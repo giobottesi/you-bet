@@ -1,0 +1,41 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/rails
+      - bundle_cache:/usr/local/bundle
+    environment:
+      - DATABASE_HOST=postgres
+      - DATABASE_USERNAME=you_bet
+      - DATABASE_PASSWORD=you_bet
+      - RAILS_ENV=development
+      - RAILS_LOG_LEVEL=debug
+    depends_on:
+      postgres:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: you_bet
+      POSTGRES_PASSWORD: you_bet
+      POSTGRES_DB: you_bet_development
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U you_bet"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+  bundle_cache:
