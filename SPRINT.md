@@ -214,41 +214,49 @@ Each card: controller (inherits ContentController) + view + route. Independent o
 
 ## Dependency Graph
 
-```
-BE 01 Rails app setup
-├── BE 02 CI pipeline
-├── BE 03 i18n config
-├── BE 04 First deploy
-├── BE 05 CLAUDE.md
-├── BE 06 AppConfig model
-│   └── BE 12 Poupança calculator
-├── BE 07 ReferenceValue model
-│   ├── BE 08 BetType value object
-│   │   ├── BE 09 MonteCarloSimulator core
-│   │   │   └── BE 10 All timeframes
-│   │   │       └── BE 11 Result caching
-│   │   └── BE 17 Bet type picker
-│   └── BE 13 OpportunityCostCalculator
-├── BE 14 Visitor tracking
-│   └── BE 20 Form submission ← (also needs BE 11)
-│       └── BE 21 Results summary
-│           ├── BE 22 Comparisons ← (also needs BE 13)
-│           ├── BE 23 Context cards
-│           ├── BE 24 Help resources
-│           └── BE 25 Permalink
-│               ├── BE 26 Share card image
-│               └── BE 27 Share buttons
-├── BE 15 Rate limiting
-├── BE 16 Landing layout
-│   ├── BE 17 Bet type picker
-│   ├── BE 18 Amount input
-│   ├── BE 19 Timeframe slider
-│   └── BE 20 Form submission
-└── BE 28 ContentController
-    ├── BE 29 Sources page
-    ├── BE 30 About page
-    ├── BE 31 Privacy page
-    └── BE 32 Devlog page
+```mermaid
+graph TD
+    BE01["BE 01 Rails app setup"] --> BE02["BE 02 CI pipeline"]
+    BE01 --> BE03["BE 03 i18n config"]
+    BE01 --> BE04["BE 04 First deploy"]
+    BE01 --> BE05["BE 05 CLAUDE.md"]
+    BE01 --> BE15["BE 15 Rate limiting"]
+
+    BE01 --> BE06["BE 06 AppConfig model"]
+    BE06 --> BE12["BE 12 Poupança calculator"]
+
+    BE01 --> BE07["BE 07 ReferenceValue model"]
+    BE07 --> BE08["BE 08 BetType value object"]
+    BE08 --> BE09["BE 09 MonteCarloSimulator core"]
+    BE09 --> BE10["BE 10 All timeframes"]
+    BE10 --> BE11["BE 11 Result caching"]
+    BE07 --> BE13["BE 13 OpportunityCostCalculator"]
+
+    BE01 --> BE14["BE 14 Visitor tracking"]
+    BE01 --> BE16["BE 16 Landing layout"]
+
+    BE16 --> BE17["BE 17 Bet type picker"]
+    BE08 --> BE17
+    BE16 --> BE18["BE 18 Amount input"]
+    BE16 --> BE19["BE 19 Timeframe slider"]
+    BE16 --> BE20["BE 20 Form submission"]
+    BE11 --> BE20
+    BE14 --> BE20
+
+    BE20 --> BE21["BE 21 Results summary"]
+    BE21 --> BE22["BE 22 Comparisons"]
+    BE13 --> BE22
+    BE21 --> BE23["BE 23 Context cards"]
+    BE21 --> BE24["BE 24 Help resources"]
+    BE21 --> BE25["BE 25 Permalink"]
+    BE25 --> BE26["BE 26 Share card image"]
+    BE25 --> BE27["BE 27 Share buttons"]
+
+    BE01 --> BE28["BE 28 ContentController"]
+    BE28 --> BE29["BE 29 Sources page"]
+    BE28 --> BE30["BE 30 About page"]
+    BE28 --> BE31["BE 31 Privacy page"]
+    BE28 --> BE32["BE 32 Devlog page"]
 ```
 
 ---
