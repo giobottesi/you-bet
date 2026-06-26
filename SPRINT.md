@@ -9,15 +9,13 @@
 
 ## Implementation Cards
 
-Cards are vertical slices — each delivers a testable, functional piece. Grouped by feature area, ordered by dependency.
+Cards are vertical slices — each delivers a testable, functional piece. **BE** = backend, **FE** = frontend.
 
 ### Scaffold
 
-Must exist before anything else.
-
 | Card | Description | Test |
 |---|---|---|
-| **BE 01** | Rails app setup (Postgres, Hotwire, Propshaft), MIT LICENSE, README | — |
+| **BE 01** | Rails app setup (Postgres, Hotwire, Propshaft, Tailwind), Docker (dev + staging), MIT LICENSE, README | — |
 | **BE 02** | CI pipeline (GitHub Actions: tests + `bundler-audit`), `.env.example` | CI green on push |
 | **BE 03** | i18n config (pt-BR primary, locale toggle scaffold) | — |
 | **BE 04** | First Fly.io deploy (São Paulo `gru`), smoke test on production URL | HTTP 200 on prod |
@@ -39,7 +37,7 @@ Each card: model + migration + PaperTrail + `.get()` accessor + seeds + test.
 
 ### Simulation Engine
 
-Each card: service object + unit test. No controllers/views yet.
+Each card: service object + unit test. No controllers/views.
 
 | Card | Description | Test |
 |---|---|---|
@@ -67,17 +65,37 @@ Each card: service object + unit test. No controllers/views yet.
 
 ---
 
-### Landing Page
-
-Each card: controller action + view partial + Stimulus (if needed) + integration test. Single-page form.
+### Permalink & Share Generation
 
 | Card | Description | Test |
 |---|---|---|
-| **BE 16** | Landing page layout — SimulationsController#new, header (☰ menu, YOU BET logo, Help), hero copy (WHAT/WHY), form area, site links, footer | Renders 200, contains form |
-| **BE 17** | Bet type picker — carousel/slider, reads from BetType, Stimulus controller | All types rendered, at least one required |
-| **BE 18** | Weekly amount input — radio buttons (DataSenado anchors) + custom field, Stimulus validation | Radios render, custom input validates |
-| **BE 19** | Timeframe slider — predefined slots (1 mês, 6 meses, 1 ano, 2 anos, 5 anos), Stimulus controller | All 5 slots, default selected, value in form |
-| **BE 20** | Form submission — SimulationsController#create, validates params, runs MonteCarloSimulator, creates Simulation, redirects to results | Valid → redirect, invalid → re-render with errors |
+| **BE 16** | Shareable permalink — `/s/:uuid` route, OG meta tags (title, description, image) | OG tags in head, permalink resolves |
+| **BE 17** | ShareCardGenerator — downloadable image with summary + #DesafioContraBets + Gatinho | Image generated, contains key data |
+
+---
+
+### Harden
+
+| Card | Description | Test |
+|---|---|---|
+| **BE 18** | OWASP 2025 verification — walk top 10 checklist against the app | Checklist documented |
+| **BE 19** | Edge case tests — zero amount, extreme values, all bet types combined, negative inputs | All handled gracefully |
+| **BE 20** | Data verification — check every stat against primary source, pre-launch checklist | Checklist signed off |
+| **BE 21** | Final deploy — Fly.io production + README polish (screenshots, local setup) | Smoke test on prod |
+
+---
+
+### Landing Page
+
+Each card: view partial + Stimulus controller + integration test. Single-page form.
+
+| Card | Description | Test |
+|---|---|---|
+| **FE 01** | Landing page layout — SimulationsController#new, header (☰ menu, YOU BET logo, Help), hero copy (WHAT/WHY), form area, site links, footer | Renders 200, contains form |
+| **FE 02** | Bet type picker — carousel/slider, reads from BetType, Stimulus controller | All types rendered, at least one required |
+| **FE 03** | Weekly amount input — radio buttons (DataSenado anchors) + custom field, Stimulus validation | Radios render, custom input validates |
+| **FE 04** | Timeframe slider — predefined slots (1 mês, 6 meses, 1 ano, 2 anos, 5 anos), Stimulus controller | All 5 slots, default selected, value in form |
+| **FE 05** | Form submission — SimulationsController#create, validates params, runs MonteCarloSimulator, creates Simulation, redirects to results | Valid → redirect, invalid → re-render with errors |
 
 ---
 
@@ -87,48 +105,35 @@ Each card: view partial + test. All under SimulationsController#show.
 
 | Card | Description | Test |
 |---|---|---|
-| **BE 21** | Results summary card — bet type, weekly amount, total loss (R$), % loss from SimulationResult | Correct values rendered, 404 on invalid UUID |
-| **BE 22** | Comparison items — OpportunityCostCalculator output, icon + count + name, "Show more" expandable | 3 items + poupança, expand loads more |
-| **BE 23** | Context cards — data-backed stats with source citations (DataSenado, BCB, etc.) | Stats rendered with source attribution |
-| **BE 24** | Help resources — CVV 188, SUS/CAPS, Jogadores Anônimos, autoexclusão. Always visible. | All resources rendered, links correct |
-
----
-
-### Sharing
-
-| Card | Description | Test |
-|---|---|---|
-| **BE 25** | Shareable permalink — `/s/:uuid` route, OG meta tags (title, description, image) | OG tags in head, permalink resolves |
-| **BE 26** | Share card image — ShareCardGenerator, downloadable image with summary + #DesafioContraBets + Gatinho | Image generated, contains key data |
-| **BE 27** | Share buttons — WhatsApp, Instagram, Twitter (link + image sharing) | Buttons render, URLs correct |
+| **FE 06** | Results summary card — bet type, weekly amount, total loss (R$), % loss from SimulationResult | Correct values rendered, 404 on invalid UUID |
+| **FE 07** | Comparison items — OpportunityCostCalculator output, icon + count + name, "Show more" expandable | 3 items + poupança, expand loads more |
+| **FE 08** | Context cards — data-backed stats with source citations (DataSenado, BCB, etc.) | Stats rendered with source attribution |
+| **FE 09** | Help resources — CVV 188, SUS/CAPS, Jogadores Anônimos, autoexclusão. Always visible. | All resources rendered, links correct |
+| **FE 10** | Share buttons — WhatsApp, Instagram, Twitter (link + image sharing) | Buttons render, URLs correct |
 
 ---
 
 ### Content Pages
 
-Each card: controller (inherits ContentController) + view + route. Independent of each other.
+Each card: controller (inherits ContentController) + view + route.
 
 | Card | Description | Test |
 |---|---|---|
-| **BE 28** | ContentController base — shared layout/helpers for static pages | — |
-| **BE 29** | Sources page — `/sources`, all 7 data sources with citations + methodological notes | All sources listed |
-| **BE 30** | About page — `/about`, AI declaration, developer story, Gatinho, GitHub + devlog links | AI disclosure present |
-| **BE 31** | Privacy page — `/privacy`, LGPD notice, data collected, retention, deletion | Deletion instructions present |
-| **BE 32** | Devlog page — `/diario`, daily journal entries from markdown/YAML | Entries display chronologically |
+| **FE 11** | ContentController base — shared layout/helpers for static pages | — |
+| **FE 12** | Sources page — `/sources`, all 7 data sources with citations + methodological notes | All sources listed |
+| **FE 13** | About page — `/about`, AI declaration, developer story, Gatinho, GitHub + devlog links | AI disclosure present |
+| **FE 14** | Privacy page — `/privacy`, LGPD notice, data collected, retention, deletion | Deletion instructions present |
+| **FE 15** | Devlog page — `/diario`, daily journal entries from markdown/YAML | Entries display chronologically |
 
 ---
 
-### Polish & Harden
+### Polish
 
 | Card | Description | Test |
 |---|---|---|
-| **BE 33** | Responsive design — mobile-first pass, Chrome Android + Safari iOS, touch inputs, card layouts | Visual QA on mobile viewports |
-| **BE 34** | Visual polish — Gatinho branding, typography, color palette, textures | Visual QA |
-| **BE 35** | Accessibility — semantic HTML, contrast, screen reader labels, keyboard nav, focus states | Lighthouse audit |
-| **BE 36** | OWASP 2025 verification — walk top 10 checklist against the app | Checklist documented |
-| **BE 37** | Edge case tests — zero amount, extreme values, all bet types combined, negative inputs | All handled gracefully |
-| **BE 38** | Data verification — check every stat against primary source, pre-launch checklist | Checklist signed off |
-| **BE 39** | Final deploy — Fly.io production + README polish (screenshots, local setup) | Smoke test on prod |
+| **FE 16** | Responsive design — mobile-first pass, Chrome Android + Safari iOS, touch inputs, card layouts | Visual QA on mobile viewports |
+| **FE 17** | Visual polish — Gatinho branding, typography, color palette, textures | Visual QA |
+| **FE 18** | Accessibility — semantic HTML, contrast, screen reader labels, keyboard nav, focus states | Lighthouse audit |
 
 ---
 
@@ -136,10 +141,10 @@ Each card: controller (inherits ContentController) + view + route. Independent o
 
 | Card | Description |
 |---|---|
-| **BE 40** | Record demo video/reel |
-| **BE 41** | Write submission caption + AI usage declaration |
-| **BE 42** | Publish on public profile + register via competition form |
-| **BE 43** | Final devlog entry + sanity check on live app |
+| **SUB 01** | Record demo video/reel |
+| **SUB 02** | Write submission caption + AI usage declaration |
+| **SUB 03** | Publish on public profile + register via competition form |
+| **SUB 04** | Final devlog entry + sanity check on live app |
 
 ---
 
@@ -147,17 +152,9 @@ Each card: controller (inherits ContentController) + view + route. Independent o
 
 | Area | Cards |
 |---|---|
-| Scaffold | BE 01–05 |
-| Data Infrastructure | BE 06–08 |
-| Simulation Engine | BE 09–13 |
-| Anonymous Sessions | BE 14 |
-| Security | BE 15 |
-| Landing Page | BE 16–20 |
-| Results Page | BE 21–24 |
-| Sharing | BE 25–27 |
-| Content Pages | BE 28–32 |
-| Polish & Harden | BE 33–39 |
-| Submit | BE 40–43 |
+| Backend | BE 01–21 |
+| Frontend | FE 01–18 |
+| Submit | SUB 01–04 |
 | **Total** | **43 cards** |
 
 ---
@@ -187,28 +184,28 @@ Each card: controller (inherits ContentController) + view + route. Independent o
 | BE 19 | ⬜ | | |
 | BE 20 | ⬜ | | |
 | BE 21 | ⬜ | | |
-| BE 22 | ⬜ | | |
-| BE 23 | ⬜ | | |
-| BE 24 | ⬜ | | |
-| BE 25 | ⬜ | | |
-| BE 26 | ⬜ | | |
-| BE 27 | ⬜ | | |
-| BE 28 | ⬜ | | |
-| BE 29 | ⬜ | | |
-| BE 30 | ⬜ | | |
-| BE 31 | ⬜ | | |
-| BE 32 | ⬜ | | |
-| BE 33 | ⬜ | | |
-| BE 34 | ⬜ | | |
-| BE 35 | ⬜ | | |
-| BE 36 | ⬜ | | |
-| BE 37 | ⬜ | | |
-| BE 38 | ⬜ | | |
-| BE 39 | ⬜ | | |
-| BE 40 | ⬜ | | |
-| BE 41 | ⬜ | | |
-| BE 42 | ⬜ | | |
-| BE 43 | ⬜ | | |
+| FE 01 | ⬜ | | |
+| FE 02 | ⬜ | | |
+| FE 03 | ⬜ | | |
+| FE 04 | ⬜ | | |
+| FE 05 | ⬜ | | |
+| FE 06 | ⬜ | | |
+| FE 07 | ⬜ | | |
+| FE 08 | ⬜ | | |
+| FE 09 | ⬜ | | |
+| FE 10 | ⬜ | | |
+| FE 11 | ⬜ | | |
+| FE 12 | ⬜ | | |
+| FE 13 | ⬜ | | |
+| FE 14 | ⬜ | | |
+| FE 15 | ⬜ | | |
+| FE 16 | ⬜ | | |
+| FE 17 | ⬜ | | |
+| FE 18 | ⬜ | | |
+| SUB 01 | ⬜ | | |
+| SUB 02 | ⬜ | | |
+| SUB 03 | ⬜ | | |
+| SUB 04 | ⬜ | | |
 
 ---
 
@@ -233,30 +230,30 @@ graph TD
     BE07 --> BE13["BE 13 OpportunityCostCalculator"]
 
     BE01 --> BE14["BE 14 Visitor tracking"]
-    BE01 --> BE16["BE 16 Landing layout"]
 
-    BE16 --> BE17["BE 17 Bet type picker"]
-    BE08 --> BE17
-    BE16 --> BE18["BE 18 Amount input"]
-    BE16 --> BE19["BE 19 Timeframe slider"]
-    BE16 --> BE20["BE 20 Form submission"]
-    BE11 --> BE20
-    BE14 --> BE20
+    BE01 --> FE01["FE 01 Landing layout"]
+    FE01 --> FE02["FE 02 Bet type picker"]
+    BE08 --> FE02
+    FE01 --> FE03["FE 03 Amount input"]
+    FE01 --> FE04["FE 04 Timeframe slider"]
+    FE01 --> FE05["FE 05 Form submission"]
+    BE11 --> FE05
+    BE14 --> FE05
 
-    BE20 --> BE21["BE 21 Results summary"]
-    BE21 --> BE22["BE 22 Comparisons"]
-    BE13 --> BE22
-    BE21 --> BE23["BE 23 Context cards"]
-    BE21 --> BE24["BE 24 Help resources"]
-    BE21 --> BE25["BE 25 Permalink"]
-    BE25 --> BE26["BE 26 Share card image"]
-    BE25 --> BE27["BE 27 Share buttons"]
+    FE05 --> FE06["FE 06 Results summary"]
+    FE06 --> FE07["FE 07 Comparisons"]
+    BE13 --> FE07
+    FE06 --> FE08["FE 08 Context cards"]
+    FE06 --> FE09["FE 09 Help resources"]
+    FE06 --> BE16["BE 16 Permalink"]
+    BE16 --> BE17["BE 17 Share card image"]
+    BE16 --> FE10["FE 10 Share buttons"]
 
-    BE01 --> BE28["BE 28 ContentController"]
-    BE28 --> BE29["BE 29 Sources page"]
-    BE28 --> BE30["BE 30 About page"]
-    BE28 --> BE31["BE 31 Privacy page"]
-    BE28 --> BE32["BE 32 Devlog page"]
+    BE01 --> FE11["FE 11 ContentController"]
+    FE11 --> FE12["FE 12 Sources page"]
+    FE11 --> FE13["FE 13 About page"]
+    FE11 --> FE14["FE 14 Privacy page"]
+    FE11 --> FE15["FE 15 Devlog page"]
 ```
 
 ---
@@ -282,7 +279,7 @@ If time allows or post-competition:
 
 ## Open Questions
 
-1. **CSS framework**: Tailwind (fast to build, heavier) vs Pico CSS (lightweight, semantic)?
+1. ~~**CSS framework**: Tailwind~~ → **Decided: Tailwind CSS**
 2. **Chart library**: For range fan (post-MVP) — CSS-only? Chart.js? Lightweight alternative?
 3. **Image generation**: ShareCardGenerator tech — server SVG? HTML-to-image? Grover? IMGKit?
 4. **Domain**: `youbet.gio.com` (subdomain of personal site)?
