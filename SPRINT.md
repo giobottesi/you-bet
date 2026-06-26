@@ -279,12 +279,12 @@ If time allows or post-competition:
 
 ## Open Questions
 
-1. ~~**CSS framework**: Tailwind~~ → **Decided: Tailwind CSS**
-2. **Chart library**: For range fan (post-MVP) — CSS-only? Chart.js? Lightweight alternative?
-3. **Image generation**: ShareCardGenerator tech — server SVG? HTML-to-image? Grover? IMGKit?
-4. **Domain**: `youbet.gio.com` (subdomain of personal site)?
-5. **Devlog format**: Static view partials per day, or YAML data rendered by a single view?
-6. **Analytics**: PostHog vs Plausible vs Umami?
+1. ~~CSS framework~~ → **Decided: Tailwind CSS**
+2. ~~Chart library~~ → **Moved to nice-to-haves** (range fan is post-MVP)
+3. ~~Image generation~~ → **Decided: HTML-to-image** (render HTML/CSS card, screenshot via headless browser)
+4. **Domain**: `youbet.<domain>.com` — subdomain TBD, Gio buying domain
+5. ~~Devlog format~~ → **Decided: YAML data file** rendered by a single view. Split file if it gets too long.
+6. ~~Analytics~~ → **Decided: Umami** (free, self-hosted, lightweight, LGPD-friendly, no cost)
 
 ---
 
