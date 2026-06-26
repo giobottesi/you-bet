@@ -1,0 +1,19 @@
+#!/bin/bash -e
+
+# Enable jemalloc for reduced memory usage and latency.
+if [ -z "${LD_PRELOAD+x}" ] && [ -f /usr/local/lib/libjemalloc.so ]; then
+  export LD_PRELOAD="/usr/local/lib/libjemalloc.so"
+fi
+
+# If running the rails server then create or migrate existing database
+if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
+  echo "Ensuring databases exist..."
+  ./bin/rails db:prepare
+
+  if [ "$RAILS_ENV" = "development" ] || [ "$RAILS_ENV" = "" ]; then
+    echo "Ensuring test database exists..."
+    RAILS_ENV=test ./bin/rails db:prepare
+  fi
+fi
+
+exec "${@}"
