@@ -19,7 +19,6 @@
 - Wrote ARCHITECTURE.md — full technical spec (5 tables, settings infra, security, caching)
 - Wrote SPRINT.md — 5-phase plan, 15.5 days of work, 1.5 days buffer
 - Created /my-bet EOD skill for daily wrap-ups
-- Created progress gists for mobile checking during Pilates
 
 ## Gio's inputs
 

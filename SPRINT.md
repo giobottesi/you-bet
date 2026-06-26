@@ -1,266 +1,256 @@
-# You-Bet — Sprint Plan v1
+# You-Bet — Sprint Plan
 
 **Duration**: 17 days | Jun 25 → Jul 12, 2026
-**Purpose**: This is the initial sprint plan. Keep it as-is throughout the project to compare planned vs actual. Track reality in the devlog (`/diario`).
-**Approach**: TDD throughout — tests are written with features, not after. No separate "testing phase."
+**Approach**: TDD throughout — tests are written with features, not after.
+**Assets**: Free/open-source only. No paid fonts, icons, images, or services.
+**Track reality**: devlog (`/diario`). Compare planned vs actual at the end.
 
 ---
 
-## Sprint Phases
+## Implementation Cards
 
-### Phase 0: Foundation (Days 1-2) — Jun 25-26
+Cards are vertical slices — each delivers a testable, functional piece. Grouped by feature area, ordered by dependency.
 
-**Goal**: Deployable skeleton with CI, i18n, settings infra, anonymous sessions, security baseline
+### Scaffold
 
-```
-Tasks:
-├── rails new you-bet (Postgres, Hotwire)
-├── GitHub repo setup (MIT LICENSE, README, .github/workflows/ci.yml)
-├── i18n config (pt-BR primary, locale toggle)
-├── AppConstant model + Setting model (PaperTrail, data_source)
-├── Seed data (all comparison prices, house edges, app constants)
-├── VisitorIdentifiable concern + cookie/localStorage sync
-├── Simulation + SimulationResult models + migrations
-├── Rack::Attack rate limiting config
-├── Initial Fly.io deploy (smoke test)
-└── CLAUDE.md for the project
-```
+Must exist before anything else.
 
-**Deliverable**: Empty app on Fly.io, CI green, settings seeded, visitor tracking active.
-
-**Estimated**: 2 days
-
----
-
-### Phase 1: Engine (Days 3-5) — Jun 27-29
-
-**Goal**: Monte Carlo simulation running, tested, cached. TDD — tests first.
-
-```
-Tasks:
-├── BetType value object (reads house edge + variance from settings)
-│   └── TDD: test expected house edge values, variance categories
-├── SimulationRunner service object
-│   ├── TDD: test expected value calculation against known math
-│   ├── Monte Carlo loop (1K sims × all 5 timeframes in one pass)
-│   ├── TDD: test percentile extraction, profit percentages
-│   ├── Poupança alternative calculator
-│   │   └── TDD: test compound interest against manual calculation
-│   └── Cache key generation + simulation_results storage
-│       └── TDD: test cache hit/miss behavior
-├── ComparisonPicker service (reads prices from settings, picks 3 random + poupança)
-│   └── TDD: test filtering by loss amount, randomness, poupança always present
-└── Verify math against known expected values (manual cross-check)
-```
-
-**Deliverable**: `SimulationRunner.call(bet_types:, weekly_amount_cents:)` returns correct, tested, cached results for all timeframes.
-
-**Estimated**: 3 days
-
----
-
-### Phase 2: UI Flow (Days 6-8) — Jun 30 - Jul 2
-
-**Goal**: Full input → results flow working in browser. TDD on controller.
-
-```
-Tasks:
-├── SimulationsController
-│   └── TDD: test new → create → show flow, param validation, cache behavior
-├── Landing page (two entry points: "never bet" / "already bet")
-├── Step 1: Bet type selection (Turbo Frame)
-├── Step 2: Weekly amount (data-based anchored radio buttons + custom input)
-├── Results page
-│   ├── Timeframe cascade (all 5 periods)
-│   ├── 3 random comparison cards + poupança (inline, no expand — DEFERRED)
-│   ├── Context cards (data-backed stats)
-│   └── Help resources section (always visible)
-└── Stimulus controllers (form nav, validation)
-```
-
-**Deferred from this phase (post-MVP):**
-- Range fan visualization (P5→P95) — cascade numbers are enough
-- "Ver todas" expand button — show 3+poupança inline, expand is trivial to add later
-
-**UI design (Figma/Inkscape) runs in parallel:**
-- Landing page layout
-- 2-step input flow
-- Results page cards + cascade
-- Comparison card design
-- Mobile breakpoints
-
-**Deliverable**: Full flow working end-to-end. Ugly but functional.
-
-**Estimated**: 3 days
-
----
-
-### Phase 3: Share & Polish (Days 9-12) — Jul 3-6
-
-**Goal**: Shareable permalinks, responsive design, visual polish, static pages
-
-```
-Tasks:
-├── Shareable result permalinks (/s/:uuid)
-│   ├── OG meta tags (title, description, image placeholder)
-│   ├── Share buttons (WhatsApp, Instagram, Twitter — link sharing)
-│   └── TDD: test permalink routing, OG tag rendering
-├── Responsive design pass (mobile-first)
-│   ├── Apply Figma/Inkscape designs
-│   ├── Touch-friendly inputs
-│   ├── Card layouts for small screens
-│   └── Test on Chrome Android + Safari iOS
-├── /sources page (data documentation with citations)
-├── /about page (AI declaration + developer story)
-├── /privacy page (LGPD notice)
-├── /diario page (devlog — daily journal entries)
-├── Footer (AI badge, privacy link, help resources)
-└── Visual polish (typography, colors, spacing)
-```
-
-**Deferred from this phase (post-MVP):**
-- Shareable image card generation (HTML→image) — OG meta on permalink gives 80% of sharing value
-- Image download button — add when image gen is ready
-
-**Deliverable**: App looks good on mobile, results are shareable via link, all pages done.
-
-**Estimated**: 4 days
-
----
-
-### Phase 4: Harden & Ship (Days 13-15) — Jul 7-9
-
-**Goal**: Production-ready, edge cases covered, deployed
-
-Since we've been doing TDD throughout, test coverage already exists. This phase is about edge cases, performance, and verification — not writing tests from scratch.
-
-```
-Tasks:
-├── Edge case tests (zero amount, extreme values, all bet types combined)
-├── Performance check (simulation speed on Fly.io)
-├── Accessibility pass (semantic HTML, contrast, screen reader labels)
-├── Verify all context card stats against primary sources (pre-launch checklist)
-├── Final Fly.io deploy
-├── README polish (screenshots, how to run locally)
-└── Smoke test full flow on production
-```
-
-**Deferred (post-MVP):**
-- Data retention job (manual cleanup if needed for ~1 month of competition use)
-
-**Deliverable**: App is live, edge-case-tested, accessible, data verified.
-
-**Estimated**: 3 days
-
----
-
-### Phase 5: Submit (Days 16-17) — Jul 10-11
-
-**Goal**: Competition submission ready
-
-```
-Tasks:
-├── Record demo video/reel of the app
-├── Write submission caption with #DesafioContraBets
-├── Declare AI usage in the post
-├── Publish on public profile
-├── Register link via competition form
-├── Final devlog entry
-└── Final sanity check on live app
-```
-
-**Deliverable**: Submitted.
-
-**Estimated**: 1 day (buffer day Jul 12 if needed)
-
----
-
-## Parallel Workstreams
-
-```
-         Jun 25──26──27──28──29──30──01──02──03──04──05──06──07──08──09──10──11──12
-              │        │              │         │              │           │  │     │
- CODE    ████████ P0   ██████ P1     ██████ P2 ████████ P3    ██████ P4  █P5│     │
- (TDD)        │        │              │         │              │           │  │     │
- DESIGN       │   ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ │              │           │  │     │
-              │   Figma/Inkscape: landing,      │              │           │  │     │
-              │   steps, results, cards, mobile │              │           │  │     │
-              │        │              │         │              │           │  │     │
- DEVLOG  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  │     │
-              daily entries throughout                                    │  │     │
-              │        │              │         │              │           │  │     │
- CONTENT      │        │              │         │    ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  │     │
-              │        │              │         │    Video/reel script + rec │     │
-              │        │              │         │              │           │  │     │
- BUFFER       │        │              │         │              │           │  │ ████│
-                                                                          Jul 12
-```
-
----
-
-## Scope Summary
-
-### MVP (17 days)
-
-| Feature | Phase | Days | Notes |
-|---|---|---|---|
-| Rails setup (Postgres, Hotwire, i18n scaffold, CI) | P0 | 1 | i18n PT-BR only, EN deferred |
-| Settings + AppConstants (PaperTrail, seed, data_source) | P0 | 0.5 | |
-| Security (Rack::Attack, CSP, UUID permalinks) | P0 | 0.5 | |
-| Anonymous sessions (cookie + localStorage) | P0 | 0.5 | |
-| Monte Carlo engine + TDD (server-side, all timeframes, caching) | P1 | 2.5 | Tests built with features |
-| ComparisonPicker service + TDD | P1 | 0.5 | |
-| Input flow + TDD (2 steps, Turbo Frames) | P2 | 1.5 | |
-| Results page (cascade, 3+poupança inline, context, help) | P2 | 1.5 | No fan chart, no expand |
-| Shareable permalinks + OG meta | P3 | 0.5 | No image gen — link sharing only |
-| Responsive design (mobile-first) | P3 | 2 | |
-| Static pages (/sources, /about, /privacy, /diario) | P3 | 1 | |
-| Visual polish | P3 | 0.5 | |
-| Fly.io deployment | P0+P4 | 0.5 | |
-| Edge cases + hardening + a11y | P4 | 2 | TDD coverage already exists |
-| Data verification (pre-launch checklist) | P4 | 0.5 | |
-| Submission video + submit | P5 | 1 | |
-| **Total** | | **~15.5 days of work** |
-
-**Buffer: ~1.5 days.** Comfortable.
-
-### Deferred to Post-MVP
-
-| Feature | Why deferred | Future effort |
+| Card | Description | Test |
 |---|---|---|
-| Range fan visualization (P5→P95 chart) | Cascade numbers work without it | ~1 day, standalone component |
-| Shareable image card generation | OG meta gives 80% of sharing value | ~1 day, additive |
-| EN translations | PT-BR audience, i18n scaffold ready | ~0.5 day, just add en.yml |
-| "Ver todas" expand button for comparisons | 3+poupança inline is enough | ~0.25 day, trivial Turbo Frame |
-| Data retention job | Manual cleanup for ~1 month use | ~0.25 day, cron task |
-| Animated trajectory visualization | Visual polish, not core | ~1 day |
-| "Compare bet types" mode | Feature expansion | ~2 days |
-| Aggregate stats dashboard | Needs traffic first | ~1 day |
-| User-facing modifier sliders | Settings infra ready | ~1 day |
-| Dark mode | Nice to have | ~0.5 day |
-| PWA | Nice to have | ~0.5 day |
+| **BE 01** | Rails app setup (Postgres, Hotwire, Propshaft), MIT LICENSE, README | — |
+| **BE 02** | CI pipeline (GitHub Actions: tests + `bundler-audit`), `.env.example` | CI green on push |
+| **BE 03** | i18n config (pt-BR primary, locale toggle scaffold) | — |
+| **BE 04** | First Fly.io deploy (São Paulo `gru`), smoke test on production URL | HTTP 200 on prod |
+| **BE 05** | Project CLAUDE.md | — |
+
+---
+
+### Data Infrastructure
+
+Each card: model + migration + PaperTrail + `.get()` accessor + seeds + test.
+
+| Card | Description | Test |
+|---|---|---|
+| **BE 06** | AppConfig model (PaperTrail, `data_source`, `.get()` with type casting). Seeds: `monte_carlo_sims`, `poupanca_monthly_rate`, `minimum_wage_cents`, `data_retention_days` | `.get()` returns correct type, PaperTrail tracks changes |
+| **BE 07** | ReferenceValue model (PaperTrail, `data_source`, `category`, `.get()` accessor). Seeds: all comparison prices + all bet type house edges | `.get()` by category.key, seed idempotency |
+| **BE 08** | BetType value object — reads house edge + variance from ReferenceValue, returns structured data per bet type | House edge values per type match seeds |
+
+---
+
+### Simulation Engine
+
+Each card: service object + unit test. No controllers/views yet.
+
+| Card | Description | Test |
+|---|---|---|
+| **BE 09** | MonteCarloSimulator core — takes bet types + weekly amount, runs 1K sims for a single timeframe, returns percentiles (P5/P25/P50/P75/P95) + profit percentage | Expected value within statistical bounds, percentiles ordered |
+| **BE 10** | MonteCarloSimulator all timeframes — extend to 5 timeframes (4/26/52/104/260 weeks) in one pass | All 5 present, losses compound over longer periods |
+| **BE 11** | Simulation result caching — cache key generation, SimulationResult storage, hit/miss behavior | Same inputs → hit, different → miss, results identical |
+| **BE 12** | Poupança calculator — compound interest at BCB rate, returns balance per timeframe | Matches manual calculation for known inputs |
+| **BE 13** | OpportunityCostCalculator — loads prices from ReferenceValue, filters by loss amount, picks 3 random + poupança fixed | Always includes poupança, items scale to loss |
+
+---
+
+### Anonymous Sessions
+
+| Card | Description | Test |
+|---|---|---|
+| **BE 14** | VisitorIdentifiable concern — UUID cookie, signed permanent, Simulation model links to visitor_id | UUID persists across requests, records linked |
+
+---
+
+### Security
+
+| Card | Description | Test |
+|---|---|---|
+| **BE 15** | Rack::Attack rate limiting — throttle simulation + general requests (ENV limits), fail2ban pattern in ENV | Throttle after limit, returns 429 |
+
+---
+
+### Landing Page
+
+Each card: controller action + view partial + Stimulus (if needed) + integration test. Single-page form.
+
+| Card | Description | Test |
+|---|---|---|
+| **BE 16** | Landing page layout — SimulationsController#new, header (☰ menu, YOU BET logo, Help), hero copy (WHAT/WHY), form area, site links, footer | Renders 200, contains form |
+| **BE 17** | Bet type picker — carousel/slider, reads from BetType, Stimulus controller | All types rendered, at least one required |
+| **BE 18** | Weekly amount input — radio buttons (DataSenado anchors) + custom field, Stimulus validation | Radios render, custom input validates |
+| **BE 19** | Timeframe slider — predefined slots (1 mês, 6 meses, 1 ano, 2 anos, 5 anos), Stimulus controller | All 5 slots, default selected, value in form |
+| **BE 20** | Form submission — SimulationsController#create, validates params, runs MonteCarloSimulator, creates Simulation, redirects to results | Valid → redirect, invalid → re-render with errors |
+
+---
+
+### Results Page
+
+Each card: view partial + test. All under SimulationsController#show.
+
+| Card | Description | Test |
+|---|---|---|
+| **BE 21** | Results summary card — bet type, weekly amount, total loss (R$), % loss from SimulationResult | Correct values rendered, 404 on invalid UUID |
+| **BE 22** | Comparison items — OpportunityCostCalculator output, icon + count + name, "Show more" expandable | 3 items + poupança, expand loads more |
+| **BE 23** | Context cards — data-backed stats with source citations (DataSenado, BCB, etc.) | Stats rendered with source attribution |
+| **BE 24** | Help resources — CVV 188, SUS/CAPS, Jogadores Anônimos, autoexclusão. Always visible. | All resources rendered, links correct |
+
+---
+
+### Sharing
+
+| Card | Description | Test |
+|---|---|---|
+| **BE 25** | Shareable permalink — `/s/:uuid` route, OG meta tags (title, description, image) | OG tags in head, permalink resolves |
+| **BE 26** | Share card image — ShareCardGenerator, downloadable image with summary + #DesafioContraBets + Gatinho | Image generated, contains key data |
+| **BE 27** | Share buttons — WhatsApp, Instagram, Twitter (link + image sharing) | Buttons render, URLs correct |
+
+---
+
+### Content Pages
+
+Each card: controller (inherits ContentController) + view + route. Independent of each other.
+
+| Card | Description | Test |
+|---|---|---|
+| **BE 28** | ContentController base — shared layout/helpers for static pages | — |
+| **BE 29** | Sources page — `/sources`, all 7 data sources with citations + methodological notes | All sources listed |
+| **BE 30** | About page — `/about`, AI declaration, developer story, Gatinho, GitHub + devlog links | AI disclosure present |
+| **BE 31** | Privacy page — `/privacy`, LGPD notice, data collected, retention, deletion | Deletion instructions present |
+| **BE 32** | Devlog page — `/diario`, daily journal entries from markdown/YAML | Entries display chronologically |
+
+---
+
+### Polish & Harden
+
+| Card | Description | Test |
+|---|---|---|
+| **BE 33** | Responsive design — mobile-first pass, Chrome Android + Safari iOS, touch inputs, card layouts | Visual QA on mobile viewports |
+| **BE 34** | Visual polish — Gatinho branding, typography, color palette, textures | Visual QA |
+| **BE 35** | Accessibility — semantic HTML, contrast, screen reader labels, keyboard nav, focus states | Lighthouse audit |
+| **BE 36** | OWASP 2025 verification — walk top 10 checklist against the app | Checklist documented |
+| **BE 37** | Edge case tests — zero amount, extreme values, all bet types combined, negative inputs | All handled gracefully |
+| **BE 38** | Data verification — check every stat against primary source, pre-launch checklist | Checklist signed off |
+| **BE 39** | Final deploy — Fly.io production + README polish (screenshots, local setup) | Smoke test on prod |
+
+---
+
+### Submit
+
+| Card | Description |
+|---|---|
+| **BE 40** | Record demo video/reel |
+| **BE 41** | Write submission caption + AI usage declaration |
+| **BE 42** | Publish on public profile + register via competition form |
+| **BE 43** | Final devlog entry + sanity check on live app |
+
+---
+
+## Card Count
+
+| Area | Cards |
+|---|---|
+| Scaffold | BE 01–05 |
+| Data Infrastructure | BE 06–08 |
+| Simulation Engine | BE 09–13 |
+| Anonymous Sessions | BE 14 |
+| Security | BE 15 |
+| Landing Page | BE 16–20 |
+| Results Page | BE 21–24 |
+| Sharing | BE 25–27 |
+| Content Pages | BE 28–32 |
+| Polish & Harden | BE 33–39 |
+| Submit | BE 40–43 |
+| **Total** | **43 cards** |
+
+---
+
+## Dependency Graph
+
+```
+BE 01 Rails app setup
+├── BE 02 CI pipeline
+├── BE 03 i18n config
+├── BE 04 First deploy
+├── BE 05 CLAUDE.md
+├── BE 06 AppConfig model
+│   └── BE 12 Poupança calculator
+├── BE 07 ReferenceValue model
+│   ├── BE 08 BetType value object
+│   │   ├── BE 09 MonteCarloSimulator core
+│   │   │   └── BE 10 All timeframes
+│   │   │       └── BE 11 Result caching
+│   │   └── BE 17 Bet type picker
+│   └── BE 13 OpportunityCostCalculator
+├── BE 14 Visitor tracking
+│   └── BE 20 Form submission ← (also needs BE 11)
+│       └── BE 21 Results summary
+│           ├── BE 22 Comparisons ← (also needs BE 13)
+│           ├── BE 23 Context cards
+│           ├── BE 24 Help resources
+│           └── BE 25 Permalink
+│               ├── BE 26 Share card image
+│               └── BE 27 Share buttons
+├── BE 15 Rate limiting
+├── BE 16 Landing layout
+│   ├── BE 17 Bet type picker
+│   ├── BE 18 Amount input
+│   ├── BE 19 Timeframe slider
+│   └── BE 20 Form submission
+└── BE 28 ContentController
+    ├── BE 29 Sources page
+    ├── BE 30 About page
+    ├── BE 31 Privacy page
+    └── BE 32 Devlog page
+```
+
+---
+
+## Nice-to-Haves
+
+If time allows or post-competition:
+
+| Feature | Effort | Notes |
+|---|---|---|
+| **Analytics** (Plausible, Umami, or PostHog) | 0.5d | Privacy-focused. PostHog free tier: 1M events/mo. |
+| **Data dashboard** — actual betting data vs aggregate simulation results | 1-2d | Validates our Monte Carlo against BCB/DataSenado figures. |
+| Range fan visualization (P5→P95 chart) | 1d | Standalone component |
+| EN translations | 0.5d | i18n scaffold ready |
+| "Ver todas" expand button for comparisons | 0.25d | Trivial Turbo Frame |
+| Data retention job | 0.25d | Cron task |
+| "Compare bet types" mode | 2d | Feature expansion |
+| User-facing modifier sliders | 1d | ReferenceValue infra ready |
+| Dark mode | 0.5d | — |
+| PWA | 0.5d | — |
 
 ---
 
 ## Open Questions
 
 1. **CSS framework**: Tailwind (fast to build, heavier) vs Pico CSS (lightweight, semantic)?
-2. **Chart library**: For range fan — CSS-only? Chart.js? Lightweight alternative?
-3. **Image generation**: Shareable cards — server SVG? HTML-to-image? Simple HTML screenshot?
-4. **Landing page**: Single page with scroll vs separate entry points?
-5. **Domain**: Custom domain or Fly.io subdomain for MVP?
-6. **Devlog format**: Static view partials per day, or YAML data rendered by a single view?
+2. **Chart library**: For range fan (post-MVP) — CSS-only? Chart.js? Lightweight alternative?
+3. **Image generation**: ShareCardGenerator tech — server SVG? HTML-to-image? Grover? IMGKit?
+4. **Domain**: `youbet.gio.com` (subdomain of personal site)?
+5. **Devlog format**: Static view partials per day, or YAML data rendered by a single view?
+6. **Analytics**: PostHog vs Plausible vs Umami?
+
+---
+
+## Constraints
+
+- **Free assets only** — no paid fonts, icons, images, libraries, or services. Google Fonts, Streamline Free, open-source everything.
+- **Code in English only** — all code, comments, variable names, commit messages, and PR descriptions in English. Only i18n locale files contain Portuguese.
+- **PR workflow** — one PR per card (or small group of related cards). Dense description, quick to read. Merge only after Gio's review.
+- **TDD** — tests with features, not after.
+- **i18n** — all user-facing strings in locale files from the start.
+- **data_source** — every number in the app cites its origin.
+- **Rails conventions + RuboCop** — follow Rails style guide, run RuboCop. Simple methods, short classes, no clever tricks.
+- **No abbreviations** — never abbreviate variable names, method names, class names, or anything. `simulation_result`, not `sim_res`. `weekly_amount_cents`, not `wkly_amt`. Readability over keystrokes.
+- **Seeds always current** — `db/seeds.rb` must always be up to date. Running `rails db:seed` on a fresh database should produce a working app.
 
 ---
 
 ## How to Use This Document
 
-This is the **plan as of Day 1**. Don't edit it as the sprint progresses.
-
-Track reality in the devlog (`/diario` page in the app). At the end of the sprint, compare this plan to what actually happened:
-- Which phases took longer/shorter than estimated?
+Track daily reality in the devlog (`/diario`). At the end of the sprint, compare this plan to what happened:
+- Which cards took longer/shorter?
 - What was added that wasn't planned?
 - What was cut?
 - What surprised us?
-
-This comparison is part of the `/about` page story — showing the real process behind AI-assisted development.

@@ -6,112 +6,59 @@ Technical architecture for the MVP. For motivation and product spec, see [PROPOS
 
 ## Stack
 
-- **Backend**: Rails 8, Ruby 3.3+
-- **Database**: PostgreSQL (Fly.io managed)
-- **Frontend**: Rails views + Hotwire (Turbo Frames for simulation flow, Stimulus for UI)
-- **Audit trail**: PaperTrail (version tracking on settings + critical models)
-- **Security**: Rack::Attack (rate limiting + fail2ban)
-- **i18n**: Rails built-in I18n (PT-BR primary, EN secondary)
-- **Hosting**: Fly.io — São Paulo region (`gru`)
-- **CI**: GitHub Actions
+| Layer | Choice | Rationale |
+|---|---|---|
+| **Backend** | Rails 8, Ruby 3.3+ | Convention-over-configuration accelerates solo dev. Hotwire ships built-in — no separate frontend build. ([Rails 8 release notes](https://rubyonrails.org/2024/11/7/rails-8-no-paas-required)) |
+| **Database** | PostgreSQL (Fly.io managed) | JSONB for simulation results, array columns for bet_types, `pg_stat_statements` for query monitoring. Industry standard for OLTP. ([PostgreSQL docs](https://www.postgresql.org/docs/current/datatype-json.html)) |
+| **Frontend** | Rails views + Hotwire (Turbo Frames + Stimulus) | Server-rendered HTML, no SPA overhead. Turbo Frames give partial page updates without client-side state management. ([Hotwire docs](https://hotwired.dev/)) |
+| **Audit trail** | PaperTrail | Every data change tracked with `whodunnit`, `object_changes`, timestamps. Required for data traceability — every number in `reference_values` has a `data_source` citation. ([PaperTrail gem](https://github.com/paper-trail-gem/paper_trail)) |
+| **Rate limiting** | Rack::Attack | Rack middleware for throttling and fail2ban. Used by GitLab, Discourse, Mastodon in production. Runs before the Rails stack — blocks abuse before it hits the app. ([Rack::Attack gem](https://github.com/rack/rack-attack)) |
+| **i18n** | Rails built-in I18n | PT-BR primary, EN scaffold ready. Rails I18n is mature and avoids external dependencies. ([Rails I18n guide](https://guides.rubyonrails.org/i18n.html)) |
+| **Hosting** | Fly.io — São Paulo region (`gru`) | Only PaaS with a data center in Brazil. Sub-50ms latency to São Paulo. Managed Postgres included. ([Fly.io regions](https://fly.io/docs/reference/regions/)) |
+| **CI** | GitHub Actions | Free for public repos. Native GitHub integration for PR checks. ([GitHub Actions docs](https://docs.github.com/en/actions)) |
 
 ---
 
 ## System Diagram
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        BROWSER (Mobile-first)                   │
-│                                                                 │
-│  ┌──────────┐   ┌──────────┐   ┌──────────────────────────────┐│
-│  │  Step 1   │──▶│  Step 2   │──▶│         Results             ││
-│  │ Bet Type  │   │  Amount   │   │ Cascade + Fan + Cards       ││
-│  └──────────┘   └──────────┘   │ + Share + Help               ││
-│       Turbo Frame swap          └────────────┬─────────────────┘│
-│                                              │                  │
-│                                    ┌─────────▼────────┐        │
-│                                    │  Expand (Turbo)   │        │
-│                                    │  All comparisons  │        │
-│                                    └──────────────────┘        │
-│                                                                 │
-│  Stimulus: form validation, localStorage sync, share, locale    │
-│  cookie ◄──► localStorage (visitor_id sync)                     │
-└──────────────────────────┬──────────────────────────────────────┘
-                           │ Turbo (HTML over the wire)
-                           ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                     RAILS 8 (Fly.io — São Paulo)                │
-│                                                                 │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │                  ApplicationController                   │    │
-│  │         include VisitorIdentifiable                      │    │
-│  └─────────────────────────────────────────────────────────┘    │
-│         │                     │                     │           │
-│         ▼                     ▼                     ▼           │
-│  ┌─────────────┐    ┌────────────────┐    ┌────────────────┐   │
-│  │ Simulations │    │    Pages       │    │    Visitor      │   │
-│  │ Controller  │    │  Controller    │    │   Controller    │   │
-│  │             │    │                │    │                 │   │
-│  │ new/create  │    │ /sources       │    │ /restore        │   │
-│  │ show (/s/id)│    │ /about         │    │ /delete         │   │
-│  │ comparisons │    │ /privacy       │    └────────────────┘   │
-│  │  (turbo)    │    │ /diario        │                          │
-│  └──────┬──────┘    └────────────────┘                          │
-│         │                                                       │
-│         ▼                                                       │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │              SimulationRunner (Service Object)           │    │
-│  │                                                         │    │
-│  │  1. Check cache (simulation_results by cache_key)       │    │
-│  │  2. If miss: run 1K Monte Carlo for ALL timeframes      │    │
-│  │  3. Extract percentiles (P5, P25, P50, P75, P95)        │    │
-│  │  4. Calculate poupança alternative                      │    │
-│  │  5. Store in simulation_results (cache)                 │    │
-│  │  6. Create simulation record (per-visitor)              │    │
-│  │  7. Return results                                      │    │
-│  └──────────────────────────────────────────────────────────┘   │
-│                                                                 │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │              ComparisonPicker (Service Object)           │    │
-│  │                                                         │    │
-│  │  1. Load comparison prices from settings table          │    │
-│  │  2. Filter to meaningful comparisons for loss amount    │    │
-│  │  3. Pick 3 random + poupança fixed                     │    │
-│  │  4. On expand: return all comparisons via Turbo Frame   │    │
-│  └──────────────────────────────────────────────────────────┘   │
-│                                                                 │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │              ShareCardGenerator (Service Object)         │    │
-│  │                                                         │    │
-│  │  OG meta tags for permalink (/s/:uuid)                  │    │
-│  │  Downloadable image card (HTML→image or SVG)            │    │
-│  └──────────────────────────────────────────────────────────┘   │
-│                                                                 │
-│  I18n: config/locales/{pt-BR,en}.yml                           │
-│  Rack::Attack: rate limiting + fail2ban                         │
-│  PaperTrail: audit trail on settings + app_constants            │
-└──────────────────────────┬──────────────────────────────────────┘
-                           │
-                           ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                     POSTGRESQL (Fly.io)                          │
-│                                                                 │
-│  app_constants ─── PaperTrail versioned                         │
-│  ├── key, value, value_type, description, data_source           │
-│                                                                 │
-│  settings ─── PaperTrail versioned                              │
-│  ├── key, value, value_type, category, description, data_source │
-│                                                                 │
-│  simulation_results ─── cached Monte Carlo                      │
-│  ├── cache_key (unique), bet_types[], weekly_amount_cents       │
-│  ├── results (jsonb: all 5 timeframes)                          │
-│                                                                 │
-│  simulations ─── per-visitor interaction                        │
-│  ├── visitor_id (indexed), simulation_result_id, locale         │
-│                                                                 │
-│  versions ─── PaperTrail audit trail                            │
-│  ├── item_type, item_id, event, whodunnit, object, changes     │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    subgraph BROWSER ["BROWSER (Mobile-first)"]
+        LP["Landing Page\nBet type + Amount inputs\nHelp guide + Menu"]
+        LP -->|Turbo Frame| RES["Results\nCascade + Cards + Share + Help"]
+        STIM["Stimulus: form validation, localStorage sync, share, locale"]
+        COOKIE["cookie ↔ localStorage (visitor_id sync)"]
+    end
+
+    BROWSER -->|"Turbo (HTML over the wire)"| RAILS
+
+    subgraph RAILS ["RAILS 8 (Fly.io — São Paulo)"]
+        AC["ApplicationController\ninclude VisitorIdentifiable"]
+        AC --> SC["SimulationsController\nnew/create, show (/s/:id)"]
+        AC --> CC["ContentController (base)"]
+        AC --> VC["VisitorController\n/restore, /delete"]
+
+        CC --> SRC["SourcesController → /sources"]
+        CC --> ABT["AboutController → /about"]
+        CC --> PRV["PrivacyController → /privacy"]
+        CC --> DIA["DiarioController → /diario"]
+
+        SC --> MCS["MonteCarloSimulator\n1. Check cache\n2. 1K sims × 5 timeframes\n3. Extract percentiles\n4. Poupança alternative\n5. Store + return"]
+        SC --> OCC["OpportunityCostCalculator\n1. Load prices from reference_values\n2. Filter by loss amount\n3. Pick 3 random + poupança"]
+        SC --> SCG["ShareCardGenerator\nOG meta tags + permalink\nDownloadable image card"]
+
+        INFRA["I18n · Rack::Attack · PaperTrail"]
+    end
+
+    RAILS --> DB
+
+    subgraph DB ["POSTGRESQL (Fly.io)"]
+        T1["app_configs — PaperTrail versioned\nkey, value, value_type, description, data_source"]
+        T2["reference_values — PaperTrail versioned\nkey, value, value_type, category, description, data_source"]
+        T3["simulation_results — cached Monte Carlo\ncache_key (unique), bet_types[], weekly_amount_cents, results (jsonb)"]
+        T4["simulations — per-visitor\nvisitor_id (indexed), simulation_result_id, locale"]
+        T5["versions — PaperTrail audit trail"]
+    end
 ```
 
 ---
@@ -119,9 +66,9 @@ Technical architecture for the MVP. For motivation and product spec, see [PROPOS
 ## Database Schema
 
 ```ruby
-# --- App constants (system-level, separate table) ---
+# --- App configs (system-level constants — Monte Carlo params, rates, retention) ---
 
-create_table :app_constants do |t|
+create_table :app_configs do |t|
   t.string :key, null: false, index: { unique: true }
   t.string :value, null: false
   t.string :value_type, null: false, default: "string"  # string, integer, float
@@ -130,9 +77,9 @@ create_table :app_constants do |t|
   t.timestamps
 end
 
-# --- Settings (comparison prices, bet type params) ---
+# --- Reference values (externally-sourced cited data — prices, house edges) ---
 
-create_table :settings do |t|
+create_table :reference_values do |t|
   t.string :key, null: false, index: { unique: true }
   t.string :value, null: false
   t.string :value_type, null: false, default: "string"
@@ -164,8 +111,6 @@ end
 # --- PaperTrail versions (auto-generated) ---
 ```
 
-Cache key: `"#{bet_types.sort.join(',')}:#{weekly_amount_cents}"` — timeframe not included because all timeframes are calculated in one run.
-
 ### Results JSONB Structure
 
 ```json
@@ -185,11 +130,13 @@ Cache key: `"#{bet_types.sort.join(',')}:#{weekly_amount_cents}"` — timeframe 
 
 ---
 
-## Settings Infrastructure
+## Reference Data Infrastructure
 
-Two tables — `app_constants` for system-level, `settings` for comparison/bet_type config. Both have `data_source` for traceability. Both PaperTrail-versioned.
+Two tables — `app_configs` for system-level constants, `reference_values` for externally-sourced cited data (prices, house edges). Both have `data_source` for traceability. Both PaperTrail-versioned.
 
-### `app_constants`
+**Why two tables?** `app_configs` are internal decisions (how many simulations to run, retention policy). `reference_values` are external facts that change independently and need citations (pizza prices, house edges). Different update cadence, different ownership. ([Separation of Concerns — Martin Fowler](https://martinfowler.com/bliki/SeparationOfConcerns.html))
+
+### `app_configs`
 
 ```
 monte_carlo_sims       = 1000     | source: "internal"
@@ -198,7 +145,7 @@ minimum_wage_cents     = 162100   | source: "Decreto federal 2026"
 data_retention_days    = 180      | source: "internal (LGPD policy)"
 ```
 
-### `settings` (category: `comparison`)
+### `reference_values` (category: `comparison`)
 
 ```
 pizza_price_cents        = 4000     | source: "iFood avg delivery, Jun 2026"
@@ -213,7 +160,7 @@ fridge_price_cents       = 200000   | source: "Americanas avg, Jun 2026"
 course_price_cents       = 250000   | source: "SENAC avg tech course"
 ```
 
-### `settings` (category: `bet_type`)
+### `reference_values` (category: `bet_type`)
 
 ```
 sports_singles.house_edge  = 0.06   | source: "Standard bookmaker vigorish"
@@ -228,28 +175,28 @@ roulette.house_edge        = 0.0526 | source: "American: 38 pockets, pays as 36"
 ### Access Pattern
 
 ```ruby
-AppConstant.get("monte_carlo_sims")               # => 1000
-Setting.get("comparison.pizza_price_cents")       # => 4000
-Setting.get("bet_type.sports_singles.house_edge") # => 0.06
+AppConfig.get("monte_carlo_sims")                       # => 1000
+ReferenceValue.get("comparison.pizza_price_cents")       # => 4000
+ReferenceValue.get("bet_type.sports_singles.house_edge") # => 0.06
 ```
 
 ### PaperTrail
 
 ```ruby
-class Setting < ApplicationRecord
+class ReferenceValue < ApplicationRecord
   has_paper_trail
 end
 
-class AppConstant < ApplicationRecord
+class AppConfig < ApplicationRecord
   has_paper_trail
 end
 ```
 
-Every change records: what changed, when, who, and the `data_source` update.
+Every change records: what changed, when, who, and the `data_source` update. This creates a full audit trail — if a price changes, we know what it was, when it changed, and which source justified the update.
 
 ### Future "Modifier" Feature
 
-Users get range sliders for house edge (conservative/aggressive). Add `_min`/`_max` keys per setting. No migration needed.
+Users get range sliders for house edge (conservative/aggressive). Add `_min`/`_max` keys per reference value. No migration needed.
 
 ---
 
@@ -257,14 +204,17 @@ Users get range sliders for house edge (conservative/aggressive). Add `_min`/`_m
 
 ### Server-Side Monte Carlo with Turbo
 
-Form submission → Rails runs simulation → Turbo Frame swaps in results. All 5 timeframes calculated in one pass.
+Form submission → Rails runs `MonteCarloSimulator` → Turbo Frame swaps in results. All 5 timeframes calculated in one pass.
 
-**Why server-side:**
-1. Collect anonymized aggregate data
-2. Turbo gives smooth no-reload UX
-3. Shareable result permalinks with OG meta
-4. House edge logic stays server-side (not inspectable/manipulable)
-5. Simpler frontend — just Stimulus for UI
+**Why server-side** (not client-side JS):
+
+| Reason | Detail |
+|---|---|
+| Aggregate data | Collect anonymized simulation data for impact stats ("this week, 5,000 people simulated R$12M in losses") |
+| House edge protection | Logic stays server-side — not inspectable or manipulable via browser dev tools |
+| Shareable permalinks | Server-generated results enable OG meta tags for rich link previews |
+| Simpler frontend | No client-side state management, just Stimulus for UI interactions |
+| Turbo UX | Hotwire gives smooth no-reload experience without SPA complexity ([Hotwire handbook](https://hotwired.dev/)) |
 
 ### Calculation Model
 
@@ -277,6 +227,8 @@ expected_loss = total_wagered × house_edge
 - Simulate each week's bets by type, amount, and house edge
 - Track cumulative P&L per simulation
 - Extract percentiles: P5, P25, P50, P75, P95
+
+**Why Monte Carlo over closed-form?** Accumulators have non-normal distributions (many small losses, rare large wins). Monte Carlo captures this skew and lets us show realistic percentile ranges. Closed-form expected value is Layer 1 — Monte Carlo adds the distribution story. ([Monte Carlo methods in finance — Glasserman, 2003](https://link.springer.com/book/10.1007/978-0-387-21617-1))
 
 **Layer 3 — Poupança comparison:**
 ```
@@ -292,13 +244,15 @@ Same inputs → statistically equivalent results. Cache by composite key:
 cache_key = "#{bet_types.sort.join(',')}:#{weekly_amount_cents}"
 ```
 
-- Cache miss → run Monte Carlo, store in `simulation_results`
+- Cache miss → run `MonteCarloSimulator`, store in `simulation_results`
 - Cache hit → reuse results, create new `simulations` record for aggregate tracking
 - Popular combos (R$50/week accumulators) computed once, served many times
 
 ---
 
 ## Anonymous Sessions
+
+**Why anonymous?** No login = no friction = more simulations = more impact. The app's goal is reach, not user profiles. UUID-based tracking gives us aggregate data without PII. ([Privacy by Design — Cavoukian, 2011](https://iapp.org/resources/article/privacy-by-design-the-7-foundational-principles/))
 
 UUID in cookie + localStorage (dual-storage):
 
@@ -310,12 +264,12 @@ UUID in cookie + localStorage (dual-storage):
 
 ### LGPD Compliance
 
-- Privacy notice in footer
-- Privacy policy page explaining: what we collect (anonymous ID + simulation data), why (save results + aggregate stats + security), retention (180 days), deletion (button)
-- "Apagar meus dados" button
-- 180-day auto-purge
-- We collect cookies for security purposes (rate limiting, abuse prevention) — this is disclosed in the privacy policy as legitimate interest under LGPD Article 7(IX)
-- Request logs (IP, path, status) are kept separately for security and NOT tied to visitor_id — they're standard web server logs for abuse detection, not user profiling
+Reference: [LGPD — Lei nº 13.709/2018](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm)
+
+- Privacy notice in footer + dedicated `/privacy` page
+- What we collect: anonymous UUID + simulation data. Why: save results + aggregate stats + security. Retention: 180 days. Deletion: button.
+- Cookies for security (rate limiting, abuse prevention) — legitimate interest under LGPD Art. 7(IX)
+- Request logs (IP, path, status) kept separately for security, NOT tied to visitor_id
 - Data is anonymized: visitor_id is a random UUID with no link to identity
 
 ---
@@ -324,23 +278,55 @@ UUID in cookie + localStorage (dual-storage):
 
 This app will be targeted. Betting is a R$30 bi/month industry in Brazil. Plan accordingly.
 
+### OWASP Top 10 (2025) Coverage
+
+Reference: [OWASP Top 10:2025](https://owasp.org/Top10/2025/)
+
+| OWASP Risk | Our Exposure | Mitigation |
+|---|---|---|
+| **A01 — Broken Access Control** | Low. No auth, no admin panel. Only write: simulation creation. | UUID permalinks (not enumerable), no elevation path |
+| **A02 — Security Misconfiguration** | Medium. Open source = config is public. | ENV vars for all sensitive values, CSP headers, secure defaults |
+| **A03 — Supply Chain Failures** | Medium. Ruby gems, GitHub Actions. | `Gemfile.lock` pinned, `bundler-audit` in CI, Dependabot enabled |
+| **A04 — Cryptographic Failures** | Low. No passwords, no PII. | TLS via Fly.io, signed cookies for visitor_id |
+| **A05 — Injection** | Medium. User input: bet types + amount. | Rails parameterized queries, strong params, input validation at boundary |
+| **A06 — Insecure Design** | Low. Simple CRUD with read-heavy public data. | Threat model in this section, rate limiting from day 1 |
+| **A07 — Authentication Failures** | N/A. No authentication. | — |
+| **A08 — Software/Data Integrity** | Low. PaperTrail on all reference data. | Audit trail, CI pipeline, no user-uploaded content |
+| **A09 — Logging & Alerting Failures** | Medium. Solo dev, no oncall. | Structured JSON logs, Fly.io metrics, rate limit event logging |
+| **A10 — Mishandling Exceptions** | Medium. Monte Carlo edge cases (zero amount, extreme values). | Input validation, rescue handlers, error boundary in Turbo |
+
 ### Rate Limiting (Rack::Attack)
 
+**Why Rack::Attack?** Rack middleware that runs before the Rails stack — blocks abuse before it hits controllers or the database. Used in production by GitLab, Discourse, and Mastodon. ([Rack::Attack gem](https://github.com/rack/rack-attack))
+
+**Open source safety:** Throttle rules (paths, limits, periods) are safe to expose — attackers can discover limits through testing anyway. Fail2ban regex patterns and blocklists go in ENV vars to prevent evasion crafting. This follows GitLab and Mastodon's approach. ([OWASP API Security — API4:2023](https://owasp.org/API-Security/editions/2023/en/0xa4-unrestricted-resource-consumption/))
+
 ```ruby
-# Throttle simulation creation: 10 per minute per IP
-Rack::Attack.throttle("simulations/ip", limit: 10, period: 60) do |req|
+# Throttle simulation creation
+Rack::Attack.throttle("simulations/ip",
+  limit: ENV.fetch("RATE_LIMIT_SIMULATIONS", 10).to_i,
+  period: 60
+) do |req|
   req.ip if req.path == "/simulations" && req.post?
 end
 
-# Throttle general requests: 60 per minute per IP
-Rack::Attack.throttle("requests/ip", limit: 60, period: 60) do |req|
+# Throttle general requests
+Rack::Attack.throttle("requests/ip",
+  limit: ENV.fetch("RATE_LIMIT_REQUESTS", 60).to_i,
+  period: 60
+) do |req|
   req.ip
 end
 
-# Fail2ban for suspicious patterns
-Rack::Attack.blocklist("block sql injection attempts") do |req|
-  Rack::Attack::Fail2Ban.filter("sql-#{req.ip}", maxretry: 3, findtime: 600, bantime: 3600) do
-    req.query_string =~ /union|select|drop|insert|delete|update|;|--|'/i
+# Fail2ban — patterns in ENV, not in source code
+Rack::Attack.blocklist("fail2ban") do |req|
+  Rack::Attack::Fail2Ban.filter("suspicious-#{req.ip}",
+    maxretry: ENV.fetch("FAIL2BAN_MAXRETRY", 3).to_i,
+    findtime: ENV.fetch("FAIL2BAN_FINDTIME", 600).to_i,
+    bantime: ENV.fetch("FAIL2BAN_BANTIME", 3600).to_i
+  ) do
+    pattern = ENV.fetch("FAIL2BAN_PATTERN", "")
+    pattern.present? && req.query_string =~ /#{pattern}/i
   end
 end
 ```
@@ -352,36 +338,21 @@ end
 | Request logs (IP, path, status, duration) | Security — abuse detection | 30 days |
 | Rate limit hits (IP, throttle name) | Security — attack detection | 30 days |
 | Blocked requests (IP, pattern) | Security — forensics | 90 days |
-| Settings/constants changes (PaperTrail) | Audit trail — data integrity | Permanent |
+| Reference data changes (PaperTrail) | Audit trail — data integrity | Permanent |
 | Simulation volume (aggregate hourly) | Monitoring — bot detection | 90 days |
 
-| What We DON'T Do | Why |
-|---|---|
-| Tie visitor_id to IP in application logic | Data minimization — separate concerns |
-| Log user-agent per visitor_id | Not needed for functionality |
-| Store simulation inputs in access logs | Only in DB, not log files |
-
-Security logs (IP-based) and user data (visitor_id-based) are separate streams. Security logs exist for legitimate interest in protecting the service. User data exists for functionality. They don't cross.
-
-### Attack Vectors
-
-| Vector | Mitigation |
-|---|---|
-| Simulation flood | Rate limit per IP |
-| Scraping cached results | Rate limit + UUID permalinks (not enumerable) |
-| SQL injection | Rails parameterized queries + input validation |
-| XSS via amount field | Rails HTML escaping + CSP headers |
-| DDoS | Fly.io built-in protection + rate limiting |
-| Data tampering | PaperTrail audit trail, no public write except simulation creation |
-| SEO spam / link injection | No user-generated text rendered publicly |
+**Data separation:** Security logs (IP-based) and user data (visitor_id-based) are separate streams. They don't cross. Security logs exist for legitimate interest (LGPD Art. 7(IX)). User data exists for functionality.
 
 ### Infrastructure
 
-- **Rack::Attack** — day 1
-- **Rails.logger** — structured JSON in production
-- **Fly.io metrics** — built-in request monitoring
-- **PaperTrail** — settings audit trail
-- **Exception tracking** — TBD: Sentry free tier (nice-to-have)
+| Tool | Purpose | Rationale |
+|---|---|---|
+| **Rack::Attack** | Rate limiting + fail2ban | Runs at Rack level, before Rails. Day 1. |
+| **Rails.logger** | Structured JSON in production | Machine-parseable for Fly.io log drain |
+| **Fly.io metrics** | Request monitoring | Built-in, no extra dependency |
+| **PaperTrail** | Reference data audit trail | Every number change tracked with source |
+| **bundler-audit** | Gem vulnerability scanning | CI step, catches known CVEs in dependencies |
+| **Sentry** | Exception tracking (nice-to-have) | Free tier, adds error alerting |
 
 ---
 
@@ -402,6 +373,27 @@ Locale detection: browser `Accept-Language` header, with manual toggle in UI.
 | Item | Choice |
 |---|---|
 | License | MIT |
-| Files day 1 | LICENSE, README.md, .github/workflows/ci.yml |
+| Files day 1 | LICENSE, README.md, .github/workflows/ci.yml, .env.example |
 | Branch strategy | `main` only (solo dev sprint) |
-| CI | GitHub Actions — Rails tests + Postgres service |
+| CI | GitHub Actions — Rails tests + Postgres service + bundler-audit |
+
+### Environment Variables
+
+All sensitive or tuneable values live in ENV, not in source code. `.env.example` documents every variable with safe defaults.
+
+```
+# Rate limiting (safe defaults, tuneable per environment)
+RATE_LIMIT_SIMULATIONS=10
+RATE_LIMIT_REQUESTS=60
+FAIL2BAN_MAXRETRY=3
+FAIL2BAN_FINDTIME=600
+FAIL2BAN_BANTIME=3600
+FAIL2BAN_PATTERN=              # regex — intentionally not in source
+
+# Rails
+SECRET_KEY_BASE=               # required in production
+DATABASE_URL=                  # Fly.io sets this automatically
+
+# Optional
+SENTRY_DSN=                    # exception tracking
+```
