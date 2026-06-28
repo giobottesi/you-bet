@@ -59,7 +59,7 @@ RSpec.describe AppConfig, type: :model do
       end
     end
 
-    describe '.fetch with default' do
+    context 'when key does not exists' do
       it 'raises ActiveRecord::RecordNotFound for missing key' do
         expect { AppConfig.fetch('nonexistent') }.to raise_error(ActiveRecord::RecordNotFound)
       end
