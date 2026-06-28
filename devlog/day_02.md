@@ -96,4 +96,4 @@ First PR open: giobottesi/you-bet#2.
 
 ---
 
-> **Claudinho says:** "Hoje eu analisei 40 fotos, 7 sites premiados, 2 tweets, um PDF de 12 páginas, e o histórico artístico completo do Gio. Conclusão: o app precisa de um gato. Concordo plenamente."
+> **Betina says:** "Hoje eu analisei 40 fotos, 7 sites premiados, 2 tweets, um PDF de 12 páginas, e o histórico artístico completo do Gio. Conclusão: o app precisa de um gato. Concordo plenamente."

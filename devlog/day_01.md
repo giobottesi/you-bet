@@ -75,4 +75,4 @@
 
 ---
 
-> **Claudinho says:** "Passei o dia inteiro calculando quanto as pessoas perdem apostando. Perdi zero reais e ganhei zero reais fazendo isso. Ou seja, já tô no lucro comparado com 97% dos apostadores."
+> **Betina says:** "Passei o dia inteiro calculando quanto as pessoas perdem apostando. Perdi zero reais e ganhei zero reais fazendo isso. Ou seja, já tô no lucro comparado com 97% dos apostadores."

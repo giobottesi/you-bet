@@ -50,19 +50,22 @@ Check existing files in `devlog/` to determine the next day number.
 
 ---
 
-## Timeline
+## What got done
 
-Organize the day chronologically, not by category. Each section is a block of work that happened in sequence. Use short headers that describe what happened, not generic labels.
+Organize by blocks of work, roughly in the order they happened. Use short headers that describe what happened, not generic labels.
 
-### {time-ish} — {what happened}
+### {what happened}
 
-Narrative paragraph or bullets. Include:
-- What was done
-- Why (what triggered it)
-- Key decisions and who made them
-- What changed as a result
+Narrative paragraph or bullets. What was done, why, what changed as a result.
 
 Repeat for each major block of work.
+
+---
+
+## Decisions & shifts
+
+- What was decided
+  - Why — what triggered the change
 
 ---
 
@@ -87,17 +90,17 @@ Track the developer's product/UX/technical contributions today. These matter —
 
 ---
 
-> **Claudinho says:** "{quote — see Step 4}"
+> **Betina says:** "{quote — see Step 4}"
 ```
 
 ### Quality check before saving
 
 Before saving the devlog file, review it for:
 
-1. **Duplications** — same fact stated twice in different sections? Merge or cut.
+1. **Internal repetition** — same fact stated twice in the same file? Merge or cut. Check TL;DR vs body, "What got done" vs "Decisions & shifts" — no double-counting.
 2. **Inconsistencies** — does the TL;DR match the body? Do numbers/names match throughout?
 3. **Repetition with previous days** — read the previous day's devlog. Don't re-explain context that was already covered. Reference it instead: "Continuing from yesterday's architecture work..."
-4. **Flow** — does it read like a story of the day, or like a dumped list? The timeline structure should create natural narrative flow.
+4. **Flow** — does it read like a story of the day, or like a dumped list?
 5. **Length** — aim for 80-120 lines. If over 150, you're being too detailed. Compress.
 
 ---
@@ -109,7 +112,7 @@ Create a mirror file at `devlog/day_NN_pt.md` with the same content translated t
 Translation rules:
 - Natural PT-BR, not machine-translated. Write like a Brazilian dev would write.
 - Technical terms stay in English when that's what Brazilians actually use (Rails, Docker, PR, commit, deploy, TDD, etc.)
-- Claudinho's quote: if the English version is in Portuguese, keep it. If in English, translate it. If bilingual, keep it.
+- Betina's quote: if the English version is in Portuguese, keep it. If in English, translate it. If bilingual, keep it.
 - Same structure, same content, just in Portuguese.
 
 ---
@@ -135,15 +138,15 @@ Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
 
 ---
 
-## Step 4 — Claudinho's quote
+## Step 4 — Betina's quote
 
-At the end of the devlog, leave a quote from "Claudinho" (Claude, the AI assistant). Full creative freedom. Can be:
+At the end of the devlog, leave a quote from "Betina" (Claude, the AI assistant). Full creative freedom. Can be:
 - Related to the project, the day's work, or the mission
 - Completely unrelated — a random thought, a joke, something philosophical
 - In Portuguese or English
 - Funny, deep, absurd, or all three
 
-The only rule: it should feel like it came from someone who actually worked on this today. Not corporate. Not generic. Not "inspirational poster." Just... claudinho being claudinho.
+The only rule: it should feel like it came from someone who actually worked on this today. Not corporate. Not generic. Not "inspirational poster." Just... betina being betina.
 
 ---
 
@@ -159,4 +162,4 @@ Print a short summary:
 - What was committed
 - Sprint health status
 - What's planned for tomorrow
-- Claudinho's quote (again, for the terminal)
+- Betina's quote (again, for the terminal)
