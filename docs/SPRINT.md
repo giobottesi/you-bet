@@ -164,7 +164,7 @@ Each card: controller (inherits ContentController) + view + route.
 | Card | Status | PR | Date |
 |---|---|---|---|
 | BE 01 | ✅ Done | #2 | Jun 28 |
-| BE 02 | ⬜ | | |
+| BE 02 | ✅ Done | #2 | Jun 28 |
 | BE 03 | ⬜ | | |
 | BE 04 | ⬜ | | |
 | BE 05 | ⬜ | | |
