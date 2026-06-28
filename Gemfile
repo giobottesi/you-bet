@@ -30,10 +30,8 @@ gem "solid_cable"
 gem "bootsnap", require: false
 
 group :development, :test do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
-
-  # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
+  gem "rspec-rails"
   gem "rubocop-rails-omakase", require: false
 end
 
@@ -43,6 +41,7 @@ group :development do
 end
 
 group :test do
+  gem "shoulda-matchers"
 end
 
 gem "tailwindcss-rails", "~> 4.6"

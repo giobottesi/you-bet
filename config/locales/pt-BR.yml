@@ -1,6 +1,6 @@
-en:
+pt-BR:
   app_name: "You Bet"
-  tagline: "The math betting companies don't show you"
+  tagline: "A matemática que as casas de apostas não mostram"
 
   locale_toggle:
     pt_BR: "Português"
