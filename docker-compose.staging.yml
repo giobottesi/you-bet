@@ -1,0 +1,34 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    environment:
+      - DATABASE_HOST=postgres
+      - DATABASE_USERNAME=you_bet
+      - DATABASE_PASSWORD=you_bet
+      - RAILS_ENV=staging
+      - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
+      - RAILS_LOG_LEVEL=info
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: you_bet
+      POSTGRES_PASSWORD: you_bet
+      POSTGRES_DB: you_bet_staging
+    volumes:
+      - staging_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U you_bet"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  staging_postgres_data:

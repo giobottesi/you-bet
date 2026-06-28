@@ -46,15 +46,15 @@ Select one or more bet types:
 
 | Bet Type | House Edge | Display Name (PT-BR) |
 |---|---|---|
-| Sports singles (futebol) | 6% | Apostas esportivas |
-| 3-leg accumulator | 15% | Múltiplas (3 jogos) |
-| 5-leg accumulator | 23% | Múltiplas (5 jogos) |
-| Tigrinho / slots | 5% (conservative) | Tigrinho / Caça-níquel |
-| Crash games (Aviator) | 4% | Aviator / Crash |
-| Lottery (Mega-Sena) | 54% | Loteria |
-| Roulette | 5.26% | Roleta |
+| Sports singles (futebol) | Low | Apostas esportivas |
+| 3-leg accumulator | Moderate | Múltiplas (3 jogos) |
+| 5-leg accumulator | High | Múltiplas (5 jogos) |
+| Tigrinho / slots | Low–Moderate | Tigrinho / Caça-níquel |
+| Crash games (Aviator) | Low | Aviator / Crash |
+| Lottery (Mega-Sena) | Very high | Loteria |
+| Roulette | Low–Moderate | Roleta |
 
-Note: Tigrinho's claimed RTP is 96.81% (3.2% edge), but unregulated platforms can configure lower RTPs. We use 5% as a conservative middle ground and explain this transparently.
+Exact house edge values and methodological notes are in [ARCHITECTURE.md](ARCHITECTURE.md) (settings seed data).
 
 ### Step 2: "Quanto por semana?"
 
@@ -89,11 +89,6 @@ No timeframe selection — results show ALL timeframes at once.
 
 The short-term profit percentage is honest and builds trust. The cascade IS the persuasion — the eye scans down and the math compounds visually.
 
-**Range Fan** — distribution of 1,000 simulated outcomes per timeframe:
-- Red zone (P5-P25): worst scenarios
-- Orange zone (P25-P75): most likely range
-- Gray zone (P75-P95): "lucky" scenarios
-
 **Comparison Cards** — 3 random from a pool + poupança always shown:
 
 ```
@@ -101,10 +96,9 @@ The short-term profit percentage is honest and builds trust. The cascade IS the 
 │ 31 pizzas│ │ 1 iPhone │ │17m Netflix│ │ R$845 na │
 │          │ │          │ │ + Spotify │ │ poupança │
 └──────────┘ └──────────┘ └──────────┘ └──────────┘
-              [ Ver todas as comparações ▼ ]
 ```
 
-Expand button loads all comparisons via Turbo Frame. Pool includes: pizzas, cesta básica, smartphone, iPhone, passagem de avião, geladeira, motorcycle, rent, streaming, vocational course. Comparisons scale to loss amount — small losses get small items, large losses get aspirational ones.
+Pool includes: pizzas, cesta básica, smartphone, iPhone, passagem de avião, geladeira, motorcycle, rent, streaming, vocational course. Comparisons scale to loss amount — small losses get small items, large losses get aspirational ones.
 
 **Context Cards** — data-backed stats from verified sources:
 
@@ -118,16 +112,7 @@ Expand button loads all comparisons via Turbo Frame. Pool includes: pizzas, cest
 
 **Every number MUST be double-checked against primary sources before launch.**
 
-**Share Your Result** — each simulation gets:
-- Downloadable/shareable image card with summary + #DesafioContraBets
-- Unique permalink (`/s/:uuid`) with OG meta tags for rich link previews
-- Direct share to Instagram/Twitter/WhatsApp
-
-**Help Resources** — always visible:
-- Autoexclusão por CPF (plataformas reguladas .bet.br)
-- CVV 188 (gratuito e sigiloso)
-- SUS e CAPS
-- Jogadores Anônimos
+**Sharing** — unique permalink (`/s/:uuid`) with OG meta tags + direct share to WhatsApp/Instagram/Twitter. Image card generation deferred to post-MVP.
 
 ---
 
@@ -147,7 +132,7 @@ Every number in the app is backed by a verified source, rendered as a `/sources`
 
 ### Methodological Notes
 - **BCB vs DataSenado bettor count**: BCB says ~24M (Pix data), DataSenado says 22M (survey). We use "22-24 million" and explain the difference.
-- **Tigrinho house edge**: PG Soft claims 96.81% RTP, but unregulated platforms can set lower RTPs. We use 5% and disclose this.
+- **Tigrinho house edge**: PG Soft claims 96.81% RTP, but unregulated platforms can set lower RTPs. We use 5% as a conservative middle ground and disclose this transparently.
 
 ---
 
@@ -171,23 +156,11 @@ The app is the creative work. The video is the submission format. The shareable 
 - [x] Content is permanent and linkable
 - [x] Published on public profile with #DesafioContraBets
 
-### AI Declaration
-
-Visible in: app footer, `/about` page, README, submission post caption.
-
 ### The `/about` Page
 
-**"Como a IA foi usada"** (mandatory for IA em Campo):
-- Research: AI analyzed 7+ data sources, cross-referenced numbers, surfaced discrepancies
-- Code: AI assisted with code generation, architecture, simulation math
-- Copy: AI drafted text, developer reviewed for tone and accuracy
-- What AI did NOT do: final editorial decisions, data validation against primary sources, design, UX judgment
-
-**"Quem construiu isso"** (developer advocacy):
-- The human developer's role: product vision, UX decisions, data source selection, design, editorial judgment, quality control
-- Why AI + developer > AI alone: AI can research 7 sources in parallel, but a developer decides which numbers matter. AI can write code fast, but a developer ensures it respects LGPD and serves the user.
-- AI is a force multiplier for developers, not a replacement. That's what "IA em Campo" means.
-- Link to GitHub repo (open source) + devlog
+AI declaration (footer badge + `/about` page + README + submission post). Two sections:
+- **"Como a IA foi usada"**: research, code, copy — and what AI did NOT do (editorial, data validation, design, UX)
+- **"Quem construiu isso"**: developer advocacy — AI is a force multiplier, not a replacement. Links to GitHub + devlog.
 
 ### Tone (Hard Rules from Brief)
 
@@ -205,33 +178,7 @@ Visible in: app footer, `/about` page, README, submission post caption.
 
 ---
 
-## Devlog — "/diario"
+## Related Docs
 
-A public daily journal page inside the app. Each day of the sprint gets an entry: what was planned, what was built, what changed, what was learned.
-
-**Why:**
-- Proves this wasn't "built in 3 hours at Lovable" — it's a 17-day craft effort
-- Shows the human decision-making behind every feature (exactly what "IA em Campo" values)
-- Doubles as content: the devlog itself is shareable, adds depth to the submission
-- Helps us compare planned vs actual sprint performance
-
-Entries are simple markdown rendered as HTML — no CMS, just a static page that gets updated daily. Stored as i18n YAML or a simple view partial per day.
-
----
-
-## App Name
-
-**You-Bet** — short, ironic, bilingual, memorable. Keeps the current repo name.
-
-Other options considered: "Quanto Você Perde", "Antes de Apostar", "A Conta da Aposta", "Se Eu Apostar".
-
----
-
-## Next Steps
-
-1. [ ] Align on this proposal
-2. [ ] Break into implementation cards
-3. [ ] Start Phase 0 (see SPRINT.md)
-
-Technical details → [ARCHITECTURE.md](ARCHITECTURE.md)
-Sprint plan → [SPRINT.md](SPRINT.md)
+- Technical details → [ARCHITECTURE.md](ARCHITECTURE.md)
+- Sprint plan → [SPRINT.md](SPRINT.md)

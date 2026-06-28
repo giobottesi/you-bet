@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+export PORT="${PORT:-3000}"
+
+# Let the debug gem allow remote connections,
+# but avoid loading until `debugger` is called
+export RUBY_DEBUG_OPEN="true"
+export RUBY_DEBUG_LAZY="true"
+
+bin/rails tailwindcss:watch &
+exec bin/rails server -b 0.0.0.0 -p "$PORT"
