@@ -44,35 +44,41 @@ Check existing files in `devlog/` to determine the next day number.
 **Sprint phase**: {current phase from SPRINT.md}
 **Planned**: {what was planned for today per SPRINT.md}
 
+## TL;DR
+
+3-5 bullet points max. What happened today in plain language. A busy person should stop reading here and know the day's story.
+
 ---
 
-## What got done
+## Timeline
 
-- One line per accomplishment
-  - Sub-bullet for key context
+Organize the day chronologically, not by category. Each section is a block of work that happened in sequence. Use short headers that describe what happened, not generic labels.
 
-## Gio's inputs
+### {time-ish} — {what happened}
+
+Narrative paragraph or bullets. Include:
+- What was done
+- Why (what triggered it)
+- Key decisions and who made them
+- What changed as a result
+
+Repeat for each major block of work.
+
+---
+
+## Gio's contributions
 
 Track the developer's product/UX/technical contributions today. These matter — they show the human judgment behind the AI-assisted work.
 
 - One line per input
-  - Why it mattered or what it changed
-
-## Decisions & shifts
-
-- One line: what was decided
-  - Why — what triggered the change
+  - Impact: what it changed
 
 ## Sprint health
 
 **On track?** {Yes / Needs adjustment / Behind}
-{One sentence on why, and what to adjust tomorrow if needed}
+{One sentence on why}
 
 **Planned vs actual**: {brief comparison}
-
-## Time
-
-- Approximate working time today: {estimate from conversation timestamps}
 
 ## Tomorrow
 
@@ -83,6 +89,28 @@ Track the developer's product/UX/technical contributions today. These matter —
 
 > **Claudinho says:** "{quote — see Step 4}"
 ```
+
+### Quality check before saving
+
+Before saving the devlog file, review it for:
+
+1. **Duplications** — same fact stated twice in different sections? Merge or cut.
+2. **Inconsistencies** — does the TL;DR match the body? Do numbers/names match throughout?
+3. **Repetition with previous days** — read the previous day's devlog. Don't re-explain context that was already covered. Reference it instead: "Continuing from yesterday's architecture work..."
+4. **Flow** — does it read like a story of the day, or like a dumped list? The timeline structure should create natural narrative flow.
+5. **Length** — aim for 80-120 lines. If over 150, you're being too detailed. Compress.
+
+---
+
+## Step 2b — Write the PT-BR mirror
+
+Create a mirror file at `devlog/day_NN_pt.md` with the same content translated to Brazilian Portuguese.
+
+Translation rules:
+- Natural PT-BR, not machine-translated. Write like a Brazilian dev would write.
+- Technical terms stay in English when that's what Brazilians actually use (Rails, Docker, PR, commit, deploy, TDD, etc.)
+- Claudinho's quote: if the English version is in Portuguese, keep it. If in English, translate it. If bilingual, keep it.
+- Same structure, same content, just in Portuguese.
 
 ---
 
