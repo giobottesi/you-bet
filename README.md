@@ -1,24 +1,18 @@
-# README
+# You-Bet
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Betting simulator that shows the real financial math of gambling in Brazil.
 
-Things you may want to cover:
+## Quick Start
 
-* Ruby version
+```bash
+docker compose up -d
+# App at http://localhost:3000
+```
 
-* System dependencies
+## Docs
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- [Proposal](docs/PROPOSAL.md) — what it is, who it's for, why it exists
+- [Architecture](docs/ARCHITECTURE.md) — technical spec, models, security
+- [Sprint](docs/SPRINT.md) — cards, roadmap, constraints
+- [Design](docs/DESIGN.md) — palette, typography, components
+- [Devlog](docs/devlog/) — daily journal
