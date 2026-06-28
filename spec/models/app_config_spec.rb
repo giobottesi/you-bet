@@ -7,35 +7,62 @@ RSpec.describe AppConfig, type: :model do
     it { is_expected.to validate_presence_of(:value_type) }
     it { is_expected.to validate_inclusion_of(:value_type).in_array(AppConfig::VALUE_TYPES) }
 
-    it "validates uniqueness of key" do
-      existing = create(:app_config)
-      expect(build(:app_config, key: existing.key)).not_to be_valid
+
+    context "when key is not unique" do
+      let!(:app_config) { create(:app_config, key: key) }
+      let(:duplicate_app_config) { build(:app_config, key: key) }
+      let(:key) { 'random_key' }
+
+      it "validates uniqueness of key" do
+        expect(duplicate_app_config.valid?).to be false
+      end
     end
   end
 
   describe ".fetch" do
+    let!(:app_config) { create(:app_config, key: key, value: value, value_type: value_type) }
+    let(:key) { 'sim_count' }
+    let(:value) { "1000" }
+    let(:value_type) { "integer" }
+
     it "returns an integer for integer value_type" do
-      create(:app_config, key: "sim_count", value: "1000", value_type: "integer")
       expect(AppConfig.fetch("sim_count")).to eq(1000)
     end
 
-    it "returns a float for float value_type" do
-      create(:app_config, key: "rate", value: "0.0067", value_type: "float")
-      expect(AppConfig.fetch("rate")).to be_within(0.0001).of(0.0067)
+    context "when value_type is float" do
+      let(:key) { "rate" }
+      let(:value) { "0.0067" }
+      let(:value_type) { "float" }
+
+      it "returns a float for float value_type" do
+        expect(AppConfig.fetch("rate")).to be_within(0.0001).of(0.0067)
+      end
     end
 
-    it "returns a BigDecimal for decimal value_type" do
-      create(:app_config, key: "precise_rate", value: "0.0067", value_type: "decimal")
-      expect(AppConfig.fetch("precise_rate")).to eq(BigDecimal("0.0067"))
+    context "when value_type is BigDecimal" do
+      let(:key) { "precise_rate" }
+      let(:value) { "0.0067" }
+      let(:value_type) { "decimal" }
+
+      it "returns a BigDecimal for decimal value_type" do
+        expect(AppConfig.fetch("precise_rate")).to eq(BigDecimal("0.0067"))
+      end
     end
 
-    it "returns a string for string value_type" do
-      create(:app_config, key: "label", value: "hello", value_type: "string")
-      expect(AppConfig.fetch("label")).to eq("hello")
+    context "when value_type is string" do
+      let(:key) { "label" }
+      let(:value) { "hello" }
+      let(:value_type) { "string" }
+
+      it "returns a string for string value_type" do
+        expect(AppConfig.fetch("label")).to eq("hello")
+      end
     end
 
-    it "raises ActiveRecord::RecordNotFound for missing key" do
-      expect { AppConfig.fetch("nonexistent") }.to raise_error(ActiveRecord::RecordNotFound)
+    describe ".fetch with default" do
+      it "raises ActiveRecord::RecordNotFound for missing key" do
+        expect { AppConfig.fetch("nonexistent") }.to raise_error(ActiveRecord::RecordNotFound)
+      end
     end
   end
 
