@@ -1,4 +1,20 @@
 pt-BR:
+  activerecord:
+    models:
+      app_config: "Configuração"
+    attributes:
+      app_config:
+        key: "Chave"
+        value: "Valor"
+        value_type: "Tipo de Valor"
+    errors:
+      models:
+        app_config:
+          attributes:
+            key:
+              taken: "já está em uso"
+            value_type:
+              inclusion: "não é um tipo de valor válido"
   app_name: "You Bet"
   tagline: "A matemática que as casas de apostas não mostram"
 
