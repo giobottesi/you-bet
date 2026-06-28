@@ -1,0 +1,18 @@
+class AppConfig < ApplicationRecord
+  validates :key, presence: true, uniqueness: true
+  validates :value, presence: true
+  validates :value_type, presence: true, inclusion: { in: %w[string integer float] }
+
+  def self.get(key)
+    record = find_by!(key: key)
+    record.typed_value
+  end
+
+  def typed_value
+    case value_type
+    when "integer" then value.to_i
+    when "float" then value.to_f
+    else value
+    end
+  end
+end
