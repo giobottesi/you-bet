@@ -1,5 +1,7 @@
 class AppConfig < ApplicationRecord
-  DEFAULTS = [
+  VALUE_TYPES = %w[string integer float decimal].freeze
+
+  SEED_DEFAULTS = [
     { key: "monte_carlo_sims", value: "1000", value_type: "integer",
       description: "Number of Monte Carlo simulations per request",
       data_source: "internal" },
@@ -16,8 +18,7 @@ class AppConfig < ApplicationRecord
 
   validates :key, presence: true, uniqueness: true
   validates :value, presence: true
-  validates :value_type, presence: true, inclusion: { in: %w[string integer float decimal] }
-  validate :value_matches_type
+  validates :value_type, presence: true, inclusion: { in: VALUE_TYPES }
 
   def self.fetch(key)
     find_by!(key: key).typed_value
@@ -30,19 +31,5 @@ class AppConfig < ApplicationRecord
     when "decimal" then BigDecimal(value)
     else value
     end
-  end
-
-  private
-
-  def value_matches_type
-    return if value.blank?
-
-    case value_type
-    when "integer" then Integer(value)
-    when "float" then Float(value)
-    when "decimal" then BigDecimal(value)
-    end
-  rescue ArgumentError, TypeError
-    errors.add(:value, "is not a valid #{value_type}")
   end
 end

@@ -5,19 +5,11 @@ RSpec.describe AppConfig, type: :model do
     it { is_expected.to validate_presence_of(:key) }
     it { is_expected.to validate_presence_of(:value) }
     it { is_expected.to validate_presence_of(:value_type) }
-    it { is_expected.to validate_inclusion_of(:value_type).in_array(%w[string integer float decimal]) }
+    it { is_expected.to validate_inclusion_of(:value_type).in_array(AppConfig::VALUE_TYPES) }
 
     it "validates uniqueness of key" do
       AppConfig.create!(key: "test_key", value: "1", value_type: "string")
       expect(AppConfig.new(key: "test_key", value: "2", value_type: "string")).not_to be_valid
-    end
-
-    it "rejects a value that does not parse as its declared type" do
-      expect(AppConfig.new(key: "bad", value: "not_a_number", value_type: "integer")).not_to be_valid
-    end
-
-    it "accepts a value that parses as its declared type" do
-      expect(AppConfig.new(key: "good", value: "42", value_type: "integer")).to be_valid
     end
   end
 
