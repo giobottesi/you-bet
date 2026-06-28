@@ -8,29 +8,29 @@ RSpec.describe AppConfig, type: :model do
     it { is_expected.to validate_inclusion_of(:value_type).in_array(AppConfig::VALUE_TYPES) }
 
     it "validates uniqueness of key" do
-      AppConfig.create!(key: "test_key", value: "1", value_type: "string")
-      expect(AppConfig.new(key: "test_key", value: "2", value_type: "string")).not_to be_valid
+      existing = create(:app_config)
+      expect(build(:app_config, key: existing.key)).not_to be_valid
     end
   end
 
   describe ".fetch" do
     it "returns an integer for integer value_type" do
-      AppConfig.create!(key: "sim_count", value: "1000", value_type: "integer")
+      create(:app_config, key: "sim_count", value: "1000", value_type: "integer")
       expect(AppConfig.fetch("sim_count")).to eq(1000)
     end
 
     it "returns a float for float value_type" do
-      AppConfig.create!(key: "rate", value: "0.0067", value_type: "float")
+      create(:app_config, key: "rate", value: "0.0067", value_type: "float")
       expect(AppConfig.fetch("rate")).to be_within(0.0001).of(0.0067)
     end
 
     it "returns a BigDecimal for decimal value_type" do
-      AppConfig.create!(key: "precise_rate", value: "0.0067", value_type: "decimal")
+      create(:app_config, key: "precise_rate", value: "0.0067", value_type: "decimal")
       expect(AppConfig.fetch("precise_rate")).to eq(BigDecimal("0.0067"))
     end
 
     it "returns a string for string value_type" do
-      AppConfig.create!(key: "label", value: "hello", value_type: "string")
+      create(:app_config, key: "label", value: "hello", value_type: "string")
       expect(AppConfig.fetch("label")).to eq("hello")
     end
 
