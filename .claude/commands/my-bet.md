@@ -21,7 +21,7 @@ git log --author=giobottesi --after="${TODAY}T00:00:00-03:00" --before="${TODAY}
 git log --author=giobottesi --after="${TODAY}T00:00:00-03:00" --before="${TODAY}T23:59:59-03:00" --stat --format='' 2>/dev/null | tail -1
 ```
 
-Read the current SPRINT.md to know what phase we're in and what's planned vs what happened.
+Read the current docs/SPRINT.md to know what phase we're in and what's planned vs what happened.
 
 Read the conversation context for decisions, shifts, and Gio's inputs.
 
@@ -31,9 +31,9 @@ If any command fails or returns nothing, skip it silently.
 
 ## Step 2 — Write the devlog entry
 
-Create a devlog file at `devlog/day_NN.md` (where NN is the sprint day number, starting from 01).
+Create a devlog file at `docs/devlog/day_NN.md` (where NN is the sprint day number, starting from 01).
 
-Check existing files in `devlog/` to determine the next day number.
+Check existing files in `docs/devlog/` to determine the next day number.
 
 ### Devlog format
 
@@ -41,8 +41,8 @@ Check existing files in `devlog/` to determine the next day number.
 # Day NN — {2-5 word theme}
 
 **Date**: {TODAY}
-**Sprint phase**: {current phase from SPRINT.md}
-**Planned**: {what was planned for today per SPRINT.md}
+**Sprint phase**: {current phase from docs/SPRINT.md}
+**Planned**: {what was planned for today per docs/SPRINT.md}
 
 ## TL;DR
 
@@ -85,7 +85,7 @@ Track the developer's product/UX/technical contributions today. These matter —
 
 ## Tomorrow
 
-- What's next per SPRINT.md
+- What's next per docs/SPRINT.md
 - Any adjustments needed
 
 ---
@@ -107,7 +107,7 @@ Before saving the devlog file, review it for:
 
 ## Step 2b — Write the PT-BR mirror
 
-Create a mirror file at `devlog/day_NN_pt.md` with the same content translated to Brazilian Portuguese.
+Create a mirror file at `docs/devlog/day_NN_pt.md` with the same content translated to Brazilian Portuguese.
 
 Translation rules:
 - Natural PT-BR, not machine-translated. Write like a Brazilian dev would write.
