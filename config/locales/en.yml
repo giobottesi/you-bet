@@ -1,31 +1,64 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
 en:
-  hello: "Hello world"
+  app_name: "You Bet"
+  tagline: "The math betting companies don't show you"
+
+  landing:
+    hero_stat: "R$30 bi/month"
+    hero_label: "is what Brazil bets per month"
+    question_bet_type: "What would you bet on?"
+    question_amount: "How much per week?"
+    submit: "Simulate"
+
+  bet_types:
+    sports_singles: "Sports betting"
+    accumulator_3: "Accumulators (3 legs)"
+    accumulator_5: "Accumulators (5 legs)"
+    slots: "Slots / Tigrinho"
+    crash: "Aviator / Crash"
+    lottery: "Lottery"
+    roulette: "Roulette"
+
+  amounts:
+    option_12: "R$12/week"
+    option_12_anchor: "a streaming subscription"
+    option_25: "R$25/week"
+    option_25_anchor: "two pizzas"
+    option_50: "R$50/week"
+    option_50_anchor: "a phone installment"
+    option_125: "R$125/week"
+    option_125_anchor: "almost a motorcycle payment"
+    custom: "Other amount"
+
+  results:
+    title: "What the math says"
+    description: "Betting %{amount}/week on %{bet_type}, across 1,000 simulations:"
+    had_profit: "%{percentage}% had some profit"
+    comparison_title: "With that money you could've had..."
+    savings_label: "earning in savings"
+
+  timeframes:
+    month_1: "1 month"
+    months_6: "6 months"
+    year_1: "1 year"
+    years_2: "2 years"
+    years_5: "5 years"
+
+  help:
+    need_help: "Need help?"
+    cvv: "CVV 188"
+    anonymous_gamblers: "Gamblers Anonymous"
+    self_exclusion: "Self-exclusion on .bet.br platforms"
+
+  navigation:
+    sources: "Sources"
+    about: "About"
+    privacy: "Privacy"
+    devlog: "Devlog"
+
+  footer:
+    ai_badge: "Made with AI assistance"
+    competition: "Desafio Contra Bets — IA em Campo"
+
+  locale_toggle:
+    pt_BR: "Português"
+    en: "English"
