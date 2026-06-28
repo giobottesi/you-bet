@@ -2,63 +2,6 @@ pt-BR:
   app_name: "You Bet"
   tagline: "A matemática que as casas de apostas não mostram"
 
-  landing:
-    hero_stat: "R$30 bi/mês"
-    hero_label: "é o que o Brasil aposta por mês"
-    question_bet_type: "O que você apostaria?"
-    question_amount: "Quanto por semana?"
-    submit: "Simular"
-
-  bet_types:
-    sports_singles: "Apostas esportivas"
-    accumulator_3: "Múltiplas (3 jogos)"
-    accumulator_5: "Múltiplas (5 jogos)"
-    slots: "Tigrinho / Caça-níquel"
-    crash: "Aviator / Crash"
-    lottery: "Loteria"
-    roulette: "Roleta"
-
-  amounts:
-    option_12: "R$12/semana"
-    option_12_anchor: "uma assinatura de streaming"
-    option_25: "R$25/semana"
-    option_25_anchor: "o preço de duas pizzas"
-    option_50: "R$50/semana"
-    option_50_anchor: "uma parcela de celular"
-    option_125: "R$125/semana"
-    option_125_anchor: "quase uma parcela de moto"
-    custom: "Outro valor"
-
-  results:
-    title: "O que a matemática diz"
-    description: "Apostando %{amount}/semana em %{bet_type}, em 1.000 simulações:"
-    had_profit: "%{percentage}% tiveram algum lucro"
-    comparison_title: "Com esse dinheiro dava pra..."
-    savings_label: "rendendo na poupança"
-
-  timeframes:
-    month_1: "1 mês"
-    months_6: "6 meses"
-    year_1: "1 ano"
-    years_2: "2 anos"
-    years_5: "5 anos"
-
-  help:
-    need_help: "Precisa de ajuda?"
-    cvv: "CVV 188"
-    anonymous_gamblers: "Jogadores Anônimos"
-    self_exclusion: "Autoexclusão em plataformas .bet.br"
-
-  navigation:
-    sources: "Fontes"
-    about: "Sobre"
-    privacy: "Privacidade"
-    devlog: "Diário"
-
-  footer:
-    ai_badge: "Feito com auxílio de IA"
-    competition: "Desafio Contra Bets — IA em Campo"
-
   locale_toggle:
     pt_BR: "Português"
     en: "English"

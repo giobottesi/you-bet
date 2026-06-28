@@ -29,7 +29,7 @@ module YouBet
     config.autoload_lib(ignore: %w[assets tasks])
 
     config.i18n.default_locale = :"pt-BR"
-    config.i18n.available_locales = [:"pt-BR", :en]
+    config.i18n.available_locales = [ :"pt-BR", :en ]
     config.i18n.fallbacks = true
     config.time_zone = "America/Sao_Paulo"
   end

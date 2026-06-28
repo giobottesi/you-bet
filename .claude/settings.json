@@ -1,0 +1,18 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "if": "Bash(git commit:*)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "RUBOCOP_OUT=$(docker compose exec -T web bin/rubocop --format simple 2>&1); RUBOCOP_EXIT=$?; RSPEC_OUT=$(docker compose exec -T web bundle exec rspec --format progress 2>&1); RSPEC_EXIT=$?; if [ $RUBOCOP_EXIT -ne 0 ] || [ $RSPEC_EXIT -ne 0 ]; then FAILURES=''; [ $RUBOCOP_EXIT -ne 0 ] && FAILURES='RuboCop failed'; [ $RSPEC_EXIT -ne 0 ] && FAILURES=\"${FAILURES:+$FAILURES, }RSpec failed\"; echo \"{\\\"hookSpecificOutput\\\":{\\\"hookEventName\\\":\\\"PreToolUse\\\",\\\"permissionDecision\\\":\\\"deny\\\",\\\"permissionDecisionReason\\\":\\\"Pre-commit checks failed: $FAILURES\\\"}}\"; fi",
+            "timeout": 120,
+            "statusMessage": "Running RuboCop + RSpec..."
+          }
+        ]
+      }
+    ]
+  }
+}
