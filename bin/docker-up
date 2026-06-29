@@ -1,0 +1,24 @@
+#!/usr/bin/env sh
+# Bring up the you-bet stack, clearing anything that would block it first:
+#   1. Stop containers from OTHER projects that hold our host ports (3000, 5432).
+#   2. Remove a stale Rails server pidfile left by a killed web container.
+#   3. docker compose up -d.
+set -e
+
+PORTS="3000 5432"
+
+for port in $PORTS; do
+  conflicting=$(docker ps --format '{{.Names}} {{.Ports}}' \
+    | grep ":${port}->" \
+    | grep -v '^you-bet' \
+    | awk '{print $1}' || true)
+  if [ -n "$conflicting" ]; then
+    echo "Port ${port} held by: ${conflicting} — stopping."
+    docker stop $conflicting >/dev/null
+  fi
+done
+
+# A killed web container leaves tmp/pids/server.pid behind, which blocks boot.
+rm -f tmp/pids/server.pid
+
+docker compose up -d "$@"
