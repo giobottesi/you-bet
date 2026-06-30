@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe OpportunityCostCalculator do
-  subject(:calculator) { described_class.new(loss_cents: loss_cents, poupanca_balance_cents: poupanca_balance_cents) }
+RSpec.describe OpportunityCostMapper do
+  subject(:mapper) { described_class.new(loss_cents: loss_cents, poupanca_balance_cents: poupanca_balance_cents) }
 
   # Non-seeded keys so the fixtures never collide with the comparison rows the
-  # test DB is seeded with. The calculator reads every `comparison` row, so the
+  # test DB is seeded with. The service reads every `comparison` row, so the
   # assertions reference only these known keys.
   let!(:comparisons) do
     {
@@ -18,7 +18,7 @@ RSpec.describe OpportunityCostCalculator do
   let(:poupanca_balance_cents) { 52_000 }
 
   describe '#run' do
-    subject(:result) { calculator.run }
+    subject(:result) { mapper.run }
 
     context 'with a moderate loss' do
       let(:loss_cents) { 50_000 }

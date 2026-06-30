@@ -10,9 +10,7 @@ class MonteCarloSimulator
     'years_5' => 260
   }.freeze
 
-  # Win probability per bet type — determines variance/skew.
-  # House edge determines expected loss; win probability determines distribution shape.
-  # Low p = rare big wins + many losses (lottery). High p = frequent small swings (sports).
+  # Win probability per bet type — shapes the distribution (low p = rare big wins, high p = small swings).
   WIN_PROBABILITIES = {
     'sports_singles' => 0.48,
     'accumulator_3' => 0.125,
@@ -24,11 +22,16 @@ class MonteCarloSimulator
   }.freeze
 
   DEFAULT_SIMULATION_COUNT = 1000
+  REPORTED_PERCENTILES = [ 5, 25, 50, 75, 95 ].freeze
 
   attribute :bet_type_key, :string
   attribute :house_edge, :float
   attribute :weekly_amount_cents, :integer
   attribute :simulation_count, :integer, default: DEFAULT_SIMULATION_COUNT
+
+  def self.run(**attributes)
+    new(**attributes).run
+  end
 
   def run
     TIMEFRAMES.each_with_object({}) do |(timeframe_key, weeks), results|
@@ -38,50 +41,50 @@ class MonteCarloSimulator
 
   private
 
-  # Win probability per bet type — determines distribution shape. Defaults to a
-  # neutral mid value for unknown bet types.
+  # Defaults to a neutral mid value for unknown bet types.
   def win_probability
     @win_probability ||= WIN_PROBABILITIES.fetch(bet_type_key, 0.45)
   end
 
-  # Per-week binary bet: win with probability p, lose with probability (1-p).
-  # Payout on win = amount * (1 - house_edge) / p
-  # This gives E[net] = p * (payout - amount) + (1-p) * (-amount) = -amount * house_edge
+  # Payout on win = amount * (1 - house_edge) / p, so E[net] = -amount * house_edge.
+  def payout_on_win
+    @payout_on_win ||= (weekly_amount_cents * (1.0 - house_edge) / win_probability).round
+  end
+
   def simulate_timeframe(weeks)
-    payout_on_win = (weekly_amount_cents * (1.0 - house_edge) / win_probability).round
-
-    outcomes = Array.new(simulation_count) do
-      cumulative = 0
-      weeks.times do
-        if rand < win_probability
-          cumulative += payout_on_win - weekly_amount_cents
-        else
-          cumulative -= weekly_amount_cents
-        end
-      end
-      cumulative
-    end
-
-    outcomes.sort!
-    profit_count = outcomes.count(&:positive?)
+    outcomes = simulated_outcomes(weeks).sort
 
     {
       weeks: weeks,
       total_wagered_cents: weekly_amount_cents * weeks,
       percentiles: extract_percentiles(outcomes),
-      profit_percentage: (profit_count.to_f / simulation_count * 100).round(1),
-      expected_value_cents: -(weekly_amount_cents * weeks * house_edge).round
+      profit_percentage: profit_percentage(outcomes),
+      expected_value_cents: expected_value_cents(weeks)
     }
   end
 
+  def simulated_outcomes(weeks)
+    simulation_count.times.map { single_run_net(weeks) }
+  end
+
+  # One run's net over `weeks`: each week wins the payout or forfeits the stake.
+  def single_run_net(weeks)
+    weeks.times.sum do
+      rand < win_probability ? payout_on_win - weekly_amount_cents : -weekly_amount_cents
+    end
+  end
+
+  def profit_percentage(outcomes)
+    (outcomes.count(&:positive?).to_f / simulation_count * 100).round(1)
+  end
+
+  def expected_value_cents(weeks)
+    -(weekly_amount_cents * weeks * house_edge).round
+  end
+
   def extract_percentiles(sorted_outcomes)
-    {
-      p5: sorted_outcomes[percentile_index(5)],
-      p25: sorted_outcomes[percentile_index(25)],
-      p50: sorted_outcomes[percentile_index(50)],
-      p75: sorted_outcomes[percentile_index(75)],
-      p95: sorted_outcomes[percentile_index(95)]
-    }
+    REPORTED_PERCENTILES.index_with { |percentile| sorted_outcomes[percentile_index(percentile)] }
+                        .transform_keys { |percentile| :"p#{percentile}" }
   end
 
   def percentile_index(percentile)

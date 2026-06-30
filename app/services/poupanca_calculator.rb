@@ -7,31 +7,41 @@ class PoupancaCalculator
   attribute :weekly_amount_cents, :integer
   attribute :monthly_rate, :float
 
-  def run
-    monthly_deposit = (weekly_amount_cents * WEEKS_PER_MONTH).round
+  def self.run(**attributes)
+    new(**attributes).run
+  end
 
+  def run
     MonteCarloSimulator::TIMEFRAMES.each_with_object({}) do |(timeframe_key, weeks), results|
-      months = (weeks / WEEKS_PER_MONTH).round
-      results[timeframe_key] = calculate_balance(monthly_deposit, months)
+      results[timeframe_key] = balance_breakdown(months_in(weeks))
     end
   end
 
   private
 
-  def calculate_balance(monthly_deposit, months)
-    balance = 0
-    total_deposited = 0
+  def monthly_deposit
+    @monthly_deposit ||= (weekly_amount_cents * WEEKS_PER_MONTH).round
+  end
 
-    months.times do
-      balance += monthly_deposit
-      balance = (balance * (1 + monthly_rate)).round
-      total_deposited += monthly_deposit
-    end
+  def months_in(weeks)
+    (weeks / WEEKS_PER_MONTH).round
+  end
+
+  def balance_breakdown(months)
+    balance = compounded_balance(months)
+    total_deposited = monthly_deposit * months
 
     {
       balance_cents: balance,
       total_deposited_cents: total_deposited,
       interest_earned_cents: balance - total_deposited
     }
+  end
+
+  # Deposit then compound monthly, rounding to whole cents each step.
+  def compounded_balance(months)
+    months.times.reduce(0) do |balance, _|
+      ((balance + monthly_deposit) * (1 + monthly_rate)).round
+    end
   end
 end
