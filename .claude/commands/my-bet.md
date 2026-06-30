@@ -117,13 +117,19 @@ Translation rules:
 
 ---
 
-## Step 3 — Commit everything
+## Step 3 — Commit on a dedicated branch, open a PR
 
-Stage all new and changed files. Write a commit message that:
+The devlog gets its **own branch and PR — docs-only**. Never bundle it onto a feature branch or sweep in unrelated working-tree changes (`.claude/*`, config, code).
 
-1. Summarizes what was accomplished today in the first line
-2. Adds a sassy, whimsical EOD message related to the day's actual work/struggles as the body — personality welcome, cringe forbidden
-3. Ends with the Co-Authored-By line
+1. Branch off `main`: `day-NN-eod` (matches the day number). Branch from main even while the devlog narrates unmerged feature work — the PR diff stays just the devlog.
+2. Stage **only** the devlog files: `git add docs/devlog/day_NN.md docs/devlog/day_NN_pt.md`. Do NOT `git add -A` — it pulls in unrelated changes.
+3. Commit message:
+   - First line summarizes what was accomplished today
+   - Body: a sassy, whimsical EOD message tied to the day's real work/struggles — personality welcome, cringe forbidden
+   - Ends with the Co-Authored-By line
+4. Push and open a PR against `main` with `gh pr create` — dense, docs-only description. Don't merge; Gio reviews.
+
+If the devlog was accidentally committed onto the wrong branch (e.g. the current feature branch): `git reset --soft` past it, `git restore --staged .` to release unrelated changes, stash just the devlog files, switch to a fresh `day-NN-eod` off main, pop, and commit only those.
 
 Example vibe (don't copy, create fresh each time):
 ```
@@ -133,7 +139,7 @@ Spent the whole day reading about how Brazilians lose money
 so I could build an app that tells them they're losing money.
 The irony is not lost on me.
 
-Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
+Co-Authored-By: betina, gio's intern <noreply@anthropic.com>
 ```
 
 ---
