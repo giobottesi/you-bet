@@ -158,97 +158,15 @@ end
 
 ### Results JSONB Structure
 
-```json
-{
-  "4_weeks": {
-    "expected_loss_cents": 6000,
-    "percentiles": { "p5": -18000, "p25": -10000, "p50": -6000, "p75": -2000, "p95": 5000 },
-    "profit_percentage": 38.2,
-    "poupanca_alternative_cents": 1740
-  },
-  "26_weeks": { "..." },
-  "52_weeks": { "..." },
-  "104_weeks": { "..." },
-  "260_weeks": { "..." }
-}
-```
+See [DATA.md → Results JSONB Structure](DATA.md#results-jsonb-structure).
 
 ---
 
 ## Reference Data Infrastructure
 
-Two tables — `app_configs` for system-level constants, `reference_values` for externally-sourced cited data (prices, house edges). Both have `data_source` for traceability. Both PaperTrail-versioned.
+Two typed key-value tables — `app_configs` (internal constants) and `reference_values` (externally-sourced cited prices and house edges) — written through validating ActiveModel upsert commands (CQS write side), read via `typed_value` casts.
 
-**Why two tables?** `app_configs` are internal decisions (how many simulations to run, retention policy). `reference_values` are external facts that change independently and need citations (pizza prices, house edges). Different update cadence, different ownership. ([Separation of Concerns — Martin Fowler](https://martinfowler.com/bliki/SeparationOfConcerns.html))
-
-### `app_configs`
-
-```
-monte_carlo_sims       = 1000     | source: "internal"
-poupanca_monthly_rate  = 0.0067   | source: "BCB Selic/TR"
-minimum_wage_cents     = 162100   | source: "Decreto federal 2026"
-data_retention_days    = 180      | source: "internal (LGPD policy)"
-```
-
-### `reference_values` (category: `comparison`)
-
-```
-pizza_price_cents        = 4000     | source: "iFood avg delivery, Jun 2026"
-iphone_price_cents       = 550000   | source: "Apple BR store, Jun 2026"
-smartphone_price_cents   = 90000    | source: "Magazalu Moto G, Jun 2026"
-cesta_basica_cents       = 80000    | source: "DIEESE Jun 2026"
-netflix_spotify_cents    = 5500     | source: "Official pricing, Jun 2026"
-motorcycle_price_cents   = 1000000  | source: "OLX Honda CG 160 avg, Jun 2026"
-rent_monthly_cents       = 120000   | source: "FipeZap national avg, Jun 2026"
-flight_price_cents       = 80000    | source: "Google Flights domestic avg"
-fridge_price_cents       = 200000   | source: "Americanas avg, Jun 2026"
-course_price_cents       = 250000   | source: "SENAC avg tech course"
-```
-
-### `reference_values` (category: `bet_type`)
-
-The bet type lives in its own `bet_type` column; `key` names the metric (`house_edge`). Uniqueness is the pair `(bet_type, key)`, so a bet type can own more metrics later (min/max edges) without key collisions.
-
-```
-bet_type=sports_singles  key=house_edge  = 0.06   | source: "Standard bookmaker vigorish"
-bet_type=accumulator_3   key=house_edge  = 0.15   | source: "Compounding 5% per-leg margin"
-bet_type=accumulator_5   key=house_edge  = 0.23   | source: "Compounding 5% per-leg margin"
-bet_type=slots_tigrinho  key=house_edge  = 0.05   | source: "PG Soft RTP adjusted for unregulated"
-bet_type=crash_aviator   key=house_edge  = 0.04   | source: "Operator-configurable, conservative"
-bet_type=lottery         key=house_edge  = 0.54   | source: "Caixa prize pool rules"
-bet_type=roulette        key=house_edge  = 0.0526 | source: "American: 38 pockets, pays as 36"
-```
-
-### Access Pattern
-
-```ruby
-AppConfig.fetch("monte_carlo_sims")                                  # => 1000
-ReferenceValue.find_by(key: "pizza_price_cents").typed_value          # => 4000
-BetType.new(key: "sports_singles").house_edge_value                  # => 0.06
-ReferenceValueUpsert.upsert!(bet_type: "...", key: "house_edge", ...) # write side
-```
-
-### PaperTrail
-
-```ruby
-class ReferenceValue < ApplicationRecord
-  has_paper_trail
-end
-
-class AppConfig < ApplicationRecord
-  has_paper_trail
-end
-```
-
-Every change records: what changed, when, who, and the `data_source` update. This creates a full audit trail — if a price changes, we know what it was, when it changed, and which source justified the update.
-
-### Future "Modifier" Feature
-
-Users get range sliders for house edge (conservative/aggressive). Add `_min`/`_max` keys per reference value. No migration needed.
-
-### Backoffice (future phase)
-
-An admin UI for managing bet types and reference values — creating/editing house edges and comparison prices without a deploy. The write path is already shaped for it: command objects like `ReferenceValueUpsert` (an `ActiveModel` form object that validates and persists via `find_or_initialize_by`) are exactly what a backoffice form binds to — `command.upsert` returns `false` + `errors` for the form to render, or persists. Because of this phase, bet types are **not** a closed set: the `inclusion` whitelist was removed so admins can add new types as data. The current `BETTING_TYPES` list is just the seeded/known set, not a constraint.
+**Full reference: [DATA.md](DATA.md)** — schema, seeded values + house-edge rationale, the write/validation path, typed-KV strategy, PaperTrail plan, and the Modifier/Backoffice roadmap.
 
 ---
 
@@ -268,37 +186,9 @@ Form submission → Rails runs `MonteCarloSimulator` → Turbo Frame swaps in re
 | Simpler frontend | No client-side state management, just Stimulus for UI interactions |
 | Turbo UX | Hotwire gives smooth no-reload experience without SPA complexity ([Hotwire handbook](https://hotwired.dev/)) |
 
-### Calculation Model
+### Calculation Model, Monte Carlo Rationale & Caching
 
-**Layer 1 — Expected Value:**
-```
-expected_loss = total_wagered × house_edge
-```
-
-**Layer 2 — Monte Carlo (1,000 simulations):**
-- Simulate each week's bets by type, amount, and house edge
-- Track cumulative P&L per simulation
-- Extract percentiles: P5, P25, P50, P75, P95
-
-**Why Monte Carlo over closed-form?** Accumulators have non-normal distributions (many small losses, rare large wins). Monte Carlo captures this skew and lets us show realistic percentile ranges. Closed-form expected value is Layer 1 — Monte Carlo adds the distribution story. ([Monte Carlo methods in finance — Glasserman, 2003](https://link.springer.com/book/10.1007/978-0-387-21617-1))
-
-**Layer 3 — Poupança comparison:**
-```
-monthly_deposit = weekly_amount × 4.33
-balance compounds at poupança rate monthly
-```
-
-### Caching
-
-Same inputs → statistically equivalent results. Cache by composite key:
-
-```
-cache_key = "#{bet_types.sort.join(',')}:#{weekly_amount_cents}"
-```
-
-- Cache miss → run `MonteCarloSimulator`, store in `simulation_results`
-- Cache hit → reuse results, create new `simulations` record for aggregate tracking
-- Popular combos (R$50/week accumulators) computed once, served many times
+The three-layer model (expected value → Monte Carlo distribution → poupança comparison), why Monte Carlo over closed-form, why 1,000 runs, and the cache-by-inputs strategy live in [DATA.md → Simulation Data](DATA.md#simulation-data).
 
 ---
 

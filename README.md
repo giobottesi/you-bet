@@ -13,6 +13,7 @@ docker compose up -d
 
 - [Proposal](docs/PROPOSAL.md) — what it is, who it's for, why it exists
 - [Architecture](docs/ARCHITECTURE.md) — technical spec, models, security
+- [Data](docs/DATA.md) — reference data, validation/write path, Monte Carlo, caching
 - [Sprint](docs/SPRINT.md) — cards, roadmap, constraints
 - [Design](docs/DESIGN.md) — palette, typography, components
 - [Devlog](docs/devlog/) — daily journal
