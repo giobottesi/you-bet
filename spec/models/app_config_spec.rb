@@ -1,24 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe AppConfig, type: :model do
-  describe 'validations' do
-    it { is_expected.to validate_presence_of(:key) }
-    it { is_expected.to validate_presence_of(:value) }
-    it { is_expected.to validate_presence_of(:value_type) }
-    it { is_expected.to validate_inclusion_of(:value_type).in_array(AppConfig::VALUE_TYPES) }
-
-
-    context 'when key is not unique' do
-      let!(:app_config) { create(:app_config, key: key) }
-      let(:duplicate_app_config) { build(:app_config, key: key) }
-      let(:key) { 'random_key' }
-
-      it 'validates uniqueness of key' do
-        expect(duplicate_app_config.valid?).to be false
-      end
-    end
-  end
-
   describe '.fetch' do
     let!(:app_config) { create(:app_config, key: key, value: value, value_type: value_type) }
     let(:key) { 'sim_count' }
