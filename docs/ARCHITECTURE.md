@@ -54,12 +54,57 @@ graph TD
 
     subgraph DB ["POSTGRESQL (Fly.io)"]
         T1["app_configs — PaperTrail versioned\nkey, value, value_type, description, data_source"]
-        T2["reference_values — PaperTrail versioned\nkey, value, value_type, category, description, data_source"]
+        T2["reference_values — PaperTrail versioned\nkey, value, value_type, category, bet_type, description, data_source"]
         T3["simulation_results — cached Monte Carlo\ncache_key (unique), bet_types[], weekly_amount_cents, results (jsonb)"]
         T4["simulations — per-visitor\nvisitor_id (indexed), simulation_result_id, locale"]
         T5["versions — PaperTrail audit trail"]
     end
 ```
+
+---
+
+## Information Flow
+
+The app is a **unidirectional pipeline**. A request enters, flows forward through composed, single-scope units, and exits — information never travels backward. Any user action traces as **one path** through the system, and the whole app is one directed flow diagram. This is a deliberate constraint, not an accident of the current code:
+
+- **Forward-only data.** Each stage consumes the previous stage's output and returns *new, immutable* data. No stage mutates anything upstream; no two objects hold references back at each other.
+- **Composition is free.** `A → B → C → D` call chains are fine — that's composition, not coupling — *as long as data only travels forward and the leaves are pure*.
+- **Leaves are pure reads.** `ReferenceValue` and `AppConfig` sit at the bottom of the call tree as read-only lookups. They never call back up the stack.
+- **Local cycles, global line.** A stage may loop internally (Monte Carlo runs thousands of iterations); the *flow between stages* stays acyclic.
+
+### The one line (simulation request)
+
+```
+params (bet_type, weekly_amount, horizon)
+  → BetType.find(key)              # value object: validates, read-only
+  → SimulationInput                # normalize + validate at the boundary
+  → MonteCarloSimulator.run        # house_edge ← BetType#house_edge_value → ReferenceValue (pure leaf)
+  → SimulationResult               # immutable loss distribution
+  → [ PoupancaCalculator,          # composed comparisons, forward-only
+      OpportunityCostCalculator ]  #   prices ← ReferenceValue (pure leaf)
+  → ShareCardGenerator / presenter
+  → response  +  SimulationRun record   # the audit line
+```
+
+### Read vs. write (CQS)
+
+The read flow stays lean; writes live in their own command objects, off the request hot path:
+
+| Side | Example | Runs |
+|---|---|---|
+| **Read / query** | `BetType` value object flowing through the pipeline | every request |
+| **Write / command** | `ReferenceValueUpsert`, seeders | seed/admin time only |
+
+Keeping the write (`*Upsert`) classes separate is what stops the objects that travel the flow from bloating.
+
+### Tracking: audit log, not event-sourcing
+
+Every action stays traceable as one diagram via an **append-only audit record per simulation** (the `simulations` row + PaperTrail on reference data) — *not* a literal event bus. Full event-sourcing (notifications / event table / pub-sub) is deferred until a real async fan-out or replay need appears; for a synchronous request→compute→respond simulator it is YAGNI.
+
+### What this means for contributors
+
+- Don't add callbacks or return paths that push data back upstream. New behavior is a new forward stage or a new pure leaf, composed in — never a back-reference.
+- **Specs stress the whole chain.** Exercise the real pipeline end-to-end (real `ReferenceValue` reads, real composition); do **not** stub collaborators. Every spec that runs the full path is a tripwire against downstream breakage.
 
 ---
 
@@ -162,22 +207,25 @@ course_price_cents       = 250000   | source: "SENAC avg tech course"
 
 ### `reference_values` (category: `bet_type`)
 
+The bet type lives in its own `bet_type` column; `key` names the metric (`house_edge`). Uniqueness is the pair `(bet_type, key)`, so a bet type can own more metrics later (min/max edges) without key collisions.
+
 ```
-sports_singles.house_edge  = 0.06   | source: "Standard bookmaker vigorish"
-accumulator_3.house_edge   = 0.15   | source: "Compounding 5% per-leg margin"
-accumulator_5.house_edge   = 0.23   | source: "Compounding 5% per-leg margin"
-slots_tigrinho.house_edge  = 0.05   | source: "PG Soft RTP adjusted for unregulated"
-crash_aviator.house_edge   = 0.04   | source: "Operator-configurable, conservative"
-lottery.house_edge         = 0.54   | source: "Caixa prize pool rules"
-roulette.house_edge        = 0.0526 | source: "American: 38 pockets, pays as 36"
+bet_type=sports_singles  key=house_edge  = 0.06   | source: "Standard bookmaker vigorish"
+bet_type=accumulator_3   key=house_edge  = 0.15   | source: "Compounding 5% per-leg margin"
+bet_type=accumulator_5   key=house_edge  = 0.23   | source: "Compounding 5% per-leg margin"
+bet_type=slots_tigrinho  key=house_edge  = 0.05   | source: "PG Soft RTP adjusted for unregulated"
+bet_type=crash_aviator   key=house_edge  = 0.04   | source: "Operator-configurable, conservative"
+bet_type=lottery         key=house_edge  = 0.54   | source: "Caixa prize pool rules"
+bet_type=roulette        key=house_edge  = 0.0526 | source: "American: 38 pockets, pays as 36"
 ```
 
 ### Access Pattern
 
 ```ruby
-AppConfig.get("monte_carlo_sims")                       # => 1000
-ReferenceValue.get("comparison.pizza_price_cents")       # => 4000
-ReferenceValue.get("bet_type.sports_singles.house_edge") # => 0.06
+AppConfig.fetch("monte_carlo_sims")                                  # => 1000
+ReferenceValue.find_by(key: "pizza_price_cents").typed_value          # => 4000
+BetType.new(key: "sports_singles").house_edge_value                  # => 0.06
+ReferenceValueUpsert.upsert!(bet_type: "...", key: "house_edge", ...) # write side
 ```
 
 ### PaperTrail
@@ -197,6 +245,10 @@ Every change records: what changed, when, who, and the `data_source` update. Thi
 ### Future "Modifier" Feature
 
 Users get range sliders for house edge (conservative/aggressive). Add `_min`/`_max` keys per reference value. No migration needed.
+
+### Backoffice (future phase)
+
+An admin UI for managing bet types and reference values — creating/editing house edges and comparison prices without a deploy. The write path is already shaped for it: command objects like `ReferenceValueUpsert` (an `ActiveModel` form object that validates and persists via `find_or_initialize_by`) are exactly what a backoffice form binds to — `command.upsert` returns `false` + `errors` for the form to render, or persists. Because of this phase, bet types are **not** a closed set: the `inclusion` whitelist was removed so admins can add new types as data. The current `BETTING_TYPES` list is just the seeded/known set, not a constraint.
 
 ---
 
