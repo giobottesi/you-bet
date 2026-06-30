@@ -20,7 +20,7 @@ class BetType
   end
 
   def self.create(key:, house_edge:, description:, data_source:)
-    ReferenceValueUpsert.upsert!(
+    ReferenceValueUpsert.upsert(
       bet_type: key, key: 'house_edge', value: house_edge.to_s, value_type: 'float',
       category: 'bet_type', description: description, data_source: data_source
     )

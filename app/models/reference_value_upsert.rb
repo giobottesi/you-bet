@@ -15,7 +15,7 @@ class ReferenceValueUpsert
   validates :value_type, presence: true, inclusion: { in: %w[string integer float] }
   validates :category, presence: true
 
-  def self.upsert!(attrs)
+  def self.upsert(attrs)
     new(**attrs).upsert
   end
 
