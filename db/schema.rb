@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_28_184230) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_30_040200) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -26,6 +26,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_28_184230) do
   end
 
   create_table "reference_values", force: :cascade do |t|
+    t.string "bet_type"
     t.string "category", null: false
     t.datetime "created_at", null: false
     t.string "data_source"
@@ -34,7 +35,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_28_184230) do
     t.datetime "updated_at", null: false
     t.string "value", null: false
     t.string "value_type", default: "string", null: false
+    t.index ["bet_type", "key"], name: "idx_reference_values_unique_bet_type_key", unique: true, where: "(bet_type IS NOT NULL)"
     t.index ["category"], name: "index_reference_values_on_category"
-    t.index ["key"], name: "index_reference_values_on_key", unique: true
+    t.index ["key"], name: "idx_reference_values_unique_key", unique: true, where: "(bet_type IS NULL)"
   end
 end

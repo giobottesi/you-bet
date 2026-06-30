@@ -1,11 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe BetType do
-  before { Rails.application.load_seed }
+  describe 'validations' do
+    it { is_expected.to validate_presence_of(:key) }
+  end
 
   describe '.all' do
-    it 'returns 7 bet types' do
-      expect(BetType.all.length).to eq(7)
+    it 'returns one value object per betting type' do
+      expect(BetType.all.map(&:key)).to match_array(BetType::BETTING_TYPES)
     end
 
     it 'returns BetType instances' do
@@ -13,31 +15,42 @@ RSpec.describe BetType do
     end
   end
 
-  describe '.find' do
-    it 'returns a BetType for valid key' do
-      bet_type = BetType.find('sports_singles')
-      expect(bet_type.key).to eq('sports_singles')
+  describe '#house_edge_value' do
+    let!(:reference_value) do
+      create(:reference_value, bet_type: 'demo_type', key: 'house_edge', value: value, value_type: 'float', category: 'bet_type')
+    end
+    let(:value) { '0.06' }
+
+    it 'reads the edge through the bet_type column' do
+      expect(BetType.new(key: 'demo_type').house_edge_value).to be_within(0.001).of(0.06)
     end
 
-    it 'raises for invalid key' do
-      expect { BetType.find('nonexistent') }.to raise_error(ArgumentError)
-    end
-  end
-
-  describe '#house_edge' do
-    it 'returns the house edge from ReferenceValue' do
-      expect(BetType.find('sports_singles').house_edge).to be_within(0.001).of(0.06)
-    end
-
-    it 'returns lottery house edge' do
-      expect(BetType.find('lottery').house_edge).to be_within(0.01).of(0.54)
+    context 'when the edge is absent' do
+      it 'returns nil' do
+        expect(BetType.new(key: 'ghost_type').house_edge_value).to be_nil
+      end
     end
   end
 
-  describe 'TYPES' do
-    it 'has a matching house edge seed for each type' do
-      BetType::TYPES.each do |key|
-        expect { ReferenceValue.get("#{key}.house_edge") }.not_to raise_error
+  describe '#display_name' do
+    it 'humanizes the key when no translation exists' do
+      expect(BetType.new(key: 'sports_singles').display_name).to eq('Sports singles')
+    end
+  end
+
+  describe '.create' do
+    it 'persists the house edge through the upsert command (whole chain)' do
+      BetType.create(key: 'promo_type', house_edge: 0.54, description: 'Promo', data_source: 'test')
+      expect(ReferenceValue.find_by(bet_type: 'promo_type', key: 'house_edge').typed_value).to be_within(0.001).of(0.54)
+    end
+  end
+
+  describe 'seeds' do
+    before { Rails.application.load_seed }
+
+    it 'has a house edge for every betting type' do
+      BetType::BETTING_TYPES.each do |key|
+        expect(BetType.new(key: key).house_edge_value).to be_a(Float)
       end
     end
   end

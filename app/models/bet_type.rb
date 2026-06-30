@@ -1,5 +1,8 @@
 class BetType
-  TYPES = %w[
+  include ActiveModel::Model
+  include ActiveModel::Attributes
+
+  BETTING_TYPES = %w[
     sports_singles
     accumulator_3
     accumulator_5
@@ -9,26 +12,25 @@ class BetType
     roulette
   ].freeze
 
-  attr_reader :key
+  attribute :key, :string
+  validates :key, presence: true
 
-  def initialize(key)
-    raise ArgumentError, "Unknown bet type: #{key}" unless TYPES.include?(key)
-    @key = key
+  def self.all
+    BETTING_TYPES.map { |key| new(key: key) }
   end
 
-  def house_edge
-    ReferenceValue.get("#{key}.house_edge")
+  def self.create(key:, house_edge:, description:, data_source:)
+    ReferenceValueUpsert.upsert!(
+      bet_type: key, key: 'house_edge', value: house_edge.to_s, value_type: 'float',
+      category: 'bet_type', description: description, data_source: data_source
+    )
+  end
+
+  def house_edge_value
+    @house_edge ||= ReferenceValue.find_by(bet_type: key, key: 'house_edge')&.typed_value
   end
 
   def display_name(locale = I18n.locale)
     I18n.t("bet_types.#{key}", locale: locale, default: key.humanize)
-  end
-
-  def self.all
-    TYPES.map { |key| new(key) }
-  end
-
-  def self.find(key)
-    new(key)
   end
 end
