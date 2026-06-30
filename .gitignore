@@ -10,6 +10,9 @@
 # Ignore all environment files.
 /.env*
 
+# Ignore personal Claude Code settings (machine paths, permissions, MCP servers).
+.claude/settings.local.json
+
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
