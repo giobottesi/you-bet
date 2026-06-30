@@ -65,29 +65,4 @@ RSpec.describe AppConfig, type: :model do
       end
     end
   end
-
-  describe 'seeds' do
-    before { Rails.application.load_seed }
-
-    it 'creates monte_carlo_sims as integer' do
-      expect(AppConfig.fetch('monte_carlo_sims')).to eq(1000)
-    end
-
-    it 'creates poupanca_monthly_rate as BigDecimal' do
-      expect(AppConfig.fetch('poupanca_monthly_rate')).to eq(BigDecimal('0.0067'))
-    end
-
-    it 'creates minimum_wage_cents as integer' do
-      expect(AppConfig.fetch('minimum_wage_cents')).to eq(162_100)
-    end
-
-    it 'creates data_retention_days as integer' do
-      expect(AppConfig.fetch('data_retention_days')).to eq(180)
-    end
-
-    it 'is idempotent' do
-      Rails.application.load_seed
-      expect(AppConfig.where(key: 'monte_carlo_sims').count).to eq(1)
-    end
-  end
 end

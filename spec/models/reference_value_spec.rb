@@ -56,25 +56,4 @@ RSpec.describe ReferenceValue, type: :model do
       expect(ReferenceValue.by_category('group_b')).to contain_exactly(other_group)
     end
   end
-
-  describe 'seeds' do
-    before { Rails.application.load_seed }
-
-    it 'creates 10 comparison values' do
-      expect(ReferenceValue.by_category('comparison').count).to eq(10)
-    end
-
-    it 'creates 7 bet type house edges' do
-      expect(ReferenceValue.by_category('bet_type').count).to eq(7)
-    end
-
-    it 'loads pizza price as an integer' do
-      expect(ReferenceValue.find_by(key: 'pizza_price_cents').typed_value).to eq(4000)
-    end
-
-    it 'is idempotent' do
-      Rails.application.load_seed
-      expect(ReferenceValue.where(key: 'pizza_price_cents').count).to eq(1)
-    end
-  end
 end

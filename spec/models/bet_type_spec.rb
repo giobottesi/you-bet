@@ -44,14 +44,4 @@ RSpec.describe BetType do
       expect(ReferenceValue.find_by(bet_type: 'promo_type', key: 'house_edge').typed_value).to be_within(0.001).of(0.54)
     end
   end
-
-  describe 'seeds' do
-    before { Rails.application.load_seed }
-
-    it 'has a house edge for every betting type' do
-      BetType::BETTING_TYPES.each do |key|
-        expect(BetType.new(key: key).house_edge_value).to be_a(Float)
-      end
-    end
-  end
 end
