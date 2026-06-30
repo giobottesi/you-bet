@@ -3,7 +3,7 @@
 # --- AppConfig ---
 
 SeedData::SEED_DEFAULTS.each do |attributes|
-  AppConfig.find_or_initialize_by(key: attributes[:key]).update!(attributes)
+  AppConfigUpsert.upsert(attributes)
 end
 
 # --- ReferenceValues: comparison prices ---
