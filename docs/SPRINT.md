@@ -164,18 +164,18 @@ Each card: controller (inherits ContentController) + view + route.
 | Card | Status | PR | Date |
 |---|---|---|---|
 | BE 01 | ✅ Done | #2 | Jun 28 |
-| BE 02 | ⬜ | | |
-| BE 03 | ⬜ | | |
-| BE 04 | ⬜ | | |
+| BE 02 | ⬜ | | skipped — CI still pending |
+| BE 03 | ✅ Done | #7 | Jun 28 |
+| BE 04 | ✅ Done | #8 | Jun 28 |
 | BE 05 | ⬜ | | |
-| BE 06 | ⬜ | | |
-| BE 07 | ⬜ | | |
-| BE 08 | ⬜ | | |
-| BE 09 | ⬜ | | |
-| BE 10 | ⬜ | | |
+| BE 06 | ✅ Done | #9 | Jun 28 |
+| BE 07 | ✅ Done | #10 | Jun 30 |
+| BE 08 | ✅ Done | #10 | Jun 30 |
+| BE 09 | ✅ Done | #11 | Jun 30 |
+| BE 10 | ✅ Done | #11 | Jun 30 |
 | BE 11 | ⬜ | | |
-| BE 12 | ⬜ | | |
-| BE 13 | ⬜ | | |
+| BE 12 | ✅ Done | #11 | Jun 30 |
+| BE 13 | ✅ Done | #11 | Jun 30 |
 | BE 14 | ⬜ | | |
 | BE 15 | ⬜ | | |
 | BE 16 | ⬜ | | |
@@ -274,6 +274,7 @@ If time allows or post-competition:
 | User-facing modifier sliders | 1d | ReferenceValue infra ready |
 | Dark mode | 0.5d | — |
 | PWA | 0.5d | — |
+| **About page: cost transparency** — what the dev pays monthly to keep the site running (self-funded), set against our betting-loss dataset | 0.5d | Refine later. A modest hosting bill vs what people lose betting — ties into the FE 13 developer story. |
 
 ---
 

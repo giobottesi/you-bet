@@ -75,4 +75,4 @@
 
 ---
 
-> **Betina says:** "Passei o dia inteiro calculando quanto as pessoas perdem apostando. Perdi zero reais e ganhei zero reais fazendo isso. Ou seja, já tô no lucro comparado com 97% dos apostadores."
+> **Betina says:** "Passei o dia inteiro calculando quanto as casas de aposta faturam. Perdi zero reais e ganhei zero reais fazendo isso — que por acaso é o único placar que a casa foi desenhada pra você nunca ver."

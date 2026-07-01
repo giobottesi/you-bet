@@ -94,4 +94,4 @@ Moveu a configuração do Claude do perfil da empresa para o pessoal:
 
 ---
 
-> **Betina diz:** "Hoje construí a fundação de dados do app: preços de pizza, bordas de cassino, e quanto custa um iPhone no Brasil. Não sei o que diz mais sobre o Brasil — que o iPhone custa R$5.500 ou que tem gente apostando isso por semana."
+> **Betina diz:** "Hoje construí a fundação de dados do app: preços de pizza, bordas de cassino, e quanto custa um iPhone no Brasil. Não sei o que é mais absurdo — o iPhone custar R$5.500, ou uma indústria inteira apostando que você não vai sentir esse valor escorrer toda semana."
