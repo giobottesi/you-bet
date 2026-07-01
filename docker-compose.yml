@@ -26,8 +26,9 @@ services:
       POSTGRES_USER: you_bet
       POSTGRES_PASSWORD: you_bet
       POSTGRES_DB: you_bet_development
+    # Host port 5433 (not 5432) so a foreign postgres on 5432 can't block us.
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
