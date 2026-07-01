@@ -8,13 +8,13 @@ Technical architecture for the MVP. For motivation and product spec, see [PROPOS
 
 | Layer | Choice | Rationale |
 |---|---|---|
-| **Backend** | Rails 8, Ruby 3.3+ | Convention-over-configuration accelerates solo dev. Hotwire ships built-in — no separate frontend build. ([Rails 8 release notes](https://rubyonrails.org/2024/11/7/rails-8-no-paas-required)) |
-| **Database** | PostgreSQL (Fly.io managed) | JSONB for simulation results, array columns for bet_types, `pg_stat_statements` for query monitoring. Industry standard for OLTP. ([PostgreSQL docs](https://www.postgresql.org/docs/current/datatype-json.html)) |
+| **Backend** | Rails 8, Ruby 4.0 | Convention-over-configuration accelerates solo dev. Hotwire ships built-in — no separate frontend build. ([Rails 8 release notes](https://rubyonrails.org/2024/11/7/rails-8-no-paas-required)) |
+| **Database** | PostgreSQL (Heroku Postgres) | JSONB for simulation results, array columns for bet_types, `pg_stat_statements` for query monitoring. Industry standard for OLTP. ([PostgreSQL docs](https://www.postgresql.org/docs/current/datatype-json.html)) |
 | **Frontend** | Rails views + Hotwire (Turbo Frames + Stimulus) | Server-rendered HTML, no SPA overhead. Turbo Frames give partial page updates without client-side state management. ([Hotwire docs](https://hotwired.dev/)) |
 | **Audit trail** | PaperTrail | Every data change tracked with `whodunnit`, `object_changes`, timestamps. Required for data traceability — every number in `reference_values` has a `data_source` citation. ([PaperTrail gem](https://github.com/paper-trail-gem/paper_trail)) |
 | **Rate limiting** | Rack::Attack | Rack middleware for throttling and fail2ban. Used by GitLab, Discourse, Mastodon in production. Runs before the Rails stack — blocks abuse before it hits the app. ([Rack::Attack gem](https://github.com/rack/rack-attack)) |
 | **i18n** | Rails built-in I18n | PT-BR primary, EN scaffold ready. Rails I18n is mature and avoids external dependencies. ([Rails I18n guide](https://guides.rubyonrails.org/i18n.html)) |
-| **Hosting** | Fly.io — São Paulo region (`gru`) | Only PaaS with a data center in Brazil. Sub-50ms latency to São Paulo. Managed Postgres included. ([Fly.io regions](https://fly.io/docs/reference/regions/)) |
+| **Hosting** | Heroku (US region) | Zero-config Procfile deploy, managed Heroku Postgres addon, automated TLS. No BR region, but the app holds no PII — data residency is a non-requirement, so US latency is an accepted tradeoff for deploy simplicity. ([Heroku regions](https://devcenter.heroku.com/articles/regions)) |
 | **CI** | GitHub Actions | Free for public repos. Native GitHub integration for PR checks. ([GitHub Actions docs](https://docs.github.com/en/actions)) |
 
 ---
@@ -32,7 +32,7 @@ graph TD
 
     BROWSER -->|"Turbo (HTML over the wire)"| RAILS
 
-    subgraph RAILS ["RAILS 8 (Fly.io — São Paulo)"]
+    subgraph RAILS ["RAILS 8 (Heroku — US)"]
         AC["ApplicationController\ninclude VisitorIdentifiable"]
         AC --> SC["SimulationsController\nnew/create, show (/s/:id)"]
         AC --> CC["ContentController (base)"]
@@ -52,7 +52,7 @@ graph TD
 
     RAILS --> DB
 
-    subgraph DB ["POSTGRESQL (Fly.io)"]
+    subgraph DB ["POSTGRESQL (Heroku Postgres)"]
         T1["app_configs — PaperTrail versioned\nkey, value, value_type, description, data_source"]
         T2["reference_values — PaperTrail versioned\nkey, value, value_type, category, bet_type, description, data_source"]
         T3["simulation_results — cached Monte Carlo\ncache_key (unique), bet_types[], weekly_amount_cents, results (jsonb)"]
@@ -229,12 +229,12 @@ Reference: [OWASP Top 10:2025](https://owasp.org/Top10/2025/)
 | **A01 — Broken Access Control** | Low. No auth, no admin panel. Only write: simulation creation. | UUID permalinks (not enumerable), no elevation path |
 | **A02 — Security Misconfiguration** | Medium. Open source = config is public. | ENV vars for all sensitive values, CSP headers, secure defaults |
 | **A03 — Supply Chain Failures** | Medium. Ruby gems, GitHub Actions. | `Gemfile.lock` pinned, `bundler-audit` in CI, Dependabot enabled |
-| **A04 — Cryptographic Failures** | Low. No passwords, no PII. | TLS via Fly.io, signed cookies for visitor_id |
+| **A04 — Cryptographic Failures** | Low. No passwords, no PII. | TLS via Heroku, signed cookies for visitor_id |
 | **A05 — Injection** | Medium. User input: bet types + amount. | Rails parameterized queries, strong params, input validation at boundary |
 | **A06 — Insecure Design** | Low. Simple CRUD with read-heavy public data. | Threat model in this section, rate limiting from day 1 |
 | **A07 — Authentication Failures** | N/A. No authentication. | — |
 | **A08 — Software/Data Integrity** | Low. PaperTrail on all reference data. | Audit trail, CI pipeline, no user-uploaded content |
-| **A09 — Logging & Alerting Failures** | Medium. Solo dev, no oncall. | Structured JSON logs, Fly.io metrics, rate limit event logging |
+| **A09 — Logging & Alerting Failures** | Medium. Solo dev, no oncall. | Structured JSON logs, Heroku metrics, rate limit event logging |
 | **A10 — Mishandling Exceptions** | Medium. Monte Carlo edge cases (zero amount, extreme values). | Input validation, rescue handlers, error boundary in Turbo |
 
 ### Rate Limiting (Rack::Attack)
@@ -290,8 +290,8 @@ end
 | Tool | Purpose | Rationale |
 |---|---|---|
 | **Rack::Attack** | Rate limiting + fail2ban | Runs at Rack level, before Rails. Day 1. |
-| **Rails.logger** | Structured JSON in production | Machine-parseable for Fly.io log drain |
-| **Fly.io metrics** | Request monitoring | Built-in, no extra dependency |
+| **Rails.logger** | Structured JSON in production | Machine-parseable for Heroku log drain |
+| **Heroku metrics** | Request monitoring | Built-in, no extra dependency |
 | **PaperTrail** | Reference data audit trail | Every number change tracked with source |
 | **bundler-audit** | Gem vulnerability scanning | CI step, catches known CVEs in dependencies |
 | **Sentry** | Exception tracking (nice-to-have) | Free tier, adds error alerting |
@@ -334,7 +334,7 @@ FAIL2BAN_PATTERN=              # regex — intentionally not in source
 
 # Rails
 SECRET_KEY_BASE=               # required in production
-DATABASE_URL=                  # Fly.io sets this automatically
+DATABASE_URL=                  # Heroku sets this automatically
 
 # Optional
 SENTRY_DSN=                    # exception tracking

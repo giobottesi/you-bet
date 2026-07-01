@@ -18,7 +18,7 @@ Cards are vertical slices — each delivers a testable, functional piece. **BE**
 | **BE 01** | Rails app setup (Postgres, Hotwire, Propshaft, Tailwind), Docker (dev + staging), MIT LICENSE, README | — |
 | **BE 02** | CI pipeline (GitHub Actions: tests + `bundler-audit`), `.env.example` | CI green on push |
 | **BE 03** | i18n config (pt-BR primary, locale toggle scaffold) | — |
-| **BE 04** | First Fly.io deploy (São Paulo `gru`), smoke test on production URL | HTTP 200 on prod |
+| **BE 04** | First Heroku deploy, smoke test on production URL | HTTP 200 on prod |
 | **BE 05** | Project CLAUDE.md | — |
 
 ---
@@ -81,7 +81,7 @@ Each card: service object + unit test. No controllers/views.
 | **BE 18** | OWASP 2025 verification — walk top 10 checklist against the app | Checklist documented |
 | **BE 19** | Edge case tests — zero amount, extreme values, all bet types combined, negative inputs | All handled gracefully |
 | **BE 20** | Data verification — check every stat against primary source, pre-launch checklist | Checklist signed off |
-| **BE 21** | Final deploy — Fly.io production + README polish (screenshots, local setup) | Smoke test on prod |
+| **BE 21** | Final deploy — Heroku production + README polish (screenshots, local setup) | Smoke test on prod |
 
 ---
 
@@ -167,7 +167,7 @@ Each card: controller (inherits ContentController) + view + route.
 | BE 02 | ✅ Done | | Jul 01 |
 | BE 03 | ✅ Done | #7 | Jun 28 |
 | BE 04 | ✅ Done | #8 | Jun 28 |
-| BE 05 | ⬜ | | |
+| BE 05 | ✅ Done | | Jul 01 |
 | BE 06 | ✅ Done | #9 | Jun 28 |
 | BE 07 | ✅ Done | #10 | Jun 30 |
 | BE 08 | ✅ Done | #10 | Jun 30 |
