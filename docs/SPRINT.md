@@ -274,6 +274,7 @@ If time allows or post-competition:
 | User-facing modifier sliders | 1d | ReferenceValue infra ready |
 | Dark mode | 0.5d | — |
 | PWA | 0.5d | — |
+| **About page: cost transparency** — what the dev pays monthly to keep the site running (self-funded), set against our betting-loss dataset | 0.5d | Refine later. A modest hosting bill vs what people lose betting — ties into the FE 13 developer story. |
 
 ---
 
