@@ -6,55 +6,73 @@
 
 if [ -t 1 ]; then
   B='\033[1m'
-  CORAL='\033[38;2;255;107;107m'   # loss / fail / frame
-  MINT='\033[38;2;168;230;207m'    # gain / pass
-  CYAN='\033[38;2;78;205;196m'     # accent / spinner
-  YELLOW='\033[38;2;255;230;109m'  # warning / prompt
-  CREAM='\033[38;2;245;230;211m'   # primary text
-  MUTED='\033[38;2;168;149;133m'   # secondary text
-  SHADOW='\033[38;2;61;46;36m'     # drop shadow (--color-border)
-  BAR='\033[48;2;255;107;107m\033[38;2;31;23;20m'  # coral pop-bar, warm-dark ink
+  CORAL='\033[38;2;255;107;107m'     # loss / fail
+  MINT='\033[38;2;168;230;207m'      # gain / pass
+  CYAN='\033[38;2;78;205;196m'       # accent / shimmer
+  YELLOW='\033[38;2;255;230;109m'    # warning / prompt / sparkle
+  PURPLE='\033[38;2;199;146;234m'    # context / frame — softer than coral
+  TANGERINE='\033[38;2;255;138;92m'  # warm shimmer variety
+  CREAM='\033[38;2;245;230;211m'     # primary text
+  MUTED='\033[38;2;168;149;133m'     # secondary text
+  SHADOW='\033[38;2;61;46;36m'       # drop shadow (--color-border)
   X='\033[0m'
 else
-  B=''; CORAL=''; MINT=''; CYAN=''; YELLOW=''; CREAM=''; MUTED=''; SHADOW=''; BAR=''; X=''
+  B=''; CORAL=''; MINT=''; CYAN=''; YELLOW=''; PURPLE=''; TANGERINE=''; CREAM=''; MUTED=''; SHADOW=''; X=''
 fi
 OUT="$(mktemp)"
-EDGE='━━━━━━━━━━━━━━━━━━━━━'  # 21
+EDGE='━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'  # 38 — roomy interior
+SHADE='▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀'  # 40 — thin (half-cell) drop shadow, offset +1
 
-# run <label> <cmd...> — pixel spinner while running; sets last_secs; prints ✗ + output only on failure.
-run() {
-  label="$1"; shift
+TTY=0; [ -t 1 ] && TTY=1
+sp() { printf "%*s" "$1" ""; }   # N blank cols
+
+# build_row <state> <label> <secs|glyph> — sets ROW to a full framed line (literal \033, print with %b).
+# interior fixed 38 cols: 4sp + glyph(1) + 3sp + label-field(16) + status-field(14)
+build_row() {
+  _label="$2"; _lblpad=$(( 16 - ${#_label} ))
+  case "$1" in
+    waiting) _g="${MUTED}◦${X}";     _l="${MUTED}${_label}${X}"; _s="${MUTED}waiting${X}"; _spd=7 ;;
+    running) _g="$3";                _l="${CREAM}${_label}${X}"; _s="${MUTED}running${X}"; _spd=7 ;;
+    done)    _g="${MINT}✓${X}";      _l="${CREAM}${_label}${X}"; _t="${3}s"; _s="${MINT}${_t}${X}";  _spd=$(( 14 - ${#_t} )) ;;
+    fail)    _g="${CORAL}${B}✗${X}"; _l="${CREAM}${_label}${X}"; _t="${3}s"; _s="${CORAL}${_t}${X}"; _spd=$(( 14 - ${#_t} )) ;;
+  esac
+  ROW="${PURPLE}${B}┃${X}    ${_g}   ${_l}$(sp "$_lblpad")${_s}$(sp "$_spd")${PURPLE}${B}┃${X}${SHADOW}█${X}"
+}
+
+# redraw <offset_up> <line> — rewrite a line N rows up, then return cursor to its resting line
+redraw() { printf "\033[%dA\r\033[K%b\r\033[%dB" "$1" "$2" "$1"; }
+pad_line() { printf "${PURPLE}${B}┃${X}%38s${PURPLE}${B}┃${X}${SHADOW}█${X}\n" ""; }
+
+# run_step <offset_up> <label> <cmd...> — animate that row waiting→running→done.
+run_step() {
+  _off="$1"; _rl="$2"; shift 2
   "$@" >"$OUT" 2>&1 &
-  pid=$!
-  start="$(date +%s)"
-  while kill -0 "$pid" 2>/dev/null; do
-    for frame in ▛ ▜ ▟ ▙; do
-      printf "\r  ${CYAN}%s${X} ${CREAM}%s${MUTED}…${X} " "$frame" "$label"
-      kill -0 "$pid" 2>/dev/null || break
-      sleep 0.08
+  _pid=$!; _start="$(date +%s)"; _i=0
+  if [ "$TTY" = 1 ]; then
+    while kill -0 "$_pid" 2>/dev/null; do
+      case $(( _i % 4 )) in
+        0) _fr="${CYAN}✦${X}" ;; 1) _fr="${PURPLE}✧${X}" ;;
+        2) _fr="${YELLOW}⋆${X}" ;; 3) _fr="${TANGERINE}✧${X}" ;;
+      esac
+      build_row running "$_rl" "$_fr"; redraw "$_off" "$ROW"
+      _i=$(( _i + 1 )); sleep 0.12
     done
-  done
-  wait "$pid"; status=$?
-  last_secs="$(( $(date +%s) - start ))"
-  printf "\r\033[K"
-  if [ "$status" -ne 0 ]; then
-    printf "  ${CORAL}${B}✗${X} ${CREAM}%s${X} ${MUTED}%ss${X}\n" "$label" "$last_secs"
-    sed 's/^/    /' "$OUT"
   fi
-  return "$status"
+  wait "$_pid"; _status=$?
+  _secs="$(( $(date +%s) - _start ))"
+  if [ "$_status" -ne 0 ]; then
+    build_row fail "$_rl" "$_secs"
+    [ "$TTY" = 1 ] && redraw "$_off" "$ROW"
+    printf "\n"; sed 's/^/  /' "$OUT"
+    rm -f "$OUT"; exit 1
+  fi
+  build_row done "$_rl" "$_secs"
+  if [ "$TTY" = 1 ]; then redraw "$_off" "$ROW"; else printf "  ✓ %s  %ss\n" "$_rl" "$_secs"; fi
 }
 
 die() { printf "  ${CORAL}${B}✗${X} %s\n" "$1"; rm -f "$OUT"; exit 1; }
 
-printf "${B}${BAR} ▐ PRE-COMMIT ▌ ${X}  ${MUTED}gems · db · rubocop · rspec${X}\n"
-
-# --- prep: gems ---
-if ! bundle check >/dev/null 2>&1; then
-  printf "  ${CYAN}installing gems…${X}\n"
-  bundle install >/dev/null 2>&1 || die "bundle install failed"
-fi
-
-# --- prep: database (offer to bring the stack up) ---
+# db-down is the one prep step that can't animate (it prompts) — handle it before the box.
 if ! pg_isready -h localhost -p 5433 -q 2>/dev/null; then
   printf "  ${YELLOW}▫${X} ${CREAM}postgres down${X} — bring the stack up? ${MUTED}[Y/n]${X} "
   read reply </dev/tty 2>/dev/null || reply=""
@@ -65,19 +83,45 @@ if ! pg_isready -h localhost -p 5433 -q 2>/dev/null; then
   until pg_isready -h localhost -p 5433 -q 2>/dev/null || [ "$tries" -ge 30 ]; do sleep 1; tries=$((tries + 1)); done
   pg_isready -h localhost -p 5433 -q 2>/dev/null || die "postgres didn't come up"
 fi
-
-# --- checks ---
-run rubocop bundle exec rubocop --format simple || { rm -f "$OUT"; exit 1; }
-t_rubocop="$last_secs"
 export DATABASE_HOST=localhost DATABASE_PORT=5433
-run rspec bundle exec rspec --format progress || { rm -f "$OUT"; exit 1; }
-t_rspec="$last_secs"
 
-# --- summary box ---
-printf "${CORAL}${B}┏${EDGE}┓${X}\n"
-printf "${CORAL}${B}┃${X}  ${MINT}✓${X} ${CREAM}rubocop${X}   ${MUTED}%2ss${X}    ${CORAL}${B}┃${X}${SHADOW}█${X}\n" "$t_rubocop"
-printf "${CORAL}${B}┃${X}  ${MINT}✓${X} ${CREAM}rspec${X}     ${MUTED}%2ss${X}    ${CORAL}${B}┃${X}${SHADOW}█${X}\n" "$t_rspec"
-printf "${CORAL}${B}┃${X}  ${MINT}■${X} ${CREAM}all clear${X}        ${CORAL}${B}┃${X}${SHADOW}█${X}\n"
-printf "${CORAL}${B}┗${EDGE}┛${X}${SHADOW}█${X}\n"
-printf " ${SHADOW}${EDGE}━━${X}\n"
+# --- coral box: header only ---
+if [ "$TTY" = 1 ]; then
+  printf "\n${CORAL}${B}┏${EDGE}┓${X}\n"
+  printf "${CORAL}${B}┃${X}  ${B}${YELLOW}✨ ${PURPLE}꒰ ${CYAN}₍^ᵕ^₎ ${CREAM}pre-commit ${PURPLE}꒱ ${YELLOW}✨${X}\033[40G${CORAL}${B}┃${X}${SHADOW}█${X}\n"
+  printf "${CORAL}${B}┗${EDGE}┛${X}${SHADOW}█${X}\n"
+  printf " ${SHADOW}${SHADE}${X}\n"
+else
+  printf "\n✨ pre-commit\n"
+fi
+
+# --- lilac box: all four rows animate live (waiting → running → done), then all clear ---
+# geometry (11 lines) → row offsets from the resting cursor: gems 9, db 8, rubocop 7, rspec 6, summary 4.
+if [ "$TTY" = 1 ]; then
+  printf "\n${PURPLE}${B}┏${EDGE}┓${X}\n"                                                           # L1
+  pad_line                                                                                           # L2
+  build_row waiting gems;    printf "%b\n" "$ROW"                                                    # L3
+  build_row waiting db;      printf "%b\n" "$ROW"                                                    # L4
+  build_row waiting rubocop; printf "%b\n" "$ROW"                                                    # L5
+  build_row waiting rspec;   printf "%b\n" "$ROW"                                                    # L6
+  pad_line                                                                                           # L7
+  printf "${PURPLE}${B}┃${X}    ${MUTED}◦   running checks…%15s${X}${PURPLE}${B}┃${X}${SHADOW}█${X}\n" ""  # L8 summary
+  pad_line                                                                                           # L9
+  printf "${PURPLE}${B}┗${EDGE}┛${X}${SHADOW}█${X}\n"                                               # L10
+  printf " ${SHADOW}${SHADE}${X}\n"                                                                 # L11
+fi
+
+run_step 9 gems    sh -c 'bundle check || bundle install'
+run_step 8 db      pg_isready -h localhost -p 5433 -q
+run_step 7 rubocop bundle exec rubocop --format simple
+run_step 6 rspec   bundle exec rspec --format progress
+
+# finalize summary row → all clear (coral pop)
+if [ "$TTY" = 1 ]; then
+  ROW="${PURPLE}${B}┃${X}    ${YELLOW}✦${X}   ${CORAL}${B}all clear${X}$(sp 21)${PURPLE}${B}┃${X}${SHADOW}█${X}"
+  redraw 4 "$ROW"
+  printf "\n  ${YELLOW}˚₊‧ ${CYAN}₍^ᵕ^₎ ${CORAL}${B}all bets in${X} ${YELLOW}‧₊˚ ✨${X}\n\n"
+else
+  printf "  ✦ all clear\n\n"
+fi
 rm -f "$OUT"
