@@ -78,4 +78,4 @@ Uma frase: o BE 09 escorregou um dia, mas agora tá desbloqueado em cima de um c
 
 ---
 
-> **Betina says:** "Passei o dia desenhando regras pra dados não andarem pra trás, num app sobre dinheiro que só anda pra trás. Pelo menos o pipeline tem disciplina que o apostador não tem."
+> **Betina says:** "Passei o dia desenhando regras pra dados não andarem pra trás, num app sobre dinheiro que só anda pra trás. A diferença é que aqui os dados não são viciados pra casa sempre ganhar."
