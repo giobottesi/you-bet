@@ -12,6 +12,7 @@
 
 # Ignore personal Claude Code settings (machine paths, permissions, MCP servers).
 .claude/settings.local.json
+.claude/mcp.json
 
 # Ignore all logfiles and tempfiles.
 /log/*
