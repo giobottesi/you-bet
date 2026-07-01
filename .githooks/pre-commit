@@ -1,49 +1,70 @@
 #!/usr/bin/env sh
 # Pre-commit: RuboCop + RSpec, host-side. Our postgres is on host port 5433.
 # Skips RSpec (never blocks) when our DB is down; CI is the backstop.
+# Styled to the You-Bet palette (DESIGN.md): coral loss, mint gain, cyan accent.
 
 if [ -t 1 ]; then
-  B='\033[1m'; D='\033[2m'; R='\033[31m'; G='\033[32m'; Y='\033[33m'; C='\033[36m'; X='\033[0m'
+  B='\033[1m'
+  CORAL='\033[38;2;255;107;107m'   # loss / fail / frame
+  MINT='\033[38;2;168;230;207m'    # gain / pass
+  CYAN='\033[38;2;78;205;196m'     # accent / spinner
+  YELLOW='\033[38;2;255;230;109m'  # warning / skip
+  CREAM='\033[38;2;245;230;211m'   # primary text
+  MUTED='\033[38;2;168;149;133m'   # secondary text
+  SHADOW='\033[38;2;61;46;36m'     # drop shadow (--color-border)
+  BAR='\033[48;2;255;107;107m\033[38;2;31;23;20m'  # coral pop-bar, warm-dark ink
+  X='\033[0m'
 else
-  B=''; D=''; R=''; G=''; Y=''; C=''; X=''
+  B=''; CORAL=''; MINT=''; CYAN=''; YELLOW=''; CREAM=''; MUTED=''; SHADOW=''; BAR=''; X=''
 fi
 OUT="$(mktemp)"
+EDGE='━━━━━━━━━━━━━━━━━━━━━'  # 21
 
-# run <label> <cmd...> — spinner while it runs, ✓/✗ + elapsed, output only on failure.
+# run <label> <cmd...> — pixel spinner while running; sets last_secs; prints ✗ + output only on failure.
 run() {
   label="$1"; shift
   "$@" >"$OUT" 2>&1 &
   pid=$!
   start="$(date +%s)"
   while kill -0 "$pid" 2>/dev/null; do
-    for frame in ⠋ ⠙ ⠹ ⠸ ⠼ ⠴ ⠦ ⠧ ⠇ ⠏; do
-      printf "\r  ${C}%s${X} %s${D}…${X} " "$frame" "$label"
+    for frame in ▛ ▜ ▟ ▙; do
+      printf "\r  ${CYAN}%s${X} ${CREAM}%s${MUTED}…${X} " "$frame" "$label"
       kill -0 "$pid" 2>/dev/null || break
       sleep 0.08
     done
   done
   wait "$pid"; status=$?
-  secs="$(( $(date +%s) - start ))"
-  if [ "$status" -eq 0 ]; then
-    printf "\r  ${G}✓${X} %s ${D}%ss${X}      \n" "$label" "$secs"
-  else
-    printf "\r  ${R}✗${X} %s ${D}%ss${X}      \n" "$label" "$secs"
+  last_secs="$(( $(date +%s) - start ))"
+  printf "\r\033[K"
+  if [ "$status" -ne 0 ]; then
+    printf "  ${CORAL}${B}✗${X} ${CREAM}%s${X} ${MUTED}%ss${X}\n" "$label" "$last_secs"
     sed 's/^/    /' "$OUT"
   fi
   return "$status"
 }
 
-printf "${B}${C}▌ pre-commit${X} ${D}· rubocop · rspec${X}\n"
+printf "${B}${BAR} ▐ PRE-COMMIT ▌ ${X}  ${MUTED}rubocop · rspec${X}\n"
 
 run rubocop bundle exec rubocop --format simple || { rm -f "$OUT"; exit 1; }
+t_rubocop="$last_secs"
+
+printf "${CORAL}${B}┏${EDGE}┓${X}\n"
+printf "${CORAL}${B}┃${X}  ${MINT}✓${X} ${CREAM}rubocop${X}   ${MUTED}%2ss${X}    ${CORAL}${B}┃${X}${SHADOW}█${X}\n" "$t_rubocop"
 
 if ! pg_isready -h localhost -p 5433 -q 2>/dev/null; then
-  printf "  ${Y}◦${X} rspec ${D}skipped — our postgres is down (bin/docker-up); CI covers it${X}\n"
+  printf "${CORAL}${B}┃${X}  ${YELLOW}▫${X} ${CREAM}rspec${X}    ${YELLOW}skipped${X}   ${CORAL}${B}┃${X}${SHADOW}█${X}\n"
+  printf "${CORAL}${B}┃${X}  ${YELLOW}▫${X} ${CREAM}deferred to CI${X}   ${CORAL}${B}┃${X}${SHADOW}█${X}\n"
+  printf "${CORAL}${B}┗${EDGE}┛${X}${SHADOW}█${X}\n"
+  printf " ${SHADOW}${EDGE}━━${X}\n"
   rm -f "$OUT"; exit 0
 fi
 
 export DATABASE_HOST=localhost DATABASE_PORT=5433
 run rspec bundle exec rspec --format progress || { rm -f "$OUT"; exit 1; }
+t_rspec="$last_secs"
 
+printf "${CORAL}${B}┃${X}  ${MINT}✓${X} ${CREAM}rspec${X}     ${MUTED}%2ss${X}    ${CORAL}${B}┃${X}${SHADOW}█${X}\n" "$t_rspec"
+printf "${CORAL}${B}┃${X}  ${MINT}■${X} ${CREAM}all clear${X}        ${CORAL}${B}┃${X}${SHADOW}█${X}\n"
+printf "${CORAL}${B}┗${EDGE}┛${X}${SHADOW}█${X}\n"
+printf " ${SHADOW}${EDGE}━━${X}\n"
 rm -f "$OUT"
-printf "${G}${B}✓ all clear${X}\n"
