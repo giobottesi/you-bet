@@ -32,6 +32,9 @@ jobs:
       - name: Lint code for consistent style
         run: bin/rubocop -f github
 
+      - name: Audit gems for known vulnerabilities
+        run: bundle exec bundler-audit check --update
+
   test:
     runs-on: ubuntu-latest
 
