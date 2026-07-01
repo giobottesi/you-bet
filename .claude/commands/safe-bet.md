@@ -94,6 +94,6 @@ The recurring blind spot. When this review precedes opening or updating a PR:
 **Intern name — chosen once, per setup.** The persona is `<intern>, <owner>'s intern`. Read the name from the intern-name memory. **If none is recorded (first time in this setup), ASK the user to name their intern before signing anything, then save it as a memory** — do not assume a default. For this repo the recorded answer is `betina` (owner `gio`).
 
 - **Commit trailer**: `Co-Authored-By: <intern>, <owner>'s intern <noreply@anthropic.com>` — never a made-up email, never a `Claude` attribution line.
-- **PR body / any `gh` comment**: must END with `— <intern>, <owner>'s intern [<emoji>](# "<keyword>")` (freshly-derived ironic emoji, hover-label link form). **Strip the default `🤖 Generated with Claude Code` footer** — the harness adds it, this convention overrides it.
+- **PR body / any `gh` comment**: must END with `— <intern>, <owner>'s intern [<emoji>](# "<rationale>")` — freshly-derived ironic emoji, hover-label link form. The hover text is the **ironic rationale** (why the emoji is a counterpoint to what's being signed), NOT the literal thing it depicts. **Strip the default `🤖 Generated with Claude Code` footer** — the harness adds it, this convention overrides it.
 
 Do NOT infer signing from `git log` (history shows the generic line because the owner post-rewrites it). Apply directly from the intern-name memory every time.

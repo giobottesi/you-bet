@@ -21,6 +21,21 @@ git log --author=giobottesi --after="${TODAY}T00:00:00-03:00" --before="${TODAY}
 git log --author=giobottesi --after="${TODAY}T00:00:00-03:00" --before="${TODAY}T23:59:59-03:00" --stat --format='' 2>/dev/null | tail -1
 ```
 
+**AI cost today (you-bet only):** ccusage has no per-project filter, so scope by cross-referencing the you-bet project's session UUIDs (its `.jsonl` filenames) against ccusage session output. Reuses ccusage pricing.
+```bash
+DAY="${TODAY//-/}"; DIR=~/.claude/projects/-Users-giobottesi-projetinhos-you-bet
+UUIDS=$(ls $DIR/*.jsonl 2>/dev/null | xargs -n1 basename | sed 's/.jsonl//' | tr '\n' ',')
+npx -y ccusage@latest session --since "$DAY" --json 2>/dev/null | python3 -c "
+import sys,json
+uu=set('$UUIDS'.split(','))
+d=json.load(sys.stdin); tc=tt=0
+for x in d['session']:
+    if x.get('period') in uu: tc+=x['totalCost']; tt+=x['totalTokens']
+print('AI cost today: \$%.2f (%d tokens, you-bet only)'%(tc,tt))
+"
+```
+If it fails or returns nothing, skip the cost line silently.
+
 Read the current docs/SPRINT.md to know what phase we're in and what's planned vs what happened.
 
 Read the conversation context for decisions, shifts, and Gio's inputs.
@@ -89,6 +104,8 @@ Track the developer's product/UX/technical contributions today. These matter —
 - Any adjustments needed
 
 ---
+
+_AI assist cost today: {$X.XX, N tokens, you-bet only — from Step 1; omit line if unavailable}_
 
 > **Betina says:** "{quote — see Step 4}"
 ```
@@ -167,5 +184,6 @@ After committing, invoke the self-improve skill to extract any learnings from to
 Print a short summary:
 - What was committed
 - Sprint health status
+- AI assist cost today (you-bet only, from Step 1)
 - What's planned for tomorrow
 - Betina's quote (again, for the terminal)
