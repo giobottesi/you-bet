@@ -69,7 +69,13 @@ Plus: RuboCop clean, code/comments in English only, tests live alongside the fea
 
 ---
 
-## Step 6 — Report
+## Step 6 — Prose review (docs, devlogs, PR body)
+
+If the branch touches any written material — `docs/**/*.md` (static docs or devlogs), `README.md`, or the PR description — run `/write-review` on those files before reporting. The repo is public competition material: fact-check claims against code/git, cut duplication (internal + cross-doc), check cohesion, and enforce the brief's tone (target the industry, never the bettor). Fold its findings into the report below.
+
+---
+
+## Step 7 — Report
 
 Group findings and lead with the worst:
 
