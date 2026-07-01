@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_30_040200) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_01_120001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -38,5 +38,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_30_040200) do
     t.index ["bet_type", "key"], name: "idx_reference_values_unique_bet_type_key", unique: true, where: "(bet_type IS NOT NULL)"
     t.index ["category"], name: "index_reference_values_on_category"
     t.index ["key"], name: "idx_reference_values_unique_key", unique: true, where: "(bet_type IS NULL)"
+  end
+
+  create_table "simulation_results", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "inputs_signature", null: false
+    t.jsonb "results", default: {}, null: false
+    t.datetime "updated_at", null: false
+    t.index ["inputs_signature"], name: "index_simulation_results_on_inputs_signature", unique: true
   end
 end
