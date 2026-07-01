@@ -30,7 +30,7 @@ class SimulationResultUpsert
   end
 
   def simulated_results
-    MonteCarloSimulator.run(
+    @simulated_results ||= MonteCarloSimulator.run(
       bet_type_key: bet_type_key,
       house_edge: house_edge,
       weekly_amount_cents: weekly_amount_cents,

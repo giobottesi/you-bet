@@ -33,17 +33,14 @@ RSpec.describe SimulationResultUpsert do
       expect(second).to eq(first)
     end
 
+    let(:changed_inputs) do
+      { bet_type_key: 'roulette', house_edge: 0.10, weekly_amount_cents: 9900, simulation_count: 500 }
+    end
+
     it 'misses the cache when any single input changes' do
       described_class.upsert(attributes)
 
-      changed = {
-        bet_type_key: 'roulette',
-        house_edge: 0.10,
-        weekly_amount_cents: 9900,
-        simulation_count: 500
-      }
-
-      changed.each do |attribute, value|
+      changed_inputs.each do |attribute, value|
         expect { described_class.upsert(attributes.merge(attribute => value)) }
           .to change(SimulationResult, :count).by(1)
       end
