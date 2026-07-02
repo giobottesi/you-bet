@@ -70,6 +70,10 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
 
   config.include FactoryBot::Syntax::Methods
+
+  # Use a host permitted by ActionDispatch::HostAuthorization (.localhost) so request
+  # specs reach the app instead of hitting a 403 blocked-host page.
+  config.before(:each, type: :request) { host! 'localhost' }
 end
 
 require 'shoulda/matchers'
