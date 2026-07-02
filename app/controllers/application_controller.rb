@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include VisitorIdentifiable
+
   allow_browser versions: :modern
   stale_when_importmap_changes
 
