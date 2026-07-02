@@ -2,6 +2,9 @@ require 'rails_helper'
 
 RSpec.describe 'Rack::Attack', type: :request do
   before do
+    # ActionDispatch::HostAuthorization 403s rspec's default www.example.com before the
+    # request reaches Rack::Attack; localhost is permitted by Rails' .localhost default.
+    host! 'localhost'
     Rack::Attack.enabled = true
     Rack::Attack.cache.store = ActiveSupport::Cache::MemoryStore.new
   end
