@@ -30,13 +30,13 @@ class Rack::Attack
                                      maxretry: env_int("FAIL2BAN_MAXRETRY", 3),
                                      findtime: env_int("FAIL2BAN_FINDTIME", 600),
                                      bantime: env_int("FAIL2BAN_BANTIME", 3600)) do
-        CharacteristicProbe.match?(request.path)
+        ScannerProbe.match?(request.path)
       end
     end
   end
 
   # Suspicious paths no legitimate visitor requests — signals a scanner.
-  module CharacteristicProbe
+  module ScannerProbe
     PATTERN = %r{\A/(?:wp-|xmlrpc|\.env|\.git|phpmyadmin)}i
     def self.match?(path) = PATTERN.match?(path)
   end

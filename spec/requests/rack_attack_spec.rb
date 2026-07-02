@@ -37,7 +37,7 @@ RSpec.describe 'Rack::Attack', type: :request do
     end
   end
 
-  describe Rack::Attack::CharacteristicProbe do
+  describe Rack::Attack::ScannerProbe do
     it 'matches known scanner paths' do
       %w[/wp-login.php /xmlrpc.php /.env /.git/config /phpmyadmin].each do |path|
         expect(described_class.match?(path)).to be(true), "expected #{path} to match"
