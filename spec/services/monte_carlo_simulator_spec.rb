@@ -80,4 +80,102 @@ RSpec.describe MonteCarloSimulator do
       expect(lottery_profit).to be < sports_profit
     end
   end
+
+  # The engine is pure math with no input validation — semantic rejection (negative/zero
+  # amounts) belongs at the boundary (SimulationInput / the form), not here. These specs
+  # pin that the engine stays robust and well-formed on hostile inputs instead of crashing.
+  describe 'edge cases' do
+    subject(:results) { simulator.run }
+
+    let(:timeframe_keys) { %w[month_1 months_6 year_1 years_2 years_5] }
+
+    context 'with a zero weekly amount' do
+      let(:weekly_amount_cents) { 0 }
+
+      it 'runs without error and reports no loss' do
+        expect(results.keys).to match_array(timeframe_keys)
+        results.each_value do |timeframe|
+          expect(timeframe[:expected_value_cents]).to eq(0)
+          expect(timeframe[:profit_percentage]).to eq(0.0)
+          expect(timeframe[:percentiles].values).to all(eq(0))
+        end
+      end
+    end
+
+    context 'with a negative weekly amount' do
+      let(:weekly_amount_cents) { -5000 }
+
+      it 'does not raise and still returns well-formed results' do
+        expect { results }.not_to raise_error
+        expect(results.keys).to match_array(timeframe_keys)
+        results.each_value do |timeframe|
+          percentiles = timeframe[:percentiles].values
+          expect(percentiles).to eq(percentiles.sort)
+        end
+      end
+    end
+
+    context 'with an extreme weekly amount' do
+      let(:weekly_amount_cents) { 100_000_000_00 } # R$100M/week
+
+      it 'handles large integers without overflow or infinity' do
+        expect(results.keys).to match_array(timeframe_keys)
+        results.each_value do |timeframe|
+          expect(timeframe[:expected_value_cents]).to be_a(Integer).and(be_negative)
+          expect(timeframe[:percentiles].values).to all(be_a(Integer))
+        end
+      end
+    end
+
+    context 'with the house edge at 0' do
+      let(:house_edge) { 0.0 }
+
+      it 'produces a break-even expected value without raising' do
+        expect(results.keys).to match_array(timeframe_keys)
+        results.each_value { |timeframe| expect(timeframe[:expected_value_cents]).to eq(0) }
+      end
+    end
+
+    context 'with the house edge at 1.0 (house always keeps the stake)' do
+      let(:house_edge) { 1.0 }
+
+      it 'loses the full wager every run' do
+        results.each_value do |timeframe|
+          expect(timeframe[:expected_value_cents]).to eq(-timeframe[:total_wagered_cents])
+          expect(timeframe[:profit_percentage]).to eq(0.0)
+          expect(timeframe[:percentiles].values).to all(eq(-timeframe[:total_wagered_cents]))
+        end
+      end
+    end
+
+    context 'with an unknown bet type' do
+      let(:bet_type_key) { 'unknown_game' }
+
+      it 'falls back to the neutral win probability without raising' do
+        expect { results }.not_to raise_error
+        expect(results.keys).to match_array(timeframe_keys)
+        results.each_value do |timeframe|
+          percentiles = timeframe[:percentiles].values
+          expect(percentiles).to eq(percentiles.sort)
+        end
+      end
+    end
+
+    context 'across every known bet type' do
+      it 'produces well-formed, losing results for each' do
+        described_class::WIN_PROBABILITIES.each_key do |key|
+          timeframes = described_class.run(
+            bet_type_key: key, house_edge: 0.1,
+            weekly_amount_cents: weekly_amount_cents, simulation_count: simulation_count
+          )
+
+          expect(timeframes.keys).to match_array(timeframe_keys), key
+          timeframes.each_value do |timeframe|
+            expect(timeframe[:percentiles].values).to eq(timeframe[:percentiles].values.sort), key
+            expect(timeframe[:expected_value_cents]).to be_negative, key
+          end
+        end
+      end
+    end
+  end
 end
