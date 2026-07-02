@@ -4,8 +4,9 @@
 # belong in git's global ignore instead:
 # `$XDG_CONFIG_HOME/git/ignore` or `~/.config/git/ignore`
 
-# Ignore bundler config.
-/.bundle
+# Ignore machine-specific bundler config, but track committed settings (frozen lockfile).
+/.bundle/*
+!/.bundle/config
 
 # Ignore all environment files.
 /.env*
