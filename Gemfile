@@ -29,6 +29,9 @@ gem "solid_cable"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
+# Rack middleware for throttling and blocking abusive requests [https://github.com/rack/rack-attack]
+gem "rack-attack"
+
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
   gem "rspec-rails"

@@ -9,6 +9,7 @@ Severity: 🔴 will bite before launch · 🟡 should fix · 🟢 nice-to-have.
 | 1 | Seeds | `db/seeds.rb` is a single file every model PR edits | Two PRs touching it collide; a force-resolve can silently drop one model's seeds | Split into `db/seeds/*.rb` loaded by a loop so each model owns its file | 🟡 | PR #10 review |
 | 2 | Tooling | Pre-commit hook can't tell "checks failed" from "docker down" | When the `web` container is down, `docker compose exec` fails and the hook blocks every commit | Add a guard: if `web` isn't running, skip with a warning instead of denying | 🟡 | PR #13 |
 | 3 | Data model | `value` is stored/cast by `value_type` with no precision policy | Float vs BigDecimal undecided; compounded rates (poupança) need BigDecimal to avoid drift | Decide per-type; use BigDecimal for `decimal`, document the rule | 🟡 | #9 / #10 review |
+| 4 | Rate limiting | Rack::Attack throttles key on `request.ip` | Behind Heroku's router the IP resolves from `X-Forwarded-For`, which a client can spoof to dodge the per-IP limit | Key on a trusted signal (visitor cookie) or pin the trusted-proxy chain if abuse appears | 🟢 | PR #31 review |
 
 ## Notes
 

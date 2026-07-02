@@ -14,6 +14,9 @@ services:
       - DATABASE_PASSWORD=you_bet
       - RAILS_ENV=development
       - RAILS_LOG_LEVEL=debug
+      # Frozen lockfile: bundle install can't silently rewrite Gemfile.lock (docker uses
+      # BUNDLE_APP_CONFIG=/usr/local/bundle, so it ignores the repo .bundle/config).
+      - BUNDLE_FROZEN=true
     depends_on:
       postgres:
         condition: service_healthy

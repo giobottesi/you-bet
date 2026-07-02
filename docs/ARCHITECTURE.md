@@ -241,37 +241,39 @@ Reference: [OWASP Top 10:2025](https://owasp.org/Top10/2025/)
 
 **Why Rack::Attack?** Rack middleware that runs before the Rails stack — blocks abuse before it hits controllers or the database. Used in production by GitLab, Discourse, and Mastodon. ([Rack::Attack gem](https://github.com/rack/rack-attack))
 
-**Open source safety:** Throttle rules (paths, limits, periods) are safe to expose — attackers can discover limits through testing anyway. Fail2ban regex patterns and blocklists go in ENV vars to prevent evasion crafting. This follows GitLab and Mastodon's approach. ([OWASP API Security — API4:2023](https://owasp.org/API-Security/editions/2023/en/0xa4-unrestricted-resource-consumption/))
+**Open source safety:** Throttle rules (paths, limits, periods) are safe to expose — attackers can discover limits through testing anyway. Fail2Ban probe signatures are well-known scanner paths (`/wp-*`, `/xmlrpc`, `/.env`, `/.git`, `/phpmyadmin`) — nothing secret to hide — but the blocklist is **ENV-gated** (`FAIL2BAN_ENABLED`) so it stays off until abuse appears. This follows GitLab and Mastodon's approach. ([OWASP API Security — API4:2023](https://owasp.org/API-Security/editions/2023/en/0xa4-unrestricted-resource-consumption/))
+
+Counters live in `Rails.cache` (solid_cache) — no new infra. `config/initializers/rack_attack.rb`:
 
 ```ruby
-# Throttle simulation creation
-Rack::Attack.throttle("simulations/ip",
-  limit: ENV.fetch("RATE_LIMIT_SIMULATIONS", 10).to_i,
-  period: 60
-) do |req|
-  req.ip if req.path == "/simulations" && req.post?
+# Simulation creation: the expensive, abuse-prone path. Keyed per IP.
+throttle("simulations/ip",
+  limit: env_int("SIMULATION_THROTTLE_LIMIT", 10),
+  period: env_int("SIMULATION_THROTTLE_PERIOD", 60)) do |request|
+  request.ip if request.post? && request.path.start_with?("/simulations")
 end
 
-# Throttle general requests
-Rack::Attack.throttle("requests/ip",
-  limit: ENV.fetch("RATE_LIMIT_REQUESTS", 60).to_i,
-  period: 60
-) do |req|
-  req.ip
+# General traffic ceiling: catches broad flooding. Excludes assets + health check.
+throttle("req/ip",
+  limit: env_int("GENERAL_THROTTLE_LIMIT", 300),
+  period: env_int("GENERAL_THROTTLE_PERIOD", 300)) do |request|
+  request.ip unless request.path.start_with?("/assets", "/up")
 end
 
-# Fail2ban — patterns in ENV, not in source code
-Rack::Attack.blocklist("fail2ban") do |req|
-  Rack::Attack::Fail2Ban.filter("suspicious-#{req.ip}",
-    maxretry: ENV.fetch("FAIL2BAN_MAXRETRY", 3).to_i,
-    findtime: ENV.fetch("FAIL2BAN_FINDTIME", 600).to_i,
-    bantime: ENV.fetch("FAIL2BAN_BANTIME", 3600).to_i
-  ) do
-    pattern = ENV.fetch("FAIL2BAN_PATTERN", "")
-    pattern.present? && req.query_string =~ /#{pattern}/i
+# Fail2Ban — ban IPs probing for common exploit paths. Opt-in via ENV.
+if ENV["FAIL2BAN_ENABLED"].present?
+  blocklist("fail2ban/probes") do |request|
+    Rack::Attack::Fail2Ban.filter("probes/#{request.ip}",
+      maxretry: env_int("FAIL2BAN_MAXRETRY", 3),
+      findtime: env_int("FAIL2BAN_FINDTIME", 600),
+      bantime: env_int("FAIL2BAN_BANTIME", 3600)) do
+      ScannerProbe.match?(request.path)   # PATTERN in source — scanner paths aren't secret
+    end
   end
 end
 ```
+
+Throttled requests return a JSON `429` with a `Retry-After` header (the throttle's `period`) so well-behaved clients back off.
 
 ### Logging Strategy
 
@@ -325,12 +327,14 @@ All sensitive or tuneable values live in ENV, not in source code. `.env.example`
 
 ```
 # Rate limiting (safe defaults, tuneable per environment)
-RATE_LIMIT_SIMULATIONS=10
-RATE_LIMIT_REQUESTS=60
+SIMULATION_THROTTLE_LIMIT=10   # POST /simulations, per IP
+SIMULATION_THROTTLE_PERIOD=60
+GENERAL_THROTTLE_LIMIT=300     # all paths except /assets, /up
+GENERAL_THROTTLE_PERIOD=300
+FAIL2BAN_ENABLED=              # set to enable exploit-probe blocklist (off by default)
 FAIL2BAN_MAXRETRY=3
 FAIL2BAN_FINDTIME=600
 FAIL2BAN_BANTIME=3600
-FAIL2BAN_PATTERN=              # regex — intentionally not in source
 
 # Rails
 SECRET_KEY_BASE=               # required in production

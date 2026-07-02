@@ -173,11 +173,11 @@ Each card: controller (inherits ContentController) + view + route.
 | BE 08 | ✅ Done | #10 | Jun 30 |
 | BE 09 | ✅ Done | #11 | Jun 30 |
 | BE 10 | ✅ Done | #11 | Jun 30 |
-| BE 11 | ✅ Done | | Jul 01 |
+| BE 11 | ✅ Done | #28 | Jul 01 |
 | BE 12 | ✅ Done | #11 | Jun 30 |
 | BE 13 | ✅ Done | #11 | Jun 30 |
-| BE 14 | ⬜ | | |
-| BE 15 | ⬜ | | |
+| BE 14 | 🔵 In review | #30 | Jul 02 |
+| BE 15 | 🔵 In review | #31 | Jul 02 |
 | BE 16 | ⬜ | | |
 | BE 17 | ⬜ | | |
 | BE 18 | ⬜ | | |
