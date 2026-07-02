@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_01_120001) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_01_120100) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -46,5 +46,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_01_120001) do
     t.jsonb "results", default: {}, null: false
     t.datetime "updated_at", null: false
     t.index ["inputs_signature"], name: "index_simulation_results_on_inputs_signature", unique: true
+  end
+
+  create_table "simulations", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "visitor_id", null: false
+    t.index ["visitor_id"], name: "index_simulations_on_visitor_id"
   end
 end
