@@ -1,0 +1,106 @@
+<% content_for :title, "You-Bet" %>
+
+<div class="landing">
+  <div class="landing__sparkle landing__sparkle--1">✦</div>
+  <div class="landing__sparkle landing__sparkle--2">✧</div>
+  <div class="landing__sparkle landing__sparkle--3">✦</div>
+  <div class="landing__sparkle landing__sparkle--4">✧</div>
+
+  <pre class="landing__cat" aria-hidden="true">
+     ✧              ✦
+        /\_____/\
+       /  o   o  \
+      ( ==  ᴥ  == )
+       )  \___/  (
+      (           )
+     ( (  )   (  ) )
+    (__(__)___(__)__)
+  ✦              ✧
+  </pre>
+
+  <h1 class="landing__name">You&#8288;-&#8288;Bet</h1>
+  <p class="landing__tagline">See what the bet really costs.</p>
+  <p class="landing__soon">Coming soon</p>
+</div>
+
+<style>
+  .landing {
+    --bg: #1F1714;
+    --surface: #2A2119;
+    --border: #3D2E24;
+    --text: #F5E6D3;
+    --muted: #A89585;
+    --coral: #FF6B6B;
+    --cyan: #4ECDC4;
+    --yellow: #FFE66D;
+    --purple: #C792EA;
+
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    background: var(--surface);
+    border: 3px solid var(--border);
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.3);
+    color: var(--text);
+    text-align: center;
+    font-family: "Libre Franklin", system-ui, sans-serif;
+  }
+
+  body { background: #1F1714; }
+
+  .landing__cat {
+    margin: 0 auto 1.5rem;
+    color: var(--coral);
+    font-size: 0.95rem;
+    line-height: 1.15;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.35);
+  }
+
+  .landing__name {
+    margin: 0 0 0.5rem;
+    font-size: 4rem;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-shadow: 3px 3px 0 var(--coral);
+  }
+
+  .landing__tagline {
+    margin: 0 0 2rem;
+    font-size: 1.125rem;
+    color: var(--muted);
+  }
+
+  .landing__soon {
+    display: inline-block;
+    margin: 0;
+    padding: 0.4rem 1.1rem;
+    background: var(--yellow);
+    border: 2px solid #000;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
+    color: #1F1714;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .landing__sparkle {
+    position: absolute;
+    font-size: 1.25rem;
+    opacity: 0.9;
+  }
+  .landing__sparkle--1 { top: 1rem;    left: 1.25rem;  color: var(--cyan); }
+  .landing__sparkle--2 { top: 1.5rem;  right: 1.5rem;  color: var(--yellow); }
+  .landing__sparkle--3 { bottom: 1.5rem; left: 2rem;   color: var(--purple); }
+  .landing__sparkle--4 { bottom: 1rem;  right: 1.75rem; color: var(--coral); }
+
+  @media (max-width: 480px) {
+    .landing__name { font-size: 2.75rem; }
+    .landing__cat  { font-size: 0.75rem; }
+  }
+</style>
