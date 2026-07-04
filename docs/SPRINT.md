@@ -275,6 +275,7 @@ If time allows or post-competition:
 | Dark mode | 0.5d | — |
 | PWA | 0.5d | — |
 | **About page: cost transparency** — what the dev pays monthly to keep the site running (self-funded), set against our betting-loss dataset | 0.5d | Refine later. A modest hosting bill vs what people lose betting — ties into the FE 13 developer story. |
+| 🔴 **Background texture / grain** — paper-grain overlay on bg + reusable layer for images | 0.5d | **High-prio NTH.** Native SVG `feTurbulence` fractalNoise as `data:` URI bg — no asset, no gem, tileable, scales. Low-opacity + `mix-blend-mode: multiply` over warm surface. Reuse same overlay as a layer on BE 17 share cards. |
 
 ---
 
@@ -283,7 +284,7 @@ If time allows or post-competition:
 1. ~~CSS framework~~ → **Decided: Tailwind CSS**
 2. ~~Chart library~~ → **Moved to nice-to-haves** (range fan is post-MVP)
 3. ~~Image generation~~ → **Decided: HTML-to-image** (render HTML/CSS card, screenshot via headless browser)
-4. **Domain**: `youbet.<domain>.com` — subdomain TBD, Gio buying domain
+4. ~~Domain~~ → **Live: `youbet.gio.show`** (subdomain of registered `gio.show`, CNAME → Heroku production, Let's Encrypt TLS)
 5. ~~Devlog format~~ → **Decided: YAML data file** rendered by a single view. Split file if it gets too long.
 6. ~~Analytics~~ → **Decided: Umami** (free, self-hosted, lightweight, LGPD-friendly, no cost)
 

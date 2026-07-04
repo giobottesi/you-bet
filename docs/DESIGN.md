@@ -1,12 +1,12 @@
 # You-Bet — Design Spec
 
-Status: **LIVE — palette and fonts are placeholder tokens, Gio fills in final values**
+Status: **LIVE — light palette locked (WCAG-verified, 2026-07-03), fonts still placeholder**
 
 ---
 
 ## Direction
 
-Festival zine meets data dashboard with pop art / pixel art energy. Warm dark base with saturated color pops that rotate per element — not monotone, not financial. Hard square borders, drop shadows, grain/noise texture. Anti-Tigrinho: welcoming, playful, not aggressive.
+Festival zine meets data dashboard with pop art / pixel art energy. Warm **light** paper base with saturated color pops that rotate per element — not monotone, not financial. Hard square borders, drop shadows, grain/noise texture. Anti-Tigrinho: welcoming, playful, not aggressive.
 
 **References**: competition kit (palette seeds, poster aesthetic), Gio's "Guia do Festival" zine (warmth, hand-lettered feel), composer.trade (big number hero), timespent.so (data viz), @cigarrogratuito (satirical marketing critique angle).
 
@@ -14,42 +14,56 @@ Festival zine meets data dashboard with pop art / pixel art energy. Warm dark ba
 
 ## Color Palette
 
-All colors are Tailwind CSS custom properties — one-file swap.
+All colors are Tailwind CSS custom properties — one-file swap. Light theme, warm paper base. Hex values are locked (for now) — sampled from Gio's palette board and WCAG-verified.
 
-### Base (warm darks)
+### Base (warm light)
 
-| Token | Hex (placeholder) | Usage |
+| Token | Hex | Usage |
 |---|---|---|
-| `--color-bg` | `#1F1714` | Page background — warm charcoal-brown |
-| `--color-surface` | `#2A2119` | Cards, containers, elevated elements |
-| `--color-border` | `#3D2E24` | Borders, dividers |
-| `--color-text` | `#F5E6D3` | Primary text — warm cream, not white |
-| `--color-muted` | `#A89585` | Secondary text, captions, labels |
+| `--color-bg` | `#FBF6EC` | Page background — warm paper |
+| `--color-surface` | `#EDE9E2` | Cards, containers, elevated elements — de-yellowed neutral |
+| `--color-border` | `#DFC3DA` | Borders, dividers — lilac |
+| `--color-text` | `#3B3239` | Primary text — warm near-black ink |
+| `--color-muted` | `#6E6358` | Secondary text, captions, labels |
 
 ### Pop accents (rotate per element — no two adjacent cards same color)
 
-| Token | Hex (placeholder) | Usage |
-|---|---|---|
-| `--color-coral` | `#FF6B6B` | Primary CTA, loss numbers, Gatinho accent |
-| `--color-cyan` | `#4ECDC4` | Links, help resources, secondary actions |
-| `--color-yellow` | `#FFE66D` | Highlights, warnings, warm attention |
-| `--color-purple` | `#C792EA` | Context stats, emphasis variety |
-| `--color-mint` | `#A8E6CF` | Gain numbers, positive outcomes |
-| `--color-tangerine` | `#FF8A5C` | Warm accent variety |
+Each accent has two variants: **bright** (fills, borders, big numbers — always paired with a dark label) and **ink** (the only variant legible as *text* on the light base). See Accessibility.
+
+| Token | Bright | Ink (text) | Usage |
+|---|---|---|---|
+| `--color-coral` | `#EC6258` | `#AA473F` | Primary CTA, loss numbers, Gatinho accent |
+| `--color-cyan` | `#6FE0CD` | `#377066` | Links, help resources, secondary actions |
+| `--color-green` | `#64D444` | `#367225` | Gain numbers, positive outcomes |
+| `--color-purple` | `#9D64D4` | `#8152AE` | Context stats, emphasis variety |
+| `--color-yellow` | `#F4BB5C` | `#7F6130` | Highlights, warnings, warm attention |
+
+Light tints (fills / backgrounds only, never text): `mint #A2EAC7`, `light-green #B4F6AD`, `light-purple #BD8EEC`, `salmon #F19D86`, `soft-yellow #F4D46C`.
 
 ### Semantic
 
 | Token | Maps to | Usage |
 |---|---|---|
-| `--color-gain` | `--color-mint` | Profit numbers — appears rarely and small |
-| `--color-loss` | `--color-coral` | Loss numbers — appears often and big |
+| `--color-gain` | `--color-green` (ink for text) | Profit numbers — appears rarely and small |
+| `--color-loss` | `--color-coral` (ink for text) | Loss numbers — appears often and big |
 
 ### Rules
 
 - Loss color appears MORE than gain — this is the point
 - Each card/stat rotates through accent colors — pop art energy
-- Background is always dark, no light mode
+- Background is always light paper, no dark mode (dark mode is a nice-to-have)
 - Hard drop shadows (`3-4px` offset, solid black 25-30% opacity) on cards and buttons
+
+### Accessibility (WCAG 2.1, non-negotiable)
+
+Every pairing below was contrast-checked. Rules, in priority order:
+
+1. **Body text = ink `#3B3239`** on paper/surface (11.5:1 / 10.2:1 — AAA). Pure black `#000000` is reserved for the logo outline and max-emphasis only, not body copy.
+2. **Muted `#6E6358`** = secondary text only, **≥16px** (4.8:1 — AA, no margin below that size).
+3. **Accent as text** on the light base MUST use the **ink** variant (all ink variants ≈4.6–4.8:1 AA). The **bright** variants FAIL as text on light (1.0–3.3:1) — never use them for text.
+4. **Accent fills** (buttons, badges) keep the **bright** hue with a **black/dark label** (5.2–14.5:1). A cream/paper label on any fill FAILS — never do it.
+5. **Never** put text on the lilac border color, and never layer paper/cream on lilac (1.3:1 FAIL).
+6. On the `surface` shade, saturated bright purple/coral drop toward AA-large — for body-size text always use their ink variants.
 
 ---
 
@@ -85,7 +99,7 @@ All colors are Tailwind CSS custom properties — one-file swap.
 
 ## Texture
 
-- **Grain/noise overlay** on page background (CSS or SVG filter)
+- **Grain/noise overlay** on page background — high-priority nice-to-have (see SPRINT.md). Preferred implementation is a native SVG `feTurbulence` fractalNoise rendered to a `data:` URI CSS background: no asset, no gem, tileable, resolution-independent. Low opacity (`0.03–0.07` on the light base) with `background-blend-mode: multiply` to keep the warm tone. The same overlay is reused as a layer on BE 17 share cards.
 - **Drop shadows** on all cards, buttons, hero text — hard offset, not soft blur
 - **Hard square borders** — no border-radius anywhere
 
@@ -131,7 +145,7 @@ Full-width, stacked. Selected state: accent-colored border. Unselected: border c
 
 ### Help Bar
 
-Footer-anchored. Muted text with cyan-colored links to CVV 188, Jogadores Anônimos.
+Footer-anchored. Muted text with cyan-**ink** (`#377066`) links to CVV 188, Jogadores Anônimos — ink variant so link text stays AA-legible on the light base.
 
 ---
 
@@ -154,4 +168,4 @@ Footer-anchored. Muted text with cyan-colored links to CVV 188, Jogadores Anôni
 
 ## Preview
 
-`palette-preview.html` in repo root — open in browser to see current palette + components. Not committed to git, local dev reference only.
+`docs/palette-compare.html` — open in browser to see the locked light palette beside the old dark set, with live WCAG contrast badges on every token. Local dev reference, not part of the app build.
