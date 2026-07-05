@@ -86,10 +86,11 @@ Repeat for each major block of work.
 
 ## Gio's contributions
 
-Track the developer's product/UX/technical contributions today. These matter — they show the human judgment behind the AI-assisted work.
+Track the developer's product/UX/technical contributions today. These matter — they show the human judgment behind the AI-assisted work, and reviewers read this section first. Highlight it, don't flatten it:
 
-- One line per input
-  - Impact: what it changed
+- Open with a one-line **bold callout** framing the day's leverage (e.g. "Direction day: six calls, zero throwaway keystrokes").
+- Group the calls under bold theme headers when there are enough to cluster (product/scope, sequencing/execution, judgment). Skip grouping only on a light-contribution day.
+- One bold call per bullet, with its impact on its own line: `→ *what it changed*`.
 
 ## Sprint health
 
@@ -110,15 +111,11 @@ _AI assist cost today: {$X.XX, N tokens, you-bet only — from Step 1; omit line
 > **Betina says:** "{quote — see Step 4}"
 ```
 
-### Quality check before saving
+### Quality check before saving — run /write-review
 
-Before saving the devlog file, review it for:
+Before saving, run the full `/write-review` flow over both the EN and PT devlog files. That skill is the source of truth for the prose bar — don't hand-roll a lighter check here. At a glance it covers: stale facts that contradict the code (Step 1), internal + cross-day repetition (Step 2), broken flow and a flat contributions section (Step 3), employer/third-party leaks that can't ship on a public repo (Step 4), tone (Step 5).
 
-1. **Internal repetition** — same fact stated twice in the same file? Merge or cut. Check TL;DR vs body, "What got done" vs "Decisions & shifts" — no double-counting.
-2. **Inconsistencies** — does the TL;DR match the body? Do numbers/names match throughout?
-3. **Repetition with previous days** — read the previous day's devlog. Don't re-explain context that was already covered. Reference it instead: "Continuing from yesterday's architecture work..."
-4. **Flow** — does it read like a story of the day, or like a dumped list?
-5. **Length** — aim for 80-120 lines. If over 150, you're being too detailed. Compress.
+Surface findings, fix, then continue. Also confirm length lands ~80-120 lines (compress if over 150) — the one bar `/write-review` doesn't check.
 
 ---
 

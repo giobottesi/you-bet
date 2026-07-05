@@ -59,6 +59,8 @@ Numbered list of changes in present tense, one item per logical change:
 ## Skills
 
 - `/safe-bet` — pre-PR review flow: coherence, duplication, sensitive info, convention checks. Run before opening any PR.
+- `/write-review` — prose-quality pass over written material (devlogs, docs, PR bodies): fact-check, duplication, cohesion, privacy/identity leak, tone.
+- `/sure-bet` — the definition of done. Orchestrates tests/lint + `/safe-bet` + `/write-review` + privacy + conventions + PR hygiene into one gate. Run before any PR so contributors ship at the team bar.
 - `/my-bet` — EOD devlog ritual: journal + progress snapshot.
 
 ## Token Economy (always-on)
