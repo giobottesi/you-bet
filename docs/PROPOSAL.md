@@ -138,6 +138,8 @@ Every number in the app is backed by a verified source, rendered as a `/sources`
 
 ## Competition Alignment
 
+> **Disclaimer**: Media outlets (BNLData) report the "Desafio Contra Bets" R$100k prize pool may lack required SPA-MF authorization under Lei 5.768/1971. Any liability falls on the organizer (Projeto Brief/Quid), not entrants — but prize payout could be delayed or contested. Doesn't block submission.
+
 ### Submission Strategy
 
 The challenge requires content formats: video, reels, carousel, meme, or image. A web app URL alone may not qualify.
