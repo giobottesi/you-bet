@@ -11,6 +11,7 @@
 - **FE-01 skeleton is up**: `SimulationsController#new`, header/hero/form-shell/footer on the light palette, request spec green.
 - **Two branches, two PRs (#37 re-skin, #38 FE-01)** — kept apart on purpose so parallel merges can't clobber each other.
 - **A gotcha tax got paid and banked**: two dev-env potholes (rspec env, a port collision with another app on this machine) cost time once and won't again.
+- **The review skills grew a privacy guardrail.** A third-party name slipped into the day's prose (a devlog line, a PR body); it got purged from history, then `/write-review` gained a privacy/identity-leak step and was wired into `/my-bet` so it can't recur.
 
 ---
 
@@ -36,6 +37,10 @@ Re-skin and FE-01 rode separate branches by Gio's call, into separate PRs. One s
 
 Two dev-env potholes cost time and got written into the ops notes so they only cost it once. First: `rspec` run through `docker exec` defaults to the container's **development** env, where the dev host-authorization config blocks the test's default host — 403s that read like real failures until you force `RAILS_ENV=test`. Second: `localhost:3000` on this machine is already taken by another app, not you-bet, so every screenshot had to be rendered **offline** from container-fetched HTML. Annoying once, documented forever.
 
+### The review skills grow a privacy guardrail
+
+Late in the day, a name belonging to another project — not you-bet — turned up in the day's prose: a devlog line and a PR body. On a public competition repo, that can't ship. The fix was two-part. First the cleanup: purge the name everywhere, which meant a `git commit --amend` + force-push on two branches and a `gh pr edit`, because a new commit that deletes a leak doesn't erase it from history. Then the guardrail, so it never recurs: `/write-review` gained a **privacy & identity-leak** step — scan prose *and* commit history for third-party names, real names, and private hosts, the gap `/safe-bet`'s secret grep skips because a company name isn't an API key — plus a `pr <N>` scope so public PR bodies are reviewable, and it's now wired into `/my-bet` to run at every EOD. While in there, the `Gio's contributions` sections of the day-07 and day-08 devlogs got restructured into themed, highlighted groups: the flat bullet list was underselling the judgment it recorded.
+
 ---
 
 ## Decisions & shifts
@@ -48,33 +53,47 @@ Two dev-env potholes cost time and got written into the ops notes so they only c
   - Why — don't put a non-functional form on the live domain while "coming soon" still does the job.
 - **Palette hexes left inline per view.**
   - Why — the error pages must be self-contained (they render when Rails is down), so a shared `:root` stylesheet waits until a third app view justifies it. Flagged, not built.
+- **Privacy leaks get a guardrail, not just a cleanup.**
+  - Why — a new commit deleting a third-party name doesn't remove it from history; codifying a `/write-review` privacy step and wiring it into `/my-bet` kills the class of bug, not just this instance.
 
 ---
 
 ## Gio's contributions
 
-- Merged the day-08 palette (#34) and FE-00 (#35) PRs before the session.
-  - Impact: gave today's re-skin a locked light palette and a landing page to actually re-skin.
-- Handed over the real logo art — horizontal wordmark + square mark.
-  - Impact: the app traded a text placeholder for real brand identity across landing and error pages.
-- Called the branch split and set hard guardrails (full autonomy, no prompts, do not merge).
-  - Impact: a long build → review → PR → devlog run executed without round-trips, and the history stayed clean and independently reviewable.
+> **A frontend morning, a guardrail afternoon — Gio unblocked the build, then caught what shouldn't ship.** Two very different kinds of judgment in one day: taste and identity on the way in, privacy and process on the way out.
+
+**Unblocked the work**
+
+- **Merged the day-08 palette (#34) and FE-00 (#35) before the session.**
+  → *Gave the re-skin a locked light palette and a landing page to actually re-skin.*
+- **Handed over the real logo art — horizontal wordmark + square mark.**
+  → *The app traded a text placeholder for real brand identity across the landing and every error page.*
+
+**Set the guardrails**
+
+- **Called the branch split and the run rules — full autonomy, no prompts, do not merge.**
+  → *A long build → review → PR → devlog run executed without round-trips; history stayed clean and independently reviewable.*
+- **Caught the third-party name in the day's prose and called for a purge plus a permanent fix.**
+  → *Turned a one-off cleanup into a `/write-review` privacy step that guards every future devlog and PR body.*
+- **Asked for the contributions sections to be highlighted, not flattened.**
+  → *This section — and day 07/08's — now leads with the judgment instead of burying it in a flat list.*
 
 ## Sprint health
 
 **On track?** Yes.
 The frontend tranche is moving — FE-00 is fully on-brand and the FE-01 layout is standing. The palette science from day 08 is now proven against real pages instead of living in a spec.
 
-**Planned vs actual**: Planned to re-skin FE-00 and start FE-01 — both done, plus the logo integration and two banked dev-env fixes.
+**Planned vs actual**: Planned to re-skin FE-00 and start FE-01 — both done, plus the logo integration, two banked dev-env fixes, and an unplanned afternoon hardening the review skills after a privacy near-miss.
 
 ## Tomorrow
 
 - **FE-02** — bet type picker (carousel/slider reading from `BetType`, first Stimulus controller): the first interactive card.
 - Once #37/#38 merge, the FE-01 form area is ready for its first real fields.
+- Land the `/write-review` privacy hardening (#40); decide whether day-07's contributions restructure needs its own follow-up PR (day 07 already merged as-is).
 - Consolidate the palette into a shared `:root` stylesheet if a third app view shows up.
 
 ---
 
-_AI assist cost today: $22.58, 23.1M tokens (you-bet only)._
+_AI assist cost today: $32.68, 32.9M tokens (you-bet only)._
 
 > **Betina says:** "Passei o dia dando cor pra uma página que existe pra dizer 'não aposta'. O cassino tem néon piscando; a gente tem papel, um gatinho de ASCII e contraste que passa no WCAG. Aposto que o papel dura mais — e essa é a única aposta segura da casa."

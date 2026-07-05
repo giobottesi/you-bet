@@ -11,6 +11,7 @@
 - **O esqueleto do FE-01 está de pé**: `SimulationsController#new`, header/hero/form-shell/footer na paleta clara, request spec verde.
 - **Duas branches, dois PRs (#37 repaginação, #38 FE-01)** — separados de propósito, pra que merges paralelos não se atropelem.
 - **Um imposto de pegadinha foi pago e anotado**: dois buracos de ambiente de dev (env do rspec, colisão de porta com outro app da máquina) custaram tempo uma vez e não custam mais.
+- **As skills de review ganharam uma trava de privacidade.** Um nome de terceiro escorregou pra prosa do dia (uma linha de devlog, um corpo de PR); foi expurgado do histórico, e aí o `/write-review` ganhou um passo de vazamento de privacidade/identidade e foi ligado ao `/my-bet` pra não repetir.
 
 ---
 
@@ -36,6 +37,10 @@ Repaginação e FE-01 foram em branches separadas por decisão do Gio, em PRs se
 
 Dois buracos de ambiente custaram tempo e foram anotados nas notas de ops pra só custarem uma vez. Primeiro: `rspec` rodado via `docker exec` cai no env **development** do container, onde a config de host-authorization do dev bloqueia o host padrão de teste — 403s que parecem falha de verdade até você forçar `RAILS_ENV=test`. Segundo: `localhost:3000` nessa máquina já está ocupado por outro app, não o you-bet, então cada screenshot teve que ser renderizado **offline** a partir do HTML buscado no container. Chato uma vez, documentado pra sempre.
 
+### As skills de review ganham uma trava de privacidade
+
+No fim do dia, um nome que pertence a outro projeto — não ao you-bet — apareceu na prosa do dia: uma linha de devlog e um corpo de PR. Num repo público de competição, isso não pode ir pro ar. O conserto foi em duas partes. Primeiro a limpeza: expurgar o nome em todo lugar, o que exigiu `git commit --amend` + force-push em duas branches e um `gh pr edit`, porque um commit novo que apaga o vazamento não o apaga do histórico. Depois a trava, pra não repetir: o `/write-review` ganhou um passo de **privacidade & vazamento de identidade** — varrer a prosa *e* o histórico de commits atrás de nomes de terceiros, nomes reais e hosts privados, a lacuna que o grep de segredos do `/safe-bet` pula porque nome de empresa não é API key — mais um escopo `pr <N>` pra que corpos de PR públicos sejam revisáveis, e agora está ligado ao `/my-bet` pra rodar em todo EOD. De quebra, as seções `Contribuições do Gio` dos devlogs dos dias 07 e 08 foram reestruturadas em grupos temáticos e destacados: a lista de bullets plana estava subvendendo o julgamento que registrava.
+
 ---
 
 ## Decisões & viradas
@@ -48,33 +53,47 @@ Dois buracos de ambiente custaram tempo e foram anotados nas notas de ops pra s�
   - Por quê — não colocar um formulário sem função no domínio ao vivo enquanto o "coming soon" ainda dá conta.
 - **Hexes da paleta ficaram inline por view.**
   - Por quê — as páginas de erro precisam ser autossuficientes (renderizam quando o Rails cai), então um stylesheet `:root` compartilhado espera até um terceiro app view justificar. Sinalizado, não construído.
+- **Vazamento de privacidade ganha trava, não só limpeza.**
+  - Por quê — um commit novo que apaga um nome de terceiro não o remove do histórico; codificar um passo de privacidade no `/write-review` e ligá-lo ao `/my-bet` mata a classe do bug, não só esta instância.
 
 ---
 
 ## Contribuições do Gio
 
-- Fez merge dos PRs da paleta do dia 08 (#34) e do FE-00 (#35) antes da sessão.
-  - Impacto: deu à repaginação de hoje uma paleta clara travada e uma landing page pra de fato repaginar.
-- Entregou a arte real do logo — wordmark horizontal + marca quadrada.
-  - Impacto: o app trocou um placeholder de texto por identidade de marca de verdade na landing e nas páginas de erro.
-- Definiu a divisão em branches e cravou as regras (autonomia total, sem prompts, não fazer merge).
-  - Impacto: uma corrida longa de build → review → PR → devlog rodou sem idas e vindas, e o histórico ficou limpo e revisável de forma independente.
+> **Uma manhã de frontend, uma tarde de trava — o Gio desbloqueou o build e depois pegou o que não podia ir pro ar.** Dois tipos bem diferentes de julgamento num dia só: gosto e identidade na entrada, privacidade e processo na saída.
+
+**Desbloqueou o trabalho**
+
+- **Fez merge da paleta do dia 08 (#34) e do FE-00 (#35) antes da sessão.**
+  → *Deu à repaginação uma paleta clara travada e uma landing page pra de fato repaginar.*
+- **Entregou a arte real do logo — wordmark horizontal + marca quadrada.**
+  → *O app trocou um placeholder de texto por identidade de marca de verdade na landing e em toda página de erro.*
+
+**Cravou as travas**
+
+- **Definiu a divisão em branches e as regras da corrida — autonomia total, sem prompts, não fazer merge.**
+  → *Uma corrida longa de build → review → PR → devlog rodou sem idas e vindas; o histórico ficou limpo e revisável de forma independente.*
+- **Pegou o nome de terceiro na prosa do dia e pediu o expurgo mais um conserto permanente.**
+  → *Transformou uma limpeza pontual num passo de privacidade do `/write-review` que protege todo devlog e corpo de PR futuro.*
+- **Pediu que as seções de contribuições fossem destacadas, não achatadas.**
+  → *Esta seção — e as dos dias 07/08 — agora lidera com o julgamento em vez de enterrá-lo numa lista plana.*
 
 ## Saúde do sprint
 
 **No prazo?** Sim.
 A leva de frontend está andando — o FE-00 está totalmente na marca e o layout do FE-01 está de pé. A ciência de paleta do dia 08 agora está provada contra páginas reais, em vez de viver numa spec.
 
-**Planejado vs real**: Planejado repaginar o FE-00 e começar o FE-01 — os dois feitos, mais a integração do logo e dois consertos de ambiente anotados.
+**Planejado vs real**: Planejado repaginar o FE-00 e começar o FE-01 — os dois feitos, mais a integração do logo, dois consertos de ambiente anotados, e uma tarde não planejada endurecendo as skills de review depois de um quase-vazamento de privacidade.
 
 ## Amanhã
 
 - **FE-02** — seletor de tipo de aposta (carrossel/slider lendo de `BetType`, primeiro controller Stimulus): o primeiro card interativo.
 - Assim que #37/#38 fizerem merge, a área de formulário do FE-01 fica pronta pros primeiros campos reais.
+- Fazer merge do hardening de privacidade do `/write-review` (#40); decidir se a reestruturação de contribuições do dia 07 precisa de um PR de follow-up próprio (o dia 07 já foi mergeado como estava).
 - Consolidar a paleta num stylesheet `:root` compartilhado se um terceiro app view aparecer.
 
 ---
 
-_Custo de assistência de IA hoje: $22.58, 23,1M tokens (só you-bet)._
+_Custo de assistência de IA hoje: $32.68, 32,9M tokens (só you-bet)._
 
 > **Betina diz:** "Passei o dia dando cor pra uma página que existe pra dizer 'não aposta'. O cassino tem néon piscando; a gente tem papel, um gatinho de ASCII e contraste que passa no WCAG. Aposto que o papel dura mais — e essa é a única aposta segura da casa."
