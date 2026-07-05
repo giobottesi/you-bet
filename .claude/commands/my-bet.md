@@ -113,9 +113,9 @@ _AI assist cost today: {$X.XX, N tokens, you-bet only — from Step 1; omit line
 
 ### Quality check before saving — run /write-review
 
-Before saving, run the full `/write-review` flow over both the EN and PT devlog files (fact-check, duplication, cohesion/structure, **privacy/identity leak**, tone). That skill is the source of truth for the prose bar — don't hand-roll a lighter check here. It catches what a quick self-read misses: a stale fact that contradicts the code, an employer/third-party name that can't ship on a public repo, a flat contributions section.
+Before saving, run the full `/write-review` flow over both the EN and PT devlog files. That skill is the source of truth for the prose bar — don't hand-roll a lighter check here. At a glance it covers: stale facts that contradict the code (Step 1), internal + cross-day repetition (Step 2), broken flow and a flat contributions section (Step 3), employer/third-party leaks that can't ship on a public repo (Step 4), tone (Step 5).
 
-Surface findings, fix, then continue. Also confirm length lands ~80-120 lines (compress if over 150).
+Surface findings, fix, then continue. Also confirm length lands ~80-120 lines (compress if over 150) — the one bar `/write-review` doesn't check.
 
 ---
 

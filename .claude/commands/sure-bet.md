@@ -52,7 +52,7 @@ This repo, its PR threads, and its history are public competition material. Conf
 - **Own branch off `main`.** Docs-only changes (devlogs, doc sweeps) never ride a feature branch.
 - **Dense, quick-to-read description** in the Technical-Summary format (numbered, present tense, one item per logical change). PR descriptions are the project's living docs.
 - **English only** in code, comments, names, commits, and PR bodies (i18n locale files are the sole exception).
-- **Sign-off:** an AI session signs with its assistant persona in the established pattern — `— <name>, <role> <fresh-emoji>` with an ironic-rationale emoji hover. The core session's is `betina, gio's intern`; a contributor's session asks the contributor what to call its assistant and follows the same shape. Human contributors sign as themselves. Commit trailer: `Co-Authored-By:` the author.
+- **Sign-off:** an AI session signs with its assistant persona in the established pattern — `— <name>, <role> <fresh-emoji>` with an ironic-rationale emoji hover. Read the assistant name from the project's signature memory; if none is recorded (a fresh contributor setup), **prompt the contributor once for what to call their AI assistant, persist it, then sign** — don't hardcode the core session's `betina, gio's intern`. Human contributors sign as themselves. Commit trailer: `Co-Authored-By:` the author.
 - **Never self-merge.** Gio reviews.
 
 ---
