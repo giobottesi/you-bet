@@ -49,12 +49,28 @@ O grosso do *pensar* de hoje virou um registro de decisão escopando os próximo
 
 Pouco teclado, muita direção — o trabalho de verdade do dia foi julgamento, e ele definiu o formato da próxima semana:
 
-- **Enquadrou o BE 17 como compartilhar ao tocar, mobile-first, público BR.** Esse enquadramento de produto é o que fez "melhor custo-benefício" resolver para renderização client-side — a opção Chromium no servidor nunca sobreviveu ao frame dele. Impacto: zero infra de servidor a mais no card de compartilhamento, respeitando a restrição de assets grátis.
-- **Definiu a filosofia de controller do FE: view simples primeiro, não dourar.** Impacto: libera toda a trilha FE para andar rápido sem abstração prematura de controller; padrão de controller se conquista de fluxo real, não se chuta antes.
-- **Ampliou o escopo do BE 18 para cobrir o Top 10 de IA/LLM.** Impacto: transforma uma passagem rotineira de segurança web no artefato de proveniência que a declaração de uso de IA da competição exige — uma auditoria, dois entregáveis.
-- **Chamou o sequenciamento dos cards:** BE 16 espera, BE 19 vai agora, PR de docs só ramifica depois dos merges de arquivo compartilhado. Impacto: nenhum doc de roadmap atropelado, nenhum trabalho jogado fora num card que não bloqueia nada.
-- **Mergeou #30 → #31 → #32 ele mesmo, um de cada vez.** Impacto: três diffs limpos e revisáveis na `main`, conflitos de arquivo compartilhado ficaram visíveis em vez de embolar.
-- **Chamou o ponto de parada.** Percebeu que o tanque do backend estava vazio e virou pro design. Impacto: nenhum código de backend cansado no ar; os rascunhos de amanhã liberam a trilha FE que estava esperando.
+> **Dia de direção: seis decisões, zero tecla jogada fora.** A alavancagem veio de um único registro de decisão escopando os próximos cinco cards — cada decisão abaixo ou apagou trabalho ou barrou um erro antes de custar nada.
+
+**Enquadramento de produto & escopo**
+
+- **BE 17 → compartilhar ao tocar, mobile-first, público BR.** Esse frame é o que fez "melhor custo-benefício" resolver para renderização client-side; a opção Chromium no servidor nunca sobreviveu a ele.
+  → *Zero infra de servidor a mais no card de compartilhamento, respeitando a restrição de assets grátis.*
+- **BE 18 → ampliado para o Top 10 de IA/LLM.** Uma passagem rotineira de segurança web vira o artefato de proveniência que a declaração de uso de IA da competição exige.
+  → *Uma auditoria, dois entregáveis.*
+
+**Sequenciamento & execução**
+
+- **Chamou a ordem dos cards:** BE 16 espera, BE 19 vai agora, PR de docs só ramifica depois dos merges de arquivo compartilhado.
+  → *Nenhum doc de roadmap atropelado, nenhum trabalho num card que não bloqueia nada.*
+- **Mergeou #30 → #31 → #32 ele mesmo, um de cada vez.**
+  → *Três diffs limpos e revisáveis na `main`; conflitos de arquivo compartilhado ficaram visíveis em vez de embolar.*
+
+**Julgamento**
+
+- **Definiu a filosofia de controller do FE — view simples primeiro, não dourar.** Padrão de controller se conquista de fluxo real, não se chuta antes.
+  → *Libera toda a trilha FE para andar rápido sem abstração prematura.*
+- **Chamou o ponto de parada.** Percebeu que o tanque do backend estava vazio e virou pro design.
+  → *Nenhum código de backend cansado no ar; os rascunhos de amanhã liberam a trilha FE que estava esperando.*
 
 ## Melhorias de IA / ferramental
 
