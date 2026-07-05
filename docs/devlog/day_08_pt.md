@@ -53,18 +53,28 @@ O Gio quer grão de papel no fundo e como camada nas imagens depois — mas marc
 
 ## Contribuições do Gio
 
-- Pegou que a primeira extração leu o hex rotulado velho em vez dos swatches reais, e apontou a fonte correta.
-  - Impacto: toda a paleta downstream é amostrada das cores certas — uma base errada aqui teria envenenado cada token.
-- Fez a decisão de produto dark→light.
-  - Impacto: redefiniu o problema de design e forçou a divisão de acessibilidade que agora protege cada página futura.
-- Decisão de gosto: surface muito amarela, suaviza.
-  - Impacto: um papel mais neutro-quente que ainda passa AA — o tipo de julgamento que a matemática de contraste sozinha não faz.
-- Confirmou os pretos escuros pro texto de corpo.
-  - Impacto: travou a única opção legível de texto no claro e manteve o preto puro pro logo, onde ele pertence.
-- Escopou a textura como nice-to-have de alta prioridade, não dívida do app.
-  - Impacto: manteve o dia focado garantindo que o grão chegue com abordagem limpa e sem dependência.
-- Congelou a paleta e commitou a landing FE-00 + páginas de erro ele mesmo, depois definiu o fluxo de branch/push/review dos docs.
-  - Impacto: transformou uma exploração de design em artefatos entregues e revisáveis (PR #34) e uma landing no board.
+> **Dia de gosto: pouco teclado, muito julgamento — seis decisões que definiram toda a fundação visual.** A matemática de contraste mede uma cor; ela não decide que as páginas devem ser quentes. Isso foi tudo Gio.
+
+**Decisões de produto & gosto**
+
+- **Fez a decisão de produto dark→light.** As páginas devem ser quentes e acolhedoras — a postura anti-Tigrinho lê melhor no papel do que no carvão.
+  → *Redefiniu o problema de design e forçou a divisão de acessibilidade que agora protege cada página futura.*
+- **Pegou o surface lendo amarelo demais — suaviza.** `#F1E7D7` → `#EDE9E2`, neutro sem cair abaixo do AA.
+  → *Um papel mais neutro-quente que a matemática de contraste sozinha nunca pediria.*
+- **Confirmou o quase-preto pro texto de corpo.**
+  → *Travou a única opção legível de texto no claro; manteve o preto puro pro logo, onde ele pertence.*
+
+**Manteve o trabalho honesto**
+
+- **Pegou a primeira extração de paleta lendo o hex rotulado velho em vez dos swatches reais**, e apontou a fonte correta.
+  → *Toda a paleta downstream amostra das cores certas — uma base errada aqui teria envenenado cada token.*
+- **Escopou a textura de fundo como nice-to-have de alta prioridade, não dívida do app.**
+  → *Manteve o dia focado garantindo que o grão chegue sem dependência.*
+
+**Entregou & definiu processo**
+
+- **Congelou a paleta, commitou a landing FE-00 + páginas de erro ele mesmo, e definiu o fluxo de branch/push/review dos docs.**
+  → *Transformou uma exploração de design em artefatos entregues e revisáveis (PR #34) e uma landing no board.*
 
 ## Saúde do sprint
 

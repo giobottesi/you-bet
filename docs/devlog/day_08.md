@@ -53,18 +53,28 @@ Separately, the parked FE-00 work got committed: the landing page (`home#index`,
 
 ## Gio's contributions
 
-- Caught that the first extraction read the stale labeled hex instead of the real swatches, and pointed at the correct source.
-  - Impact: the entire downstream palette is sampled from the right colors — a wrong base here would have poisoned every token.
-- Made the dark→light product call.
-  - Impact: redefined the design problem and forced the accessibility split that now protects every future page.
-- Taste call: surface too yellow, mute it.
-  - Impact: a warmer-neutral paper that still clears AA — the kind of judgment contrast math alone won't make.
-- Confirmed dark blacks for body text.
-  - Impact: locked the one legible text option on light and kept pure black for the logo where it belongs.
-- Scoped texture as a high-priority nice-to-have, not app debt.
-  - Impact: kept today focused while guaranteeing the grain lands with a clean, dependency-free approach.
-- Froze the palette and committed the FE-00 landing + error pages himself, then set the docs branch/push/review workflow.
-  - Impact: turned a design exploration into shipped, reviewable artifacts (PR #34) and a landing page on the board.
+> **Taste day: light on keystrokes, heavy on judgment — six calls that set the whole visual foundation.** Contrast math can measure a color; it can't decide the pages should feel warm. That was all Gio.
+
+**Product & taste calls**
+
+- **Made the dark→light product call.** The pages should feel warm and welcoming — the anti-Tigrinho posture reads better on paper than charcoal.
+  → *Redefined the design problem and forced the accessibility split that now protects every future page.*
+- **Caught the surface reading too yellow — mute it.** `#F1E7D7` → `#EDE9E2`, neutral without dropping below AA.
+  → *A warmer-neutral paper the contrast math alone would never have asked for.*
+- **Confirmed dark near-black for body text.**
+  → *Locked the one legible text option on light; kept pure black for the logo where it belongs.*
+
+**Kept the work honest**
+
+- **Caught the first palette extraction reading the stale labeled hex instead of the real swatches**, and pointed at the correct source.
+  → *The whole downstream palette samples from the right colors — a wrong base here would have poisoned every token.*
+- **Scoped background texture as a high-priority nice-to-have, not app debt.**
+  → *Kept today focused while guaranteeing the grain lands dependency-free.*
+
+**Shipped & set process**
+
+- **Froze the palette, committed the FE-00 landing + error pages himself, and set the docs branch/push/review flow.**
+  → *Turned a design exploration into shipped, reviewable artifacts (PR #34) and a landing page on the board.*
 
 ## Sprint health
 
