@@ -9,6 +9,7 @@
 - Dia gasto na meta-camada em vez de features: endurecemos toda a stack de review do contribuidor — `/write-review`, um novo gate `/sure-bet` de definition-of-done, e plugamos o `/write-review` dentro do `/my-bet`.
 - Entregamos um ganho de DX pequeno — `git-delta` como pager do git, documentado num novo `docs/DEV_TOOLING.md` (PR #44) — pra que os diffs deste repo cheio de prosa parem de parecer raspadinha.
 - Amadurecemos o sistema de memória: pegamos dois conflitos vivos entre skill e memória e codificamos a regra que impede eles de voltarem.
+- Colocamos o novo portão no primeiro teste de verdade — varremos todos os PRs abertos sob as regras endurecidas. Todos em conformidade, zero correção. A barra segurou no contato.
 - FE 02 escorregou um dia de propósito. As ferramentas que protegem a qualidade eram o que fazia mais sentido consertar primeiro.
 
 ---
@@ -27,6 +28,10 @@ A stack de skills do contribuidor saiu de "checklist bacana" pra uma barra de fa
 
 A vitória silenciosa do dia. Dois conflitos vivos apareceram onde a memória tinha copiado os internals de um skill e depois derivado: uma assinatura da betina desatualizada, e uma contagem de passos do `/safe-bet` que não batia mais com o skill real. Causa-raiz nomeada e codificada — memória guarda o *porquê* e a decisão; o arquivo do skill continua a fonte única da verdade pro *como*. Cópias derivam; ponteiros não. Esse único princípio aposenta uma classe inteira de bugs recorrentes.
 
+### O portão passou no próprio primeiro teste
+
+Uma barra de qualidade que ninguém rodou em trabalho real é uma hipótese. Então, no momento em que as regras foram mergeadas, elas foram apontadas pro conjunto aberto ao vivo: todo PR aberto — os de prosa (devlogs, a série de reflexões) e os dois PRs de código de FE (#37 re-skin, #38 landing) — varridos contra a barra endurecida do `/write-review` e `/sure-bet`. Resultado: todos em conformidade, zero correção, zero force-push. Os PRs escritos *depois* do hardening se conformaram sozinhos; pros dois que vieram antes, o único vazamento real que apareceu — um nome de terceiro na prosa do dia 09 — já tinha sido trocado por um neutro "outro app" durante a limpeza daquele dia. Aí saiu uma faxina de brinde: apaguei a branch de hardening agora redundante (os commits já tinham entrado no main via squash, então era duplicata) e podei as refs de rastreamento remoto obsoletas. O portão não só existia — ele segurou.
+
 ---
 
 ## Decisões & mudanças
@@ -37,6 +42,8 @@ A vitória silenciosa do dia. Dois conflitos vivos apareceram onde a memória ti
   - Por quê — dicas de DX não têm relação com o trabalho de feature em andamento; misturar numa branch de feature viola a higiene de PR pequeno que o projeto segue.
 - **Memória para de espelhar internals de skill.**
   - Por quê — dois conflitos entregaram comportamento errado porque uma cópia de memória dos passos de um skill ficou velha. Aponte pra fonte da verdade em vez de duplicá-la.
+- **Validar o portão contra os PRs ao vivo no dia em que ele merga, não depois.**
+  - Por quê — uma barra que nunca rodou em trabalho real não está provada. Varrer o conjunto aberto inteiro na hora transformou "deve segurar" em "segura" e não achou nada pra corrigir — o sinal mais forte possível de que o hardening era real.
 
 ---
 
@@ -47,6 +54,7 @@ A vitória silenciosa do dia. Dois conflitos vivos apareceram onde a memória ti
 **Escopo & sequenciamento**
 - Chamou o adiamento do FE 02 — endureceu o portão de review *antes* da próxima feature, não depois. → *Todo PR restante agora passa por uma barra de qualidade imposta, não mais só esperançosa.*
 - Escopou a nota do delta no próprio PR a partir de main em vez de pendurar na branch de hardening. → *Manteve o diff só de docs e o histórico da branch honesto.*
+- Chamou a varredura de PRs no momento em que as regras mergaram — validar o portão no conjunto aberto ao vivo, e aí limpar a branch morta. → *Confirmou que todo o conjunto aberto passa na nova barra sem retrabalho; o hardening foi provado, não presumido.*
 
 **Julgamento**
 - Puxou por diffs *visuais* melhores justamente porque o repo é cheio de prosa — conectou uma escolha de tooling ao formato real do trabalho. → *`git-delta` escolhido pro loop de review, não por novidade.*
@@ -58,7 +66,7 @@ A vitória silenciosa do dia. Dois conflitos vivos apareceram onde a memória ti
 **No trilho?** Sim
 Um dia de investimento em processo no meio do sprint; a trilha de FE está uma fatia atrás, mas a infra de qualidade está agora à frente.
 
-**Planejado vs real**: Planejado FE 02; na prática endureci os skills de review + entreguei o tooling do delta + amadureci o sistema de memória. Uma troca deliberada, não um atraso.
+**Planejado vs real**: Planejado FE 02; na prática endureci os skills de review + entreguei o tooling do delta + amadureci o sistema de memória + varri o conjunto de PRs abertos deixando tudo em conformidade com a nova barra. Uma troca deliberada, não um atraso.
 
 ## Amanhã
 
@@ -67,6 +75,6 @@ Um dia de investimento em processo no meio do sprint; a trilha de FE está uma f
 
 ---
 
-_Custo de IA hoje: $38.23, 35.6M tokens (só you-bet)._
+_Custo de IA hoje: $41.58, 38.8M tokens (só you-bet)._
 
 > **Betina diz:** "Construí um portão, um linter e um jeito mais bonito de olhar pros meus próprios erros. Amanhã eu erro de novo, mas em alta resolução."
