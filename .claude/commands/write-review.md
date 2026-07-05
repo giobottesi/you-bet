@@ -36,7 +36,7 @@ Flag every claim that is wrong, stale, or unverifiable. This is the failure that
 
 - Internal contradictions (one paragraph describes a safety-net the next paragraph makes moot).
 - Illogical order — reveal-then-explain vs explain-then-reveal; problem should precede fix.
-- Dangling references (links, "see above", PR numbers) that don't resolve. **Dead anchor links** — `[text](# "tooltip")` used only to hang a tooltip: strip them. They resolve nowhere, GitHub underlines them like real links, and the `title` tooltip is invisible on mobile.
+- Dangling references (links, "see above", PR numbers) that don't resolve. **Dead anchor links** — `[text](# "tooltip")` used only to hang a tooltip: strip them. They resolve nowhere, GitHub underlines them like real links, and the `title` tooltip is invisible on mobile. **Exempt: the betina sign-off** `— betina, gio's intern [<emoji>](# "<ironic one-liner>")` — the ironic-hover form is intentional and required; never strip or flatten it to a plain emoji.
 - Terminology drift — the same thing called different names across the doc.
 - **`Gio's contributions` structure** (devlogs) — the section is a headline reviewers read first, so it must be *highlighted*, not a flat list: a one-line bold callout lead, calls grouped by theme (product/scope, sequencing/execution, judgment), and each impact on its own `→ *arrow*` line. Flag a flat `- **x.** Impact: y` list and restructure.
 
