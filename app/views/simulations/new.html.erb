@@ -1,0 +1,161 @@
+<% content_for :title, "You-Bet — Run the numbers" %>
+
+<div class="page">
+  <header class="site-header">
+    <button type="button" class="site-header__menu" aria-label="Menu">☰</button>
+    <a class="site-header__logo" href="<%= root_path %>">
+      <img src="/you-bet-mark.svg" alt="You-Bet" width="44" height="41">
+    </a>
+    <a class="site-header__help" href="#help">Help</a>
+  </header>
+
+  <section class="hero">
+    <h1 class="hero__what">See the real cost of your bets.</h1>
+    <p class="hero__why">
+      "Just a little each week" adds up. You-Bet turns your betting habit into the
+      number you'd actually have if that money had gone somewhere that pays you back.
+    </p>
+  </section>
+
+  <section class="form-area" aria-label="Simulation form">
+    <%= form_with model: @simulation, url: "#", method: :post, data: { turbo: false } do |form| %>
+      <%# FE-02 bet type picker · FE-03 weekly amount · FE-04 timeframe slider land here %>
+      <div class="form-area__placeholder">
+        <p class="form-area__hint">Your bet setup goes here — coming together card by card.</p>
+      </div>
+      <%= form.button "See the damage", type: "submit", class: "cta", disabled: true %>
+    <% end %>
+  </section>
+
+  <nav class="site-links" aria-label="Site links">
+    <a href="#about">About</a>
+    <a href="#how">How it works</a>
+    <a href="#sources">Sources</a>
+  </nav>
+
+  <footer class="site-footer" id="help">
+    <p class="site-footer__help">
+      Betting stops being fun? <a href="https://www.cvv.org.br">CVV 188</a> ·
+      <a href="https://jogadoresanonimos.com.br">Jogadores Anônimos</a>
+    </p>
+    <p class="site-footer__note">You-Bet — the house always wins. See by how much.</p>
+  </footer>
+</div>
+
+<style>
+  .page {
+    --bg: #FBF6EC;
+    --surface: #EDE9E2;
+    --border: #DFC3DA;
+    --text: #3B3239;
+    --muted: #6E6358;
+    --coral: #EC6258;
+    --cyan-ink: #377066;
+    --yellow: #F4BB5C;
+
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 48rem;
+    margin: 0 auto;
+    padding: 1.25rem;
+    color: var(--text);
+    font-family: "Libre Franklin", system-ui, sans-serif;
+  }
+
+  body { background: #FBF6EC; }
+  .page a { color: var(--cyan-ink); }
+
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 3px solid var(--border);
+  }
+  .site-header__menu {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--text);
+    cursor: pointer;
+  }
+  .site-header__logo { flex: 0 0 auto; line-height: 0; }
+  .site-header__logo img { display: block; height: 44px; width: auto; }
+  .site-header__help {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.85rem;
+    text-decoration: none;
+  }
+
+  .hero { padding: 2rem 0; }
+  .hero__what {
+    margin: 0 0 1rem;
+    font-size: 2rem;
+    line-height: 1.2;
+    font-weight: 800;
+    color: var(--text);
+    text-shadow: 3px 3px 0 var(--coral);
+  }
+  .hero__why {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+
+  .form-area {
+    padding: 1.5rem;
+    background: var(--surface);
+    border: 3px solid var(--border);
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.25);
+  }
+  .form-area__placeholder {
+    padding: 2rem 1rem;
+    border: 2px dashed var(--border);
+    text-align: center;
+  }
+  .form-area__hint { margin: 0; color: var(--muted); font-size: 0.95rem; }
+
+  .cta {
+    display: block;
+    width: 100%;
+    margin-top: 1.5rem;
+    padding: 0.9rem 1rem;
+    background: var(--coral);
+    border: 2px solid #000;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+    color: #000;
+    font-weight: 800;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+  }
+  .cta:disabled { opacity: 0.55; cursor: not-allowed; }
+
+  .site-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    padding: 2rem 0 1rem;
+    font-size: 0.9rem;
+  }
+
+  .site-footer {
+    padding-top: 1.5rem;
+    border-top: 3px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .site-footer__note { margin: 0.75rem 0 0; }
+
+  @media (min-width: 640px) {
+    .page { padding: 2rem; }
+    .hero__what { font-size: 2.5rem; }
+  }
+</style>
