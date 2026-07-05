@@ -138,6 +138,10 @@ Every number in the app is backed by a verified source, rendered as a `/sources`
 
 ## Competition Alignment
 
+> **Disclaimer**: Media outlets (BNLData) report the "Desafio Contra Bets" R$100k prize pool may lack required SPA-MF authorization under Lei 5.768/1971. Any liability falls on the organizer (Projeto Brief/Quid), not entrants — but prize payout could be delayed or contested. Doesn't block submission.
+
+> **Naming note**: "UBET"/"YouBet" is used by live commercial betting brands (Tabcorp's UBET, youbet.com) — fine for this non-commercial demo at `youbet.gio.show`, but revisit the name before any commercial launch. Lei 14.790/2023 (SPA authorization) doesn't apply here since the app takes no real bets or money.
+
 ### Submission Strategy
 
 The challenge requires content formats: video, reels, carousel, meme, or image. A web app URL alone may not qualify.
