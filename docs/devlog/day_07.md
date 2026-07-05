@@ -47,14 +47,28 @@ Most of today's *thinking* went into a decision record scoping the next five car
 
 ## Gio's contributions
 
-Light on keystrokes, heavy on direction — the day's real work was judgment, and it set the shape of the next week:
+> **Direction day: six calls, zero throwaway keystrokes.** The leverage came from one decision record scoping the next five cards — each call below either deleted work or stopped a mistake before it cost anything.
 
-- **Framed BE 17 as tap-to-share, mobile-first, BR audience.** That product frame is what made "best cost-value" resolve to client-side rendering — the server-Chromium option never survived his framing. Impact: zero added server infra for the share card, honors the free-assets constraint.
-- **Set the FE controller philosophy: plain views first, don't gold-plate.** Impact: unblocks the whole FE track to move fast without premature controller abstractions; controller patterns get earned from real flows, not guessed up front.
-- **Widened BE 18's scope to cover AI/LLM Top 10.** Impact: turns a routine web-security pass into the provenance artifact the competition's AI-usage declaration needs — one audit, two deliverables.
-- **Called the card sequencing:** BE 16 waits, BE 19 goes now, docs PR branches only after the shared-file merges land. Impact: no clobbered roadmap docs, no wasted work on a card that blocks nothing.
-- **Merged #30 → #31 → #32 himself, one at a time.** Impact: three clean reviewable diffs on `main`, shared-file conflicts stayed visible instead of tangling.
-- **Called the stop point.** Recognized the backend tank was empty and pivoted to design. Impact: no tired backend code shipped; tomorrow's drafts unblock the waiting FE track.
+**Product & scope framing**
+
+- **BE 17 → tap-to-share, mobile-first, BR audience.** That frame is what made "best cost-value" resolve to client-side rendering; the server-Chromium option never survived it.
+  → *Zero added server infra for the share card, honors the free-assets constraint.*
+- **BE 18 → widened to the AI/LLM Top 10.** A routine web-security pass becomes the provenance artifact the competition's AI-usage declaration needs.
+  → *One audit, two deliverables.*
+
+**Sequencing & execution**
+
+- **Called the card order:** BE 16 waits, BE 19 goes now, docs PR branches only after the shared-file merges land.
+  → *No clobbered roadmap docs, no work on a card that blocks nothing.*
+- **Merged #30 → #31 → #32 himself, one at a time.**
+  → *Three clean reviewable diffs on `main`; shared-file conflicts stayed visible instead of tangling.*
+
+**Judgment**
+
+- **Set the FE controller philosophy — plain views first, don't gold-plate.** Controller patterns get earned from real flows, not guessed up front.
+  → *Unblocks the whole FE track to move fast without premature abstractions.*
+- **Called the stop point.** Recognized the backend tank was empty and pivoted to design.
+  → *No tired backend code shipped; tomorrow's drafts unblock the waiting FE track.*
 
 ## AI / tooling improvements
 
