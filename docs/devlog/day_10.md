@@ -78,3 +78,20 @@ One process-investment day mid-sprint; the FE track is one slice behind but the 
 _AI assist cost today: $41.58, 38.8M tokens (you-bet only)._
 
 > **Betina says:** "Built a gate, a linter, and a prettier way to look at my own mistakes. Tomorrow I get to make new ones in higher resolution."
+
+---
+
+## Appendix — the Sunday phone sesh
+
+Written up after the fact; the whole thing happened from a phone, mid-Sunday, right as Brazil lost its World Cup match and dropped out — ironic timing for a debugging session that kept ending the same way: the house wins the first few tries.
+
+`youbet.gio.show` came back from its first custom-domain deploy as one long 500. What looked at first like a DNS or Heroku cert issue turned out to be two real, independent bugs, only visible once the actual deploy path got run for real instead of theorized about:
+
+- **The database was never migrated.** No release phase existed at all, and once one got added, Heroku's single Postgres add-on couldn't support the three separate `solid_cache`/`solid_queue`/`solid_cable` databases the app was configured for. Collapsing them onto the primary database still wasn't enough — `db:prepare`'s "does this database exist" check meant their tables never actually got created, so every request touching `Rack::Attack`'s cache-backed throttle counters 500'd.
+- **tailwind.css never made it into a single build.** A second, unrelated 500 (`Propshaft::MissingAssetError`) survived two separate rake-hook attempts — clearing Propshaft's memoized asset listing, then shelling out to the CLI directly at different points in the task graph — before the actual cause surfaced: `app/assets/builds/.keep` was never committed, so the directory doesn't exist yet when Rails registers its asset load paths at boot on a fresh Heroku checkout. Gio found that one with a plain Google search, faster than the local reproduction loop was converging on it.
+
+Both shipped in PR #46, verified end-to-end against a real Postgres instance and a real from-scratch checkout — not just working-tree state — before being called done. Running the actual test suite as part of `/sure-bet`, not just manual reproduction, caught a third, quieter regression the fix itself introduced (the schema-loading hook crashing `db:prepare` in test/dev) before it ever reached a PR.
+
+**Gio's contribution, this round:** drove every pivot in the diagnosis from a phone — ruled out DNS, ran the first `db:migrate` himself from the Heroku console, pushed back on release-phase safety before letting it ship, and beat two rounds of AI-authored rake hackery to the real fix with a search engine. Scoreboard for the day: Brazil 0, house edge 2 (two wrong guesses before the right one), Gio 1 (the actual fix).
+
+> **Betina says:** "Brazil's out of the Cup and my first two fixes were out by half-time too. At least the app I'm debugging is the one that warns people the house always wins first — I just didn't expect to be the house's opening demo."

@@ -78,3 +78,20 @@ Um dia de investimento em processo no meio do sprint; a trilha de FE está uma f
 _Custo de IA hoje: $41.58, 38.8M tokens (só you-bet)._
 
 > **Betina diz:** "Construí um portão, um linter e um jeito mais bonito de olhar pros meus próprios erros. Amanhã eu erro de novo, mas em alta resolução."
+
+---
+
+## Apêndice — o plantão pelo celular de domingo
+
+Escrito depois dos fatos; a coisa toda aconteceu pelo celular, no meio de um domingo, bem na hora em que o Brasil perdeu o jogo da Copa e caiu — timing irônico pra uma sessão de debug que insistia em terminar do mesmo jeito: a casa ganha nas primeiras tentativas.
+
+`youbet.gio.show` voltou do primeiro deploy no domínio próprio como um 500 contínuo. O que parecia de cara um problema de DNS ou certificado do Heroku virou dois bugs reais e independentes, só visíveis depois que o caminho de deploy de verdade rodou de verdade, em vez de só ser teorizado:
+
+- **O banco nunca foi migrado.** Não existia fase de release nenhuma, e depois que uma foi criada, o add-on único de Postgres do Heroku não suportava os três bancos separados (`solid_cache`/`solid_queue`/`solid_cable`) que o app tinha configurado. Juntar tudo no banco principal ainda não bastou — a checagem "esse banco já existe" do `db:prepare` fazia com que as tabelas nunca fossem criadas de fato, então toda requisição que tocava os contadores de throttle do `Rack::Attack` (que usam o cache) dava 500.
+- **O tailwind.css nunca entrava num único build.** Um segundo 500, sem relação com o primeiro (`Propshaft::MissingAssetError`), sobreviveu a duas tentativas de gambiarra via rake — limpar o cache de arquivos do Propshaft, depois chamar a CLI direto em pontos diferentes do grafo de tasks — antes da causa real aparecer: `app/assets/builds/.keep` nunca tinha sido commitado, então a pasta não existe ainda quando o Rails registra os caminhos de assets no boot, num checkout novo do Heroku. O Gio achou essa com uma busca simples no Google, mais rápido do que o loop de reprodução local estava conseguindo convergir.
+
+Os dois foram resolvidos no PR #46, verificados de ponta a ponta contra uma instância real de Postgres e um checkout limpo de verdade — não só o estado da working tree — antes de serem dados como prontos. Rodar a suíte de testes de verdade como parte do `/sure-bet`, não só reprodução manual, pegou uma terceira regressão, mais discreta, que o próprio conserto tinha introduzido (o hook de carregar schema quebrando o `db:prepare` em test/dev), antes de chegar a virar PR.
+
+**Contribuição do Gio nessa rodada:** conduziu cada virada do diagnóstico pelo celular — descartou DNS, rodou o primeiro `db:migrate` ele mesmo pelo console do Heroku, questionou a segurança da fase de release antes de deixar subir, e venceu duas rodadas de gambiarra em rake escritas por IA com uma busca no Google. Placar do dia: Brasil 0, house edge 2 (dois palpites errados antes do certo), Gio 1 (o conserto de verdade).
+
+> **Betina diz:** "O Brasil caiu da Copa e meus dois primeiros consertos também caíram antes do intervalo. Pelo menos o app que eu tava debugando é o que avisa que a casa sempre ganha primeiro — só não esperava ser a demonstração de abertura da casa."
