@@ -5,3 +5,12 @@ en:
   locale_toggle:
     pt_BR: "Português"
     en: "English"
+
+  bet_types:
+    sports_singles: "Sports singles"
+    accumulator_3: "3-leg accumulator"
+    accumulator_5: "5-leg accumulator"
+    slots_tigrinho: "Slots (Tigrinho)"
+    crash_aviator: "Crash (Aviator)"
+    lottery: "Lottery"
+    roulette: "Roulette"

@@ -1,6 +1,37 @@
 <%# locals: (form:) %>
-<%# FE-02 — bet type picker widget mounts on the bet-type-picker Stimulus controller %>
-<section class="form-section" data-controller="bet-type-picker">
-  <h2 class="form-section__label">What do you bet on?</h2>
-  <p class="form-section__hint">Bet type picker — FE-02.</p>
+<%# FE-02 — bet type picker: multi-select paper-checkbox slider on the bet-type-picker Stimulus controller %>
+<section class="bet-picker" data-controller="bet-type-picker">
+  <div class="bet-picker__head">
+    <h2 class="bet-picker__label">What do you bet on?</h2>
+    <span class="bet-picker__count" data-bet-type-picker-target="count" data-empty="true" aria-live="polite"></span>
+  </div>
+  <p class="bet-picker__hint">Pick every kind of bet you make — each carries its own house edge.</p>
+
+  <div class="bet-slider">
+    <div class="bet-slider__controls">
+      <button type="button" class="bet-slider__arrow"
+              data-bet-type-picker-target="prev" data-action="bet-type-picker#scrollPrev" aria-label="Scroll left">‹</button>
+      <button type="button" class="bet-slider__arrow"
+              data-bet-type-picker-target="next" data-action="bet-type-picker#scrollNext" aria-label="Scroll right">›</button>
+    </div>
+    <div class="bet-slider__viewport" data-bet-type-picker-target="viewport">
+      <div class="bet-carousel" role="group" aria-label="Bet types"
+           data-bet-type-picker-target="carousel"
+           data-action="scroll->bet-type-picker#sync change->bet-type-picker#validate">
+        <% @bet_types.each_with_index do |bet_type, index| %>
+          <label class="bet-card" style="--bet-accent: <%= bet_card_accent(index) %>">
+            <%= check_box_tag "bet_type_keys[]", bet_type.key, false,
+                  id: "bet_type_#{bet_type.key}",
+                  data: { bet_type_picker_target: "checkbox" } %>
+            <span class="bet-card__mark" aria-hidden="true"></span>
+            <span class="bet-card__name"><%= bet_type.display_name %></span>
+            <% edge = house_edge_label(bet_type) %>
+            <% if edge %>
+              <abbr class="bet-card__edge" title="Vantagem da casa — a fatia que a casa embolsa de cada aposta">casa <span><%= edge %></span></abbr>
+            <% end %>
+          </label>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </section>

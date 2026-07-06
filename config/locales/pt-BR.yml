@@ -21,3 +21,12 @@ pt-BR:
   locale_toggle:
     pt_BR: "Português"
     en: "English"
+
+  bet_types:
+    sports_singles: "Apostas simples"
+    accumulator_3: "Múltipla de 3"
+    accumulator_5: "Múltipla de 5"
+    slots_tigrinho: "Slots (Tigrinho)"
+    crash_aviator: "Crash (Aviator)"
+    lottery: "Loteria"
+    roulette: "Roleta"

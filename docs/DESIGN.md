@@ -190,13 +190,15 @@ Concrete, reusable treatments pulled from the magicagem palette spike (PR #47, n
 
 ## Design-refinement references (unreviewed)
 
-Candidate texture/whimsy demos gathered 2026-07-06 for a later refinement pass — **not yet vetted for fit or license**. Reimplement from scratch rather than copy-paste (see licensing note below); treat these as inspiration only.
+Candidate texture/whimsy demos gathered 2026-07-06 for a later refinement pass — **not yet vetted for fit or license**. Reimplement from scratch rather than copy-paste (see licensing note below); treat these as inspiration only. Reviewed + annotated 2026-07-06 (fit verdict against the locked hard-square / hard-offset-shadow / `feTurbulence`-grain direction):
 
-- https://codepen.io/cssparadise/pen/gbMdgOR
-- https://codepen.io/aitchiss/pen/QWKmPqx
-- https://codepen.io/slimsmearlapp/pen/DqVqPy
-- https://codepen.io/martinwolf/pen/GRaWPy
-- https://codepen.io/BastianAndre/pen/eBBvVz
-- https://shaders.paper.design/paper-texture — Paper's WebGL paper-texture shader (heavier than the locked `feTurbulence` grain; refinement candidate only)
+| Pen | What it does | Fit verdict |
+|---|---|---|
+| [cssparadise/gbMdgOR](https://codepen.io/cssparadise/pen/gbMdgOR) | **Paper-radio group** (Uiverse, pharmacist-sabot). Hidden native input; hand-drawn circle with double inset+offset shadow (`inset -2px -2px 0`, `2px 2px 0`); dot scales in with a bounce on `:checked`; accent recolor + label shift; hard border + `4px 4px 0` offset shadow + hover lift. | ✅ **Adopted — FE-02 bet-type picker.** Palette swapped to You-Bet accents (rotated per card), square corners, dropped the pen's scanline/`repeating-linear-gradient` texture (our grain is the locked `feTurbulence` overlay). |
+| [aitchiss/QWKmPqx](https://codepen.io/aitchiss/pen/QWKmPqx) | **Sellotaped corners** — translucent tape strips pinned via `::before`/`::after` rotated `-45deg` over a paper sheet. Skeuomorphic "taped to the wall" look. | 🔶 Candidate for **share/results cards** as a whimsy accent (cousin of corner sparkles). Not for form UI. |
+| [slimsmearlapp/DqVqPy](https://codepen.io/slimsmearlapp/pen/DqVqPy) | **Torn/curled paper edge** — two pseudo-elements with directional `box-shadow` + `rotate(135deg)` fake a lifted torn edge. | ⚠️ Uses **soft-blur** shadow — contradicts the locked hard-offset direction. Skip unless reworked to a hard edge. |
+| [martinwolf/GRaWPy](https://codepen.io/martinwolf/pen/GRaWPy) | **Page-lift/curl corners** — `::before`/`::after` skewed + rotated with a blurred shadow underneath; sheet appears to peel off the surface. | ⚠️ Soft-blur lift, same conflict. Whimsy candidate only if hardened. |
+| [BastianAndre/eBBvVz](https://codepen.io/BastianAndre/pen/eBBvVz) | **Lifted paper strips** — stacked sticky-note strips (`linear-gradient` fill) that rotate + lift on hover with a blurred drop shadow. | ⚠️ Soft-blur + rounded feel. Direction candidate for a list/stack layout only if reworked. |
+| [shaders.paper.design/paper-texture](https://shaders.paper.design/paper-texture) | Paper's **WebGL paper-texture shader**. | ⚠️ Heavier than the locked asset-free `feTurbulence` grain; runtime cost. Refinement candidate only. |
 
 **Licensing:** CodePen demos default to MIT unless the pen states otherwise, but many state nothing — legally ambiguous to lift verbatim into a public competition repo. Rebuild the technique in our own code. WebGL/shader options also carry a runtime cost the current asset-free grain avoids — weigh before adopting.
