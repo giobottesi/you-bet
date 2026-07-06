@@ -21,3 +21,24 @@ pt-BR:
   locale_toggle:
     pt_BR: "Português"
     en: "English"
+
+  bet_types:
+    sports_singles: "Apostas simples"
+    accumulator_3: "Múltipla de 3"
+    accumulator_5: "Múltipla de 5"
+    slots_tigrinho: "Slots (Tigrinho)"
+    crash_aviator: "Crash (Aviator)"
+    lottery: "Loteria"
+    roulette: "Roleta"
+
+  simulations:
+    bet_type_picker:
+      heading: "No que você aposta?"
+      hint: "Escolha todo tipo de aposta que você faz — cada um tem a sua vantagem da casa."
+      house_edge_prefix: "casa"
+      count_none: "Nenhuma selecionada"
+      count_selected: "%{count} selecionada(s)"
+      pick_at_least_one: "Escolha pelo menos um tipo de aposta."
+      scroll_prev: "Rolar para a esquerda"
+      scroll_next: "Rolar para a direita"
+      group_label: "Tipos de aposta"

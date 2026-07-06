@@ -1,6 +1,39 @@
 <%# locals: (form:) %>
-<%# FE-02 — bet type picker widget mounts on the bet-type-picker Stimulus controller %>
-<section class="form-section" data-controller="bet-type-picker">
-  <h2 class="form-section__label">What do you bet on?</h2>
-  <p class="form-section__hint">Bet type picker — FE-02.</p>
+<%# #54 — bet type picker: multi-select paper-checkbox slider on the bet-type-picker Stimulus controller %>
+<section class="bet-picker" data-controller="bet-type-picker"
+         data-bet-type-picker-count-none-value="<%= t(".count_none") %>"
+         data-bet-type-picker-count-selected-value="<%= t(".count_selected") %>"
+         data-bet-type-picker-validity-message-value="<%= t(".pick_at_least_one") %>">
+  <div class="bet-picker__head">
+    <h2 class="bet-picker__label"><%= t(".heading") %></h2>
+    <span class="bet-picker__count" data-bet-type-picker-target="count" data-empty="true" aria-live="polite"></span>
+  </div>
+  <p class="bet-picker__hint"><span class="bet-picker__hint-mark" aria-hidden="true">→</span> <%= t(".hint") %></p>
+
+  <div class="bet-slider">
+    <div class="bet-slider__viewport">
+      <button type="button" class="bet-slider__arrow bet-slider__arrow--prev"
+              data-bet-type-picker-target="prev" data-action="bet-type-picker#scrollPrev" aria-label="<%= t(".scroll_prev") %>">‹</button>
+      <button type="button" class="bet-slider__arrow bet-slider__arrow--next"
+              data-bet-type-picker-target="next" data-action="bet-type-picker#scrollNext" aria-label="<%= t(".scroll_next") %>">›</button>
+      <div class="bet-carousel" role="group" aria-label="<%= t(".group_label") %>"
+           data-bet-type-picker-target="carousel"
+           data-action="scroll->bet-type-picker#updateArrows change->bet-type-picker#validate">
+        <% @bet_types.each_with_index do |bet_type, index| %>
+          <label class="bet-card" style="--bet-accent: <%= bet_card_accent(index) %>"
+                 data-bet-type-picker-target="card">
+            <%= check_box_tag "bet_type_keys[]", bet_type.key, false,
+                  id: "bet_type_#{bet_type.key}",
+                  data: { bet_type_picker_target: "checkbox" } %>
+            <span class="bet-card__mark" aria-hidden="true"></span>
+            <span class="bet-card__name"><%= bet_type.display_name %></span>
+            <% edge = house_edge_label(bet_type) %>
+            <% if edge %>
+              <span class="bet-card__edge"><%= t(".house_edge_prefix") %> <span><%= edge %></span></span>
+            <% end %>
+          </label>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </section>

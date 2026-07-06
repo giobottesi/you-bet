@@ -18,5 +18,19 @@ RSpec.describe 'Simulations', type: :request do
       expect(response.body).to include('data-controller="weekly-amount"')
       expect(response.body).to include('data-controller="timeframe-slider"')
     end
+
+    describe 'bet type picker (#54)' do
+      it 'renders every bet type by its display name' do
+        BetType.all.each do |bet_type|
+          expect(response.body).to include(bet_type.display_name)
+        end
+      end
+
+      it 'renders each type as a multi-select checkbox in the bet_type_keys array' do
+        checkboxes = response.body.scan('name="bet_type_keys[]"')
+        expect(checkboxes.size).to eq(BetType::BETTING_TYPES.size)
+        expect(response.body).to include('type="checkbox"')
+      end
+    end
   end
 end
