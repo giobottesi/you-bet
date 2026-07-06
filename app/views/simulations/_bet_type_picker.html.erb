@@ -18,7 +18,7 @@
               data-bet-type-picker-target="next" data-action="bet-type-picker#scrollNext" aria-label="<%= t(".scroll_next") %>">›</button>
       <div class="bet-carousel" role="group" aria-label="<%= t(".group_label") %>"
            data-bet-type-picker-target="carousel"
-           data-action="scroll->bet-type-picker#sync change->bet-type-picker#validate">
+           data-action="scroll->bet-type-picker#updateArrows change->bet-type-picker#validate">
         <% @bet_types.each_with_index do |bet_type, index| %>
           <label class="bet-card" style="--bet-accent: <%= bet_card_accent(index) %>">
             <%= check_box_tag "bet_type_keys[]", bet_type.key, false,
