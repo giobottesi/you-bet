@@ -95,6 +95,10 @@ Every pairing below was contrast-checked. Rules, in priority order:
 - Display font has `text-shadow` for depth (drop shadow on type)
 - Constraint: Google Fonts only (free)
 
+### `--font-heading` candidate (from #47 spike — needs Gio call)
+
+The magicagem spike (PR #47, not-to-merge) used **Caveat** — a Google Fonts hand-lettered script — for headings/wordmark. It fits the "Guia do Festival" hand-lettered reference and is free/Google-hosted. Logged as a candidate for the still-TBD heading slot. Caution: Caveat reads soft/casual and may undercut the pop-art punch, so it's Gio's call. (The spike paired it with Quicksand for body, but body is already locked to Libre Franklin — not up for revisit.)
+
 ---
 
 ## Texture
@@ -102,6 +106,7 @@ Every pairing below was contrast-checked. Rules, in priority order:
 - **Grain/noise overlay** on page background — high-priority nice-to-have (see SPRINT.md). Preferred implementation is a native SVG `feTurbulence` fractalNoise rendered to a `data:` URI CSS background: no asset, no gem, tileable, resolution-independent. Low opacity (`0.03–0.07` on the light base) with `background-blend-mode: multiply` to keep the warm tone. The same overlay is reused as a layer on BE 17 share cards.
 - **Drop shadows** on all cards, buttons, hero text — hard offset, not soft blur
 - **Hard square borders** — no border-radius anywhere
+- **Dot-grid alternative** (candidate from #47 spike — needs Gio call): the spike backed pages with a pure-CSS dot grid — `background-image: radial-gradient(<color> 1px, transparent 1px); background-size: 24px 24px;`. Asset-free and tileable like the grain, but a repeating *pattern* not *noise*. Not a replacement for the locked `feTurbulence` grain — logged as a candidate texture only. Side-by-side prototype: open `docs/texture-compare.html` in a browser (live opacity/spacing sliders on the real paper base + neo-brutalist card).
 
 ---
 
@@ -149,11 +154,22 @@ Footer-anchored. Muted text with cyan-**ink** (`#377066`) links to CVV 188, Joga
 
 ---
 
+## Whimsy patterns (harvested from the #47 spike)
+
+Concrete, reusable treatments pulled from the magicagem palette spike (PR #47, not-to-merge). Only the brand-agnostic *mechanics* are kept — the spike's soft pastel/rounded/blurred look is deliberately **not** adopted (rounded corners and soft-blur shadows contradict the locked hard-square, hard-shadow direction).
+
+- **Corner sparkles** — absolutely-positioned `✦`/`✧` glyphs tucked into a container's corners, each in a *different accent **ink** variant* (cyan/yellow/purple/coral ink). Cheap pop-art energy, no asset, and using ink variants keeps the glyphs on-palette and AA-legible on the light base. Use sparingly — hero and empty states, not every card.
+- **Accent rotation by index** — the locked "no two adjacent cards share a color" rule, implemented: cycle the border/accent class by `index % <accent-count>` when rendering a card list. Deterministic, no per-card config.
+- **Card hover lift** — `transform: translateY(-2px)` on a `~0.15s` transition for clickable cards. Keep the *hard* drop shadow (don't swap to a soft blur as the spike did) — lift the card, not the shadow.
+
+---
+
 ## Gatinho Mascot
 
 - Drawn by Gio (Procreate/Inkscape)
 - Appears: footer, share cards, empty states, error pages
 - Counterpoint to Tigrinho — friendly, knowing, not predatory
+- ASCII/text-art Gatinho is an acceptable lightweight placeholder before the illustrated mascot ships (the old landing used a text-art cat) — swap to Gio's illustration once available
 
 ---
 

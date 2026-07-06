@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>You-Bet — Texture comparison: feTurbulence grain vs dot-grid</title>
+<style>
+  :root {
+    --bg: #FBF6EC;
+    --surface: #EDE9E2;
+    --border: #DFC3DA;
+    --text: #3B3239;
+    --muted: #6E6358;
+    --coral: #EC6258;
+    --coral-ink: #AA473F;
+    --cyan-ink: #377066;
+    --purple-ink: #8152AE;
+    --yellow-ink: #7F6130;
+    --grain-opacity: 0.05;
+    --dot-size: 24px;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Libre Franklin", system-ui, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+  }
+
+  .toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background: var(--surface);
+    border-bottom: 3px solid var(--border);
+  }
+  .toolbar h1 { margin: 0; font-size: 1.1rem; }
+  .toolbar label { font-size: 0.85rem; color: var(--muted); display: flex; gap: 0.5rem; align-items: center; }
+  .toolbar output { font-variant-numeric: tabular-nums; color: var(--text); font-weight: 700; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+
+  /* Each panel is a full "page" mock so the texture reads in real context. */
+  .panel {
+    position: relative;
+    min-height: 78vh;
+    padding: 3rem 2rem;
+    border-right: 3px solid var(--border);
+    background-color: var(--bg);
+  }
+  .panel:last-child { border-right: none; }
+
+  /* Option A — feTurbulence fractal noise, data: URI, blended over the warm base. */
+  .panel--grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: var(--grain-opacity);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+
+  /* Option B — pure-CSS dot grid, repeating radial-gradient. */
+  .panel--dots {
+    background-image: radial-gradient(var(--border) 1px, transparent 1px);
+    background-size: var(--dot-size) var(--dot-size);
+  }
+
+  .panel__tag {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 2rem;
+    padding: 0.35rem 0.8rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background: var(--surface);
+    border: 2px solid var(--text);
+  }
+  .panel__note { position: relative; margin: 0 0 2rem; font-size: 0.85rem; color: var(--muted); max-width: 34ch; }
+
+  /* Neo-brutalist result card — hard border + hard offset shadow, no radius. */
+  .card {
+    position: relative;
+    max-width: 30rem;
+    padding: 2rem;
+    background: var(--surface);
+    border: 3px solid var(--text);
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.25);
+  }
+  .card__label { margin: 0 0 0.5rem; font-size: 1rem; color: var(--muted); }
+  .card__number {
+    margin: 0 0 1rem;
+    font-size: 3.5rem;
+    line-height: 1;
+    font-weight: 900;
+    color: var(--coral-ink);
+    text-shadow: 3px 3px 0 var(--coral);
+  }
+  .card__body { margin: 0 0 1.5rem; color: var(--text); }
+  .cta {
+    display: inline-block;
+    padding: 0.9rem 1.5rem;
+    font-weight: 800;
+    color: #000;
+    background: var(--coral);
+    border: 3px solid var(--text);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+  }
+
+  /* Corner sparkles — accent INK variants, harvested pattern from #47. */
+  .sparkle { position: absolute; font-size: 1.4rem; pointer-events: none; }
+  .sparkle--1 { top: -0.6rem; left: -0.6rem; color: var(--cyan-ink); }
+  .sparkle--2 { top: -0.4rem; right: -0.5rem; color: var(--yellow-ink); }
+  .sparkle--3 { bottom: -0.5rem; left: 30%; color: var(--purple-ink); }
+  .sparkle--4 { bottom: -0.6rem; right: -0.4rem; color: var(--coral-ink); }
+</style>
+</head>
+<body>
+  <div class="toolbar">
+    <h1>Texture: grain vs dot-grid</h1>
+    <label>Grain opacity
+      <input id="grain" type="range" min="0" max="0.15" step="0.005" value="0.05">
+      <output id="grainVal">0.05</output>
+    </label>
+    <label>Dot spacing
+      <input id="dots" type="range" min="12" max="48" step="2" value="24">
+      <output id="dotsVal">24px</output>
+    </label>
+  </div>
+
+  <div class="grid">
+    <section class="panel panel--grain">
+      <span class="panel__tag">A · feTurbulence grain (locked)</span>
+      <p class="panel__note">SVG fractal noise as a <code>data:</code> URI, <code>mix-blend-mode: multiply</code>. No asset, tileable, resolution-independent.</p>
+      <div class="card">
+        <span class="sparkle sparkle--1">✦</span>
+        <span class="sparkle sparkle--2">✧</span>
+        <span class="sparkle sparkle--3">✦</span>
+        <span class="sparkle sparkle--4">✧</span>
+        <p class="card__label">If you'd invested instead</p>
+        <p class="card__number">R$ 18.400</p>
+        <p class="card__body">That's what "just R$50 a week" really cost you over 5 years.</p>
+        <span class="cta">See the damage</span>
+      </div>
+    </section>
+
+    <section class="panel panel--dots">
+      <span class="panel__tag">B · CSS dot-grid (candidate)</span>
+      <p class="panel__note">Repeating <code>radial-gradient</code> dots. Asset-free like the grain, but a regular <em>pattern</em>, not <em>noise</em>.</p>
+      <div class="card">
+        <span class="sparkle sparkle--1">✦</span>
+        <span class="sparkle sparkle--2">✧</span>
+        <span class="sparkle sparkle--3">✦</span>
+        <span class="sparkle sparkle--4">✧</span>
+        <p class="card__label">If you'd invested instead</p>
+        <p class="card__number">R$ 18.400</p>
+        <p class="card__body">That's what "just R$50 a week" really cost you over 5 years.</p>
+        <span class="cta">See the damage</span>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const root = document.documentElement;
+    const grain = document.getElementById("grain");
+    const dots = document.getElementById("dots");
+    const grainVal = document.getElementById("grainVal");
+    const dotsVal = document.getElementById("dotsVal");
+    grain.addEventListener("input", () => {
+      root.style.setProperty("--grain-opacity", grain.value);
+      grainVal.textContent = grain.value;
+    });
+    dots.addEventListener("input", () => {
+      root.style.setProperty("--dot-size", dots.value + "px");
+      dotsVal.textContent = dots.value + "px";
+    });
+  </script>
+</body>
+</html>
