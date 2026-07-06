@@ -9,6 +9,10 @@
 
   <div class="bet-slider">
     <div class="bet-slider__viewport" data-bet-type-picker-target="viewport">
+      <button type="button" class="bet-slider__arrow bet-slider__arrow--prev"
+              data-bet-type-picker-target="prev" data-action="bet-type-picker#scrollPrev" aria-label="Scroll left">‹</button>
+      <button type="button" class="bet-slider__arrow bet-slider__arrow--next"
+              data-bet-type-picker-target="next" data-action="bet-type-picker#scrollNext" aria-label="Scroll right">›</button>
       <div class="bet-carousel" role="group" aria-label="Bet types"
            data-bet-type-picker-target="carousel"
            data-action="scroll->bet-type-picker#sync change->bet-type-picker#validate">

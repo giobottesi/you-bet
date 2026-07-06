@@ -94,6 +94,25 @@
     --fade-left: 0;
     --fade-right: 1;
   }
+
+  /* Small chevrons floating at the slider's mid-height edges (over the fades) */
+  .bet-slider__arrow {
+    @apply absolute z-[3] flex h-7 w-7 cursor-pointer items-center justify-center
+      border-2 border-text text-base/none font-extrabold text-text shadow-[2px_2px_0_rgba(0,0,0,0.3)];
+    top: calc(50% - 8px);
+    transform: translateY(-50%);
+    background: #FFFDF8;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.2s ease;
+  }
+  .bet-slider__arrow:active {
+    @apply shadow-[1px_1px_0_rgba(0,0,0,0.3)];
+    transform: translateY(-50%) translate(1px, 1px);
+  }
+  .bet-slider__arrow--prev { @apply left-1; }
+  .bet-slider__arrow--next { @apply right-1; }
+  .bet-slider__arrow:disabled {
+    @apply pointer-events-none opacity-0;
+  }
   .bet-slider__viewport::before,
   .bet-slider__viewport::after {
     content: "";
