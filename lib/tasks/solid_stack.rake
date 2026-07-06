@@ -9,6 +9,7 @@ namespace :db do
       queue: "solid_queue_jobs",
       cable: "solid_cable_messages"
     }.each do |role, table|
+      next unless Rake::Task.task_defined?("db:schema:load:#{role}")
       next if ActiveRecord::Base.connection.table_exists?(table)
 
       ENV["DISABLE_DATABASE_ENVIRONMENT_CHECK"] = "1"
