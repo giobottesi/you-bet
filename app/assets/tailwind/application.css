@@ -1,1 +1,70 @@
 @import "tailwindcss";
+
+@theme {
+  /* Base — warm light */
+  --color-bg: #FBF6EC;
+  --color-surface: #EDE9E2;
+  --color-border: #DFC3DA;
+  --color-text: #3B3239;
+  --color-muted: #6E6358;
+
+  /* Pop accents — bright (fills/borders) + ink (the only text-legible variant) */
+  --color-coral: #EC6258;
+  --color-coral-ink: #AA473F;
+  --color-cyan: #6FE0CD;
+  --color-cyan-ink: #377066;
+  --color-green: #64D444;
+  --color-green-ink: #367225;
+  --color-purple: #9D64D4;
+  --color-purple-ink: #8152AE;
+  --color-yellow: #F4BB5C;
+  --color-yellow-ink: #7F6130;
+
+  /* Light tints — fills/backgrounds only, never text */
+  --color-mint: #A2EAC7;
+  --color-light-green: #B4F6AD;
+  --color-light-purple: #BD8EEC;
+  --color-salmon: #F19D86;
+  --color-soft-yellow: #F4D46C;
+
+  /* Semantic — ink variants (rendered as text) */
+  --color-gain: #367225;
+  --color-loss: #AA473F;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: "Libre Franklin", system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  /* Links on the light base use cyan-ink (AA-legible per DESIGN.md) */
+  .page a {
+    @apply text-cyan-ink;
+  }
+
+  .form-section {
+    @apply border-2 border-dashed border-border px-4 py-5;
+  }
+  .form-section + .form-section {
+    @apply mt-5;
+  }
+  .form-section__label {
+    @apply mb-2 text-xl/[1.3] font-extrabold;
+  }
+  .form-section__hint {
+    @apply text-muted text-[0.95rem];
+  }
+
+  .cta {
+    @apply mt-6 block w-full cursor-pointer border-2 border-black bg-coral px-4 py-[0.9rem]
+      text-base font-extrabold uppercase tracking-[0.06em] text-black
+      shadow-[4px_4px_0_rgba(0,0,0,0.25)];
+  }
+  .cta:disabled {
+    @apply cursor-not-allowed opacity-[0.55];
+  }
+}
