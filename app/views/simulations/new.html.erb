@@ -19,10 +19,9 @@
 
   <section class="form-area" aria-label="Simulation form">
     <%= form_with model: @simulation, url: "#", method: :post, data: { turbo: false } do |form| %>
-      <%# FE-02 bet type picker · FE-03 weekly amount · FE-04 timeframe slider land here %>
-      <div class="form-area__placeholder">
-        <p class="form-area__hint">Your bet setup goes here — coming together card by card.</p>
-      </div>
+      <%= render "bet_type_picker", form: form %>
+      <%= render "weekly_amount", form: form %>
+      <%= render "timeframe_slider", form: form %>
       <%= form.button "See the damage", type: "submit", class: "cta", disabled: true %>
     <% end %>
   </section>
@@ -114,12 +113,18 @@
     border: 3px solid var(--border);
     box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.25);
   }
-  .form-area__placeholder {
-    padding: 2rem 1rem;
+  .form-section {
+    padding: 1.25rem 1rem;
     border: 2px dashed var(--border);
-    text-align: center;
   }
-  .form-area__hint { margin: 0; color: var(--muted); font-size: 0.95rem; }
+  .form-section + .form-section { margin-top: 1.25rem; }
+  .form-section__label {
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+    line-height: 1.3;
+    font-weight: 800;
+  }
+  .form-section__hint { margin: 0; color: var(--muted); font-size: 0.95rem; }
 
   .cta {
     display: block;
