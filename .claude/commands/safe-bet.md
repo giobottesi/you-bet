@@ -67,6 +67,13 @@ Tag findings with Gio's review tags:
 
 Plus: RuboCop clean, code/comments in English only, tests live alongside the feature (TDD), RSpec style (no helper methods — factories and inline setup only).
 
+**Stimulus controllers** (hardest to review — hold the line):
+- **Method names follow Rails naming — say what the method does.** Verb-first, Action+Noun, no vague `sync`/`handle`/`update`/`process`. `updateArrows`, not `sync`; `validateSelection`, not `check`. The name is the first comment.
+- **One job per method, with a one-line intent comment.** If a method needs "and" to describe it, question the split.
+- **Element-size or scroll-dependent state uses a `ResizeObserver` on the element**, not a `window` `resize` listener — the latter misses reflows the window didn't cause (font load, sibling layout). Every observer/listener opened in `connect()` is torn down in `disconnect()`.
+- **User-facing strings arrive via `values` from the i18n locale files** — never hard-coded in the controller.
+- **Reach for `static targets`/`static values`, not manual `querySelector`/`dataset`** where a target or value fits.
+
 ---
 
 ## Step 6 — Prose review (docs, devlogs, PR body)
