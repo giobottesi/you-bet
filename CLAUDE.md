@@ -63,6 +63,15 @@ Numbered list of changes in present tense, one item per logical change:
 - `/sure-bet` — the definition of done. Orchestrates tests/lint + `/safe-bet` + `/write-review` + privacy + conventions + PR hygiene into one gate. Run before any PR so contributors ship at the team bar.
 - `/my-bet` — EOD devlog ritual: journal + progress snapshot.
 
+## Working from Phone / Web (cloud sandbox)
+
+Claude Code web sessions (`claude.ai/code`, incl. mobile) run in an **ephemeral cloud sandbox** that sees *only* what's committed here — no local machine, no personal skills/notebook, no private memory. Account for this so a session doesn't burn turns rediscovering it:
+
+- **Signing** — the sandbox has no git-identity hook, so commits default to the harness trailer. Apply the repo's signing convention manually: `/safe-bet` Step 8 (run standalone or via `/sure-bet`) prompts for and persists a per-contributor sign-off — an AI-assistant name for AI-assisted work, or your own name if you're human — then emits the `Co-Authored-By:` trailer from it. Also strip the harness `🤖 Generated with Claude Code` PR footer and any `Claude-Session:` line, which the sandbox won't remove on its own.
+- **Skills** — only the repo commands above are available. `/self-improve` and any local/notebook skills do **not** exist here; don't hunt for them.
+- **Environment** — no Docker daemon. Run the suite directly: `bundle exec rspec` / `rubocop` (bypass flaky binstubs via `Bundler.setup` + the executable). Spin up Postgres ad hoc if a spec needs it.
+- **Handoff** — since `/self-improve` can't run here, end a session by saving the transcript to a file in the repo so a desktop session can ingest the learnings into memory.
+
 ## Token Economy (always-on)
 
 These rules apply from turn one. Not conditional on session length.
