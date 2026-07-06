@@ -106,8 +106,8 @@
     @apply shadow-[1px_1px_0_rgba(0,0,0,0.3)];
     transform: translateY(-50%) translate(1px, 1px);
   }
-  .bet-slider__arrow--prev { @apply left-1; }
-  .bet-slider__arrow--next { @apply right-1; }
+  .bet-slider__arrow--prev { @apply -left-3; }
+  .bet-slider__arrow--next { @apply -right-3; }
   .bet-slider__arrow:disabled {
     @apply pointer-events-none opacity-0;
   }
