@@ -1,0 +1,64 @@
+<% content_for :title, "magicagem — sessions" %>
+
+<div class="session-list">
+  <% @blog_sessions.each_with_index do |blog_session, index| %>
+    <%= link_to blog_session_path(blog_session.id), class: "session-card session-card--#{index % 3}" do %>
+      <p class="session-card__crystal"><%= blog_session.crystal %> <span aria-hidden="true">💎</span></p>
+      <h2 class="session-card__title"><%= blog_session.title %></h2>
+      <p class="session-card__date"><%= blog_session.published_on.strftime("%B %-d, %Y") %> &middot; feeling <%= blog_session.mood %></p>
+      <p class="session-card__excerpt"><%= blog_session.excerpt %></p>
+    <% end %>
+  <% end %>
+</div>
+
+<style>
+  .session-list {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .session-card {
+    display: block;
+    padding: 1.5rem;
+    background: var(--blog-surface);
+    border: 2px solid var(--blog-border);
+    border-radius: 1.25rem;
+    box-shadow: 0 6px 18px rgba(61, 44, 79, 0.08);
+    text-decoration: none;
+    color: var(--blog-text);
+    transition: transform 0.15s ease;
+  }
+
+  .session-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .session-card--0 { border-color: var(--blog-pink); }
+  .session-card--1 { border-color: var(--blog-mint); }
+  .session-card--2 { border-color: var(--blog-gold); }
+
+  .session-card__crystal {
+    margin: 0 0 0.35rem;
+    font-size: 0.85rem;
+    color: var(--blog-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .session-card__title {
+    margin: 0 0 0.35rem;
+    font-family: "Caveat", cursive;
+    font-size: 2rem;
+  }
+
+  .session-card__date {
+    margin: 0 0 0.75rem;
+    font-size: 0.85rem;
+    color: var(--blog-muted);
+  }
+
+  .session-card__excerpt {
+    margin: 0;
+    line-height: 1.5;
+  }
+</style>

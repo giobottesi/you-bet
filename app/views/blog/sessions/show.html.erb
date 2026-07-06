@@ -1,0 +1,58 @@
+<% content_for :title, "magicagem — #{@blog_session.title}" %>
+
+<article class="session">
+  <%= link_to "← back to sessions", blog_sessions_path, class: "session__back" %>
+
+  <p class="session__crystal"><%= @blog_session.crystal %> <span aria-hidden="true">💎</span></p>
+  <h1 class="session__title"><%= @blog_session.title %></h1>
+  <p class="session__date"><%= @blog_session.published_on.strftime("%B %-d, %Y") %> &middot; feeling <%= @blog_session.mood %></p>
+
+  <div class="session__body">
+    <% @blog_session.body.split("\n\n").each do |paragraph| %>
+      <p><%= paragraph %></p>
+    <% end %>
+  </div>
+</article>
+
+<style>
+  .session__back {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    color: var(--blog-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+
+  .session {
+    background: var(--blog-surface);
+    border: 2px solid var(--blog-lavender);
+    border-radius: 1.25rem;
+    padding: 2rem;
+    box-shadow: 0 6px 18px rgba(61, 44, 79, 0.08);
+  }
+
+  .session__crystal {
+    margin: 0 0 0.35rem;
+    font-size: 0.85rem;
+    color: var(--blog-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .session__title {
+    margin: 0 0 0.35rem;
+    font-family: "Caveat", cursive;
+    font-size: 2.75rem;
+  }
+
+  .session__date {
+    margin: 0 0 1.5rem;
+    font-size: 0.85rem;
+    color: var(--blog-muted);
+  }
+
+  .session__body p {
+    line-height: 1.6;
+    margin: 0 0 1rem;
+  }
+</style>

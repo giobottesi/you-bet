@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "magicagem" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  </head>
+
+  <body class="blog-body">
+    <header class="blog-header">
+      <a class="blog-header__wordmark" href="<%= blog_sessions_path %>">magicagem <span aria-hidden="true">✨</span></a>
+      <p class="blog-header__tagline">a little diary of crystals &amp; quiet magic — est. 2014</p>
+      <a class="blog-header__instagram" href="https://instagram.com/magicagem" target="_blank" rel="noopener">@magicagem</a>
+    </header>
+
+    <main class="blog-main">
+      <%= yield %>
+    </main>
+
+    <footer class="blog-footer">
+      <p>made with 🔮 since 2014 &middot; <a href="https://instagram.com/magicagem" target="_blank" rel="noopener">@magicagem</a></p>
+    </footer>
+
+    <style>
+      :root {
+        --blog-bg: #F5EFFA;
+        --blog-surface: #FFFCFF;
+        --blog-border: #E3C9F0;
+        --blog-text: #3D2C4F;
+        --blog-muted: #7A6690;
+        --blog-pink: #F6B8D0;
+        --blog-gold: #E8B24D;
+        --blog-mint: #A8E6CF;
+        --blog-lavender: #C9B6E4;
+      }
+
+      .blog-body {
+        margin: 0;
+        background: var(--blog-bg);
+        background-image: radial-gradient(var(--blog-lavender) 1px, transparent 1px);
+        background-size: 24px 24px;
+        color: var(--blog-text);
+        font-family: "Quicksand", system-ui, sans-serif;
+      }
+
+      .blog-header {
+        max-width: 40rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.5rem 1.5rem;
+        text-align: center;
+      }
+
+      .blog-header__wordmark {
+        display: inline-block;
+        font-family: "Caveat", cursive;
+        font-size: 3rem;
+        color: var(--blog-text);
+        text-decoration: none;
+      }
+
+      .blog-header__tagline {
+        margin: 0.25rem 0 0.75rem;
+        color: var(--blog-muted);
+        font-size: 0.95rem;
+      }
+
+      .blog-header__instagram {
+        display: inline-block;
+        padding: 0.3rem 0.9rem;
+        border-radius: 999px;
+        background: var(--blog-pink);
+        color: var(--blog-text);
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 0.85rem;
+      }
+
+      .blog-main {
+        max-width: 40rem;
+        margin: 0 auto;
+        padding: 0 1.5rem 3rem;
+      }
+
+      .blog-footer {
+        text-align: center;
+        padding: 1.5rem;
+        color: var(--blog-muted);
+        font-size: 0.85rem;
+      }
+
+      .blog-footer a {
+        color: var(--blog-muted);
+      }
+    </style>
+  </body>
+</html>

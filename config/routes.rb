@@ -12,6 +12,11 @@ Rails.application.routes.draw do
   # Landing page layout — the simulation form lives here (FE-01+).
   resources :simulations, only: [ :new ]
 
+  # magicagem blog scaffold — whimsy-palette preview, separate from the You-Bet brand.
+  namespace :blog do
+    resources :sessions, only: [ :index, :show ]
+  end
+
   # Defines the root path route ("/")
   root "home#index"
 end
