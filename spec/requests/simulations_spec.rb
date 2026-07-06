@@ -19,7 +19,7 @@ RSpec.describe 'Simulations', type: :request do
       expect(response.body).to include('data-controller="timeframe-slider"')
     end
 
-    describe 'bet type picker (FE-02)' do
+    describe 'bet type picker (#54)' do
       it 'renders every bet type by its display name' do
         BetType.all.each do |bet_type|
           expect(response.body).to include(bet_type.display_name)

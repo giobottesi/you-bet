@@ -68,7 +68,7 @@
     @apply cursor-not-allowed opacity-[0.55];
   }
 
-  /* ===== FE-02 bet type picker — multi-select paper-checkbox slider ===== */
+  /* ===== #54 bet type picker — multi-select paper-checkbox slider ===== */
   .bet-picker__head {
     @apply flex flex-wrap items-baseline justify-between gap-4;
   }
@@ -95,8 +95,8 @@
 
   /* Square chevron buttons at the slider's mid-height edges */
   .bet-slider__arrow {
-    @apply absolute z-[3] flex h-8 w-8 cursor-pointer items-center justify-center
-      border-2 border-text text-2xl/none font-black text-text shadow-[2px_2px_0_rgba(0,0,0,0.3)];
+    @apply absolute z-[3] flex h-7 w-7 cursor-pointer items-center justify-center
+      border-2 border-text text-xl/none font-black text-text shadow-[2px_2px_0_rgba(0,0,0,0.3)];
     top: calc(50% - 8px);
     transform: translateY(-50%);
     background: #FFFDF8;

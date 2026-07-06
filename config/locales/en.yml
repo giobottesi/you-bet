@@ -14,3 +14,15 @@ en:
     crash_aviator: "Crash (Aviator)"
     lottery: "Lottery"
     roulette: "Roulette"
+
+  simulations:
+    bet_type_picker:
+      heading: "What do you bet on?"
+      hint: "Pick every kind of bet you make — each carries its own house edge."
+      house_edge_prefix: "edge"
+      count_none: "None selected"
+      count_selected: "%{count} selected"
+      pick_at_least_one: "Pick at least one bet type."
+      scroll_prev: "Scroll left"
+      scroll_next: "Scroll right"
+      group_label: "Bet types"

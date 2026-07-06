@@ -1,9 +1,11 @@
 import { Controller } from "@hotwired/stimulus"
 
-// FE-02 bet type picker — multi-select paper-checkbox slider.
+// #54 bet type picker — multi-select paper-checkbox slider.
 // Enforces "pick at least one" and pages the slider with the edge arrows.
+// User-facing strings come in as values so they stay in the i18n locale files.
 export default class extends Controller {
   static targets = ["carousel", "checkbox", "count", "prev", "next"]
+  static values = { countNone: String, countSelected: String, validityMessage: String }
 
   connect() {
     this.syncBound = () => this.sync()
@@ -18,9 +20,10 @@ export default class extends Controller {
 
   validate() {
     const selected = this.checkboxTargets.filter((box) => box.checked).length
-    this.countTarget.textContent = selected === 0 ? "None selected" : `${selected} selected`
+    this.countTarget.textContent =
+      selected === 0 ? this.countNoneValue : this.countSelectedValue.replace("%{count}", selected)
     this.countTarget.dataset.empty = selected === 0
-    this.checkboxTargets[0].setCustomValidity(selected === 0 ? "Pick at least one bet type." : "")
+    this.checkboxTargets[0].setCustomValidity(selected === 0 ? this.validityMessageValue : "")
   }
 
   scrollPrev() {
