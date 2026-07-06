@@ -1,9 +1,9 @@
 import { Controller } from "@hotwired/stimulus"
 
 // FE-02 bet type picker — multi-select paper-checkbox slider.
-// Enforces "pick at least one", drives arrow scrolling + the edge-fade scroll affordance.
+// Enforces "pick at least one" and drives the scroll affordances (edge fades + progress bar).
 export default class extends Controller {
-  static targets = ["carousel", "checkbox", "count", "viewport", "prev", "next"]
+  static targets = ["carousel", "checkbox", "count", "viewport", "progress"]
 
   connect() {
     this.syncBound = () => this.sync()
@@ -23,26 +23,16 @@ export default class extends Controller {
     this.checkboxTargets[0].setCustomValidity(selected === 0 ? "Pick at least one bet type." : "")
   }
 
-  scrollPrev() {
-    this.carouselTarget.scrollBy({ left: -this.pageDistance, behavior: "smooth" })
-  }
-
-  scrollNext() {
-    this.carouselTarget.scrollBy({ left: this.pageDistance, behavior: "smooth" })
-  }
-
   sync() {
     const carousel = this.carouselTarget
     const maxScroll = carousel.scrollWidth - carousel.clientWidth
-    const position = carousel.scrollLeft
-    this.viewportTarget.style.setProperty("--fade-left", position > 4 ? 1 : 0)
-    this.viewportTarget.style.setProperty("--fade-right", position < maxScroll - 4 ? 1 : 0)
-    this.prevTarget.disabled = position <= 4
-    this.nextTarget.disabled = position >= maxScroll - 4
-  }
+    const position = maxScroll > 0 ? carousel.scrollLeft / maxScroll : 0
+    const visibleRatio = Math.min(1, carousel.clientWidth / carousel.scrollWidth)
 
-  get pageDistance() {
-    const card = this.carouselTarget.querySelector(".bet-card")
-    return card ? (card.offsetWidth + 16) * 2 : 300
+    this.viewportTarget.style.setProperty("--fade-left", carousel.scrollLeft > 4 ? 1 : 0)
+    this.viewportTarget.style.setProperty("--fade-right", carousel.scrollLeft < maxScroll - 4 ? 1 : 0)
+
+    this.progressTarget.style.width = `${visibleRatio * 100}%`
+    this.progressTarget.style.left = `${position * (100 - visibleRatio * 100)}%`
   }
 }

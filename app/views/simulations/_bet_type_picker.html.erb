@@ -5,15 +5,9 @@
     <h2 class="bet-picker__label">What do you bet on?</h2>
     <span class="bet-picker__count" data-bet-type-picker-target="count" data-empty="true" aria-live="polite"></span>
   </div>
-  <p class="bet-picker__hint">Pick every kind of bet you make — each carries its own house edge.</p>
+  <p class="bet-picker__hint"><span class="bet-picker__hint-mark" aria-hidden="true">→</span> Pick every kind of bet you make — each carries its own house edge.</p>
 
   <div class="bet-slider">
-    <div class="bet-slider__controls">
-      <button type="button" class="bet-slider__arrow"
-              data-bet-type-picker-target="prev" data-action="bet-type-picker#scrollPrev" aria-label="Scroll left">‹</button>
-      <button type="button" class="bet-slider__arrow"
-              data-bet-type-picker-target="next" data-action="bet-type-picker#scrollNext" aria-label="Scroll right">›</button>
-    </div>
     <div class="bet-slider__viewport" data-bet-type-picker-target="viewport">
       <div class="bet-carousel" role="group" aria-label="Bet types"
            data-bet-type-picker-target="carousel"
@@ -27,11 +21,14 @@
             <span class="bet-card__name"><%= bet_type.display_name %></span>
             <% edge = house_edge_label(bet_type) %>
             <% if edge %>
-              <abbr class="bet-card__edge" title="Vantagem da casa — a fatia que a casa embolsa de cada aposta">casa <span><%= edge %></span></abbr>
+              <span class="bet-card__edge">casa <span><%= edge %></span></span>
             <% end %>
           </label>
         <% end %>
       </div>
+    </div>
+    <div class="bet-slider__progress" aria-hidden="true">
+      <span class="bet-slider__progress-thumb" data-bet-type-picker-target="progress"></span>
     </div>
   </div>
 </section>

@@ -83,12 +83,12 @@
     @apply bg-surface text-muted;
   }
   .bet-picker__hint {
-    @apply mt-1 mb-[0.6rem] text-muted;
+    @apply mt-1 mb-3 flex items-baseline gap-2 font-semibold text-coral-ink;
+  }
+  .bet-picker__hint-mark {
+    @apply font-extrabold;
   }
 
-  .bet-slider__controls {
-    @apply mb-2 flex justify-end gap-2;
-  }
   .bet-slider__viewport {
     @apply relative;
     --fade-left: 0;
@@ -112,18 +112,13 @@
     opacity: var(--fade-right);
   }
 
-  .bet-slider__arrow {
-    @apply flex h-[2.4rem] w-[2.4rem] cursor-pointer items-center justify-center
-      border-2 border-text text-2xl/none font-extrabold text-text shadow-[3px_3px_0_rgba(0,0,0,0.3)];
-    background: #FFFDF8;
-    transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.2s ease;
+  /* Scroll position indicator — thumb width = visible fraction, offset = scroll position (set by Stimulus) */
+  .bet-slider__progress {
+    @apply relative mt-1 h-2 w-full border-2 border-text bg-surface;
   }
-  .bet-slider__arrow:active {
-    @apply shadow-[1px_1px_0_rgba(0,0,0,0.3)];
-    transform: translate(2px, 2px);
-  }
-  .bet-slider__arrow:disabled {
-    @apply cursor-default opacity-25 shadow-[2px_2px_0_rgba(0,0,0,0.3)];
+  .bet-slider__progress-thumb {
+    @apply absolute bottom-0 left-0 top-0 bg-coral;
+    transition: left 0.05s linear;
   }
 
   .bet-carousel {
@@ -170,10 +165,8 @@
     @apply mt-auto text-[1.08rem]/[1.2] font-extrabold;
   }
   .bet-card__edge {
-    @apply cursor-help self-start border-[1.5px] border-text px-2 py-[0.2rem] text-[0.72rem] font-bold uppercase tracking-[0.03em] text-black;
+    @apply self-start border-[1.5px] border-text px-2 py-[0.2rem] text-[0.72rem] font-bold uppercase tracking-[0.03em] text-black;
     background: var(--bet-accent);
-    text-decoration: underline dotted;
-    text-underline-offset: 2px;
   }
   .bet-card__edge span { font-variant-numeric: tabular-nums; }
 
