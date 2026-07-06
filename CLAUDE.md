@@ -70,7 +70,7 @@ Claude Code web sessions (`claude.ai/code`, incl. mobile) run in an **ephemeral 
 - **Signing** — the sandbox has no git-identity hook, so commits default to the harness trailer. Apply the repo's signing convention manually: `/safe-bet` Step 8 (run standalone or via `/sure-bet`) prompts for and persists a per-contributor sign-off — an AI-assistant name for AI-assisted work, or your own name if you're human — then emits the `Co-Authored-By:` trailer from it. Also strip the harness `🤖 Generated with Claude Code` PR footer and any `Claude-Session:` line, which the sandbox won't remove on its own.
 - **Skills** — only the repo commands above are available. `/self-improve` and any local/notebook skills do **not** exist here; don't hunt for them.
 - **Environment** — no Docker daemon. Run the suite directly: `bundle exec rspec` / `rubocop` (bypass flaky binstubs via `Bundler.setup` + the executable). Spin up Postgres ad hoc if a spec needs it.
-- **Handoff** — since `/self-improve` can't run here, end a session by saving the transcript to a file in the repo so a desktop session can ingest the learnings into memory.
+- **Handoff** — since `/self-improve` can't run here, end a session by writing a short, privacy-scrubbed handoff note (the learnings only — never the raw transcript, which leaks private memory/host/employer references into git permanently) so a desktop session can ingest it into memory. The session PR description is a fine place for it.
 
 ## Token Economy (always-on)
 
