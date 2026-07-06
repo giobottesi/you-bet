@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe 'Rack::Attack', type: :request do
+  # Rack::Attack throttles use fixed time windows (Time.now.to_i / period). A request loop
+  # that straddles a window boundary splits its count across two buckets, so the request that
+  # should trip the limit lands in a fresh bucket and never 429s. Freeze time to pin one window.
+  include ActiveSupport::Testing::TimeHelpers
+
   before do
     # ActionDispatch::HostAuthorization 403s rspec's default www.example.com before the
     # request reaches Rack::Attack; localhost is permitted by Rails' .localhost default.
@@ -18,13 +23,13 @@ RSpec.describe 'Rack::Attack', type: :request do
     let(:limit) { 10 } # SIMULATION_THROTTLE_LIMIT default
 
     it 'allows requests up to the limit' do
-      limit.times { post '/simulations' }
+      freeze_time { limit.times { post '/simulations' } }
 
       expect(response).not_to have_http_status(:too_many_requests)
     end
 
     it 'returns 429 with a Retry-After header once the limit is exceeded' do
-      (limit + 1).times { post '/simulations' }
+      freeze_time { (limit + 1).times { post '/simulations' } }
 
       expect(response).to have_http_status(:too_many_requests)
       expect(response.headers['Retry-After']).to be_present
