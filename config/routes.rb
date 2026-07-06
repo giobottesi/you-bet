@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   # magicagem blog scaffold — whimsy-palette preview, separate from the You-Bet brand.
   namespace :blog do
     resources :sessions, only: [ :index, :show ]
+    get "about", to: "pages#about"
+    get "archive", to: "pages#archive"
   end
 
   # Defines the root path route ("/")

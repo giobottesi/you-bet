@@ -13,6 +13,12 @@
       <a class="blog-header__wordmark" href="<%= blog_sessions_path %>">magicagem <span aria-hidden="true">✨</span></a>
       <p class="blog-header__tagline">a little diary of crystals &amp; quiet magic — est. 2014</p>
       <a class="blog-header__instagram" href="https://instagram.com/magicagem" target="_blank" rel="noopener">@magicagem</a>
+
+      <nav class="blog-nav">
+        <%= link_to "sessions", blog_sessions_path, class: "blog-nav__link" %>
+        <%= link_to "archive", blog_archive_path, class: "blog-nav__link" %>
+        <%= link_to "about", blog_about_path, class: "blog-nav__link" %>
+      </nav>
     </header>
 
     <main class="blog-main">
@@ -75,6 +81,26 @@
         font-weight: 600;
         text-decoration: none;
         font-size: 0.85rem;
+      }
+
+      .blog-nav {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-top: 1.25rem;
+      }
+
+      .blog-nav__link {
+        color: var(--blog-muted);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .blog-nav__link:hover {
+        color: var(--blog-text);
       }
 
       .blog-main {

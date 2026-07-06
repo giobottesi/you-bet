@@ -1,0 +1,56 @@
+<% content_for :title, "magicagem — archive" %>
+
+<div class="archive">
+  <% @blog_sessions_by_year.each do |year, blog_sessions| %>
+    <section class="archive__year">
+      <h2 class="archive__year-title"><%= year %></h2>
+      <ul class="archive__list">
+        <% blog_sessions.each do |blog_session| %>
+          <li>
+            <%= link_to blog_session.title, blog_session_path(blog_session.id), class: "archive__link" %>
+            <span class="archive__date"><%= blog_session.published_on.strftime("%b %-d") %></span>
+          </li>
+        <% end %>
+      </ul>
+    </section>
+  <% end %>
+</div>
+
+<style>
+  .archive__year { margin-bottom: 2rem; }
+
+  .archive__year-title {
+    font-family: "Caveat", cursive;
+    font-size: 2rem;
+    margin: 0 0 0.75rem;
+    color: var(--blog-muted);
+  }
+
+  .archive__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .archive__list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.6rem 0;
+    border-bottom: 1px dashed var(--blog-border);
+  }
+
+  .archive__link {
+    color: var(--blog-text);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .archive__link:hover {
+    text-decoration: underline;
+  }
+
+  .archive__date {
+    color: var(--blog-muted);
+    font-size: 0.85rem;
+  }
+</style>
