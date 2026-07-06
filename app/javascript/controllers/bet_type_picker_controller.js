@@ -1,9 +1,9 @@
 import { Controller } from "@hotwired/stimulus"
 
 // FE-02 bet type picker — multi-select paper-checkbox slider.
-// Enforces "pick at least one" and drives the scroll affordances (edge fades + progress bar).
+// Enforces "pick at least one" and pages the slider with the edge arrows.
 export default class extends Controller {
-  static targets = ["carousel", "checkbox", "count", "viewport", "prev", "next"]
+  static targets = ["carousel", "checkbox", "count", "prev", "next"]
 
   connect() {
     this.syncBound = () => this.sync()
@@ -34,8 +34,6 @@ export default class extends Controller {
   sync() {
     const carousel = this.carouselTarget
     const maxScroll = carousel.scrollWidth - carousel.clientWidth
-    this.viewportTarget.style.setProperty("--fade-left", carousel.scrollLeft > 4 ? 1 : 0)
-    this.viewportTarget.style.setProperty("--fade-right", carousel.scrollLeft < maxScroll - 4 ? 1 : 0)
     this.prevTarget.disabled = carousel.scrollLeft <= 4
     this.nextTarget.disabled = carousel.scrollLeft >= maxScroll - 4
   }
