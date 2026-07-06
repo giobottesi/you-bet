@@ -95,13 +95,18 @@ Every pairing below was contrast-checked. Rules, in priority order:
 - Display font has `text-shadow` for depth (drop shadow on type)
 - Constraint: Google Fonts only (free)
 
+### `--font-heading` candidate (from #47 spike — needs Gio call)
+
+The magicagem spike (PR #47, not-to-merge) used **Caveat** — a Google Fonts hand-lettered script — for headings/wordmark. It fits the "Guia do Festival" hand-lettered reference and is free/Google-hosted. Logged as a candidate for the still-TBD heading slot. Caution: Caveat reads soft/casual and may undercut the pop-art punch, so it's Gio's call. (The spike paired it with Quicksand for body, but body is already locked to Libre Franklin — not up for revisit.)
+
 ---
 
 ## Texture
 
-- **Grain/noise overlay** on page background — high-priority nice-to-have (see SPRINT.md). Preferred implementation is a native SVG `feTurbulence` fractalNoise rendered to a `data:` URI CSS background: no asset, no gem, tileable, resolution-independent. Low opacity (`0.03–0.07` on the light base) with `background-blend-mode: multiply` to keep the warm tone. The same overlay is reused as a layer on BE 17 share cards.
+- **Grain/noise overlay** on page background — **locked as the app texture** (see SPRINT.md). Native SVG `feTurbulence` fractalNoise rendered to a `data:` URI CSS background: no asset, no gem, tileable, resolution-independent. Tested recipe (`docs/texture-compare.html`): `baseFrequency='0.65'` + `numOctaves='3'` for coarse grain that survives on-screen (fine high-freq noise aliases to flat gray), a `feColorMatrix` collapsing the RGB noise to contrasty black-alpha speckle, over the light base with `mix-blend-mode: multiply`. Opacity `~0.12–0.25` (0.05 reads as invisible over the warm paper). The same overlay is reused as a layer on BE 17 share cards.
 - **Drop shadows** on all cards, buttons, hero text — hard offset, not soft blur
 - **Hard square borders** — no border-radius anywhere
+- **Dot-grid** (from #47 spike) — **not for this app.** `background-image: radial-gradient(<color> 1px, transparent 1px); background-size: 24px 24px;`. Asset-free and tileable like the grain, but a repeating *pattern* not *noise*. Decision (Gio call, 2026-07-06): grain wins for You-Bet; the dot-grid is reserved for a separate private magicagem-blog project, not tracked here. Retained as a comparison lane in `docs/texture-compare.html`.
 
 ---
 
@@ -149,11 +154,22 @@ Footer-anchored. Muted text with cyan-**ink** (`#377066`) links to CVV 188, Joga
 
 ---
 
+## Whimsy patterns (harvested from the #47 spike)
+
+Concrete, reusable treatments pulled from the magicagem palette spike (PR #47, not-to-merge). Only the brand-agnostic *mechanics* are kept — the spike's soft pastel/rounded/blurred look is deliberately **not** adopted (rounded corners and soft-blur shadows contradict the locked hard-square, hard-shadow direction).
+
+- **Corner sparkles** — absolutely-positioned `✦`/`✧` glyphs tucked into a container's corners, each in a *different accent **ink** variant* (cyan/yellow/purple/coral ink). Cheap pop-art energy, no asset, and using ink variants keeps the glyphs on-palette and AA-legible on the light base. Use sparingly — hero and empty states, not every card.
+- **Accent rotation by index** — the locked "no two adjacent cards share a color" rule, implemented: cycle the border/accent class by `index % <accent-count>` when rendering a card list. Deterministic, no per-card config.
+- **Card hover lift** — `transform: translateY(-2px)` on a `~0.15s` transition for clickable cards. Keep the *hard* drop shadow (don't swap to a soft blur as the spike did) — lift the card, not the shadow.
+
+---
+
 ## Gatinho Mascot
 
 - Drawn by Gio (Procreate/Inkscape)
 - Appears: footer, share cards, empty states, error pages
 - Counterpoint to Tigrinho — friendly, knowing, not predatory
+- ASCII/text-art Gatinho is an acceptable lightweight placeholder before the illustrated mascot ships (the old landing used a text-art cat) — swap to Gio's illustration once available
 
 ---
 
@@ -169,3 +185,18 @@ Footer-anchored. Muted text with cyan-**ink** (`#377066`) links to CVV 188, Joga
 ## Preview
 
 `docs/palette-compare.html` — open in browser to see the locked light palette beside the old dark set, with live WCAG contrast badges on every token. Local dev reference, not part of the app build.
+
+---
+
+## Design-refinement references (unreviewed)
+
+Candidate texture/whimsy demos gathered 2026-07-06 for a later refinement pass — **not yet vetted for fit or license**. Reimplement from scratch rather than copy-paste (see licensing note below); treat these as inspiration only.
+
+- https://codepen.io/cssparadise/pen/gbMdgOR
+- https://codepen.io/aitchiss/pen/QWKmPqx
+- https://codepen.io/slimsmearlapp/pen/DqVqPy
+- https://codepen.io/martinwolf/pen/GRaWPy
+- https://codepen.io/BastianAndre/pen/eBBvVz
+- https://shaders.paper.design/paper-texture — Paper's WebGL paper-texture shader (heavier than the locked `feTurbulence` grain; refinement candidate only)
+
+**Licensing:** CodePen demos default to MIT unless the pen states otherwise, but many state nothing — legally ambiguous to lift verbatim into a public competition repo. Rebuild the technique in our own code. WebGL/shader options also carry a runtime cost the current asset-free grain avoids — weigh before adopting.
