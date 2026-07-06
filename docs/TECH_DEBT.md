@@ -10,6 +10,7 @@ Severity: 🔴 will bite before launch · 🟡 should fix · 🟢 nice-to-have.
 | 2 | Tooling | Pre-commit hook can't tell "checks failed" from "docker down" | When the `web` container is down, `docker compose exec` fails and the hook blocks every commit | Add a guard: if `web` isn't running, skip with a warning instead of denying | 🟡 | PR #13 |
 | 3 | Data model | `value` is stored/cast by `value_type` with no precision policy | Float vs BigDecimal undecided; compounded rates (poupança) need BigDecimal to avoid drift | Decide per-type; use BigDecimal for `decimal`, document the rule | 🟡 | #9 / #10 review |
 | 4 | Rate limiting | Rack::Attack throttles key on `request.ip` | Behind Heroku's router the IP resolves from `X-Forwarded-For`, which a client can spoof to dodge the per-IP limit | Key on a trusted signal (visitor cookie) or pin the trusted-proxy chain if abuse appears | 🟢 | PR #31 review |
+| 5 | View layer | FE widgets are plain partials + Stimulus, no encapsulation or isolated tests | Partials share a global namespace, leak logic to helpers, and can only be tested through a full view render | Migrate reusable widgets (results/comparison/context/share cards first) to ViewComponent — typed props + isolated unit tests. Good contributor-friendly starter task | 🟢 | FE 02 structure decision |
 
 ## Notes
 
