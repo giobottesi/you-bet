@@ -19,6 +19,6 @@ Rails.application.routes.draw do
     get "archive", to: "pages#archive"
   end
 
-  # Defines the root path route ("/")
-  root "home#index"
+  # Defines the root path route ("/") — the FE-01 landing page skeleton.
+  root "simulations#new"
 end

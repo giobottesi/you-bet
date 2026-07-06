@@ -13,4 +13,17 @@ RSpec.describe 'Simulations', type: :request do
       expect(response.body).to include('See the damage')
     end
   end
+
+  describe 'GET / (root)' do
+    before { get root_path }
+
+    it 'returns 200' do
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'renders the same landing page as simulations/new' do
+      expect(response.body).to include('<form')
+      expect(response.body).to include('See the damage')
+    end
+  end
 end
