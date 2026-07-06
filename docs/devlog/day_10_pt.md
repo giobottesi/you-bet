@@ -95,3 +95,19 @@ Os dois foram resolvidos no PR #46, verificados de ponta a ponta contra uma inst
 **Contribuição do Gio nessa rodada:** conduziu cada virada do diagnóstico pelo celular — descartou DNS, rodou o primeiro `db:migrate` ele mesmo pelo console do Heroku, questionou a segurança da fase de release antes de deixar subir, e venceu duas rodadas de gambiarra em rake escritas por IA com uma busca no Google. Placar do dia: Brasil 0, house edge 2 (dois palpites errados antes do certo), Gio 1 (o conserto de verdade).
 
 > **Betina diz:** "O Brasil caiu da Copa e meus dois primeiros consertos também caíram antes do intervalo. Pelo menos o app que eu tava debugando é o que avisa que a casa sempre ganha primeiro — só não esperava ser a demonstração de abertura da casa."
+
+---
+
+## Apêndice — a escapada do magicagem
+
+*Escrito depois dos fatos — branch próprio (`claude/blog-session-views-scaffold-dt4fdj`), sessão própria, sem relação com a FE 02. "Apêndice" é a palavra certa: aditivo, não card de sprint.*
+
+O Gio pediu um scaffold do "magicagem" — o antigo blog de cristais e tarô dele, de 2014 — com o handle real `@magicagem` do Instagram e uma paleta que ele chamou de whimsy, enquadrado desde o início como "só faz um PR pra eu imaginar umas coisas". Construídos `/blog/sessions` (index + show), `/blog/archive` e `/blog/about` sobre um model `BlogSession` de dados congelados (sem migration), atrás de um layout próprio — paleta própria em lavanda suave/rosa/dourado, deliberadamente o oposto do visual zine já travado do You-Bet, pra as duas marcas nunca se confundirem.
+
+Enquanto isso estava no ar, o esqueleto de landing da FE-01, que estava parado sem link em `/simulations/new` desde o dia 9, finalmente foi conectado à raiz, substituindo o antigo placeholder "coming soon" do `HomeController` — e um link Blog entrou na landing page pra os dois protótipos lerem como um site navegável só, em vez de duas URLs órfãs.
+
+Isso é explicitamente um **super protótipo**: uma ferramenta de reação descartável, não um compromisso de feature. É esperado que mude de forma bastante, ou seja cortado de vez, antes de virar algo real — nenhuma decisão foi tomada sobre se magicagem faz parte do You-Bet. O Gio fez deploy do scaffold do blog no Heroku no meio da sessão, por conta própria e com as próprias credenciais, pra ver ao vivo em vez de imaginar a partir de uma descrição. A reação foi imediata: "so cuuuute" — e, mais útil ainda, gostar de ver a paleta whimsy ao lado da landing zine, mesmo antes das duas estarem linkadas, como jeito de pensar direção de verdade, em vez de chutar uma. A conexão da raiz e o link do blog saíram logo depois desse primeiro olhar e ficaram na fila pro próximo deploy.
+
+**Contribuição do Gio, nessa rodada:** enquadrou a coisa toda como descartável desde o primeiro pedido, o que foi o que deixou tudo andar rápido sem debate de escopo; percebeu que os dois protótipos novos não tinham nenhum link entre si e pediu um; fez a chamada explícita, de olhos abertos, de manter o handle real do Instagram no ar num repo público ("tenho meus segredos na manga, já sou véio de internet o suficiente"); e reagiu a algo concreto em vez de descrever uma preferência de forma abstrata — que é o ponto inteiro de construir um spike desses.
+
+> **Betina diz:** "Passei o dia construindo um blog de cristais e uma calculadora de dano de aposta debaixo do mesmo teto. Se a casa sempre ganha, pelo menos agora ela tem um cantinho whimsy pra sentar enquanto espera."

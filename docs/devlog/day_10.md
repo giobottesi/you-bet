@@ -95,3 +95,19 @@ Both shipped in PR #46, verified end-to-end against a real Postgres instance and
 **Gio's contribution, this round:** drove every pivot in the diagnosis from a phone — ruled out DNS, ran the first `db:migrate` himself from the Heroku console, pushed back on release-phase safety before letting it ship, and beat two rounds of AI-authored rake hackery to the real fix with a search engine. Scoreboard for the day: Brazil 0, house edge 2 (two wrong guesses before the right one), Gio 1 (the actual fix).
 
 > **Betina says:** "Brazil's out of the Cup and my first two fixes were out by half-time too. At least the app I'm debugging is the one that warns people the house always wins first — I just didn't expect to be the house's opening demo."
+
+---
+
+## Appendix — the magicagem side-quest
+
+*Written up after the fact — its own branch (`claude/blog-session-views-scaffold-dt4fdj`), its own session, no relation to FE 02. "Appendix" is the right word for it: additive, not sprint-card work.*
+
+Gio asked for a scaffold of "magicagem" — his old 2014 crystals-and-tarot blog — branded with the real `@magicagem` Instagram handle and a palette he called whimsy, framed from the start as "just make a PR so I can imagine some things." Built `/blog/sessions` (index + show), `/blog/archive`, and `/blog/about` on a `BlogSession` frozen-data model (no migration needed) behind a dedicated layout — its own soft lavender/pink/gold palette, deliberately the opposite of the locked You-Bet zine look, so the two brands never blur together.
+
+While that was live, the FE-01 landing skeleton that's been sitting unlinked at `/simulations/new` since day 9 finally got wired to root, replacing the old "coming soon" `HomeController` placeholder — and a Blog link went on the landing page so the two prototypes read as one navigable site instead of two orphan URLs.
+
+This is explicitly a **super prototype**: a disposable reaction tool, not a feature commitment. Expect it to change shape a lot, or get cut outright, before it's anything real — no decision has been made on whether magicagem belongs in You-Bet at all. Gio deployed the blog scaffold to Heroku mid-session, on his own call and his own credentials, to see it live rather than imagine it from a description. The reaction was immediate: "so cuuuute" — and, more usefully, liking the whimsy palette sitting next to the zine landing page, even before the two were cross-linked, as a way to actually think about direction instead of guessing at one. The root-wiring and the blog link shipped right after that first look and are queued for the next deploy.
+
+**Gio's contribution, this round:** framed the whole thing as disposable from the first ask, which is what let it move fast without a scope debate; caught that the two new prototypes had zero link between them and asked for one; made the explicit, eyes-open call to keep the real Instagram handle live on a public repo ("I have my secrets under my sleeves, I'm internet old enough"); and reacted to something concrete instead of describing a preference in the abstract — which is the entire point of building a spike like this one.
+
+> **Betina says:** "Spent the day building a crystal blog and a betting-harm calculator under the same roof. If the house always wins, at least now it has a whimsy corner to sit in while it waits."
