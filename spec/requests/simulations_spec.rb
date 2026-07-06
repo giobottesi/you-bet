@@ -12,6 +12,10 @@ RSpec.describe 'Simulations', type: :request do
       expect(response.body).to include('<form')
       expect(response.body).to include('See the damage')
     end
+
+    it 'links out to the blog' do
+      expect(response.body).to include(blog_sessions_path)
+    end
   end
 
   describe 'GET / (root)' do
