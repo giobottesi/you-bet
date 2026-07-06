@@ -14,7 +14,7 @@ Technical architecture for the MVP. For motivation and product spec, see [PROPOS
 | **Audit trail** | PaperTrail | Every data change tracked with `whodunnit`, `object_changes`, timestamps. Required for data traceability — every number in `reference_values` has a `data_source` citation. ([PaperTrail gem](https://github.com/paper-trail-gem/paper_trail)) |
 | **Rate limiting** | Rack::Attack | Rack middleware for throttling and fail2ban. Used by GitLab, Discourse, Mastodon in production. Runs before the Rails stack — blocks abuse before it hits the app. ([Rack::Attack gem](https://github.com/rack/rack-attack)) |
 | **i18n** | Rails built-in I18n | PT-BR primary, EN scaffold ready. Rails I18n is mature and avoids external dependencies. ([Rails I18n guide](https://guides.rubyonrails.org/i18n.html)) |
-| **Hosting** | Heroku (US region) | Zero-config Procfile deploy, managed Heroku Postgres addon, automated TLS. No BR region, but the app holds no PII — data residency is a non-requirement, so US latency is an accepted tradeoff for deploy simplicity. ([Heroku regions](https://devcenter.heroku.com/articles/regions)) |
+| **Hosting** | Heroku (US region) | Procfile deploy (`release:` phase runs `db:prepare`), managed Heroku Postgres addon, automated TLS. No BR region, but the app holds no PII — data residency is a non-requirement, so US latency is an accepted tradeoff for deploy simplicity. ([Heroku regions](https://devcenter.heroku.com/articles/regions)) |
 | **CI** | GitHub Actions | Free for public repos. Native GitHub integration for PR checks. ([GitHub Actions docs](https://docs.github.com/en/actions)) |
 
 ---
