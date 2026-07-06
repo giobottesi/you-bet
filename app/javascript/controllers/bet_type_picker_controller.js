@@ -5,7 +5,7 @@ import { Controller } from "@hotwired/stimulus"
 // that page the slider. User-facing strings arrive as values so the copy lives
 // in the i18n locale files, never hard-coded here.
 export default class extends Controller {
-  static targets = ["carousel", "checkbox", "count", "prev", "next"]
+  static targets = ["carousel", "card", "checkbox", "count", "prev", "next"]
   static values = { countNone: String, countSelected: String, validityMessage: String }
 
   connect() {
@@ -55,7 +55,7 @@ export default class extends Controller {
   // One "page" is two cards: card width plus the 16px (1rem) flex gap between
   // them. Falls back to 300px before the first card has laid out.
   get pageDistance() {
-    const card = this.carouselTarget.querySelector(".bet-card")
-    return card ? (card.offsetWidth + 16) * 2 : 300
+    if (!this.hasCardTarget) return 300
+    return (this.cardTargets[0].offsetWidth + 16) * 2
   }
 }

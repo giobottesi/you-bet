@@ -20,7 +20,8 @@
            data-bet-type-picker-target="carousel"
            data-action="scroll->bet-type-picker#updateArrows change->bet-type-picker#validate">
         <% @bet_types.each_with_index do |bet_type, index| %>
-          <label class="bet-card" style="--bet-accent: <%= bet_card_accent(index) %>">
+          <label class="bet-card" style="--bet-accent: <%= bet_card_accent(index) %>"
+                 data-bet-type-picker-target="card">
             <%= check_box_tag "bet_type_keys[]", bet_type.key, false,
                   id: "bet_type_#{bet_type.key}",
                   data: { bet_type_picker_target: "checkbox" } %>
