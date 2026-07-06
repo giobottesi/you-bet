@@ -112,14 +112,6 @@
     opacity: var(--fade-right);
   }
 
-  /* Scroll position indicator — thumb width = visible fraction, offset = scroll position (set by Stimulus) */
-  .bet-slider__progress {
-    @apply relative mt-1 h-2 w-full border-2 border-text bg-surface;
-  }
-  .bet-slider__progress-thumb {
-    @apply absolute bottom-0 left-0 top-0 bg-coral;
-    transition: left 0.05s linear;
-  }
 
   .bet-carousel {
     @apply -mx-1 flex gap-4 overflow-x-auto px-1 pt-2 pb-4;
