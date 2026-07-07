@@ -1,40 +1,48 @@
 @import "tailwindcss";
 
 @theme {
-  /* Base — warm light */
-  --color-bg: #FBF6EC;
-  --color-surface: #EDE9E2;
+  /* Base — warm light, de-yellowed (low-sat paper, not cream wash) */
+  --color-bg: #F8F6F2;
+  --color-surface: #EBE9E6;
   --color-border: #DFC3DA;
-  --color-text: #3B3239;
-  --color-muted: #6E6358;
+  --color-text: #1E1714;
+  --color-muted: #7E6E5D;
+  --color-card: #F6F5F3; /* card paper — de-yellowed (lower sat than bg); border + shadow define them */
 
   /* Pop accents — bright (fills/borders) + ink (the only text-legible variant) */
-  --color-coral: #EC6258;
-  --color-coral-ink: #AA473F;
-  --color-cyan: #6FE0CD;
-  --color-cyan-ink: #377066;
-  --color-green: #64D444;
-  --color-green-ink: #367225;
-  --color-purple: #9D64D4;
-  --color-purple-ink: #8152AE;
-  --color-yellow: #F4BB5C;
-  --color-yellow-ink: #7F6130;
+  --color-coral: #FF5550;
+  --color-coral-ink: #E00700;
+  --color-cyan: #2DE3CD;
+  --color-cyan-ink: #117E71;
+  --color-green: #15D718;
+  --color-green-ink: #0D820F;
+  --color-purple: #A661DB;
+  --color-purple-ink: #9848D5;
+  --color-yellow: #FFB846;
+  --color-yellow-ink: #9E6100;
 
   /* Light tints — fills/backgrounds only, never text */
-  --color-mint: #A2EAC7;
-  --color-light-green: #B4F6AD;
-  --color-light-purple: #BD8EEC;
-  --color-salmon: #F19D86;
-  --color-soft-yellow: #F4D46C;
+  --color-mint: #8BEDC4;
+  --color-light-green: #A0F8A5;
+  --color-light-purple: #C68CF2;
+  --color-salmon: #FF9881;
+  --color-soft-yellow: #FAD257;
 
   /* Semantic — ink variants (rendered as text) */
-  --color-gain: #367225;
-  --color-loss: #AA473F;
+  --color-gain: #0D820F;
+  --color-loss: #E00700;
 }
 
 @layer base {
+  :root {
+    /* Paper texture: fine fiber hatch + whisper of warm noise (overlap → texture not stripes). Applied to every paper surface. */
+    --paper-grain:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.35 0 0 0 0 0.26 0 0 0 0 0.16 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E"),
+      repeating-linear-gradient(to bottom, transparent 0 2px, rgba(30, 23, 20, 0.045) 2px 3px);
+  }
   body {
     background-color: var(--color-bg);
+    background-image: var(--paper-grain);
     color: var(--color-text);
     font-family: "Libre Franklin", system-ui, sans-serif;
   }
@@ -99,7 +107,7 @@
       border-2 border-text text-xl/none font-black text-text shadow-[2px_2px_0_rgba(0,0,0,0.3)];
     top: calc(50% - 8px);
     transform: translateY(-50%);
-    background: #FFFDF8;
+    background: var(--color-card);
     transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.2s ease;
   }
   .bet-slider__arrow:active {
@@ -131,7 +139,8 @@
     flex: 0 0 9.5rem;
     min-height: 10rem;
     scroll-snap-align: start;
-    background: #FFFDF8;
+    background-color: var(--color-card);
+    background-image: var(--paper-grain);
     transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   }
   .bet-card:hover {
@@ -143,7 +152,7 @@
   }
   .bet-card__mark {
     @apply flex h-[1.7rem] w-[1.7rem] items-center justify-center border-2 border-text;
-    background: #FDFAF4;
+    background: var(--color-card);
     box-shadow: inset -2px -2px 0 var(--color-text), 2px 2px 0 var(--color-text);
     transition: transform 0.25s ease, background 0.2s ease, border-color 0.2s ease;
   }
@@ -157,8 +166,21 @@
     @apply mt-auto text-[1.08rem]/[1.2] font-extrabold;
   }
   .bet-card__edge {
-    @apply self-start border-[1.5px] border-text px-2 py-[0.2rem] text-[0.72rem] font-bold uppercase tracking-[0.03em] text-black;
-    background: var(--bet-accent);
+    @apply self-start text-[0.72rem] font-bold uppercase tracking-[0.03em] text-text;
+    /* Highlighter marker in the card accent — replaces the boxed badge. Asymmetric feathered ends + tilt = hand-swiped, not perfect. */
+    padding: 0.08em 0.3em;
+    transform: rotate(-1.2deg);
+    background-repeat: no-repeat;
+    background-image: linear-gradient(
+      98deg,
+      transparent 0,
+      color-mix(in srgb, var(--bet-accent) 58%, transparent) 0.5em,
+      color-mix(in srgb, var(--bet-accent) 66%, transparent) 42%,
+      color-mix(in srgb, var(--bet-accent) 58%, transparent) calc(100% - 0.7em),
+      transparent 100%
+    );
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
   }
   .bet-card__edge span { font-variant-numeric: tabular-nums; }
 
