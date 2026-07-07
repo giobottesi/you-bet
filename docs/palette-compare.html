@@ -1,166 +1,63 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>You-Bet · Palette Compare (Dark vs Light)</title>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>You-Bet · Current Palette</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; background: #17130f; color: #F1E7D7; padding: 32px 20px 64px; }
-  h1 { font-size: 26px; letter-spacing: -0.5px; margin-bottom: 4px; }
-  .sub { color: #A89585; margin-bottom: 28px; font-size: 13px; }
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 1180px; margin: 0 auto; }
-  @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
-  .panel { border-radius: 18px; padding: 24px; border: 1px solid rgba(255,255,255,.08); }
-  .panel.dark  { background: #1F1714; color: #F1E7D7; }
-  .panel.light { background: #FBF6EC; color: #3B3239; border-color: #DFC3DA; }
-  .tag { display:inline-block; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:4px 10px; border-radius:999px; margin-bottom:14px; }
-  .dark  .tag { background:#3B3239; color:#F1E7D7; }
-  .light .tag { background:#DFC3DA; color:#3B3239; }
-  h2 { font-size: 19px; margin-bottom: 2px; }
-  .lead { font-size: 12px; opacity:.65; margin-bottom: 20px; }
-  .section-label { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; opacity:.5; margin:22px 0 10px; }
-  .rows { display:flex; flex-direction:column; gap:8px; }
-  .row { display:flex; align-items:center; gap:12px; }
-  .chip { width:44px; height:44px; border-radius:10px; flex:none; border:1px solid rgba(0,0,0,.15); }
-  .light .chip { border-color: rgba(0,0,0,.12); }
-  .meta { display:flex; flex-direction:column; gap:1px; min-width:0; }
-  .name { font-weight:600; font-size:13px; }
-  .hex { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size:12px; opacity:.7; }
-  .badge { margin-left:auto; font-size:11px; font-weight:700; font-family: ui-monospace, monospace; padding:3px 8px; border-radius:6px; white-space:nowrap; }
-  .aaa  { background:#367225; color:#fff; }
-  .aa   { background:#7F6130; color:#fff; }
-  .aalg { background:#8a6d1a; color:#fff; }
-  .fail { background:#AA473F; color:#fff; }
-  .light .aaa { background:#367225; } .light .aa { background:#7F6130; }
-  .accgrid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
-  .acc { border-radius:10px; padding:10px 12px; }
-  .acc .h { font-weight:700; font-size:13px; }
-  .acc .x { font-family:ui-monospace,monospace; font-size:11px; opacity:.85; }
-  /* live sample card */
-  .demo { margin-top:24px; border-radius:14px; padding:20px; }
-  .dark  .demo { background:#2A2119; border:1px solid #3D2E24; }
-  .light .demo { background:#EDE9E2; border:1px solid #DFC3DA; }
-  .demo h3 { font-size:18px; margin-bottom:6px; }
-  .dark  .demo h3 { color:#F1E7D7; } .light .demo h3 { color:#3B3239; }
-  .demo p  { font-size:13px; margin-bottom:4px; }
-  .dark  .demo p { color:#F1E7D7; } .light .demo p { color:#3B3239; }
-  .demo .muted { font-size:12px; }
-  .dark  .demo .muted { color:#A89585; } .light .demo .muted { color:#6E6358; }
-  .btnrow { display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; }
-  .btn { border:none; border-radius:9px; padding:9px 16px; font-weight:700; font-size:13px; cursor:default; color:#000; }
-  .btn.line { background:transparent; border:2px solid; font-weight:700; }
-  .dark  .btn.line { color:#6FE0CD; border-color:#6FE0CD; }
-  .light .btn.line { color:#8152AE; border-color:#8152AE; }
-  .link { font-weight:700; text-decoration:underline; }
-  .dark  .link { color:#6FE0CD; } .light .link { color:#377066; }
-  .note { max-width:1180px; margin:26px auto 0; font-size:12px; color:#A89585; line-height:1.7; }
-  .note code { font-family:ui-monospace,monospace; color:#F1E7D7; background:#2A2119; padding:1px 5px; border-radius:4px; }
-  .legend { max-width:1180px; margin:18px auto 0; display:flex; gap:14px; flex-wrap:wrap; font-size:11px; color:#A89585; }
-  .legend span b { display:inline-block; width:10px; height:10px; border-radius:3px; margin-right:5px; vertical-align:middle; }
-</style>
-</head>
-<body>
-  <h1>You-Bet · Palette Compare</h1>
-  <div class="sub">OLD dark-first vs NEW light theme — WCAG AA/AAA verified. Badges = contrast of that color as text vs its panel background (or label vs fill for accent chips).</div>
+:root{--bg:#F8F6F2;--ink:#1E1714;--muted:#7E6E5D;--surface:#EDE8DE;--border:#DFC3DA;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink);padding:36px 22px 72px;max-width:760px;margin:0 auto}
+h1{font-size:26px;letter-spacing:-.5px} .sub{color:var(--muted);font-size:13px;margin:4px 0 28px}
+h2{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:30px 0 12px}
+.rows{display:flex;flex-direction:column;gap:8px}
+.row,.pair{display:flex;align-items:center;gap:12px}
+.chip{width:44px;height:44px;border-radius:10px;flex:none;border:2px solid var(--ink)}
+.chip.lg{width:38px;height:38px}
+.meta{display:flex;flex-direction:column;min-width:96px} .meta b{font-size:13px;font-weight:700}
+.hex{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--muted)}
+.use{font-size:12px;color:var(--muted);margin-left:auto;text-align:right}
+.badge{font-family:ui-monospace,monospace;font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;white-space:nowrap;border:1.5px solid var(--ink)}
+.badge.aa{background:#0D820F;color:#fff;border-color:#0D820F}
+.badge.lg{background:var(--surface);color:var(--ink)}
+.badge.fill{background:transparent;color:var(--muted);border-color:var(--border)}
+.arow{display:grid;grid-template-columns:1fr 1fr auto;gap:14px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)}
+.arow .use{grid-column:1/-1;margin:0;text-align:left}
+.tints{display:flex;flex-wrap:wrap;gap:10px}
+.tchip{width:120px;height:64px;border-radius:10px;border:2px solid var(--ink);display:flex;align-items:flex-end;padding:6px}
+.tchip span{font-family:ui-monospace,monospace;font-size:10px;color:#1E1714;background:rgba(248,246,242,.7);padding:2px 4px;border-radius:4px;line-height:1.3}
+.note{margin-top:28px;font-size:12px;color:var(--muted);border-left:3px solid var(--border);padding-left:12px}
+.legend{display:flex;gap:14px;font-size:11px;color:var(--muted);margin-top:8px;flex-wrap:wrap}
+.legend b{color:var(--ink)}
+</style></head><body>
+<h1>You-Bet · Current Palette</h1>
+<p class="sub">Live tokens from <code>application.css</code>. Ratios vs <code>#F8F6F2</code> (page paper). Sourced from vibe.svg.</p>
+<div class="legend"><span><b>AA</b> ≥4.5 — body text ok</span><span><b>large</b> ≥3 — big/UI only</span><span><b>fill</b> &lt;3 — never text</span></div>
+<h2>Base</h2><div class="rows"><div class="row"><span class="chip" style="background:#F8F6F2"></span><span class="meta"><b>bg</b><span class="hex">#F8F6F2</span></span><span class="use">page paper</span><span class="badge fill">fill 1.0</span></div>
+<div class="row"><span class="chip" style="background:#EDE8DE"></span><span class="meta"><b>surface</b><span class="hex">#EDE8DE</span></span><span class="use">elevated</span><span class="badge fill">fill 1.13</span></div>
+<div class="row"><span class="chip" style="background:#DFC3DA"></span><span class="meta"><b>border</b><span class="hex">#DFC3DA</span></span><span class="use">lilac</span><span class="badge fill">fill 1.5</span></div>
+<div class="row"><span class="chip" style="background:#1E1714"></span><span class="meta"><b>text (ink)</b><span class="hex">#1E1714</span></span><span class="use">body</span><span class="badge aa">AA 16.38</span></div>
+<div class="row"><span class="chip" style="background:#7E6E5D"></span><span class="meta"><b>muted</b><span class="hex">#7E6E5D</span></span><span class="use">captions ≥16px</span><span class="badge aa">AA 4.55</span></div>
+<div class="row"><span class="chip" style="background:#F8F6F2"></span><span class="meta"><b>card</b><span class="hex">#F8F6F2</span></span><span class="use">= bg</span><span class="badge fill">fill 1.0</span></div>
+</div>
+<h2>Pop accents — bright + ink</h2><div class="arow">
+ <div class="pair"><span class="chip lg" style="background:#FF5550"></span><span class="meta"><b>coral</b><span class="hex">#FF5550</span></span><span class="badge fill">fill 2.92</span></div>
+ <div class="pair"><span class="chip lg" style="background:#E00700"></span><span class="meta"><b>coral-ink</b><span class="hex">#E00700</span></span><span class="badge aa">AA 4.63</span></div>
+ <span class="use">CTA / loss</span></div>
+<div class="arow">
+ <div class="pair"><span class="chip lg" style="background:#2DE3CD"></span><span class="meta"><b>cyan</b><span class="hex">#2DE3CD</span></span><span class="badge fill">fill 1.5</span></div>
+ <div class="pair"><span class="chip lg" style="background:#117E71"></span><span class="meta"><b>cyan-ink</b><span class="hex">#117E71</span></span><span class="badge aa">AA 4.58</span></div>
+ <span class="use">links</span></div>
+<div class="arow">
+ <div class="pair"><span class="chip lg" style="background:#15D718"></span><span class="meta"><b>green</b><span class="hex">#15D718</span></span><span class="badge fill">fill 1.81</span></div>
+ <div class="pair"><span class="chip lg" style="background:#0D820F"></span><span class="meta"><b>green-ink</b><span class="hex">#0D820F</span></span><span class="badge aa">AA 4.61</span></div>
+ <span class="use">gain</span></div>
+<div class="arow">
+ <div class="pair"><span class="chip lg" style="background:#A661DB"></span><span class="meta"><b>purple</b><span class="hex">#A661DB</span></span><span class="badge lg">large 3.63</span></div>
+ <div class="pair"><span class="chip lg" style="background:#9848D5"></span><span class="meta"><b>purple-ink</b><span class="hex">#9848D5</span></span><span class="badge aa">AA 4.61</span></div>
+ <span class="use">stats</span></div>
+<div class="arow">
+ <div class="pair"><span class="chip lg" style="background:#FFB846"></span><span class="meta"><b>yellow</b><span class="hex">#FFB846</span></span><span class="badge fill">fill 1.6</span></div>
+ <div class="pair"><span class="chip lg" style="background:#9E6100"></span><span class="meta"><b>yellow-ink</b><span class="hex">#9E6100</span></span><span class="badge aa">AA 4.67</span></div>
+ <span class="use">highlights</span></div>
 
-  <div class="legend">
-    <span><b style="background:#367225"></b>AAA ≥7:1</span>
-    <span><b style="background:#7F6130"></b>AA ≥4.5:1</span>
-    <span><b style="background:#8a6d1a"></b>AA-large ≥3:1</span>
-    <span><b style="background:#AA473F"></b>FAIL &lt;3:1</span>
-  </div>
-
-  <div class="grid" style="margin-top:20px;">
-
-    <!-- ============ OLD DARK ============ -->
-    <div class="panel dark">
-      <span class="tag">Old · Dark-first</span>
-      <h2>Dark theme</h2>
-      <div class="lead">bg #1F1714 · text on dark carries everything</div>
-
-      <div class="section-label">Base</div>
-      <div class="rows">
-        <div class="row"><div class="chip" style="background:#1F1714"></div><div class="meta"><span class="name">bg</span><span class="hex">#1F1714</span></div></div>
-        <div class="row"><div class="chip" style="background:#2A2119"></div><div class="meta"><span class="name">surface</span><span class="hex">#2A2119</span></div></div>
-        <div class="row"><div class="chip" style="background:#3D2E24"></div><div class="meta"><span class="name">border</span><span class="hex">#3D2E24</span></div></div>
-        <div class="row"><div class="chip" style="background:#F1E7D7"></div><div class="meta"><span class="name">text (cream)</span><span class="hex">#F1E7D7</span></div><span class="badge aaa">17.1 AAA</span></div>
-        <div class="row"><div class="chip" style="background:#A89585"></div><div class="meta"><span class="name">muted</span><span class="hex">#A89585</span></div><span class="badge aa">6.1 AA</span></div>
-      </div>
-
-      <div class="section-label">Accents · as text on bg / label on fill</div>
-      <div class="accgrid">
-        <div class="acc" style="background:#6FE0CD;color:#000"><div class="h">cyan</div><div class="x">#6FE0CD · 13.2 AAA</div></div>
-        <div class="acc" style="background:#9D64D4;color:#000"><div class="h">purple</div><div class="x">#9D64D4 · 5.2 AA</div></div>
-        <div class="acc" style="background:#F4BB5C;color:#000"><div class="h">orange</div><div class="x">#F4BB5C · 12.1 AAA</div></div>
-        <div class="acc" style="background:#64D444;color:#000"><div class="h">green</div><div class="x">#64D444 · 11.0 AAA</div></div>
-        <div class="acc" style="background:#EC6258;color:#000"><div class="h">coral</div><div class="x">#EC6258 · 6.4 AA</div></div>
-        <div class="acc" style="background:#A2EAC7;color:#000"><div class="h">mint (tint)</div><div class="x">#A2EAC7 · 15.1 AAA</div></div>
-      </div>
-
-      <div class="demo">
-        <h3>Bet smarter, not harder</h3>
-        <p>Cream body text on warm-dark surface. Reads clean at any size.</p>
-        <p class="muted">Muted caption · secondary info only, ≥16px.</p>
-        <div class="btnrow">
-          <button class="btn" style="background:#6FE0CD">Primary</button>
-          <button class="btn" style="background:#F4BB5C">Place bet</button>
-          <button class="btn line">Cancel</button>
-        </div>
-        <p style="margin-top:12px;font-size:13px;">Inline <a class="link">accent link</a> stays legible.</p>
-      </div>
-    </div>
-
-    <!-- ============ NEW LIGHT ============ -->
-    <div class="panel light">
-      <span class="tag">New · Light</span>
-      <h2>Light theme</h2>
-      <div class="lead">paper #FBF6EC · dark ink + darkened accents for text</div>
-
-      <div class="section-label">Base</div>
-      <div class="rows">
-        <div class="row"><div class="chip" style="background:#FBF6EC"></div><div class="meta"><span class="name">bg (paper)</span><span class="hex">#FBF6EC</span></div></div>
-        <div class="row"><div class="chip" style="background:#EDE9E2"></div><div class="meta"><span class="name">surface</span><span class="hex">#EDE9E2</span></div></div>
-        <div class="row"><div class="chip" style="background:#DFC3DA"></div><div class="meta"><span class="name">border (lilac)</span><span class="hex">#DFC3DA</span></div></div>
-        <div class="row"><div class="chip" style="background:#3B3239"></div><div class="meta"><span class="name">text (ink)</span><span class="hex">#3B3239</span></div><span class="badge aaa">11.5 AAA</span></div>
-        <div class="row"><div class="chip" style="background:#6E6358"></div><div class="meta"><span class="name">muted</span><span class="hex">#6E6358</span></div><span class="badge aa">4.8 AA</span></div>
-      </div>
-
-      <div class="section-label">Accents · INK = as text · BRIGHT = fill w/ dark label</div>
-      <div class="accgrid">
-        <div class="acc" style="background:#EDE9E2;color:#377066;border:1px solid #DFC3DA"><div class="h">cyan ink</div><div class="x">#377066 · 4.7 AA</div></div>
-        <div class="acc" style="background:#6FE0CD;color:#000"><div class="h">cyan fill</div><div class="x">#6FE0CD · lbl 13.2</div></div>
-        <div class="acc" style="background:#EDE9E2;color:#8152AE;border:1px solid #DFC3DA"><div class="h">purple ink</div><div class="x">#8152AE · 4.6 AA</div></div>
-        <div class="acc" style="background:#9D64D4;color:#000"><div class="h">purple fill</div><div class="x">#9D64D4 · lbl 5.2</div></div>
-        <div class="acc" style="background:#EDE9E2;color:#7F6130;border:1px solid #DFC3DA"><div class="h">orange ink</div><div class="x">#7F6130 · 4.7 AA</div></div>
-        <div class="acc" style="background:#F4BB5C;color:#000"><div class="h">orange fill</div><div class="x">#F4BB5C · lbl 12.1</div></div>
-        <div class="acc" style="background:#EDE9E2;color:#367225;border:1px solid #DFC3DA"><div class="h">green ink</div><div class="x">#367225 · 4.8 AA</div></div>
-        <div class="acc" style="background:#64D444;color:#000"><div class="h">green fill</div><div class="x">#64D444 · lbl 11.0</div></div>
-        <div class="acc" style="background:#EDE9E2;color:#AA473F;border:1px solid #DFC3DA"><div class="h">coral ink</div><div class="x">#AA473F · 4.7 AA</div></div>
-        <div class="acc" style="background:#EC6258;color:#000"><div class="h">coral fill</div><div class="x">#EC6258 · lbl 6.4</div></div>
-      </div>
-
-      <div class="demo">
-        <h3>Bet smarter, not harder</h3>
-        <p>Ink body text on cream surface. Same AAA legibility, brighter mood.</p>
-        <p class="muted">Muted caption · secondary info only, ≥16px.</p>
-        <div class="btnrow">
-          <button class="btn" style="background:#6FE0CD">Primary</button>
-          <button class="btn" style="background:#F4BB5C">Place bet</button>
-          <button class="btn line">Cancel</button>
-        </div>
-        <p style="margin-top:12px;font-size:13px;">Inline <a class="link">accent link</a> uses INK variant, not bright.</p>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="note">
-    <b style="color:#F1E7D7">Light-theme rules baked in above:</b><br>
-    1. Body = ink <code>#3B3239</code> on paper/cream (11.5 / 10.1 AAA). Muted = <code>#6E6358</code> (4.8 AA, ≥16px).<br>
-    2. Accent <b>text</b> on light bg must use the darkened INK variant — bright accents FAIL as text on light (all &lt;3.3:1).<br>
-    3. Accent <b>fills</b> keep the bright hue with a <b>black/dark label</b> — cream labels FAIL on every fill.<br>
-    4. Never text on lilac and never cream-on-lilac.
-  </div>
-</body>
-</html>
+<h2>Light tints — fills only, never text</h2><div class="tints"><span class="tchip" style="background:#8BEDC4"><span>mint<br>#8BEDC4</span></span><span class="tchip" style="background:#A0F8A5"><span>light-green<br>#A0F8A5</span></span><span class="tchip" style="background:#C68CF2"><span>light-purple<br>#C68CF2</span></span><span class="tchip" style="background:#FF9881"><span>salmon<br>#FF9881</span></span><span class="tchip" style="background:#FAD257"><span>soft-yellow<br>#FAD257</span></span></div>
+<p class="note">Bright accents are fills — legibility carried by the 2px ink border/outline (like the logo), never used as text. The ink column is the text-legible variant. Cards use <code>--color-card = --color-bg</code>: no fill wash, defined by border + hard shadow.</p>
+</body></html>

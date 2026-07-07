@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>You-Bet · Trinket Preview v2</title>
+<style>
+:root{
+  --bg:#F8F6F2; --panel:#EBE9E6; --card:#F6F5F3; --ink:#1E1714; --muted:#7E6E5D;
+  --border:#DFC3DA; --coral:#FF5550; --cyan:#2DE3CD; --green:#15D718; --purple:#A661DB;
+  --l-purple:#C68CF2; --mint:#8BEDC4; --yellow:#FFB846;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:15px/1.5 "Libre Franklin",-apple-system,system-ui,sans-serif;background:var(--bg);color:var(--ink);padding:40px 24px 80px;max-width:1040px;margin:0 auto}
+h1{font-size:28px;letter-spacing:-.5px} .sub{color:var(--muted);font-size:13px;margin:6px 0 8px}
+.zone{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border:1.5px solid var(--ink);padding:2px 7px;border-radius:999px;margin-left:8px;vertical-align:middle}
+h2{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:44px 0 6px;border-top:2px solid var(--ink);padding-top:16px}
+.rowlab{font-size:12px;font-weight:700;color:var(--muted);margin:0 0 14px}
+.stage{display:flex;flex-wrap:wrap;gap:34px;align-items:flex-start}
+.item{display:flex;flex-direction:column;gap:8px;align-items:center}
+.cap{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--muted);text-align:center;max-width:180px}
+
+.card{position:relative;width:170px;min-height:170px;background-color:var(--card);
+  border:2.5px solid var(--ink);box-shadow:5px 5px 0 rgba(0,0,0,.28);padding:17px;display:flex;flex-direction:column}
+.mark{width:27px;height:27px;border:2px solid var(--ink);box-shadow:inset -2px -2px 0 var(--ink),2px 2px 0 var(--ink);background:var(--card)}
+.name{font-weight:800;font-size:1.05rem;margin-top:auto;line-height:1.15}
+.edge{align-self:flex-start;margin-top:8px;border:1.5px solid var(--ink);background:var(--coral);color:#000;font-weight:700;font-size:.72rem;letter-spacing:.03em;text-transform:uppercase;padding:2px 8px}
+
+/* ============ GRAIN VARIANTS (the live question) ============ */
+/* g1: warm fiber lines — bigger pitch, warm sepia not black */
+.g1{background-image:repeating-linear-gradient(to bottom, transparent 0 5px, rgba(150,110,70,.06) 5px 6px)}
+/* g2: warm cross-weave — H + V faint warm lines */
+.g2{background-image:
+  repeating-linear-gradient(to bottom, transparent 0 6px, rgba(150,110,70,.045) 6px 7px),
+  repeating-linear-gradient(to right, transparent 0 6px, rgba(150,110,70,.035) 6px 7px)}
+/* g3: mottled stock — big soft warm blotches + faint fiber */
+.g3{background-image:
+  radial-gradient(120px 90px at 20% 15%, rgba(150,110,70,.06), transparent 70%),
+  radial-gradient(140px 100px at 85% 80%, rgba(120,90,60,.05), transparent 70%),
+  radial-gradient(100px 80px at 60% 40%, rgba(170,130,80,.04), transparent 70%),
+  repeating-linear-gradient(to bottom, transparent 0 5px, rgba(150,110,70,.03) 5px 6px)}
+/* g4: coarse turbulence done right — BIG low-freq fiber, warm, blended */
+.g4{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.014' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.58 0 0 0 0 0.42 0 0 0 0 0.26 0 0 0 0.16 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");background-size:300px 300px}
+
+/* ============ STATIC RESULT-SLIP (where tape/perf/dogear live) ============ */
+.slip{position:relative;width:230px;min-height:300px;background:var(--card);border:2.5px solid var(--ink);
+  box-shadow:6px 6px 0 rgba(0,0,0,.28);padding:22px 20px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.014' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.58 0 0 0 0 0.42 0 0 0 0 0.26 0 0 0 0.16 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E")}
+.slip h3{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:800}
+.slip .big{font-size:2rem;font-weight:900;margin:6px 0}
+.slip .line{font-size:.85rem;color:var(--muted);margin-top:auto}
+
+/* perf-b: side stub tear + notches (LOVED, on static slip) */
+.perf-stub{border-left:2px dashed var(--ink);padding-left:30px;margin-left:0}
+.perf-stub::before{content:"";position:absolute;left:-6px;top:0;bottom:0;width:12px;
+  background:radial-gradient(circle 5px at 0 8px,var(--bg) 5px,transparent 6px) repeat-y;background-size:12px 18px}
+
+/* natural dog-ear — curled shaded fold, not flat triangle */
+.dogear-a::after{content:"";position:absolute;top:-1px;right:-1px;width:34px;height:34px;
+  background:linear-gradient(135deg,var(--panel) 0%,var(--card) 48%,rgba(0,0,0,.10) 50%,transparent 52%);
+  border-bottom-left-radius:5px;box-shadow:-2px 2px 3px rgba(0,0,0,.13)}
+.dogear-b::after{content:"";position:absolute;top:-1px;right:-1px;width:46px;height:46px;
+  background:radial-gradient(120% 120% at 100% 0,var(--card) 40%,#e5e2dc 50%,rgba(0,0,0,.12) 58%,transparent 62%);
+  border-bottom-left-radius:8px;box-shadow:-3px 3px 4px rgba(0,0,0,.15)}
+
+/* washi tape (loved, on static slip) */
+.tape-tint::before{content:"";position:absolute;z-index:2;width:70px;height:26px;top:-12px;left:50%;
+  transform:translateX(-50%) rotate(-3deg);background:color-mix(in srgb,var(--l-purple) 60%,transparent);
+  box-shadow:0 1px 2px rgba(0,0,0,.12)}
+
+/* panel for dog-ear demo */
+.panel{position:relative;width:300px;min-height:150px;background:var(--panel);border:2px dashed var(--border);padding:22px}
+.panel h3{font-weight:800;font-size:1.1rem}
+
+/* highlighter */
+.hl mark{background:linear-gradient(120deg,color-mix(in srgb,var(--yellow) 72%,transparent),color-mix(in srgb,var(--yellow) 72%,transparent));
+  padding:.05em .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone;border-radius:2px}
+</style></head><body>
+<h1>You-Bet · Trinket Preview <span style="font-size:14px;color:var(--muted)">v2</span></h1>
+<p class="sub">Action-cards stay clean paper. Decoration (tape/perf/dog-ear) lives on static surfaces only.</p>
+
+<h2>GRAIN — pick the paper <span class="zone">on all paper</span></h2>
+<p class="rowlab">Left = current (grey, fine). Want warmer + bigger. Four takes:</p>
+<div class="stage">
+  <div class="item"><div class="card" style="background-image:repeating-linear-gradient(to bottom,transparent 0 2px,rgba(30,23,20,.045) 2px 3px)"><div class="mark"></div><div class="name">current</div><div class="edge">Casa 6%</div></div><div class="cap">now · fine black lines (grey)</div></div>
+  <div class="item"><div class="card g1"><div class="mark"></div><div class="name">g1</div><div class="edge">Casa 6%</div></div><div class="cap">g1 · warm fiber lines, 6px</div></div>
+  <div class="item"><div class="card g2"><div class="mark"></div><div class="name">g2</div><div class="edge">Casa 6%</div></div><div class="cap">g2 · warm cross-weave</div></div>
+  <div class="item"><div class="card g3"><div class="mark"></div><div class="name">g3</div><div class="edge">Casa 6%</div></div><div class="cap">g3 · mottled stock (blotches+fiber)</div></div>
+  <div class="item"><div class="card g4"><div class="mark"></div><div class="name">g4</div><div class="edge">Casa 6%</div></div><div class="cap">g4 · coarse turbulence, warm (real paper)</div></div>
+</div>
+
+<h2>#3 · Natural dog-ear <span class="zone">Zone B</span></h2>
+<p class="rowlab">Curled + shaded fold (not the flat triangle). Which reads more natural?</p>
+<div class="stage">
+  <div class="item"><div class="panel dogear-a g4"><h3>No que você aposta?</h3></div><div class="cap">a · soft curl 34px</div></div>
+  <div class="item"><div class="panel dogear-b g4"><h3>No que você aposta?</h3></div><div class="cap">b · rounded curl 46px</div></div>
+</div>
+
+<h2>#5 + #4 · On a static RESULT-SLIP <span class="zone">Zone B</span></h2>
+<p class="rowlab">Perf-b (loved) + washi tape, on a non-interactive slip — this is the card type they belong on:</p>
+<div class="stage">
+  <div class="item"><div class="slip perf-stub"><h3>Se tivesse guardado</h3><div class="big" style="color:var(--green)">R$ 4.200</div><div class="line">em vez de apostar</div></div><div class="cap">perf-b · side stub tear+notches</div></div>
+  <div class="item"><div class="slip tape-tint"><h3>Se tivesse guardado</h3><div class="big" style="color:var(--green)">R$ 4.200</div><div class="line">em vez de apostar</div></div><div class="cap">washi tape (pastel) on slip</div></div>
+</div>
+
+<h2>#7 · Highlighter (shipping) <span class="zone">Zone C</span></h2>
+<div class="stage"><p style="font-size:1.6rem" class="hl">You'd have <mark>R$ 4.200</mark> instead.</p></div>
+</body></html>
