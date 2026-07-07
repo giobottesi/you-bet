@@ -12,6 +12,19 @@ RSpec.describe SimulationsHelper, type: :helper do
     end
   end
 
+  describe '#weekly_amount_anchors' do
+    it 'returns the four DataSenado tiers keyed by comparison, in ascending cents' do
+      expect(helper.weekly_amount_anchors.values).to eq([ 1200, 2500, 5000, 12500 ])
+    end
+  end
+
+  describe '#weekly_amount_label' do
+    it 'formats cents as a whole-real R$ label' do
+      expect(helper.weekly_amount_label(1200)).to eq('R$12')
+      expect(helper.weekly_amount_label(12500)).to eq('R$125')
+    end
+  end
+
   describe '#house_edge_label' do
     let(:bet_type) { BetType.new(key: 'sports_singles') }
 

@@ -7,6 +7,23 @@ module SimulationsHelper
     "var(--color-#{BET_CARD_ACCENTS[index % BET_CARD_ACCENTS.size]})"
   end
 
+  # DataSenado weekly-spend tiers (PROPOSAL.md) — comparison key => weekly amount in cents. Custom field covers exact amounts.
+  WEEKLY_AMOUNT_ANCHORS = {
+    streaming: 1200,
+    two_pizzas: 2500,
+    phone_installment: 5000,
+    moto_installment: 12500
+  }.freeze
+
+  def weekly_amount_anchors
+    WEEKLY_AMOUNT_ANCHORS
+  end
+
+  # Whole-real R$ label for a cents amount, e.g. 1200 -> "R$12".
+  def weekly_amount_label(cents)
+    number_to_currency(cents / 100.0, unit: 'R$', precision: 0, format: '%u%n')
+  end
+
   # House edge as a percentage label, e.g. 0.06 -> "6%". Nil when the ReferenceValue isn't seeded.
   def house_edge_label(bet_type)
     edge = bet_type.house_edge_value

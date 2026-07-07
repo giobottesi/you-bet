@@ -26,3 +26,16 @@ en:
       scroll_prev: "Scroll left"
       scroll_next: "Scroll right"
       group_label: "Bet types"
+    weekly_amount:
+      heading: "How much a week?"
+      hint: "Pick a weekly amount — or type your own."
+      per_week: "week"
+      group_label: "Weekly amount"
+      comparisons:
+        streaming: "a streaming subscription"
+        two_pizzas: "the price of two pizzas"
+        phone_installment: "a phone installment"
+        moto_installment: "almost a motorcycle installment"
+      custom_label: "Other amount"
+      custom_placeholder: "0.00"
+      custom_invalid: "Enter an amount above zero."

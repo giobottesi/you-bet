@@ -42,3 +42,16 @@ pt-BR:
       scroll_prev: "Rolar para a esquerda"
       scroll_next: "Rolar para a direita"
       group_label: "Tipos de aposta"
+    weekly_amount:
+      heading: "Quanto por semana?"
+      hint: "Escolha um valor semanal — ou digite o seu."
+      per_week: "semana"
+      group_label: "Valor semanal"
+      comparisons:
+        streaming: "uma assinatura de streaming"
+        two_pizzas: "o preço de duas pizzas"
+        phone_installment: "uma parcela de celular"
+        moto_installment: "quase uma parcela de moto"
+      custom_label: "Outro valor"
+      custom_placeholder: "0,00"
+      custom_invalid: "Digite um valor acima de zero."
