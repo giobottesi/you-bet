@@ -152,6 +152,19 @@ Full-width on mobile. Primary accent bg, dark text. Hard drop shadow. Square cor
 
 Full-width, stacked. Selected state: accent-colored border. Unselected: border color.
 
+### Timeframe Slider (FE-04)
+
+Index-based range over the five horizon slots; the accent rotates per slot (coral→cyan→green→purple→yellow) and drives the thumb, the fill, and the active tick underline. Draggability affordances (slider-UX best practice, sources below):
+
+- **Grip glyph on the thumb** — a ↔ double-arrow (ink SVG on the bright thumb) signals horizontal movement; the single strongest "this slides" cue.
+- **Accent fill left→thumb** — `linear-gradient` hard-stop driven by `--fill-percent` (JS, no native WebKit fill pseudo-element). Shows progress + that the handle moves.
+- **44×44px thumb** — meets the Apple/Google minimum touch target.
+- **Named ticks are the value labels** — the five slot names below the track double as the scale, so no floating value bubble is needed (that pattern is for continuous sliders where the value isn't otherwise shown). `aria-valuetext` carries the active label so screen readers announce "1 year", not the raw index.
+
+Motion is kept minimal — only a subtle `:active` grab-scale on the thumb; no idle/select wiggle.
+
+WCAG: the active tick keeps dark text on an accent *highlighter* underline (not bright-colored text) — green/yellow text on paper fails contrast, and only coral/cyan/purple have ink variants.
+
 ### Help Bar
 
 Footer-anchored. Muted text with cyan-**ink** (`#117E71`) links to CVV 188, Jogadores Anônimos — ink variant so link text stays AA-legible on the light base.
@@ -236,3 +249,12 @@ Candidate texture/whimsy demos gathered 2026-07-06 for a later refinement pass �
 | [shaders.paper.design/paper-texture](https://shaders.paper.design/paper-texture) | Paper's **WebGL paper-texture shader**. | ⚠️ Heavier than the locked asset-free `feTurbulence` grain; runtime cost. Refinement candidate only. |
 
 **Licensing:** CodePen demos default to MIT unless the pen states otherwise, but many state nothing — legally ambiguous to lift verbatim into a public competition repo. Rebuild the technique in our own code. WebGL/shader options also carry a runtime cost the current asset-free grain avoids — weigh before adopting.
+
+### Slider UX references (FE-04)
+
+Best-practice sources behind the Timeframe Slider affordances (grip glyph, filled track, 44px touch target):
+
+- [NN/G — Slider: Rules of Thumb](https://www.nngroup.com/articles/gui-slider-controls/)
+- [Baymard — Form Slider UX (5 requirements)](https://baymard.com/blog/slider-interfaces)
+- [Setproduct — Slider UI design (anatomy + accessibility)](https://www.setproduct.com/blog/slider-ui-design)
+- [Smashing Magazine — Designing the Perfect Slider](https://www.smashingmagazine.com/2017/07/designing-perfect-slider/)

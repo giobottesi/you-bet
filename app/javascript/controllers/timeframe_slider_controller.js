@@ -9,12 +9,14 @@ export default class extends Controller {
     this.applySlot()
   }
 
-  // Read the slider index, write its week count to the form, mark the matching tick, and tint the thumb to the slot's accent.
+  // Read the slider index, write its week count to the form, mark the matching tick, and tint the thumb + fill to the slot's accent.
   applySlot() {
     const index = Number(this.rangeTarget.value)
+    const activeTick = this.tickTargets[index]
     this.weeksTarget.value = this.weeksValue[index]
     this.tickTargets.forEach((tick, i) => tick.classList.toggle("is-active", i === index))
-    const accent = getComputedStyle(this.tickTargets[index]).getPropertyValue("--bet-accent")
-    this.element.style.setProperty("--bet-accent", accent)
+    this.element.style.setProperty("--bet-accent", getComputedStyle(activeTick).getPropertyValue("--bet-accent"))
+    this.element.style.setProperty("--fill-percent", `${(index / (this.tickTargets.length - 1)) * 100}%`)
+    this.rangeTarget.setAttribute("aria-valuetext", activeTick.textContent)
   }
 }
