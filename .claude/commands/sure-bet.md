@@ -14,7 +14,7 @@ git fetch origin && git diff --stat origin/main...HEAD
 - **Prose touched?** (`docs/`, `*.md`, README, the PR body itself) → Step 3 applies.
 - Public repo always → Step 4 applies.
 
-List the files under review before starting.
+List the files under review before starting. If an untracked handover/scratch doc sits in the repo root (e.g. `HANDOVER_NEXT.md`), it must **not** appear in the staged diff — `git add -A`/`git add .` will sweep it in; `git reset <doc>` to unstage, and prefer scoped `git add app/ spec/ …`.
 
 ---
 
