@@ -1,16 +1,16 @@
-# Dia 12 — Fazer o papel virar papel
+# Dia 12 — Consertar o papel, depois precificar a aposta
 
 **Data**: 2026-07-07
 **Fase do sprint**: Landing Page (cards de FE)
-**Planejado**: Nada agendado — FE-03/FE-04 eram os próximos no board. O dia virou um conserto não planejado: a paleta tinha derivado sem avisar, e bastou olhar os cards de verdade pra provar.
+**Planejado**: FE-03 (input de valor semanal) era o card do board. Saiu de tarde — mas a manhã foi sequestrada por um conserto de paleta não planejado: as cores tinham derivado sem avisar, e bastou olhar os cards de verdade pra provar. Dois atos, um dia.
 
 ## TL;DR
 
-- A paleta light tinha ficado **apagada e amarelada** — todos os acentos dessaturados, o verde puxando pro amarelo, o "ink" virando magenta frio, os cards lavados sob um `#FFFDF8` quase branco.
-- Puxei os valores reais do board `vibe.svg`, tirei o amarelo da base, re-saturei os acentos de volta ao neon, e re-derivei as variantes ink de texto que passam no AA.
-- Persegui uma **textura de papel** de verdade metade do dia — de linhas de caderno, passando por um erro de lixa, até um hatch com ruído morno que finalmente lê como papel, não listras.
-- Troquei os badges quadrados de `CASA %` por um **marca-texto passado à mão**, e montei um **sistema de trinkets** documentado (zonas de whimsy-vs-importância + um catálogo com regras de onde cada um entra).
-- Levei uma correção sobre **autonomia demais no design** — e transformei todo o vai-e-volta em docs de preview vivos.
+- **Manhã — resgate da paleta.** A paleta light tinha ficado **apagada e amarelada** — todos os acentos dessaturados, o verde puxando pro amarelo, o "ink" virando magenta frio, os cards lavados sob um `#FFFDF8` quase branco. Puxei os valores reais do board `vibe.svg`, tirei o amarelo da base, re-saturei os acentos, re-derivei as variantes ink de texto que passam no AA.
+- Persegui uma **textura de papel** de verdade metade da manhã — linhas de caderno → um erro de lixa → um hatch com ruído morno que finalmente lê como papel, não listras.
+- Troquei os badges quadrados de `CASA %` por um **marca-texto passado à mão**, e montei um **sistema de trinkets** documentado (zonas de whimsy-vs-importância + um catálogo com regras de onde cada um entra). Levei uma correção sobre **autonomia demais no design** — transformei todo o vai-e-volta em docs de preview vivos.
+- **Tarde — FE-03 saiu (PR #59).** O passo de valor semanal: quatro radio cards de faixa de gasto DataSenado (R$12/25/50/125) mais um campo custom em reais, um controller Stimulus `weekly-amount`, chaves en/pt-BR, specs de helper + request. Segundo passo do form, no idioma dos bet-cards do FE-02.
+- **`required` nativo em vez de JS** — um grupo de radio já expressa "escolha um" de graça, então o controller só cuida do que a plataforma não faz: sync reais→cents e a checagem de maior-que-zero. O passe de design entregou **paridade do dot-pop** com o FE-02; a rampa de acento frio→quente da escada de gasto ficou **guardada** esperando um aval no DESIGN.md.
 
 ---
 
@@ -34,6 +34,12 @@ A textura levou o maior número de iterações, e cada uma foi um sinal real, n�
 
 Os badges pareciam burocráticos demais, então o `CASA %` virou um marca-texto — o acento do próprio card, texto ink escuro, pontas irregulares e uma leve inclinação pra ler passado à mão. Isso abriu uma pergunta maior: onde o whimsy entra sem distrair da decisão de verdade? A resposta foi escrita como um **mapa de whimsy-vs-importância** (caminho da ação fica quieto, o cromo ganha capricho, zonas ambientes podem brincar) e um **catálogo de trinkets** — grain, marca-texto, perfuração, fita crepe, borda tracejada — cada um com sua restrição de posição. A regra dura: cards interativos ficam papel limpo; decoração vive em superfícies estáticas.
 
+### FE-03 — precificando a aposta (PR #59)
+
+Com a base limpa, a tarde foi pro card planejado: *quanto por semana?* O scaffold seguiu a forma do FE-02 — partial flat, controller Stimulus por seção, tokens `@theme` — então a forma era conhecida; as perguntas eram sobre validação e copy. Quatro âncoras de faixa de gasto DataSenado (R$12 / R$25 / R$50 / R$125) renderizam como radio cards, irmãos do `.bet-card`: papel, acento-ao-selecionar, e um beat `amount-pop` pro dot saltar como o checkmark do FE-02 (reduced-motion suprime). Um campo custom em reais deixa a pessoa nomear o próprio número.
+
+A divisão da validação caiu da própria textura da plataforma: um grupo de radio já significa "escolha exatamente um", então o `required` nativo no grupo compartilhado `weekly_amount_cents` carrega isso de graça — sem a dança de `setCustomValidity` que o caso de ≥1-checkbox do FE-02 precisou. O controller Stimulus só cuida do que o HTML não faz: digitar no campo custom seleciona o radio dele, sincroniza reais→cents, e bloqueia o submit até o valor passar de zero. Specs de helper cobrem o mapa de âncoras e o label `R$12`; specs de request checam um radio required por âncora mais a linha custom. O form ainda está desligado (`url: "#"`) — ligar `weekly_amount_cents` a um atributo persistido é um card de BE depois.
+
 ---
 
 ## Decisões & viradas
@@ -45,14 +51,18 @@ Os badges pareciam burocráticos demais, então o `CASA %` virou um marca-texto 
 - **Trinkets são um sistema documentado, não firulas ad-hoc.**
   - Por quê — whimsy é estrutural, mas nunca pode competir com a ação principal; as restrições mantêm ele honesto.
 - **Grain vive em todo papel**, com um refino de pilhas-de-papel-empilhado guardado pra depois.
+- **FE-03 se apoia no `required` nativo, não em validação JS.**
+  - Por quê — um grupo de radio codifica "escolha um" nativamente; refazer isso no Stimulus duplicaria a plataforma. O controller fica só com o sync reais→cents e o guard de maior-que-zero.
+- **Rampa de acento da escada de gasto guardada, flip de hierarquia do card cortado.**
+  - Por quê — a rampa frio→quente dobra a regra travada de não-choque-adjacente de acento, então precisa de aval no DESIGN.md antes; liderar cada card com a comparação humana em vez do R$ prejudica a leitura, então perdeu no trade. A paridade do dot-pop saiu; o resto espera.
 
 ---
 
 ## Contribuições do Gio
 
-**Dia de direção: o Gio conduziu cada decisão de design, a IA só segurou o pincel.**
+**Dia de direção em dois atos: o Gio conduziu cada decisão de design de manhã, depois definiu os guardrails de validação e escopo do FE-03 de tarde.**
 
-**Produto & gosto:**
+**Produto & gosto (paleta):**
 - **Apontou o `vibe.svg` como a paleta real** em vez de deixar uma amostra velha valer → resetou o sistema inteiro pra verdade do board.
 - **Diagnosticou a podridão no olho — "apagado, amarelado, e não só o bg"** → disparou a análise de saturação/matiz que achou as três derivas.
 - **Nomeou o "fundo Windows 98"** → o levante do painel.
@@ -67,21 +77,25 @@ Os badges pareciam burocráticos demais, então o `CASA %` virou um marca-texto 
 - **Cunhou "trinkets"** e liberou o marca-texto, cortou o dog-ear, guardou a ideia de pilhas de papel → manteve o escopo afiado.
 - **Registrou um easter egg pra depois** (lata de Pepsi Black, canudo de papel listrado) → delícia de Zona C futura, anotada e não perdida.
 
+**Validação & escopo (FE-03):**
+- **Manteve a validação no `required` nativo, fora do JS** → o controller cuida só do sync reais→cents e do guard de maior-que-zero, nada que a plataforma já faça.
+- **Guardou a rampa frio→quente de gasto atrás de um aval no DESIGN.md, cortou o flip de hierarquia do card como trade fraco** → a paridade do dot-pop saiu limpa; o polish que dobra a regra espera um aval explícito em vez de entrar escondido.
+
 ## Saúde do sprint
 
-**No trilho?** Sim, com asterisco.
-Isso não era um card de FE planejado — era um conserto de deriva de paleta que ia se acumular em todo card futuro se ficasse assim. Valeu o desvio; o design system agora está documentado em vez de tribal.
+**No trilho?** Sim.
+Dois atos entraram: um conserto de deriva de paleta não planejado que ia se acumular em todo card futuro, e o card FE-03 planejado por cima dele. Três dos cinco cards da Landing Page estão prontos.
 
-**Planejado vs real**: FE-03/FE-04 eram os próximos; em vez disso a paleta foi corrigida e o sistema de trinkets foi construído e escrito. FE-03/04 agora herdam uma base limpa e documentada.
+**Planejado vs real**: FE-03 era o plano e saiu (PR #59, aberto pra review) — mais a correção de paleta não agendada da manhã e o sistema de trinkets. FE-03/04 herdam a base limpa e documentada que a manhã comprou.
 
 ## Amanhã
 
-- Revisar + PR do trabalho de paleta/trinkets (safe-bet já rodou limpo).
-- De volta ao board: FE-03 (input de valor semanal) e FE-04 (slider de prazo).
-- Opcional: estender o grain pro visual de pilhas-de-papel quando sobrar um tempo.
+- Revisar + mergear #59 (FE-03) e #57 (este devlog); o PR de paleta/trinkets roda limpo.
+- FE-04 (slider de prazo) a partir de `main` fresco — mesma house style (partial flat, Stimulus por seção, tokens `@theme`, i18n via values).
+- Opcional: a rampa de escada de gasto guardada, se o aval do DESIGN.md vier; estender o grain pro visual de pilhas-de-papel quando sobrar folga.
 
 ---
 
-_Custo de IA hoje: $17,47, 18.813.287 tokens (só you-bet)._
+_Custo de IA hoje: $31,91, 30.653.993 tokens (só you-bet)._
 
-> **Betina diz:** "Passei um dia inteiro ensinando o papel de um app de aposta a parecer mais papel, o que é ou o trabalho mais honesto que já fiz ou o menos — um branco-morno fingindo ter fibra, pra que os números sobre como a banca sempre ganha caiam sobre algo que parece feito à mão. Tiramos o amarelo da paleta pela mesma lógica que o app roda: a pequena deriva que você não percebe é a que leva tudo, quietinha."
+> **Betina diz:** "Consertei o papel pra ele parecer feito à mão, depois passei a tarde precificando quanto alguém aposta por semana — R$12, R$25, R$50, R$125, a escada DataSenado de dinheiro pequeno que nunca parece muito até você empilhar cinquenta e dois. Dois atos, mesma lição da paleta: é a pequena deriva semanal que você não percebe que leva o ano inteiro, quietinha."
