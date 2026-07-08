@@ -202,6 +202,98 @@
     @apply outline outline-[3px] outline-cyan-ink;
     outline-offset: 2px;
   }
+
+  /* ===== FE-03 weekly amount — DataSenado anchor radios + custom field ===== */
+  .amount-picker {
+    @apply mt-5;
+  }
+  .amount-picker__label {
+    @apply text-2xl/[1.15] font-extrabold;
+    text-shadow: 2px 2px 0 var(--color-cyan);
+  }
+  .amount-picker__hint {
+    @apply mt-1 mb-3 flex items-baseline gap-2 font-semibold text-cyan-ink;
+  }
+  .amount-picker__hint-mark {
+    @apply font-extrabold;
+  }
+
+  .amount-grid {
+    @apply grid gap-4 pt-2 pb-1;
+    grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+  }
+
+  /* Radio card — sibling of .bet-card's checkbox idiom (paper, accent-on-select), round dot not ✓ */
+  .amount-card {
+    --bet-accent: var(--color-coral);
+    @apply relative flex cursor-pointer select-none flex-col gap-1 border-[2.5px] border-text p-4 pl-12
+      shadow-[5px_5px_0_rgba(0,0,0,0.28)];
+    background-color: var(--color-card);
+    background-image: var(--paper-grain);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .amount-card:hover {
+    @apply shadow-[8px_8px_0_rgba(0,0,0,0.28)];
+    transform: translateY(-3px);
+  }
+  .amount-card input[type="radio"] {
+    @apply pointer-events-none absolute opacity-0;
+  }
+  .amount-card__mark {
+    @apply absolute left-4 top-4 flex h-[1.4rem] w-[1.4rem] items-center justify-center rounded-full border-2 border-text;
+    background: var(--color-card);
+    box-shadow: inset -2px -2px 0 var(--color-text);
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+  .amount-card__mark::after {
+    content: "";
+    @apply h-[0.6rem] w-[0.6rem] rounded-full bg-text;
+    transform: scale(0);
+    transition: transform 0.2s ease-out;
+  }
+  .amount-card__value {
+    @apply text-[1.15rem]/[1.1] font-extrabold;
+  }
+  .amount-card__per {
+    @apply block text-[0.7rem] font-bold uppercase tracking-[0.03em] text-muted;
+  }
+  .amount-card__note {
+    @apply text-[0.82rem] text-muted;
+  }
+
+  .amount-card:has(input:checked) {
+    border-color: var(--bet-accent);
+    transform: translateY(-3px);
+    box-shadow: 8px 8px 0 var(--bet-accent);
+  }
+  .amount-card:has(input:checked) .amount-card__mark {
+    border-color: var(--bet-accent);
+    background: var(--bet-accent);
+  }
+  .amount-card:has(input:checked) .amount-card__mark::after {
+    @apply bg-black;
+    transform: scale(1);
+    animation: amount-pop 0.35s ease-out;
+  }
+  .amount-card input:focus-visible + .amount-card__mark {
+    @apply outline outline-[3px] outline-cyan-ink;
+    outline-offset: 2px;
+  }
+
+  /* Custom row spans the grid; the reais field sits inline after the label */
+  .amount-card--custom {
+    @apply col-[1/-1] flex-row flex-wrap items-center gap-3;
+  }
+  .amount-custom {
+    @apply inline-flex items-center gap-1 border-2 border-text bg-bg px-2 py-1;
+  }
+  .amount-custom__prefix {
+    @apply font-bold text-muted;
+  }
+  .amount-custom__input {
+    @apply w-24 border-none bg-transparent text-[1.05rem] font-bold outline-none;
+    font-variant-numeric: tabular-nums;
+  }
 }
 
 @keyframes bet-pop {
@@ -210,8 +302,16 @@
   100% { transform: scale(1) rotate(-8deg); }
 }
 
+/* FE-03 radio dot — sibling of bet-pop, no rotate (a dot has no "tilt") */
+@keyframes amount-pop {
+  0% { transform: scale(0); }
+  60% { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .bet-card, .bet-card__mark, .bet-card__mark::after {
+  .bet-card, .bet-card__mark, .bet-card__mark::after,
+  .amount-card, .amount-card__mark, .amount-card__mark::after {
     transition: none;
     animation: none;
   }

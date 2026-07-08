@@ -1,6 +1,37 @@
 <%# locals: (form:) %>
-<%# FE-03 — weekly amount widget mounts on the weekly-amount Stimulus controller %>
-<section class="form-section" data-controller="weekly-amount">
-  <h2 class="form-section__label">How much a week?</h2>
-  <p class="form-section__hint">Weekly amount — FE-03.</p>
+<%# FE-03 — weekly amount: DataSenado anchor radios + custom reais field on the weekly-amount Stimulus controller %>
+<section class="amount-picker" data-controller="weekly-amount"
+         data-weekly-amount-custom-invalid-value="<%= t(".custom_invalid") %>">
+  <div class="amount-picker__head">
+    <h2 class="amount-picker__label"><%= t(".heading") %></h2>
+  </div>
+  <p class="amount-picker__hint"><span class="amount-picker__hint-mark" aria-hidden="true">→</span> <%= t(".hint") %></p>
+
+  <div class="amount-grid" role="radiogroup" aria-label="<%= t(".group_label") %>">
+    <% SimulationsHelper::WEEKLY_AMOUNT_ANCHORS.each_with_index do |(key, cents), index| %>
+      <label class="amount-card" style="--bet-accent: <%= bet_card_accent(index) %>">
+        <%= radio_button_tag "weekly_amount_cents", cents, false,
+              required: true, id: "weekly_amount_#{cents}",
+              data: { action: "weekly-amount#validate" } %>
+        <span class="amount-card__mark" aria-hidden="true"></span>
+        <span class="amount-card__value"><%= weekly_amount_label(cents) %><span class="amount-card__per">/<%= t(".per_week") %></span></span>
+        <span class="amount-card__note"><%= t(".comparisons.#{key}") %></span>
+      </label>
+    <% end %>
+
+    <label class="amount-card amount-card--custom" style="--bet-accent: <%= bet_card_accent(SimulationsHelper::WEEKLY_AMOUNT_ANCHORS.size) %>">
+      <%= radio_button_tag "weekly_amount_cents", "", false,
+            required: true, id: "weekly_amount_custom",
+            data: { weekly_amount_target: "customRadio", action: "weekly-amount#validate" } %>
+      <span class="amount-card__mark" aria-hidden="true"></span>
+      <span class="amount-card__value"><%= t(".custom_label") %></span>
+      <span class="amount-custom">
+        <span class="amount-custom__prefix" aria-hidden="true">R$</span>
+        <%= number_field_tag "weekly_amount_custom_reais", nil,
+              min: 0, step: "0.01", inputmode: "decimal", class: "amount-custom__input",
+              placeholder: t(".custom_placeholder"), aria: { label: t(".custom_label") },
+              data: { weekly_amount_target: "customInput", action: "input->weekly-amount#selectCustom" } %>
+      </span>
+    </label>
+  </div>
 </section>
