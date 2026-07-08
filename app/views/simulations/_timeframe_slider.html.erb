@@ -1,22 +1,21 @@
 <%# locals: (form:) %>
 <%# FE-04 — timeframe slider: index-based range over the five slots; hidden timeframe_weeks carries the real value. %>
-<% slots = SimulationsHelper::TIMEFRAME_SLOTS.to_a %>
-<% default_index = SimulationsHelper::TIMEFRAME_DEFAULT_INDEX %>
 <section class="timeframe" data-controller="timeframe-slider"
-         data-timeframe-slider-weeks-value="<%= slots.map(&:last).to_json %>">
+         data-timeframe-slider-weeks-value="<%= timeframe_weeks_json %>">
   <h2 class="timeframe__label"><%= t(".heading") %></h2>
   <p class="timeframe__hint"><span class="timeframe__hint-mark" aria-hidden="true">→</span> <%= t(".hint") %></p>
 
-  <%= hidden_field_tag "timeframe_weeks", slots[default_index].last,
+  <%= hidden_field_tag "timeframe_weeks", timeframe_slots[timeframe_default_index].last,
         data: { timeframe_slider_target: "weeks" } %>
 
-  <input type="range" class="timeframe__range" min="0" max="<%= slots.size - 1 %>" step="1"
-         value="<%= default_index %>" aria-label="<%= t(".group_label") %>"
+  <input type="range" class="timeframe__range" min="0" max="<%= timeframe_slots.size - 1 %>" step="1"
+         value="<%= timeframe_default_index %>" aria-label="<%= t(".group_label") %>"
          data-timeframe-slider-target="range" data-action="input->timeframe-slider#applySlot">
 
   <ol class="timeframe__ticks">
-    <% slots.each_with_index do |(key, _weeks), index| %>
-      <li class="timeframe__tick<%= ' is-active' if index == default_index %>"
+    <% timeframe_slots.each_with_index do |(key, _weeks), index| %>
+      <li class="timeframe__tick<%= ' is-active' if index == timeframe_default_index %>"
+          style="--bet-accent: <%= bet_card_accent(index) %>"
           data-timeframe-slider-target="tick"><%= t(".slots.#{key}") %></li>
     <% end %>
   </ol>

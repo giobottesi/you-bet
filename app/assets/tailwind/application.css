@@ -316,11 +316,13 @@
     background-image: var(--paper-grain);
   }
   .timeframe__range::-webkit-slider-thumb {
-    @apply h-7 w-7 appearance-none border-[2.5px] border-text bg-purple shadow-[3px_3px_0_rgba(0,0,0,0.28)];
-    transition: transform 0.15s ease;
+    @apply h-7 w-7 appearance-none border-[2.5px] border-text shadow-[3px_3px_0_rgba(0,0,0,0.28)];
+    background-color: var(--bet-accent, var(--color-purple));
+    transition: transform 0.15s ease, background-color 0.15s ease;
   }
   .timeframe__range::-moz-range-thumb {
-    @apply h-7 w-7 border-[2.5px] border-text bg-purple shadow-[3px_3px_0_rgba(0,0,0,0.28)];
+    @apply h-7 w-7 border-[2.5px] border-text shadow-[3px_3px_0_rgba(0,0,0,0.28)];
+    background-color: var(--bet-accent, var(--color-purple));
   }
   .timeframe__range:active::-webkit-slider-thumb {
     transform: scale(1.15);
@@ -336,8 +338,10 @@
   .timeframe__tick {
     @apply text-[0.78rem] font-semibold text-muted transition-colors;
   }
+  /* Dark text kept for WCAG; the slot's accent reads through a highlighter underline. */
   .timeframe__tick.is-active {
-    @apply font-extrabold text-purple-ink;
+    @apply font-extrabold text-text;
+    box-shadow: inset 0 -0.5em 0 color-mix(in srgb, var(--bet-accent) 55%, transparent);
   }
 }
 

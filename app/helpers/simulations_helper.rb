@@ -27,6 +27,19 @@ module SimulationsHelper
   # Slot selected when the form loads — 1 year, the default horizon.
   TIMEFRAME_DEFAULT_INDEX = 2
 
+  # Slider view helpers — keep the template free of constant lookups and JSON coercion.
+  def timeframe_slots
+    TIMEFRAME_SLOTS.to_a
+  end
+
+  def timeframe_default_index
+    TIMEFRAME_DEFAULT_INDEX
+  end
+
+  def timeframe_weeks_json
+    TIMEFRAME_SLOTS.values.to_json
+  end
+
   # R$ label for a cents amount, e.g. 1200 -> "R$12". Precision defaults to whole reais.
   def weekly_amount_label(cents, precision: 0)
     number_to_currency(cents / 100.0, unit: 'R$', precision: precision, format: '%u%n')

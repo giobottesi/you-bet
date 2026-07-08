@@ -12,18 +12,16 @@ RSpec.describe SimulationsHelper, type: :helper do
     end
   end
 
-  describe 'WEEKLY_AMOUNT_ANCHORS' do
-    it 'holds the four DataSenado tiers keyed by comparison, in ascending cents' do
+  describe 'constants' do
+    it 'holds the four DataSenado WEEKLY_AMOUNT_ANCHORS keyed by comparison, in ascending cents' do
       expect(SimulationsHelper::WEEKLY_AMOUNT_ANCHORS.values).to eq([ 1200, 2500, 5000, 12500 ])
     end
-  end
 
-  describe 'TIMEFRAME_SLOTS' do
-    it 'holds the five horizon slots in weeks, matching the simulator timeframes (BE 10)' do
+    it 'holds the five TIMEFRAME_SLOTS in weeks, matching the simulator timeframes (BE 10)' do
       expect(SimulationsHelper::TIMEFRAME_SLOTS.values).to eq([ 4, 26, 52, 104, 260 ])
     end
 
-    it 'defaults to the 1-year slot' do
+    it 'defaults the timeframe slider to the 1-year slot' do
       key = SimulationsHelper::TIMEFRAME_SLOTS.keys[SimulationsHelper::TIMEFRAME_DEFAULT_INDEX]
       expect(key).to eq(:one_year)
     end
