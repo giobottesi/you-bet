@@ -294,6 +294,51 @@
     @apply w-24 border-none bg-transparent text-[1.05rem] font-bold outline-none;
     font-variant-numeric: tabular-nums;
   }
+
+  /* ===== FE-04 timeframe slider — index-based range over the five horizon slots ===== */
+  .timeframe {
+    @apply mt-5;
+  }
+  .timeframe__label {
+    @apply text-2xl/[1.15] font-extrabold;
+    text-shadow: 2px 2px 0 var(--color-purple);
+  }
+  .timeframe__hint {
+    @apply mt-1 mb-4 flex items-baseline gap-2 font-semibold text-muted;
+  }
+  .timeframe__hint-mark {
+    @apply font-extrabold;
+  }
+
+  /* Flat paper track with a square accent thumb — no rounded UA chrome */
+  .timeframe__range {
+    @apply h-3 w-full cursor-pointer appearance-none border-[2.5px] border-text bg-bg;
+    background-image: var(--paper-grain);
+  }
+  .timeframe__range::-webkit-slider-thumb {
+    @apply h-7 w-7 appearance-none border-[2.5px] border-text bg-purple shadow-[3px_3px_0_rgba(0,0,0,0.28)];
+    transition: transform 0.15s ease;
+  }
+  .timeframe__range::-moz-range-thumb {
+    @apply h-7 w-7 border-[2.5px] border-text bg-purple shadow-[3px_3px_0_rgba(0,0,0,0.28)];
+  }
+  .timeframe__range:active::-webkit-slider-thumb {
+    transform: scale(1.15);
+  }
+  .timeframe__range:focus-visible {
+    @apply outline outline-[3px] outline-purple-ink;
+    outline-offset: 3px;
+  }
+
+  .timeframe__ticks {
+    @apply mt-2 flex list-none justify-between p-0;
+  }
+  .timeframe__tick {
+    @apply text-[0.78rem] font-semibold text-muted transition-colors;
+  }
+  .timeframe__tick.is-active {
+    @apply font-extrabold text-purple-ink;
+  }
 }
 
 @keyframes bet-pop {
@@ -311,7 +356,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .bet-card, .bet-card__mark, .bet-card__mark::after,
-  .amount-card, .amount-card__mark, .amount-card__mark::after {
+  .amount-card, .amount-card__mark, .amount-card__mark::after,
+  .timeframe__range, .timeframe__range::-webkit-slider-thumb, .timeframe__tick {
     transition: none;
     animation: none;
   }

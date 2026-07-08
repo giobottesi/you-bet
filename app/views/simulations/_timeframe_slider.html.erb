@@ -1,6 +1,23 @@
 <%# locals: (form:) %>
-<%# FE-04 — timeframe slider widget mounts on the timeframe-slider Stimulus controller %>
-<section class="form-section" data-controller="timeframe-slider">
-  <h2 class="form-section__label">Over how long?</h2>
-  <p class="form-section__hint">Timeframe slider — FE-04.</p>
+<%# FE-04 — timeframe slider: index-based range over the five slots; hidden timeframe_weeks carries the real value. %>
+<% slots = SimulationsHelper::TIMEFRAME_SLOTS.to_a %>
+<% default_index = SimulationsHelper::TIMEFRAME_DEFAULT_INDEX %>
+<section class="timeframe" data-controller="timeframe-slider"
+         data-timeframe-slider-weeks-value="<%= slots.map(&:last).to_json %>">
+  <h2 class="timeframe__label"><%= t(".heading") %></h2>
+  <p class="timeframe__hint"><span class="timeframe__hint-mark" aria-hidden="true">→</span> <%= t(".hint") %></p>
+
+  <%= hidden_field_tag "timeframe_weeks", slots[default_index].last,
+        data: { timeframe_slider_target: "weeks" } %>
+
+  <input type="range" class="timeframe__range" min="0" max="<%= slots.size - 1 %>" step="1"
+         value="<%= default_index %>" aria-label="<%= t(".group_label") %>"
+         data-timeframe-slider-target="range" data-action="input->timeframe-slider#applySlot">
+
+  <ol class="timeframe__ticks">
+    <% slots.each_with_index do |(key, _weeks), index| %>
+      <li class="timeframe__tick<%= ' is-active' if index == default_index %>"
+          data-timeframe-slider-target="tick"><%= t(".slots.#{key}") %></li>
+    <% end %>
+  </ol>
 </section>

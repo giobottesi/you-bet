@@ -18,6 +18,17 @@ RSpec.describe SimulationsHelper, type: :helper do
     end
   end
 
+  describe 'TIMEFRAME_SLOTS' do
+    it 'holds the five horizon slots in weeks, matching the simulator timeframes (BE 10)' do
+      expect(SimulationsHelper::TIMEFRAME_SLOTS.values).to eq([ 4, 26, 52, 104, 260 ])
+    end
+
+    it 'defaults to the 1-year slot' do
+      key = SimulationsHelper::TIMEFRAME_SLOTS.keys[SimulationsHelper::TIMEFRAME_DEFAULT_INDEX]
+      expect(key).to eq(:one_year)
+    end
+  end
+
   describe '#weekly_amount_label' do
     it 'formats cents as a whole-real R$ label by default' do
       expect(helper.weekly_amount_label(1200)).to eq('R$12')

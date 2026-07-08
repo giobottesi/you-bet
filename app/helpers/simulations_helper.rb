@@ -15,6 +15,18 @@ module SimulationsHelper
     moto_installment: 12500
   }.freeze
 
+  # FE-04 timeframe slots — slot key => horizon in weeks, matching MonteCarloSimulator's 5 timeframes (BE 10).
+  TIMEFRAME_SLOTS = {
+    one_month: 4,
+    six_months: 26,
+    one_year: 52,
+    two_years: 104,
+    five_years: 260
+  }.freeze
+
+  # Slot selected when the form loads — 1 year, the default horizon.
+  TIMEFRAME_DEFAULT_INDEX = 2
+
   # R$ label for a cents amount, e.g. 1200 -> "R$12". Precision defaults to whole reais.
   def weekly_amount_label(cents, precision: 0)
     number_to_currency(cents / 100.0, unit: 'R$', precision: precision, format: '%u%n')

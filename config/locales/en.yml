@@ -39,3 +39,13 @@ en:
       custom_label: "Other amount"
       custom_placeholder: "0.00"
       custom_invalid: "Enter an amount above zero."
+    timeframe_slider:
+      heading: "Over how long?"
+      hint: "Drag to pick your betting horizon — losses compound the longer you play."
+      group_label: "Timeframe"
+      slots:
+        one_month: "1 month"
+        six_months: "6 months"
+        one_year: "1 year"
+        two_years: "2 years"
+        five_years: "5 years"
