@@ -56,5 +56,27 @@ RSpec.describe 'Simulations', type: :request do
         expect(body).to include('type="number"')
       end
     end
+
+    describe 'timeframe slider (#FE-04)' do
+      let(:body) { response.body }
+      let(:slots) { SimulationsHelper::TIMEFRAME_SLOTS }
+      let(:default_weeks) { slots.values[SimulationsHelper::TIMEFRAME_DEFAULT_INDEX] }
+
+      it 'renders a range input bounded by the slot count' do
+        expect(body).to include('type="range"')
+        expect(body).to include("max=\"#{slots.size - 1}\"")
+      end
+
+      it 'renders a hidden timeframe_weeks field defaulting to the 1-year horizon' do
+        expect(body).to include('name="timeframe_weeks"')
+        expect(body).to include("value=\"#{default_weeks}\"")
+      end
+
+      it 'renders one tick per slot with the active default' do
+        ticks = body.scan('data-timeframe-slider-target="tick"')
+        expect(ticks.size).to eq(slots.size)
+        expect(body).to include('is-active')
+      end
+    end
   end
 end

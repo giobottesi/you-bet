@@ -55,3 +55,13 @@ pt-BR:
       custom_label: "Outro valor"
       custom_placeholder: "0,00"
       custom_invalid: "Digite um valor acima de zero."
+    timeframe_slider:
+      heading: "Por quanto tempo?"
+      hint: "Arraste para escolher o seu horizonte de apostas — as perdas se acumulam quanto mais você joga."
+      group_label: "Prazo"
+      slots:
+        one_month: "1 mês"
+        six_months: "6 meses"
+        one_year: "1 ano"
+        two_years: "2 anos"
+        five_years: "5 anos"

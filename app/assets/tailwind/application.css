@@ -294,6 +294,68 @@
     @apply w-24 border-none bg-transparent text-[1.05rem] font-bold outline-none;
     font-variant-numeric: tabular-nums;
   }
+
+  /* ===== FE-04 timeframe slider — index-based range over the five horizon slots ===== */
+  .timeframe {
+    @apply mt-5;
+  }
+  .timeframe__label {
+    @apply text-2xl/[1.15] font-extrabold;
+    text-shadow: 2px 2px 0 var(--color-purple);
+  }
+  .timeframe__hint {
+    @apply mt-1 mb-4 flex items-baseline gap-2 font-semibold text-muted;
+  }
+  .timeframe__hint-mark {
+    @apply font-extrabold;
+  }
+
+  /* Horizontal double-arrow drag glyph (ink on the bright thumb) — signals "this slides". */
+  .timeframe {
+    --timeframe-grip: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='12' viewBox='0 0 24 12' fill='none' stroke='%231e1714' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 6h14M5 6l3-3M5 6l3 3M19 6l-3-3M19 6l-3 3'/%3E%3C/svg%3E");
+  }
+
+  /* Flat paper track with an accent fill left→thumb and a square accent thumb — no rounded UA chrome */
+  .timeframe__range {
+    @apply h-4 w-full cursor-pointer appearance-none border-[2.5px] border-text bg-bg;
+    background-image:
+      linear-gradient(to right, var(--bet-accent, var(--color-purple)) var(--fill-percent, 50%), transparent var(--fill-percent, 50%)),
+      var(--paper-grain);
+  }
+  .timeframe__range::-webkit-slider-thumb {
+    @apply h-11 w-11 appearance-none border-[2.5px] border-text shadow-[3px_3px_0_rgba(0,0,0,0.28)];
+    background-color: var(--bet-accent, var(--color-purple));
+    background-image: var(--timeframe-grip);
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: transform 0.15s ease, background-color 0.15s ease;
+  }
+  .timeframe__range::-moz-range-thumb {
+    @apply h-11 w-11 border-[2.5px] border-text shadow-[3px_3px_0_rgba(0,0,0,0.28)];
+    background-color: var(--bet-accent, var(--color-purple));
+    background-image: var(--timeframe-grip);
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .timeframe__range:active::-webkit-slider-thumb {
+    transform: scale(1.12);
+  }
+  .timeframe__range:focus-visible {
+    @apply outline outline-[3px] outline-purple-ink;
+    outline-offset: 3px;
+  }
+
+  .timeframe__ticks {
+    @apply mt-2 flex list-none justify-between p-0;
+  }
+  .timeframe__tick {
+    @apply text-[0.78rem] font-semibold text-muted transition-colors;
+  }
+  /* Dark text kept for WCAG; the slot's accent reads through a highlighter underline. */
+  .timeframe__tick.is-active {
+    @apply font-extrabold text-text;
+    box-shadow: inset 0 -0.5em 0 color-mix(in srgb, var(--bet-accent) 55%, transparent);
+  }
 }
 
 @keyframes bet-pop {
@@ -311,7 +373,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .bet-card, .bet-card__mark, .bet-card__mark::after,
-  .amount-card, .amount-card__mark, .amount-card__mark::after {
+  .amount-card, .amount-card__mark, .amount-card__mark::after,
+  .timeframe__range, .timeframe__range::-webkit-slider-thumb, .timeframe__tick {
     transition: none;
     animation: none;
   }
