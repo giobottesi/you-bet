@@ -33,23 +33,27 @@ RSpec.describe 'Simulations', type: :request do
       end
     end
 
-    describe 'weekly amount input (FE-03)' do
-      it 'renders a required radio per anchor plus the custom row under weekly_amount_cents' do
-        radios = response.body.scan('name="weekly_amount_cents"')
-        expect(radios.size).to eq(4 + 1) # four DataSenado anchors + the custom row
-        expect(response.body).to include('type="radio"')
-        expect(response.body).to include('required')
+    describe 'weekly amount input (#59)' do
+      let(:body) { response.body }
+      let(:radios) { body.scan('name="weekly_amount_cents"') }
+      let(:anchor_count) { SimulationsHelper::WEEKLY_AMOUNT_ANCHORS.size }
+
+      it 'renders one radio per anchor plus the custom row' do
+        expect(radios.size).to eq(anchor_count + 1)
+      end
+
+      it 'renders the radios as a required radio group' do
+        expect(body).to include('type="radio"')
+        expect(body).to include('required')
       end
 
       it 'renders each anchor by its formatted R$ label' do
-        %w[R$12 R$25 R$50 R$125].each do |label|
-          expect(response.body).to include(label)
-        end
+        %w[R$12 R$25 R$50 R$125].each { |label| expect(body).to include(label) }
       end
 
       it 'renders a custom reais number field' do
-        expect(response.body).to include('data-weekly-amount-target="customInput"')
-        expect(response.body).to include('type="number"')
+        expect(body).to include('data-weekly-amount-target="customInput"')
+        expect(body).to include('type="number"')
       end
     end
   end

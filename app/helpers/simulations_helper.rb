@@ -15,13 +15,9 @@ module SimulationsHelper
     moto_installment: 12500
   }.freeze
 
-  def weekly_amount_anchors
-    WEEKLY_AMOUNT_ANCHORS
-  end
-
-  # Whole-real R$ label for a cents amount, e.g. 1200 -> "R$12".
-  def weekly_amount_label(cents)
-    number_to_currency(cents / 100.0, unit: 'R$', precision: 0, format: '%u%n')
+  # R$ label for a cents amount, e.g. 1200 -> "R$12". Precision defaults to whole reais.
+  def weekly_amount_label(cents, precision: 0)
+    number_to_currency(cents / 100.0, unit: 'R$', precision: precision, format: '%u%n')
   end
 
   # House edge as a percentage label, e.g. 0.06 -> "6%". Nil when the ReferenceValue isn't seeded.

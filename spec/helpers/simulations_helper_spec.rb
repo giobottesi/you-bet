@@ -12,16 +12,20 @@ RSpec.describe SimulationsHelper, type: :helper do
     end
   end
 
-  describe '#weekly_amount_anchors' do
-    it 'returns the four DataSenado tiers keyed by comparison, in ascending cents' do
-      expect(helper.weekly_amount_anchors.values).to eq([ 1200, 2500, 5000, 12500 ])
+  describe 'WEEKLY_AMOUNT_ANCHORS' do
+    it 'holds the four DataSenado tiers keyed by comparison, in ascending cents' do
+      expect(SimulationsHelper::WEEKLY_AMOUNT_ANCHORS.values).to eq([ 1200, 2500, 5000, 12500 ])
     end
   end
 
   describe '#weekly_amount_label' do
-    it 'formats cents as a whole-real R$ label' do
+    it 'formats cents as a whole-real R$ label by default' do
       expect(helper.weekly_amount_label(1200)).to eq('R$12')
       expect(helper.weekly_amount_label(12500)).to eq('R$125')
+    end
+
+    it 'keeps the centavos when a precision is passed' do
+      expect(helper.weekly_amount_label(1250, precision: 2)).to eq('R$12.50')
     end
   end
 
