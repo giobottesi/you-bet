@@ -40,9 +40,14 @@ module SimulationsHelper
     TIMEFRAME_SLOTS.values.to_json
   end
 
-  # R$ label for a cents amount, e.g. 1200 -> "R$12". Precision defaults to whole reais.
-  def weekly_amount_label(cents, precision: 0)
+  # Canonical R$ label for a cents amount, e.g. 1200 -> "R$12". Precision defaults to whole reais.
+  def reais_label(cents, precision: 0)
     number_to_currency(cents / 100.0, unit: 'R$', precision: precision, format: '%u%n')
+  end
+
+  # Weekly-spend label — the form's cents-to-R$ formatter, kept as a named alias for its callsites.
+  def weekly_amount_label(cents, precision: 0)
+    reais_label(cents, precision: precision)
   end
 
   # House edge as a percentage label, e.g. 0.06 -> "6%". Nil when the ReferenceValue isn't seeded.
@@ -51,5 +56,20 @@ module SimulationsHelper
     return if edge.nil?
 
     number_to_percentage(edge * 100, precision: edge < 0.1 ? 2 : 0, strip_insignificant_zeros: true)
+  end
+
+  # Localized horizon name, reusing the slider's slot i18n, e.g. 52 -> "1 year". Nil for an unknown span.
+  def timeframe_label(timeframe_weeks)
+    slot_key = TIMEFRAME_SLOTS.key(timeframe_weeks)
+    return if slot_key.nil?
+
+    t("simulations.timeframe_slider.slots.#{slot_key}")
+  end
+
+  # A loss fraction as a percentage label, e.g. 0.05 -> "5%". Nil when there's no loss to show.
+  def loss_percentage_label(loss_fraction)
+    return if loss_fraction.nil?
+
+    number_to_percentage(loss_fraction * 100, precision: 1, strip_insignificant_zeros: true)
   end
 end

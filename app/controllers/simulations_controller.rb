@@ -18,6 +18,7 @@ class SimulationsController < ApplicationController
 
   def show
     @simulation = Simulation.find_by!(uuid: params[:id])
+    @bet_type_results = @simulation.bet_type_keys.filter_map { |bet_type_key| bet_type_result_for(bet_type_key) }
   end
 
   private
@@ -30,12 +31,17 @@ class SimulationsController < ApplicationController
 
   # One submission warms N cache rows — the simulator returns every timeframe per type.
   def warm_result_cache
-    @simulation.bet_type_keys.each do |bet_type_key|
-      SimulationResultUpsert.upsert(
-        bet_type_key: bet_type_key,
-        house_edge: BetType.new(key: bet_type_key).house_edge_value,
-        weekly_amount_cents: @simulation.weekly_amount_cents
-      )
-    end
+    @simulation.bet_type_keys.each { |bet_type_key| bet_type_result_for(bet_type_key) }
+  end
+
+  # Read-through the cache for one bet type, warming on miss. Nil when the house edge isn't seeded.
+  def bet_type_result_for(bet_type_key)
+    bet_type = BetType.new(key: bet_type_key)
+    result = SimulationResultUpsert.upsert(
+      bet_type_key: bet_type_key,
+      house_edge: bet_type.house_edge_value,
+      weekly_amount_cents: @simulation.weekly_amount_cents
+    )
+    [ bet_type, result ] if result.is_a?(SimulationResult)
   end
 end

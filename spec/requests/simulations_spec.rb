@@ -161,4 +161,47 @@ RSpec.describe 'Simulations', type: :request do
       expect(response).to have_http_status(:not_found)
     end
   end
+
+  describe 'GET /simulations/:id results summary (#show, FE-06)' do
+    let(:simulation) do
+      create(:simulation, bet_type_keys: %w[sports_singles roulette],
+                          weekly_amount_cents: 5000, timeframe_weeks: 52)
+    end
+
+    let!(:sports_singles_edge) do
+      create(:reference_value, bet_type: 'sports_singles', key: 'house_edge',
+                               value: '0.05', value_type: 'float', category: 'bet_type')
+    end
+    let!(:roulette_edge) do
+      create(:reference_value, bet_type: 'roulette', key: 'house_edge',
+                               value: '0.027', value_type: 'float', category: 'bet_type')
+    end
+
+    before { get simulation_path(simulation, locale: 'en') }
+
+    it 'returns 200 for a valid uuid' do
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'names every selected bet type' do
+      expect(response.body).to include(BetType.new(key: 'sports_singles').display_name(:en))
+      expect(response.body).to include(BetType.new(key: 'roulette').display_name(:en))
+    end
+
+    it 'renders the deterministic R$ loss for the selected 1-year horizon' do
+      # 5000c/week * 52 weeks * 0.05 edge = R$130; * 0.027 edge = R$70.
+      expect(response.body).to include('R$130')
+      expect(response.body).to include('R$70')
+    end
+
+    it 'renders each loss as a percentage of everything wagered (the realized edge)' do
+      expect(response.body).to include('5%')
+      expect(response.body).to include('2.7%')
+    end
+
+    it 'renders the selected weekly amount and horizon' do
+      expect(response.body).to include('R$50')
+      expect(response.body).to include('1 year')
+    end
+  end
 end
