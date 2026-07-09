@@ -2,6 +2,18 @@ en:
   app_name: "You Bet"
   tagline: "The math betting companies don't show you"
 
+  content:
+    back_to_simulator: "Back to simulator"
+
+  sources:
+    title: "Sources"
+    heading: "Where our numbers come from"
+    intro: "Every figure in You-Bet is backed by a verified public source. Here is each one, what it provides, and how we reconciled it."
+    list_label: "Data sources"
+    provides_label: "What it provides"
+    figures_label: "Key figures"
+    methodology_heading: "Methodological notes"
+
   locale_toggle:
     pt_BR: "Português"
     en: "English"

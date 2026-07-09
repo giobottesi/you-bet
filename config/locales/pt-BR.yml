@@ -18,6 +18,18 @@ pt-BR:
   app_name: "You Bet"
   tagline: "A matemática que as casas de apostas não mostram"
 
+  content:
+    back_to_simulator: "Voltar ao simulador"
+
+  sources:
+    title: "Fontes"
+    heading: "De onde vêm nossos números"
+    intro: "Cada número no You-Bet tem por trás uma fonte pública verificada. Aqui está cada uma, o que fornece e como a conciliamos."
+    list_label: "Fontes de dados"
+    provides_label: "O que fornece"
+    figures_label: "Números principais"
+    methodology_heading: "Notas metodológicas"
+
   locale_toggle:
     pt_BR: "Português"
     en: "English"
