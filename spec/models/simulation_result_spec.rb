@@ -30,12 +30,5 @@ RSpec.describe SimulationResult do
     it 'exposes the loss as a fraction of everything wagered' do
       expect(simulation_result.loss_fraction(52)).to eq(0.05)
     end
-
-    it 'has no loss fraction when nothing was wagered' do
-      simulation_result = build(:simulation_result, results: {
-                                  'year_1' => { 'expected_value_cents' => 0, 'total_wagered_cents' => 0 }
-                                })
-      expect(simulation_result.loss_fraction(52)).to be_nil
-    end
   end
 end

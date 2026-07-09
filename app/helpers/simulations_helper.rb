@@ -66,10 +66,8 @@ module SimulationsHelper
     t("simulations.timeframe_slider.slots.#{slot_key}")
   end
 
-  # A loss fraction as a percentage label, e.g. 0.05 -> "5%". Nil when there's no loss to show.
+  # A loss fraction as a percentage label, e.g. 0.05 -> "5%".
   def loss_percentage_label(loss_fraction)
-    return if loss_fraction.nil?
-
     number_to_percentage(loss_fraction * 100, precision: 1, strip_insignificant_zeros: true)
   end
 end
