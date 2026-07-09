@@ -1,10 +1,24 @@
-<% content_for :title, "You-Bet — Your results" %>
+<% content_for :title, t("simulations.results.title") %>
 
-<%# FE-05 stub — permalink target for a persisted simulation. Full results page lands in FE-06+. %>
 <div class="page mx-auto w-full max-w-3xl p-5 sm:p-8" data-simulation-uuid="<%= @simulation.to_param %>">
-  <h1 class="text-[2rem]/[1.2] font-extrabold text-text">Crunching your numbers…</h1>
-  <p class="mt-4 text-base text-muted">
-    Results for <%= @simulation.bet_type_keys.size %> bet type(s) at
-    <%= weekly_amount_label(@simulation.weekly_amount_cents) %>/week are on the way.
+  <h1 class="text-[2rem]/[1.2] font-extrabold text-text"><%= t("simulations.results.heading") %></h1>
+  <p class="mt-3 text-base text-muted">
+    <%= t("simulations.results.summary",
+          amount: weekly_amount_label(@simulation.weekly_amount_cents),
+          timeframe: timeframe_label(@simulation.timeframe_weeks)) %>
   </p>
+
+  <ul class="mt-6 space-y-4">
+    <% @bet_type_results.each do |bet_type, simulation_result| %>
+      <% timeframe_result = selected_timeframe_result(simulation_result, @simulation.timeframe_weeks) %>
+      <% next unless timeframe_result %>
+      <li class="border-[3px] border-border bg-card p-5 shadow-[4px_4px_0_rgba(0,0,0,0.2)]">
+        <h2 class="text-lg font-bold text-text"><%= bet_type.display_name %></h2>
+        <p class="mt-1 text-[2rem]/[1.1] font-extrabold text-loss"><%= total_loss_label(timeframe_result) %></p>
+        <p class="text-sm text-muted">
+          <%= t("simulations.results.loss_share", percentage: loss_percentage_label(timeframe_result)) %>
+        </p>
+      </li>
+    <% end %>
+  </ul>
 </div>

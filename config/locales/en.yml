@@ -49,3 +49,8 @@ en:
         one_year: "1 year"
         two_years: "2 years"
         five_years: "5 years"
+    results:
+      title: "You-Bet — Your results"
+      heading: "Here's the damage"
+      summary: "Betting %{amount}/week over %{timeframe}, here's what the math says you'd lose:"
+      loss_share: "%{percentage} of everything you'd wager"
