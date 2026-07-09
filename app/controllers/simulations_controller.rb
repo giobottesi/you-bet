@@ -7,7 +7,7 @@ class SimulationsController < ApplicationController
   def create
     @simulation = Simulation.new(simulation_params.merge(visitor_id: current_visitor_id))
 
-    if @simulation.create
+    if @simulation.save
       warm_result_cache
       redirect_to @simulation
     else

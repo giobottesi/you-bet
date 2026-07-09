@@ -1,4 +1,6 @@
 class Simulation < ApplicationRecord
+  before_create :assign_uuid
+
   validates :visitor_id, presence: true
   validates :bet_type_keys, presence: true
   validates :weekly_amount_cents, presence: true, numericality: { greater_than: 0 }
@@ -10,12 +12,11 @@ class Simulation < ApplicationRecord
     uuid
   end
 
-  def create
-    self.uuid = SecureRandom.uuid
-    save
-  end
-
   private
+
+  def assign_uuid
+    self.uuid = SecureRandom.uuid
+  end
 
   def bet_type_keys_are_known
     unknown = bet_type_keys - BetType::BETTING_TYPES

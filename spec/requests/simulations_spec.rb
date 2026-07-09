@@ -85,9 +85,11 @@ RSpec.describe 'Simulations', type: :request do
       { bet_type_keys: %w[sports_singles roulette], weekly_amount_cents: '2500', timeframe_weeks: '52' }
     end
 
-    before do
+    let!(:sports_singles_edge) do
       create(:reference_value, bet_type: 'sports_singles', key: 'house_edge',
                                value: '0.05', value_type: 'float', category: 'bet_type')
+    end
+    let!(:roulette_edge) do
       create(:reference_value, bet_type: 'roulette', key: 'house_edge',
                                value: '0.027', value_type: 'float', category: 'bet_type')
     end
