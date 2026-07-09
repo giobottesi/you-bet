@@ -10,6 +10,11 @@ class Simulation < ApplicationRecord
     uuid
   end
 
+  def create
+    self.uuid = SecureRandom.uuid
+    save
+  end
+
   private
 
   def bet_type_keys_are_known
