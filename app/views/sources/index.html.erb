@@ -14,6 +14,7 @@
         <p class="text-base text-text"><%= source[:provides] %></p>
         <p class="mt-2 text-[0.8rem] font-bold uppercase tracking-[0.06em] text-muted"><%= t("sources.figures_label") %></p>
         <p class="text-base text-text"><%= source[:figures] %></p>
+        <p class="mt-3"><%= link_to t("sources.source_link"), source[:url], class: "font-bold underline", target: "_blank", rel: "noopener" %></p>
       </li>
     <% end %>
   </ul>
@@ -24,8 +25,11 @@
   <ul class="flex flex-col gap-4">
     <% @methodological_notes.each do |note| %>
       <li class="border-l-[3px] border-border pl-4">
-        <p class="font-bold text-text"><%= note[:subject] %></p>
-        <p class="text-base text-muted"><%= note[:note] %></p>
+        <p class="font-bold text-text"><%= t("sources.notes.#{note[:key]}.subject") %></p>
+        <p class="text-base text-muted"><%= t("sources.notes.#{note[:key]}.body") %></p>
+        <% if note[:url] %>
+          <p class="mt-1"><%= link_to t("sources.learn_more"), note[:url], class: "underline", target: "_blank", rel: "noopener" %></p>
+        <% end %>
       </li>
     <% end %>
   </ul>

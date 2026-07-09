@@ -109,6 +109,22 @@ bet_type=roulette        key=house_edge  = 0.0526 | source: "American: 38 pocket
 
 Seed definitions live in `app/models/seed_data.rb`; `db/seeds.rb` feeds them through the upsert commands below.
 
+## Research Source Citations (`/sources` page)
+
+Every headline figure the app cites is verified against its primary source and deep-linked (not the publisher homepage). Figures were audited against each study directly — a few were re-attributed or reworded from the challenge kit's framing (noted below). `SourcesController::DATA_SOURCES` is the runtime copy of this table.
+
+| Source | Verified figures | Deep link | Note |
+|---|---|---|---|
+| **BCB — Estudo Especial nº 119** | R$18–21 bi/mo via Pix (2024 avg); 5M *people* in Bolsa Família households sent R$3 bi to bets (4M benefit-holder families) | [bcb.gov.br — EE119 PDF](https://www.bcb.gov.br/conteudo/relatorioinflacao/EstudosEspeciais/EE119_Analise_tecnica_sobre_o_mercado_de_apostas_online_no_Brasil_e_o_perfil_dos_apostadores.pdf) | Kit framed "5M families" — corrected to *people*. R$30 bi/mo is a CNC figure, re-attributed away from BCB. |
+| **DataSenado — quem aposta no Brasil (2024)** | 22.1M bet in the last 30 days; 52% earn ≤2 min wages; 42% carry 90+ day debt | [senado.leg.br — interactive](https://www.senado.leg.br/institucional/datasenado/relatorio_online/pesquisa_aposta_esportiva/2024/interativo.html) | 42% = inverse of the reported 58% with no 90+ day debt. |
+| **CNC — bets & family debt** | >R$30 bi/mo; +500% spending growth in 3 years; ~269K families in severe (90+ day) default | [portaldocomercio.org.br](https://portaldocomercio.org.br/diario-executivo/para-cnc-bets-agravam-endividamento-das-familias-brasileiras/) | Magnitude publicly contested by IBJR — flagged in the methodological notes. |
+| **UNIFESP / LENAD III (FAPESP)** | 10.9M at-risk gamblers (6.8% of 14+); 66.8% of bettors show risky-or-problem gambling | [revistapesquisa.fapesp.br](https://revistapesquisa.fapesp.br/quase-11-milhoes-de-brasileiros-apostam-de-modo-a-por-em-risco-a-saude-e-as-financas/) | 66.8% = "jogo de risco *ou* problemático" combined. |
+| **Ibevar/FIA** | debt-driver regression coefficient: bets 0.2255 vs interest 0.0709 (~3x) | [infomoney.com.br](https://www.infomoney.com.br/politica/apostas-online-superam-juros-como-fator-de-endividamento-no-brasil-mostra-estudo/) | Replaces the kit's unquantified "weigh more than interest". |
+| **INSS / Intercept — "Do tigrinho ao INSS"** | +2,300% monthly ludopatia sick-leave benefits (Jun 2023 → Apr 2025); 73% of beneficiaries are men | [intercept.com.br](https://www.intercept.com.br/2025/06/25/bets-auxilios-doenca-vicio-em-jogos-brasil/) | — |
+| **AtlasIntel / Latam Pulse (Apr 2026)** | 86.7% say bets harmful; 70% support a total ban; 76% want ad limits; 85.2% link bets to family debt | [atlasintel.org — poll](https://atlasintel.org/poll/latam-pulse-brazil-april-2026-2026-04-30) | Ad-limit and family-debt figures live in the poll PDF, not the HTML. |
+
+**Not carried on the page (re-attributed):** "53.9% of debtors are women" is a Procon-SP figure, not DataSenado — dropped rather than mis-cite.
+
 ## Write Path — Validation & Idempotency
 
 All writes go through ActiveModel command objects (`AppConfigUpsert`, `ReferenceValueUpsert`), never `Model.create` directly. The AR record stays a dumb typed-KV row; every rule lives in the command at the boundary. This is the CQS **write side** — the query side (`fetch`, `typed_value`) trusts the data because the command already validated it.

@@ -12,7 +12,22 @@ en:
     list_label: "Data sources"
     provides_label: "What it provides"
     figures_label: "Key figures"
+    source_link: "See the source ↗"
     methodology_heading: "Methodological notes"
+    learn_more: "Learn more ↗"
+    notes:
+      bettor_count:
+        subject: "BCB vs DataSenado bettor count"
+        body: "BCB counts distinct CPFs sending Pix to bets; DataSenado surveys self-reported bettors (22.1M/month). The two methods differ — we cite each to its own source rather than merge them."
+      cnc_contested:
+        subject: "CNC magnitude is contested"
+        body: "The CNC study drew a public rebuttal from the betting industry association (IBJR), which disputes the scale. We cite CNC but flag the dispute rather than present it as settled."
+      tigrinho_edge:
+        subject: "Tigrinho house edge"
+        body: "PG Soft claims 96.81% RTP, but unregulated platforms can set lower RTPs. We use 5% as a conservative middle ground and disclose it transparently."
+      bolsa_familia:
+        subject: "What is Bolsa Família"
+        body: "Bolsa Família is Brazil's federal cash-transfer program for low-income families."
 
   locale_toggle:
     pt_BR: "Português"
