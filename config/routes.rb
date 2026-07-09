@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   root "simulations#new"
   resources :simulations, only: [ :create, :show ]
   get "sources", to: "sources#index"
+  get "diario", to: "diario#index"
 end

@@ -45,6 +45,11 @@ pt-BR:
         subject: "O que é o Bolsa Família"
         body: "O Bolsa Família é o programa federal de transferência de renda do Brasil para famílias de baixa renda."
 
+  devlog:
+    title: "Diário"
+    heading: "Construindo isto abertamente"
+    intro: "Um registro diário de como o You-Bet foi feito — uma entrada por dia de sprint, da mais antiga para a mais recente."
+
   locale_toggle:
     pt_BR: "Português"
     en: "English"
