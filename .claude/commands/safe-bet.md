@@ -65,7 +65,7 @@ Tag findings with Gio's review tags:
 - `yagni:` single-caller abstractions, unused config
 - `shrink:` logic that compresses to an equivalent shorter form
 
-Plus: RuboCop clean, code/comments in English only, tests live alongside the feature (TDD), RSpec style (no helper methods — factories and inline setup only).
+Plus: RuboCop clean, code/comments in English only, tests live alongside the feature (TDD), RSpec style (no helper methods — factories and inline setup only; group a class's constant assertions under one `describe 'constants'`, not one describe per constant).
 
 **Stimulus controllers** (hardest to review — hold the line):
 - **Method names follow Rails naming — say what the method does.** Verb-first, Action+Noun, no vague `sync`/`handle`/`update`/`process`. `updateArrows`, not `sync`; `validateSelection`, not `check`. The name is the first comment.
