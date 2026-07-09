@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_01_120100) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_08_192700) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -49,9 +49,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_01_120100) do
   end
 
   create_table "simulations", force: :cascade do |t|
+    t.string "bet_type_keys", default: [], null: false, array: true
     t.datetime "created_at", null: false
+    t.integer "timeframe_weeks"
     t.datetime "updated_at", null: false
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.string "visitor_id", null: false
+    t.integer "weekly_amount_cents"
+    t.index ["uuid"], name: "index_simulations_on_uuid", unique: true
     t.index ["visitor_id"], name: "index_simulations_on_visitor_id"
   end
 end
