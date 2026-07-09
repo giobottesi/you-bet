@@ -66,23 +66,10 @@ module SimulationsHelper
     t("simulations.timeframe_slider.slots.#{slot_key}")
   end
 
-  # The stored result bucket for the simulation's selected horizon, keyed via the simulator's weeks map.
-  def selected_timeframe_result(simulation_result, timeframe_weeks)
-    bucket_key = MonteCarloSimulator::TIMEFRAMES.key(timeframe_weeks)
-    simulation_result.results[bucket_key]
-  end
+  # A loss fraction as a percentage label, e.g. 0.05 -> "5%". Nil when there's no loss to show.
+  def loss_percentage_label(loss_fraction)
+    return if loss_fraction.nil?
 
-  # Projected loss for the horizon as an absolute R$ label (stored net value is negative).
-  def total_loss_label(timeframe_result)
-    reais_label(timeframe_result['expected_value_cents'].abs)
-  end
-
-  # Projected loss as a share of everything wagered over the horizon, e.g. "5%". Nil when nothing is wagered.
-  def loss_percentage_label(timeframe_result)
-    wagered_cents = timeframe_result['total_wagered_cents'].to_i
-    return if wagered_cents.zero?
-
-    fraction = timeframe_result['expected_value_cents'].abs.to_f / wagered_cents * 100
-    number_to_percentage(fraction, precision: 1, strip_insignificant_zeros: true)
+    number_to_percentage(loss_fraction * 100, precision: 1, strip_insignificant_zeros: true)
   end
 end

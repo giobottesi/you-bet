@@ -168,13 +168,16 @@ RSpec.describe 'Simulations', type: :request do
                           weekly_amount_cents: 5000, timeframe_weeks: 52)
     end
 
-    before do
+    let!(:sports_singles_edge) do
       create(:reference_value, bet_type: 'sports_singles', key: 'house_edge',
                                value: '0.05', value_type: 'float', category: 'bet_type')
+    end
+    let!(:roulette_edge) do
       create(:reference_value, bet_type: 'roulette', key: 'house_edge',
                                value: '0.027', value_type: 'float', category: 'bet_type')
-      get simulation_path(simulation, locale: 'en')
     end
+
+    before { get simulation_path(simulation, locale: 'en') }
 
     it 'returns 200 for a valid uuid' do
       expect(response).to have_http_status(:ok)
