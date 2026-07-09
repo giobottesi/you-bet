@@ -51,6 +51,33 @@ pt-BR:
     intro: "Um registro diário de como o You-Bet foi feito — uma entrada por dia de sprint, da mais recente para a mais antiga."
     ai_note: "A Betina — minha assistente de IA — escreveu estas entradas. Não são totalmente revisadas, mas ajudam a contar como isto foi construído."
 
+  privacy:
+    title: "Privacidade"
+    heading: "O que guardamos e como apagar"
+    intro: "O You-Bet não pede nome, email ou login. Este aviso lista o pouco que registramos, por quê e como apagar — como exige a LGPD."
+    collected_label: "Dados que registramos"
+    purpose_label: "Por quê"
+    retention_label: "Por quanto tempo"
+    collected:
+      visitor_cookie:
+        name: "Cookie de identificação do visitante"
+        purpose: "Um ID aleatório que diferencia sessões anônimas, para que uma simulação possa ser rastreada até o navegador que a gerou."
+        retention: "Guardado como cookie assinado no seu navegador até você limpá-lo."
+      simulation_inputs:
+        name: "Os dados da sua simulação"
+        purpose: "Os tipos de aposta, o valor semanal e o prazo que você informa, usados para rodar a sua projeção."
+        retention: "Guardados junto ao seu identificador de visitante para que as suas rodadas continuem suas, até você limpar o cookie. O resultado calculado em si fica em um cache anônimo compartilhado, não ligado a você."
+      language_preference:
+        name: "Preferência de idioma"
+        purpose: "O idioma que você escolhe, para o site aparecer na sua língua."
+        retention: "Mantida no cookie de sessão e descartada quando a sessão termina."
+    deletion:
+      heading: "Como apagar seus dados"
+      intro: "Como o identificador do visitante vive apenas no seu navegador, o controle é seu:"
+      step_clear_cookie: "Limpe os cookies e os dados deste site nas configurações do seu navegador. Isso remove o identificador do visitante e corta o vínculo com qualquer simulação guardada para ele."
+      step_no_profile: "Nenhum nome, email ou perfil de dispositivo é armazenado, então, uma vez apagado o cookie, os registros restantes não podem ser rastreados até você."
+      contact: "Para um pedido formal de exclusão sob a LGPD, entre em contato com os mantenedores pelo repositório público de código do projeto."
+
   locale_toggle:
     pt_BR: "Português"
     en: "English"

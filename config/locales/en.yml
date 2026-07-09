@@ -35,6 +35,33 @@ en:
     intro: "A daily log of how You-Bet got made — one entry per sprint day, newest first."
     ai_note: "Betina — my AI assistant — wrote these entries. They aren't fully reviewed, but they help tell the story of how this got built."
 
+  privacy:
+    title: "Privacy"
+    heading: "What we keep, and how to erase it"
+    intro: "You-Bet asks for no name, email, or login. This notice lists the little we do record, why, and how to delete it — as the LGPD requires."
+    collected_label: "Data we record"
+    purpose_label: "Why"
+    retention_label: "How long"
+    collected:
+      visitor_cookie:
+        name: "Visitor identifier cookie"
+        purpose: "A random ID that tells anonymous sessions apart, so a simulation can be traced back to the browser that ran it."
+        retention: "Stored as a signed cookie in your browser until you clear it."
+      simulation_inputs:
+        name: "Your simulation inputs"
+        purpose: "The bet types, weekly amount, and timeframe you enter, used to run your projection."
+        retention: "Saved against your visitor identifier so your runs stay yours, until you clear the cookie. The computed result itself is stored in a shared, anonymous cache that is not tied to you."
+      language_preference:
+        name: "Language preference"
+        purpose: "The locale you pick, so the site renders in your language."
+        retention: "Held in the session cookie and dropped when the session ends."
+    deletion:
+      heading: "How to delete your data"
+      intro: "Because the visitor identifier lives only in your browser, you stay in control:"
+      step_clear_cookie: "Clear cookies and site data for this site in your browser settings. This removes the visitor identifier and cuts the link to any simulation stored for it."
+      step_no_profile: "No name, email, or device profile is ever stored, so once the cookie is gone the remaining rows cannot be traced back to you."
+      contact: "For a formal erasure request under the LGPD, contact the maintainers through the project's public source repository."
+
   locale_toggle:
     pt_BR: "Português"
     en: "English"
