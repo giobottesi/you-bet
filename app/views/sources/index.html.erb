@@ -8,7 +8,7 @@
 <section aria-label="<%= t('sources.list_label') %>">
   <ul class="flex flex-col gap-4">
     <% @data_sources.each do |source| %>
-      <li class="bg-surface [background-image:var(--paper-grain)] border-[3px] border-border p-5 shadow-[6px_6px_0_rgba(0,0,0,0.25)]">
+      <li class="taped bg-surface [background-image:var(--paper-grain)] border-[3px] border-border p-5">
         <h2 class="text-[1.15rem] font-extrabold text-text"><%= source[:name] %></h2>
         <p class="mt-2 text-[0.8rem] font-bold uppercase tracking-[0.06em] text-muted"><%= t("sources.provides_label") %></p>
         <p class="text-base text-text"><%= source[:provides] %></p>
@@ -22,9 +22,9 @@
 
 <section class="py-8" aria-label="<%= t('sources.methodology_heading') %>">
   <h2 class="mb-4 text-[1.5rem] font-extrabold text-text"><%= t("sources.methodology_heading") %></h2>
-  <ul class="flex flex-col gap-4">
+  <ul class="flex flex-col gap-5 border-2 border-dashed border-border p-5">
     <% @methodological_notes.each do |note| %>
-      <li class="border-l-[3px] border-border pl-4">
+      <li>
         <p class="font-bold text-text"><%= t("sources.notes.#{note[:key]}.subject") %></p>
         <p class="text-base text-muted"><%= t("sources.notes.#{note[:key]}.body") %></p>
         <% if note[:url] %>
