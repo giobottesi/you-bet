@@ -77,3 +77,8 @@ pt-BR:
         one_year: "1 ano"
         two_years: "2 anos"
         five_years: "5 anos"
+    results:
+      title: "You-Bet — Seus resultados"
+      heading: "Olha o estrago"
+      summary: "Apostando %{amount}/semana durante %{timeframe}, é isso que a matemática diz que você perderia:"
+      loss_share: "%{percentage} de tudo que você apostaria"

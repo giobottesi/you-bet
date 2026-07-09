@@ -11,5 +11,6 @@ Rails.application.routes.draw do
 
   # The simulation form is the landing page — served at root, no separate /new URL.
   root "simulations#new"
+  resources :simulations, only: [ :create, :show ]
   get "sources", to: "sources#index"
 end

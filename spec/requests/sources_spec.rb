@@ -26,7 +26,8 @@ RSpec.describe 'Sources', type: :request do
 
     it 'renders every methodological note' do
       SourcesController::METHODOLOGICAL_NOTES.each do |note|
-        expect(response.body).to include(note[:subject])
+        expect(response.body).to include(CGI.escapeHTML(note[:subject]))
+        expect(response.body).to include(CGI.escapeHTML(note[:note]))
       end
     end
   end

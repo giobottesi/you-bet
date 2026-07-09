@@ -1,0 +1,25 @@
+<% content_for :title, t("simulations.results.title") %>
+
+<div class="page mx-auto w-full max-w-3xl p-5 sm:p-8" data-simulation-uuid="<%= @simulation.to_param %>">
+  <h1 class="text-[2rem]/[1.2] font-extrabold text-text"><%= t("simulations.results.heading") %></h1>
+  <p class="mt-3 text-base text-muted">
+    <%= t("simulations.results.summary",
+          amount: weekly_amount_label(@simulation.weekly_amount_cents),
+          timeframe: timeframe_label(@simulation.timeframe_weeks)) %>
+  </p>
+
+  <ul class="mt-6 space-y-4">
+    <% @bet_type_results.each do |bet_type, simulation_result| %>
+      <% loss_cents = simulation_result.loss_cents(@simulation.timeframe_weeks) %>
+      <% next if loss_cents.nil? %>
+      <li class="border-[3px] border-border bg-card p-5 shadow-[4px_4px_0_rgba(0,0,0,0.2)]">
+        <h2 class="text-lg font-bold text-text"><%= bet_type.display_name %></h2>
+        <p class="mt-1 text-[2rem]/[1.1] font-extrabold text-loss"><%= reais_label(loss_cents) %></p>
+        <p class="text-sm text-muted">
+          <%= t("simulations.results.loss_share",
+                percentage: loss_percentage_label(simulation_result.loss_fraction(@simulation.timeframe_weeks))) %>
+        </p>
+      </li>
+    <% end %>
+  </ul>
+</div>

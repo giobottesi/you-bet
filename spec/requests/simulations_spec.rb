@@ -79,4 +79,129 @@ RSpec.describe 'Simulations', type: :request do
       end
     end
   end
+
+  describe 'POST /simulations (#create, FE-05)' do
+    let(:valid_params) do
+      { bet_type_keys: %w[sports_singles roulette], weekly_amount_cents: '2500', timeframe_weeks: '52' }
+    end
+
+    let!(:sports_singles_edge) do
+      create(:reference_value, bet_type: 'sports_singles', key: 'house_edge',
+                               value: '0.05', value_type: 'float', category: 'bet_type')
+    end
+    let!(:roulette_edge) do
+      create(:reference_value, bet_type: 'roulette', key: 'house_edge',
+                               value: '0.027', value_type: 'float', category: 'bet_type')
+    end
+
+    it 'persists a simulation carrying the submitted inputs' do
+      expect { post simulations_path, params: valid_params }.to change(Simulation, :count).by(1)
+
+      simulation = Simulation.last
+      expect(simulation.bet_type_keys).to eq(%w[sports_singles roulette])
+      expect(simulation.weekly_amount_cents).to eq(2500)
+      expect(simulation.timeframe_weeks).to eq(52)
+    end
+
+    it 'stamps the visitor_id from the signed cookie' do
+      post simulations_path, params: valid_params
+
+      expect(Simulation.last.visitor_id).to be_present
+    end
+
+    it 'redirects to the permalink addressed by uuid, not the sequential id' do
+      post simulations_path, params: valid_params
+
+      expect(response).to redirect_to(simulation_path(Simulation.last))
+      expect(response.location).to include(Simulation.last.uuid)
+    end
+
+    it 'warms one result cache row per selected bet type' do
+      expect { post simulations_path, params: valid_params }.to change(SimulationResult, :count).by(2)
+    end
+
+    it 'drops the blank custom-radio entry before validating' do
+      post simulations_path, params: valid_params.merge(bet_type_keys: [ '', 'roulette' ])
+
+      expect(Simulation.last.bet_type_keys).to eq(%w[roulette])
+    end
+
+    context 'with no bet types selected' do
+      it 're-renders the form with 422 and persists nothing' do
+        expect { post simulations_path, params: valid_params.merge(bet_type_keys: []) }
+          .not_to change(Simulation, :count)
+
+        expect(response).to have_http_status(:unprocessable_content)
+        expect(response.body).to include('<form')
+      end
+    end
+
+    context 'with a blank weekly amount' do
+      it 're-renders the form with 422' do
+        post simulations_path, params: valid_params.merge(weekly_amount_cents: '')
+
+        expect(response).to have_http_status(:unprocessable_content)
+      end
+    end
+  end
+
+  describe 'GET /simulations/:id (#show, FE-05)' do
+    it 'renders the permalink addressed by uuid' do
+      simulation = create(:simulation)
+
+      get simulation_path(simulation)
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include(simulation.uuid)
+    end
+
+    it '404s on an unknown uuid' do
+      get simulation_path(id: SecureRandom.uuid)
+
+      expect(response).to have_http_status(:not_found)
+    end
+  end
+
+  describe 'GET /simulations/:id results summary (#show, FE-06)' do
+    let(:simulation) do
+      create(:simulation, bet_type_keys: %w[sports_singles roulette],
+                          weekly_amount_cents: 5000, timeframe_weeks: 52)
+    end
+
+    let!(:sports_singles_edge) do
+      create(:reference_value, bet_type: 'sports_singles', key: 'house_edge',
+                               value: '0.05', value_type: 'float', category: 'bet_type')
+    end
+    let!(:roulette_edge) do
+      create(:reference_value, bet_type: 'roulette', key: 'house_edge',
+                               value: '0.027', value_type: 'float', category: 'bet_type')
+    end
+
+    before { get simulation_path(simulation, locale: 'en') }
+
+    it 'returns 200 for a valid uuid' do
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'names every selected bet type' do
+      expect(response.body).to include(BetType.new(key: 'sports_singles').display_name(:en))
+      expect(response.body).to include(BetType.new(key: 'roulette').display_name(:en))
+    end
+
+    it 'renders the deterministic R$ loss for the selected 1-year horizon' do
+      # 5000c/week * 52 weeks * 0.05 edge = R$130; * 0.027 edge = R$70.
+      expect(response.body).to include('R$130')
+      expect(response.body).to include('R$70')
+    end
+
+    it 'renders each loss as a percentage of everything wagered (the realized edge)' do
+      expect(response.body).to include('5%')
+      expect(response.body).to include('2.7%')
+    end
+
+    it 'renders the selected weekly amount and horizon' do
+      expect(response.body).to include('R$50')
+      expect(response.body).to include('1 year')
+    end
+  end
 end
