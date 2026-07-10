@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Devlog', type: :request do
   describe 'GET /devlog' do
-    let(:entries) { DevlogEntry.all }
+    let(:entries) { DevlogReader.all }
     # Each entry's title heads its collapsible <details>, a stable locale-appropriate marker.
     let(:markers) { entries.map(&:title) }
 
@@ -41,21 +41,21 @@ RSpec.describe 'Devlog', type: :request do
     end
   end
 
-  describe 'constants' do
+  describe 'DevlogReader' do
     it 'points at the committed devlog directory' do
-      expect(DevlogEntry::DEVLOG_DIRECTORY).to eq(Rails.root.join('docs', 'devlog'))
+      expect(DevlogReader::DEVLOG_DIRECTORY).to eq(Rails.root.join('docs', 'devlog'))
     end
 
     it 'derives sprint-day numbers in ascending order' do
-      expect(DevlogEntry.day_numbers).to eq(DevlogEntry.day_numbers.sort)
+      expect(DevlogReader.day_numbers).to eq(DevlogReader.day_numbers.sort)
     end
 
     it 'loads exactly one entry per canonical English day file' do
-      expect(DevlogEntry.all.size).to eq(DevlogEntry.day_numbers.size)
+      expect(DevlogReader.all.size).to eq(DevlogReader.day_numbers.size)
     end
 
     it 'splits the H1 title off the entry body' do
-      entry = DevlogEntry.all.first
+      entry = DevlogReader.all.first
 
       expect(entry.title).to be_present
       expect(entry.title).not_to start_with('#')
@@ -63,7 +63,7 @@ RSpec.describe 'Devlog', type: :request do
     end
 
     it 'splits the body into H2 sections with a leading preamble' do
-      sections = DevlogEntry.all.second.sections
+      sections = DevlogReader.all.second.sections
 
       expect(sections.size).to be > 1
       expect(sections.first.heading).to be_nil

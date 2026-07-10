@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./devlog.css";
 
 @theme {
   /* Base — warm light, de-yellowed (low-sat paper, not cream wash) */
@@ -357,24 +358,6 @@
     box-shadow: inset 0 -0.5em 0 color-mix(in srgb, var(--bet-accent) 55%, transparent);
   }
 
-  /* FE-15 devlog: readable defaults for rendered markdown (Tailwind preflight strips these) */
-  .markdown-body { @apply text-text leading-relaxed; }
-  .markdown-body h1 { @apply mt-6 mb-3 text-2xl font-extrabold; }
-  .markdown-body h2 { @apply mt-5 mb-2 text-xl font-bold; }
-  .markdown-body h3 { @apply mt-4 mb-2 text-lg font-bold; }
-  .markdown-body p { @apply my-3; }
-  .markdown-body ul { @apply my-3 list-disc pl-6; }
-  .markdown-body ol { @apply my-3 list-decimal pl-6; }
-  .markdown-body li { @apply my-1; }
-  .markdown-body a { @apply font-semibold text-coral-ink underline; }
-  .markdown-body strong { @apply font-bold; }
-  .markdown-body em { @apply italic; }
-  .markdown-body code { @apply rounded bg-surface px-1 py-0.5 font-mono text-[0.9em]; }
-  .markdown-body pre { @apply my-3 overflow-x-auto rounded bg-surface p-3; }
-  .markdown-body hr { @apply my-5 border-t-2 border-border; }
-  .markdown-body blockquote { @apply my-3 border-l-4 border-border pl-4 text-muted; }
-  .devlog-section { @apply border-l-2 border-border pl-3; }
-  .devlog-section > summary { @apply py-1; }
 }
 
 @keyframes bet-pop {
