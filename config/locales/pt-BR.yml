@@ -18,6 +18,33 @@ pt-BR:
   app_name: "You Bet"
   tagline: "A matemática que as casas de apostas não mostram"
 
+  content:
+    back_to_simulator: "Voltar ao simulador"
+
+  sources:
+    title: "Fontes"
+    heading: "De onde vêm nossos números"
+    intro: "Cada número no You-Bet tem por trás uma fonte pública verificada. Aqui está cada uma, o que fornece e como a conciliamos."
+    list_label: "Fontes de dados"
+    provides_label: "O que fornece"
+    figures_label: "Números principais"
+    source_link: "Ver a fonte ↗"
+    methodology_heading: "Notas metodológicas"
+    learn_more: "Saiba mais ↗"
+    notes:
+      bettor_count:
+        subject: "Contagem de apostadores: BCB vs DataSenado"
+        body: "O BCB conta CPFs distintos enviando Pix para bets; o DataSenado pesquisa apostadores autodeclarados (22,1 mi/mês). Os métodos diferem — citamos cada número à sua própria fonte em vez de fundi-los."
+      cnc_contested:
+        subject: "A magnitude da CNC é contestada"
+        body: "O estudo da CNC recebeu uma réplica pública da associação da indústria de apostas (IBJR), que contesta a escala. Citamos a CNC, mas sinalizamos a disputa em vez de apresentá-la como consenso."
+      tigrinho_edge:
+        subject: "Margem da casa no tigrinho"
+        body: "A PG Soft alega RTP de 96,81%, mas plataformas não reguladas podem definir RTPs menores. Usamos 5% como meio-termo conservador e declaramos isso de forma transparente."
+      bolsa_familia:
+        subject: "O que é o Bolsa Família"
+        body: "O Bolsa Família é o programa federal de transferência de renda do Brasil para famílias de baixa renda."
+
   locale_toggle:
     pt_BR: "Português"
     en: "English"
