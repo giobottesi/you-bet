@@ -32,7 +32,8 @@ en:
   devlog:
     title: "Devlog"
     heading: "Building this in the open"
-    intro: "A daily log of how You-Bet got made — one entry per sprint day, oldest first."
+    intro: "A daily log of how You-Bet got made — one entry per sprint day, newest first."
+    ai_note: "Betina — my AI assistant — wrote these entries. They aren't fully reviewed, but they help tell the story of how this got built."
 
   locale_toggle:
     pt_BR: "Português"

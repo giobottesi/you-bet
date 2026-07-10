@@ -48,7 +48,8 @@ pt-BR:
   devlog:
     title: "Diário"
     heading: "Construindo isto abertamente"
-    intro: "Um registro diário de como o You-Bet foi feito — uma entrada por dia de sprint, da mais antiga para a mais recente."
+    intro: "Um registro diário de como o You-Bet foi feito — uma entrada por dia de sprint, da mais recente para a mais antiga."
+    ai_note: "A Betina — minha assistente de IA — escreveu estas entradas. Não são totalmente revisadas, mas ajudam a contar como isto foi construído."
 
   locale_toggle:
     pt_BR: "Português"

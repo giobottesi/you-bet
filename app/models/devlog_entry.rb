@@ -4,16 +4,27 @@ class DevlogEntry
   DEVLOG_DIRECTORY = Rails.root.join('docs', 'devlog')
   PORTUGUESE_LOCALE = 'pt-BR'
 
-  attr_reader :day_number, :body
+  # A collapsible chunk of an entry; heading nil for the leading preamble (date/phase/planned).
+  Section = Data.define(:heading, :body)
 
-  def initialize(day_number:, body:)
+  attr_reader :day_number, :title, :body
+
+  def initialize(day_number:, title:, body:)
     @day_number = day_number
+    @title = title
     @body = body
   end
 
-  # Every entry, ascending by sprint-day number, in the locale-appropriate variant.
+  # Body split into H2 sections; text before the first H2 is the preamble (heading nil).
+  def sections
+    preamble, *rest = body.split(/^## (.+)$/)
+    parsed = rest.each_slice(2).map { |heading, section_body| Section.new(heading: heading.strip, body: section_body.to_s.strip) }
+    parsed.unshift(Section.new(heading: nil, body: preamble.strip))
+  end
+
+  # Every entry, newest sprint day first, in the locale-appropriate variant.
   def self.all(locale: I18n.locale)
-    day_numbers.map { |day_number| load(day_number, locale) }
+    day_numbers.reverse.map { |day_number| load(day_number, locale) }
   end
 
   # Sprint-day numbers derived from the canonical English files.
@@ -23,8 +34,10 @@ class DevlogEntry
        .sort
   end
 
+  # Splits the leading H1 (the day title) off the body so it can head a collapsible entry.
   def self.load(day_number, locale)
-    new(day_number: day_number, body: File.read(variant_path(day_number, locale)))
+    title_line, body = File.read(variant_path(day_number, locale)).split("\n", 2)
+    new(day_number: day_number, title: title_line.delete_prefix('#').strip, body: body.to_s.strip)
   end
 
   # Portuguese variant when the locale asks for it and the file exists; English otherwise.
