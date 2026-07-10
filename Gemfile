@@ -50,3 +50,6 @@ group :test do
 end
 
 gem "tailwindcss-rails", "~> 4.6"
+
+# Render committed devlog markdown (docs/devlog) to HTML — trusted authored content.
+gem "redcarpet", "~> 3.6"

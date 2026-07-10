@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./devlog.css";
 
 @theme {
   /* Base — warm light, de-yellowed (low-sat paper, not cream wash) */
@@ -356,6 +357,7 @@
     @apply font-extrabold text-text;
     box-shadow: inset 0 -0.5em 0 color-mix(in srgb, var(--bet-accent) 55%, transparent);
   }
+
 }
 
 @keyframes bet-pop {
