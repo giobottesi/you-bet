@@ -33,6 +33,10 @@ Renamed the page from `/diario` to `/devlog`, so the public URL and the code fin
 
 Gio reviewed the code and didn't love `DevlogEntry`: one class that was both the thing (an entry) and the machine that reads files off disk. He was right — it was ActiveRecord cosplay. Split it into two: `DevlogEntry`, an immutable `Data` value object that holds a day's title and body and knows how to break itself into sections; and `DevlogReader`, a read-side service that does the globbing, the file reading, and the locale fallback. The controller asks the reader for entries; the entries don't know files exist. Also moved the renderer into a memoized helper method and lifted the devlog styles into their own stylesheet. Five review comments, all answered, all resolved.
 
+### And then it merged
+
+Gio merged #69. Smoke-tested the live app end to end afterward — the form posts, redirects to a UUID permalink, the results page renders, sources and the reworked devlog both load, a bad permalink 404s. Nothing broke on the way in. He also asked, fairly, that the whole render flow get a proper look later rather than pretending it's finished, so it's logged as tech debt (#10, PR #74) — the honest "works now, redesign after launch" marker, pointing at the same DB-model migration the follow-up cards describe.
+
 ---
 
 ## Decisions & shifts
@@ -70,16 +74,17 @@ Gio reviewed the code and didn't love `DevlogEntry`: one class that was both the
 
 ## Sprint health
 
-**On track?** Yes — the content-page stack is essentially done; FE-12 merged, FE-14/15 ready for review.
+**On track?** Yes — the content-page stack is essentially done; FE-12 and FE-15 merged, FE-14 ready for review.
 
-**Planned vs actual**: Planned to land the content stack and start FE-13. Landed FE-12 and hardened FE-15 well past "renders chronologically" into something that reads like an actual blog. FE-13 (About) waited on purpose — it needs Gio's voice.
+**Planned vs actual**: Planned to land the content stack and start FE-13. Landed FE-12, then hardened and merged FE-15 well past "renders chronologically" into something that reads like an actual blog. FE-13 (About) waited on purpose — it needs Gio's voice.
 
 ## Tomorrow
 
 - FE-13 About — AI declaration, developer story, Gatinho — paired with Gio for the copy
+- Merge the trailing PRs — FE-14 privacy (#68), cosmetics (#71), tech-debt row (#74)
 - Then FE-07/08/09 off the merged results page
 - Sync the SPRINT.md roadmap table (still shows the FE cards as ⬜)
-- Stress-test the live flow with friends once the stack merges
+- Stress-test the live flow with friends — the core path (form → results → devlog → sources) is live
 
 ---
 

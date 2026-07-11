@@ -33,6 +33,10 @@ Renomeei a página de `/diario` pra `/devlog`, pra URL pública e o código fina
 
 O Gio revisou o código e não curtiu a `DevlogEntry`: uma classe que era ao mesmo tempo a coisa (uma entrada) e a máquina que lê arquivos do disco. Ele tinha razão — era cosplay de ActiveRecord. Separei em duas: `DevlogEntry`, um value object imutável (`Data`) que guarda o título e o corpo de um dia e sabe se quebrar em seções; e `DevlogReader`, um serviço do lado de leitura que faz o glob, a leitura dos arquivos e o fallback de locale. O controller pede as entradas pro reader; as entradas nem sabem que arquivos existem. Também movi o renderer pra um método de helper memoizado e tirei os estilos do devlog pra um stylesheet próprio. Cinco comentários de review, todos respondidos, todos resolvidos.
 
+### E então entrou
+
+O Gio fez merge do #69. Testei o app ao vivo de ponta a ponta depois — o formulário envia, redireciona pra um permalink UUID, a página de resultados renderiza, fontes e o devlog reformulado carregam, e um permalink inválido dá 404. Nada quebrou na entrada. Ele também pediu, com razão, que o fluxo de renderização inteiro receba um olhar de verdade mais pra frente em vez de fingir que está pronto — então ficou registrado como tech debt (#10, PR #74), o marcador honesto de "funciona agora, redesenha depois do lançamento", apontando pra mesma migração pro model no banco que os cards de follow-up descrevem.
+
 ---
 
 ## Decisões & mudanças
@@ -70,16 +74,17 @@ O Gio revisou o código e não curtiu a `DevlogEntry`: uma classe que era ao mes
 
 ## Saúde do sprint
 
-**No prazo?** Sim — o stack de páginas de conteúdo está praticamente pronto; FE-12 no merge, FE-14/15 prontos pra review.
+**No prazo?** Sim — o stack de páginas de conteúdo está praticamente pronto; FE-12 e FE-15 mergeados, FE-14 pronto pra review.
 
-**Planejado vs real**: Planejei fechar o stack de conteúdo e começar o FE-13. Fechei o FE-12 e endureci o FE-15 muito além de "renderiza cronologicamente", até virar algo que se lê como um blog de verdade. O FE-13 (Sobre) esperou de propósito — precisa da voz do Gio.
+**Planejado vs real**: Planejei fechar o stack de conteúdo e começar o FE-13. Fechei o FE-12, depois endureci e mergeei o FE-15 muito além de "renderiza cronologicamente", até virar algo que se lê como um blog de verdade. O FE-13 (Sobre) esperou de propósito — precisa da voz do Gio.
 
 ## Amanhã
 
 - FE-13 Sobre — declaração de IA, história do dev, Gatinho — em par com o Gio pela copy
+- Fazer merge dos PRs restantes — FE-14 privacidade (#68), cosméticos (#71), a linha de tech-debt (#74)
 - Depois FE-07/08/09 em cima da página de resultados já mergeada
 - Sincronizar a tabela de roadmap do SPRINT.md (ainda mostra os cards de FE como ⬜)
-- Testar o fluxo ao vivo com amigos assim que o stack entrar
+- Testar o fluxo ao vivo com amigos — o caminho principal (formulário → resultados → devlog → fontes) está no ar
 
 ---
 
