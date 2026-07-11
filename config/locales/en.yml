@@ -60,7 +60,12 @@ en:
       intro: "Since that cookie number lives only in your browser, you stay in control:"
       step_clear_cookie: "Clear this site's cookies and data in your browser settings. That erases your visitor number and undoes the link to any simulation saved for it."
       step_no_profile: "We never store a name, email, or device profile. So once the cookie is gone, whatever is left can't be tied back to you."
-      contact: "Want a formal erasure request under the LGPD? Reach the people who maintain the project through its public code repository."
+      contact_html: "Want a formal erasure request under the LGPD? Reach the people who maintain the project through %{repo_link}."
+      contact_repo_label: "its public code repository"
+    references:
+      heading: "Learn more"
+      lgpd: "LGPD — Law No. 13.709/2018 (official text)"
+      anpd_cookies: "ANPD — Guide on cookies and personal-data protection"
 
   locale_toggle:
     pt_BR: "Português"

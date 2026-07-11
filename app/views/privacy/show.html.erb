@@ -30,5 +30,16 @@
       <p class="text-base text-text"><%= t("privacy.deletion.step_no_profile") %></p>
     </li>
   </ul>
-  <p class="mt-4 text-base text-muted"><%= t("privacy.deletion.contact") %></p>
+  <p class="mt-4 text-base text-muted"><%= t("privacy.deletion.contact_html", repo_link: link_to(t("privacy.deletion.contact_repo_label"), ContentController::REPOSITORY_URL, class: "underline", target: "_blank", rel: "noopener")) %></p>
+</section>
+
+<section class="py-8" aria-label="<%= t('privacy.references.heading') %>">
+  <h2 class="mb-4 text-[1.5rem] font-extrabold text-text"><%= t("privacy.references.heading") %></h2>
+  <ul class="flex flex-col gap-2">
+    <% @reference_links.each do |key, url| %>
+      <li>
+        <%= link_to t("privacy.references.#{key}"), url, class: "text-base text-text underline", target: "_blank", rel: "noopener" %>
+      </li>
+    <% end %>
+  </ul>
 </section>

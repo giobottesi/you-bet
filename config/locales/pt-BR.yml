@@ -76,7 +76,12 @@ pt-BR:
       intro: "Como aquele número do cookie vive só no seu navegador, o controle é todo seu:"
       step_clear_cookie: "Limpe os cookies e os dados deste site nas configurações do seu navegador. Isso apaga o seu número de visitante e desfaz o vínculo com qualquer simulação salva para ele."
       step_no_profile: "A gente nunca guarda nome, email ou perfil do seu aparelho. Então, depois que o cookie some, o que sobra não tem como ser ligado a você."
-      contact: "Quer fazer um pedido formal de exclusão pela LGPD? Fale com quem mantém o projeto pelo repositório público de código."
+      contact_html: "Quer fazer um pedido formal de exclusão pela LGPD? Fale com quem mantém o projeto pelo %{repo_link}."
+      contact_repo_label: "repositório público de código"
+    references:
+      heading: "Para saber mais"
+      lgpd: "LGPD — Lei nº 13.709/2018 (texto oficial)"
+      anpd_cookies: "ANPD — Guia sobre cookies e proteção de dados pessoais"
 
   locale_toggle:
     pt_BR: "Português"
