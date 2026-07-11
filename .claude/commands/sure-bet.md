@@ -33,7 +33,7 @@ Run `/safe-bet` over the diff. It covers coherence, duplication, **sensitive-inf
 
 ## Step 3 — Prose review (`/write-review`)
 
-If the change touches any prose — docs, a devlog, or the **PR body you're about to write** — run `/write-review` on it (`pr <N>` scope for a body already pushed). It fact-checks every concrete claim against the code, kills duplication, checks cohesion/structure, scans for **privacy/identity leaks**, and holds the tone bar. A PR description is public prose; it goes through this too.
+If the change touches any prose — docs, a devlog, or the **PR body you're about to write** — run `/write-review` on it (`pr <N>` scope for a body already pushed). It gates the copy against `docs/COPY_STANDARDS.md` (source, cohesion, flow, tone, plain-language, no-AI-tells) and runs a hard **privacy/identity-leak** scan, returning pass/fail + findings. A PR description is public prose; it goes through this too. High-stakes copy should have been written with `/ghost-bet`, which satisfies the same Standards at write time — so this gate is meant to come back green.
 
 ## Step 4 — Privacy (public repo)
 
