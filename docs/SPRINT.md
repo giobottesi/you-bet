@@ -3,7 +3,7 @@
 **Duration**: 17 days | Jun 25 → Jul 12, 2026
 **Approach**: TDD throughout — tests are written with features, not after.
 **Assets**: Free/open-source only. No paid fonts, icons, images, or services.
-**Track reality**: devlog (`/diario`). Compare planned vs actual at the end.
+**Track reality**: devlog (`/devlog`). Compare planned vs actual at the end.
 
 ---
 
@@ -123,7 +123,7 @@ Each card: controller (inherits ContentController) + view + route.
 | **FE 12** | Sources page — `/sources`, all 7 data sources with citations + methodological notes | All sources listed |
 | **FE 13** | About page — `/about`, AI declaration, developer story, Gatinho, GitHub + devlog links | AI disclosure present |
 | **FE 14** | Privacy page — `/privacy`, LGPD notice, data collected, retention, deletion | Deletion instructions present |
-| **FE 15** | Devlog page — `/diario`, daily journal entries from markdown/YAML | Entries display chronologically |
+| **FE 15** | Devlog page — `/devlog`, daily journal entries from markdown/YAML | Entries display chronologically |
 
 ---
 
@@ -176,29 +176,29 @@ Each card: controller (inherits ContentController) + view + route.
 | BE 11 | ✅ Done | #28 | Jul 01 |
 | BE 12 | ✅ Done | #11 | Jun 30 |
 | BE 13 | ✅ Done | #11 | Jun 30 |
-| BE 14 | 🔵 In review | #30 | Jul 02 |
-| BE 15 | 🔵 In review | #31 | Jul 02 |
+| BE 14 | ✅ Done | #30 | Jul 02 |
+| BE 15 | ✅ Done | #31 | Jul 02 |
 | BE 16 | ⬜ | | |
 | BE 17 | ⬜ | | |
 | BE 18 | ⬜ | | |
-| BE 19 | ⬜ | | |
+| BE 19 | ✅ Done | #32 | Jul 02 |
 | BE 20 | ⬜ | | |
 | BE 21 | ⬜ | | |
-| FE 01 | ⬜ | | |
-| FE 02 | ⬜ | | |
-| FE 03 | ⬜ | | |
-| FE 04 | ⬜ | | |
-| FE 05 | ⬜ | | |
-| FE 06 | ⬜ | | |
+| FE 01 | ✅ Done | #38 | Jul 05 |
+| FE 02 | ✅ Done | #54 | Jul 06 |
+| FE 03 | ✅ Done | #59 | Jul 08 |
+| FE 04 | ✅ Done | #61 | Jul 08 |
+| FE 05 | ✅ Done | #63 | Jul 09 |
+| FE 06 | ✅ Done | #67 | Jul 09 |
 | FE 07 | ⬜ | | |
 | FE 08 | ⬜ | | |
-| FE 09 | ⬜ | | |
+| FE 09 | 🔵 In review | #77 | |
 | FE 10 | ⬜ | | |
 | FE 11 | ⬜ | | |
-| FE 12 | ⬜ | | |
-| FE 13 | ⬜ | | |
-| FE 14 | ⬜ | | |
-| FE 15 | ⬜ | | |
+| FE 12 | ✅ Done | #66 | Jul 10 |
+| FE 13 | 🔵 In review | #76 | |
+| FE 14 | 🔵 In review | #68 | |
+| FE 15 | ✅ Done | #69 | Jul 10 |
 | FE 16 | ⬜ | | |
 | FE 17 | ⬜ | | |
 | FE 18 | ⬜ | | |
@@ -306,7 +306,7 @@ If time allows or post-competition:
 
 ## How to Use This Document
 
-Track daily reality in the devlog (`/diario`). At the end of the sprint, compare this plan to what happened:
+Track daily reality in the devlog (`/devlog`). At the end of the sprint, compare this plan to what happened:
 - Which cards took longer/shorter?
 - What was added that wasn't planned?
 - What was cut?

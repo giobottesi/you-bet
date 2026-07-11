@@ -5,12 +5,14 @@ End-to-end: how numbers enter the system (reference data), how they're validated
 - [Reference Data Infrastructure](#reference-data-infrastructure) — config + cited external numbers
 - [Schema](#schema)
 - [Seeded Data](#seeded-data)
+- [Research Source Citations](#research-source-citations-sources-page) — verified figures + deep links
 - [Write Path — Validation & Idempotency](#write-path--validation--idempotency)
 - [Typed KV — Storage & Read Cast](#typed-kv--storage--read-cast)
 - [Access Pattern](#access-pattern)
 - [PaperTrail (planned)](#papertrail-planned)
 - [Simulation Data](#simulation-data) — calculation model, Monte Carlo rationale, results, caching
-- [Future Modifier / Backoffice](#future-modifier-feature)
+- [Future Modifier Feature](#future-modifier-feature)
+- [Backoffice (future phase)](#backoffice-future-phase)
 
 ---
 
@@ -286,4 +288,4 @@ Users get range sliders for house edge (conservative/aggressive). Add `_min`/`_m
 
 ## Backoffice (future phase)
 
-An admin UI for managing bet types and reference values — creating/editing house edges and comparison prices without a deploy. The write path is already shaped for it: command objects like `ReferenceValueUpsert` (an `ActiveModel` form object that validates and persists via `find_or_initialize_by`) are exactly what a backoffice form binds to — `command.upsert` returns `false` + `errors` for the form to render, or persists. Because of this phase, bet types are **not** a closed set: the `inclusion` whitelist was removed so admins can add new types as data. The current `BETTING_TYPES` list is just the seeded/known set, not a constraint.
+An admin UI for managing bet types and reference values — creating/editing house edges and comparison prices without a deploy. The write path is already shaped for it: `ReferenceValueUpsert` is the [form-bindable](#write-path--validation--idempotency) command a backoffice form binds to. To support this future phase, bet types are **not** a closed set: the `inclusion` whitelist was removed so admins can add new types as data. The current `BETTING_TYPES` list is just the seeded/known set, not a constraint.

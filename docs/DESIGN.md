@@ -107,7 +107,7 @@ The magicagem spike (PR #47, not-to-merge) used **Caveat** — a Google Fonts ha
 ## Texture
 
 - **Grain/noise overlay** on page background — **locked as the app texture** (see SPRINT.md). Native SVG `feTurbulence` fractalNoise rendered to a `data:` URI CSS background: no asset, no gem, tileable, resolution-independent. Tested recipe (`docs/texture-compare.html`): `baseFrequency='0.65'` + `numOctaves='3'` for coarse grain that survives on-screen (fine high-freq noise aliases to flat gray), a `feColorMatrix` collapsing the RGB noise to contrasty black-alpha speckle, over the light base with `mix-blend-mode: multiply`. Opacity `~0.12–0.25` (0.05 reads as invisible over the warm paper). The same overlay is reused as a layer on BE 17 share cards.
-  - *Refinement (2026-07-06):* on **cards**, the grain is a fine fiber **hatch + a whisper of warm noise** (see the Paper-grain row in the Trinket catalog) — the two layers overlap so it reads as texture, not stripes, and the warm tint avoids grey striping. Extends to panel/page when "grain on all paper" lands.
+  - *Refinement (2026-07-06):* on **cards**, the grain gains a fine fiber **hatch** over the warm noise — see the Paper-grain row in the Trinket catalog for the full recipe and rollout.
 - **Drop shadows** on all cards, buttons, hero text — hard offset, not soft blur
 - **Hard square borders** — no border-radius anywhere
 - **Dot-grid** (from #47 spike) — **not for this app.** `background-image: radial-gradient(<color> 1px, transparent 1px); background-size: 24px 24px;`. Asset-free and tileable like the grain, but a repeating *pattern* not *noise*. Decision (Gio call, 2026-07-06): grain wins for You-Bet; the dot-grid is reserved for a separate private magicagem-blog project, not tracked here. Retained as a comparison lane in `docs/texture-compare.html`.
@@ -235,9 +235,9 @@ Local dev references — open in a browser (`file://…`), not part of the app b
 
 ---
 
-## Design-refinement references (unreviewed)
+## Design-refinement references
 
-Candidate texture/whimsy demos gathered 2026-07-06 for a later refinement pass — **not yet vetted for fit or license**. Reimplement from scratch rather than copy-paste (see licensing note below); treat these as inspiration only. Reviewed + annotated 2026-07-06 (fit verdict against the locked hard-square / hard-offset-shadow / `feTurbulence`-grain direction):
+Candidate texture/whimsy demos gathered 2026-07-06, reviewed + annotated the same day (fit verdict against the locked hard-square / hard-offset-shadow / `feTurbulence`-grain direction below). Reimplement from scratch rather than copy-paste (see licensing note below); treat these as inspiration only.
 
 | Pen | What it does | Fit verdict |
 |---|---|---|
