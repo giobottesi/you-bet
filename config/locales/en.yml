@@ -35,6 +35,38 @@ en:
     intro: "A daily log of how You-Bet got made — one entry per sprint day, newest first."
     ai_note: "Betina — my AI assistant — wrote these entries. They aren't fully reviewed, but they help tell the story of how this got built."
 
+  privacy:
+    title: "Privacy"
+    heading: "What we keep, and how to erase it"
+    intro: "You-Bet never asks for your name, your email, or a password. We keep very little, and you can erase all of it whenever you want. That's what the LGPD guarantees. Below we explain, in plain language, what gets saved and why."
+    collected_label: "Data we record"
+    purpose_label: "Why"
+    retention_label: "How long"
+    collected:
+      visitor_cookie:
+        name: "A cookie that identifies your visit"
+        purpose: "A cookie is a small text file a website saves in your browser. Ours holds no name: just a random number, so the site can recognize you when you come back and bring your simulation back to you."
+        retention: "Saved in your browser until you clear it."
+      simulation_inputs:
+        name: "The details you type into the simulation"
+        purpose: "The bet types, the weekly amount, and the timeframe you choose. We use them only to calculate your projection."
+        retention: "Saved next to that cookie number until you clear the cookie. The calculated result itself is anonymous and not linked to you."
+      language_preference:
+        name: "Language preference"
+        purpose: "The language you pick, so the site speaks yours."
+        retention: "Saved in your session cookie and cleared when you close the browser."
+    deletion:
+      heading: "How to delete your data"
+      intro: "Since that cookie number lives only in your browser, you stay in control:"
+      step_clear_cookie: "Clear this site's cookies and data in your browser settings. That erases your visitor number and undoes the link to any simulation saved for it."
+      step_no_profile: "We never store a name, email, or device profile. So once the cookie is gone, whatever is left can't be tied back to you."
+      contact_html: "Want a formal erasure request under the LGPD? Reach the people who maintain the project through %{repo_link}."
+      contact_repo_label: "its public code repository"
+    references:
+      heading: "Learn more"
+      lgpd: "LGPD — Law No. 13.709/2018 (official text)"
+      anpd_cookies: "ANPD — Guide on cookies and personal-data protection"
+
   locale_toggle:
     pt_BR: "Português"
     en: "English"

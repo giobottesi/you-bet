@@ -14,4 +14,5 @@ Rails.application.routes.draw do
   resources :simulations, only: [ :create, :show ]
   get "sources", to: "sources#index"
   get "devlog", to: "devlog#index"
+  get "privacy", to: "privacy#show"
 end

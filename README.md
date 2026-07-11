@@ -17,3 +17,9 @@ docker compose up -d
 - [Sprint](docs/SPRINT.md) — cards, roadmap, constraints
 - [Design](docs/DESIGN.md) — palette, typography, components
 - [Devlog](docs/devlog/) — daily journal
+
+## Contact
+
+- **Repository:** https://github.com/giobottesi/you-bet — open an issue for questions, bugs, or a formal LGPD erasure request.
+<!-- GIO: add your public contact email below once set, then delete this comment -->
+- **Email:** _coming soon_

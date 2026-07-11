@@ -51,6 +51,38 @@ pt-BR:
     intro: "Um registro diário de como o You-Bet foi feito — uma entrada por dia de sprint, da mais recente para a mais antiga."
     ai_note: "A Betina — minha assistente de IA — escreveu estas entradas. Não são totalmente revisadas, mas ajudam a contar como isto foi construído."
 
+  privacy:
+    title: "Privacidade"
+    heading: "O que guardamos e como apagar"
+    intro: "O You-Bet nunca pede seu nome, seu email ou uma senha. Guardamos bem pouca coisa, e você pode apagar tudo quando quiser. É o que a LGPD garante. Abaixo a gente explica, em português claro, o que fica salvo e por quê."
+    collected_label: "Dados que registramos"
+    purpose_label: "Por quê"
+    retention_label: "Por quanto tempo"
+    collected:
+      visitor_cookie:
+        name: "Um cookie que identifica a sua visita"
+        purpose: "Cookie é um pequeno arquivo de texto que o site salva no seu navegador. O nosso não tem o seu nome: guarda só um número aleatório, que serve para o site reconhecer que é você quando você volta e trazer a sua simulação de volta pra você."
+        retention: "Fica salvo no seu navegador até você limpá-lo."
+      simulation_inputs:
+        name: "Os dados que você digita na simulação"
+        purpose: "Os tipos de aposta, o valor por semana e o prazo que você escolhe. A gente usa isso só para calcular a sua projeção."
+        retention: "Ficam salvos junto com aquele número do cookie até você limpar o cookie. O resultado do cálculo em si é anônimo e não fica ligado a você."
+      language_preference:
+        name: "Preferência de idioma"
+        purpose: "O idioma que você escolhe, para o site falar a sua língua."
+        retention: "Fica no cookie da sua sessão e é apagada quando você fecha o navegador."
+    deletion:
+      heading: "Como apagar seus dados"
+      intro: "Como aquele número do cookie vive só no seu navegador, o controle é todo seu:"
+      step_clear_cookie: "Limpe os cookies e os dados deste site nas configurações do seu navegador. Isso apaga o seu número de visitante e desfaz o vínculo com qualquer simulação salva para ele."
+      step_no_profile: "A gente nunca guarda nome, email ou perfil do seu aparelho. Então, depois que o cookie some, o que sobra não tem como ser ligado a você."
+      contact_html: "Quer fazer um pedido formal de exclusão pela LGPD? Fale com quem mantém o projeto pelo %{repo_link}."
+      contact_repo_label: "repositório público de código"
+    references:
+      heading: "Para saber mais"
+      lgpd: "LGPD — Lei nº 13.709/2018 (texto oficial)"
+      anpd_cookies: "ANPD — Guia sobre cookies e proteção de dados pessoais"
+
   locale_toggle:
     pt_BR: "Português"
     en: "English"
