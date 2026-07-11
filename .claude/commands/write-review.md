@@ -60,7 +60,21 @@ Check against the brief's hard rules (`docs/PROPOSAL.md` → Tone table):
 - Betina's desabafos / quotes must punch **up** (house, odds, predatory design), never **down** (the gambler). Keep the wit; redirect the target.
 - Voice consistent with the brand (warm, knowing, anti-Tigrinho — see `docs/DESIGN.md`).
 
-## Step 6 — Report, then fix
+## Step 6 — Plain language (user-facing pages)
+
+Applies to pages a visitor reads (privacy, sources, about, help, in-app copy) — **not** internal docs or devlogs, which keep their register. The bar is comprehension by someone with zero tech literacy, in **both** locales.
+
+- **Define jargon natively, in everyday terms.** Any term a layperson can't picture (cookie, session, cache, identifier) gets a one-line plain definition in the reader's own language — a *native* framing, not a translated analogy. pt-BR: "cookie é um pequeno arquivo de texto que o site salva no seu navegador", not an English-derived metaphor like "ficha do guarda-volumes" (reads translated). Match the local authority's register — ANPD for pt-BR privacy.
+- **Strip AI text markers** (readers are sick of them; they read machine-written). This is a de-AI style *filter*, not a detector — em-dashes and triads are legit human devices; cut the overuse/formula, not the tool:
+  - Em-dash overuse for dramatic pauses → periods + short sentences.
+  - Flourish closers ("Só isso.", "É simples assim.", "e isso muda tudo", "That's all.") → cut.
+  - Antithesis padding ("não é apenas X, mas Y" / "not just X — it's Y") → say it plainly.
+  - Conectivo/transition dump (pt-BR "além disso, no entanto, dessa forma"; en "moreover, furthermore") → trim.
+  - Rule-of-three padding, buzzwords (leverage, seamless, robust, delve, elevate).
+- **Estrangeirismos are fine when widely understood and they don't break the flow** (cookie, site, link, e-mail). Don't force-translate a word everyone already uses; force-translate only jargon that genuinely blocks comprehension.
+- **Less internal-app detail.** Tell the user what they need to know about their data, not how storage works. Cut cache/keying/architecture detail from user copy.
+
+## Step 7 — Report, then fix
 
 Group findings by type, one line each: `path:line — <issue>. <fix>.`
 ```
@@ -69,5 +83,6 @@ DUPLICATION
 COHESION
 PRIVACY
 TONE
+PLAIN-LANGUAGE
 ```
 Surface first. Apply fixes only after go-ahead. Devlog edits stay on the devlog's branch; static-doc edits get their own branch off main (docs-only). Never bundle unrelated code.

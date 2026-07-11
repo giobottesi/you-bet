@@ -38,29 +38,29 @@ en:
   privacy:
     title: "Privacy"
     heading: "What we keep, and how to erase it"
-    intro: "You-Bet never asks for your name, email, or a login. Here's the little we do keep, why we keep it, and how to erase it whenever you want — just as the LGPD guarantees."
+    intro: "You-Bet never asks for your name, your email, or a password. We keep very little, and you can erase all of it whenever you want. That's what the LGPD guarantees. Below we explain, in plain language, what gets saved and why."
     collected_label: "Data we record"
     purpose_label: "Why"
     retention_label: "How long"
     collected:
       visitor_cookie:
-        name: "Visitor identifier cookie"
-        purpose: "A random tag your browser carries so we can tell one anonymous visit from another — it's how your simulation finds its way back to you, with no name attached."
-        retention: "Kept as a cookie in your browser until you clear it. That's all."
+        name: "A cookie that identifies your visit"
+        purpose: "A cookie is a small text file a website saves in your browser. Ours holds no name: just a random number, so the site can recognize you when you come back and bring your simulation back to you."
+        retention: "Saved in your browser until you clear it."
       simulation_inputs:
-        name: "Your simulation inputs"
-        purpose: "The bet types, weekly amount, and timeframe you enter — we use them only to run your projection."
-        retention: "Kept next to your visitor tag so your runs stay yours, until you clear the cookie. The result itself sits in a shared, anonymous cache that isn't linked to you."
+        name: "The details you type into the simulation"
+        purpose: "The bet types, the weekly amount, and the timeframe you choose. We use them only to calculate your projection."
+        retention: "Saved next to that cookie number until you clear the cookie. The calculated result itself is anonymous and not linked to you."
       language_preference:
         name: "Language preference"
         purpose: "The language you pick, so the site speaks yours."
-        retention: "Rides along in your session cookie and is dropped when the session ends."
+        retention: "Saved in your session cookie and cleared when you close the browser."
     deletion:
       heading: "How to delete your data"
-      intro: "Since your visitor tag lives only in your browser, you stay in control:"
-      step_clear_cookie: "Clear this site's cookies and data in your browser settings. That deletes your visitor tag and cuts the link to any simulation saved for it."
-      step_no_profile: "We never store a name, email, or device profile — so once the cookie is gone, whatever rows remain can't be traced back to you."
-      contact: "Want a formal erasure request under the LGPD? Reach the maintainers through the project's public code repository."
+      intro: "Since that cookie number lives only in your browser, you stay in control:"
+      step_clear_cookie: "Clear this site's cookies and data in your browser settings. That erases your visitor number and undoes the link to any simulation saved for it."
+      step_no_profile: "We never store a name, email, or device profile. So once the cookie is gone, whatever is left can't be tied back to you."
+      contact: "Want a formal erasure request under the LGPD? Reach the people who maintain the project through its public code repository."
 
   locale_toggle:
     pt_BR: "Português"

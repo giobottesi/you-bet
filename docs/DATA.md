@@ -125,6 +125,19 @@ Every headline figure the app cites is verified against its primary source and d
 
 **Not carried on the page (re-attributed):** "53.9% of debtors are women" is a Procon-SP figure, not DataSenado — dropped rather than mis-cite.
 
+## Privacy Notice — Plain-Language Sources (parked for `/privacy`)
+
+The `/privacy` copy is written as plain-language privacy *education* — a visitor with zero tech literacy should finish knowing what a cookie is and how to erase their data. These are the primary sources behind that register, parked here for a future "further reading" block on the page (not yet surfaced in the UI).
+
+| Source | Why it's cited | Link |
+|---|---|---|
+| **ANPD — Guia Orientativo: Cookies e Proteção de Dados Pessoais** (Oct 2022) | pt-BR register + native cookie framing ("arquivos instalados no dispositivo" / mainstream "pequeno arquivo de texto que o site salva no navegador"); explicitly written to teach a lay audience. | [gov.br/anpd — PDF](https://www.gov.br/anpd/pt-br/centrais-de-conteudo/materiais-educativos-e-publicacoes/guia-orientativo-cookies-e-protecao-de-dados-pessoais.pdf) |
+| **ANPD — Aviso de Privacidade** | LGPD transparency: "linguagem simples e compreensível", avoiding siglas/jargões/estrangeirismos; states what data, why, how long. | [gov.br/anpd — aviso](https://www.gov.br/anpd/pt-br/acesso-a-informacao/aviso-de-privacidade) |
+| **ICO — Cookies and privacy notices** | Explain each cookie in the reader's terms; users must grasp the consequences, not decode jargon. | [ico.org.uk](https://ico.org.uk/for-organisations/advice-for-small-organisations/privacy-notices-and-cookies/cookies-and-privacy-notices-in-detail/) |
+| **GDPR Art. 12 — clear and plain language** | The legal baseline: "concise, transparent, intelligible", vocabulary tailored to the audience. | [gdpr-info.eu](https://gdpr-info.eu/art-12-gdpr/) |
+| **digital.gov — Plain Language** (ex `plainlanguage.gov`) | Second-person voice, common words over jargon, concrete over abstract, short sentences. | [digital.gov](https://digital.gov/guides/plain-language) |
+| **NN/g — Privacy policies & cookie permissions** | UX evidence: users feel policies "aren't written for them"; bullet each purpose, make choices scannable. | [nngroup.com](https://www.nngroup.com/articles/privacy-policies-terms-use-pages/) |
+
 ## Write Path — Validation & Idempotency
 
 All writes go through ActiveModel command objects (`AppConfigUpsert`, `ReferenceValueUpsert`), never `Model.create` directly. The AR record stays a dumb typed-KV row; every rule lives in the command at the boundary. This is the CQS **write side** — the query side (`fetch`, `typed_value`) trusts the data because the command already validated it.

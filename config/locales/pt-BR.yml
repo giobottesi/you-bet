@@ -54,29 +54,29 @@ pt-BR:
   privacy:
     title: "Privacidade"
     heading: "O que guardamos e como apagar"
-    intro: "O You-Bet nunca pede seu nome, email ou login. Aqui está o pouco que guardamos, por que guardamos e como apagar quando quiser — exatamente como a LGPD garante."
+    intro: "O You-Bet nunca pede seu nome, seu email ou uma senha. Guardamos bem pouca coisa, e você pode apagar tudo quando quiser. É o que a LGPD garante. Abaixo a gente explica, em português claro, o que fica salvo e por quê."
     collected_label: "Dados que registramos"
     purpose_label: "Por quê"
     retention_label: "Por quanto tempo"
     collected:
       visitor_cookie:
-        name: "Cookie de identificação do visitante"
-        purpose: "Uma etiqueta aleatória que o seu navegador carrega para diferenciarmos uma visita anônima de outra — é assim que a sua simulação volta pra você, sem nenhum nome atrelado."
-        retention: "Guardada como cookie no seu navegador até você limpá-lo. Só isso."
+        name: "Um cookie que identifica a sua visita"
+        purpose: "Cookie é um pequeno arquivo de texto que o site salva no seu navegador. O nosso não tem o seu nome: guarda só um número aleatório, que serve para o site reconhecer que é você quando você volta e trazer a sua simulação de volta pra você."
+        retention: "Fica salvo no seu navegador até você limpá-lo."
       simulation_inputs:
-        name: "Os dados da sua simulação"
-        purpose: "Os tipos de aposta, o valor semanal e o prazo que você informa — usamos só para rodar a sua projeção."
-        retention: "Guardados junto à sua etiqueta de visitante para que as suas rodadas continuem suas, até você limpar o cookie. O resultado em si fica em um cache anônimo compartilhado, não ligado a você."
+        name: "Os dados que você digita na simulação"
+        purpose: "Os tipos de aposta, o valor por semana e o prazo que você escolhe. A gente usa isso só para calcular a sua projeção."
+        retention: "Ficam salvos junto com aquele número do cookie até você limpar o cookie. O resultado do cálculo em si é anônimo e não fica ligado a você."
       language_preference:
         name: "Preferência de idioma"
         purpose: "O idioma que você escolhe, para o site falar a sua língua."
-        retention: "Vai junto no cookie de sessão e é descartada quando a sessão termina."
+        retention: "Fica no cookie da sua sessão e é apagada quando você fecha o navegador."
     deletion:
       heading: "Como apagar seus dados"
-      intro: "Como a sua etiqueta de visitante vive apenas no seu navegador, o controle é seu:"
-      step_clear_cookie: "Limpe os cookies e os dados deste site nas configurações do navegador. Isso apaga a sua etiqueta de visitante e corta o vínculo com qualquer simulação guardada para ela."
-      step_no_profile: "Nunca guardamos nome, email ou perfil de dispositivo — então, uma vez apagado o cookie, o que sobrar não pode ser rastreado até você."
-      contact: "Quer um pedido formal de exclusão sob a LGPD? Fale com os mantenedores pelo repositório público de código do projeto."
+      intro: "Como aquele número do cookie vive só no seu navegador, o controle é todo seu:"
+      step_clear_cookie: "Limpe os cookies e os dados deste site nas configurações do seu navegador. Isso apaga o seu número de visitante e desfaz o vínculo com qualquer simulação salva para ele."
+      step_no_profile: "A gente nunca guarda nome, email ou perfil do seu aparelho. Então, depois que o cookie some, o que sobra não tem como ser ligado a você."
+      contact: "Quer fazer um pedido formal de exclusão pela LGPD? Fale com quem mantém o projeto pelo repositório público de código."
 
   locale_toggle:
     pt_BR: "Português"
