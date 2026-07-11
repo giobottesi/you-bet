@@ -135,3 +135,20 @@ pt-BR:
       heading: "Olha o estrago"
       summary: "Apostando %{amount}/semana durante %{timeframe}, é isso que a matemática diz que você perderia:"
       loss_share: "%{percentage} de tudo que você apostaria"
+      help:
+        heading: "Você não está sozinho(a) nisso"
+        intro: "A casa foi feita pra ganhar — isso é sobre eles, não sobre você. Se apostar deixou de ser uma escolha, ou se você só quer conversar com alguém, aqui vão lugares reais, gratuitos e sigilosos pra começar. Pedir ajuda é normal."
+        call_label: "Ligue"
+        resources:
+          cvv:
+            name: "CVV — Centro de Valorização da Vida"
+            description: "Apoio emocional gratuito e sigiloso, a qualquer hora do dia ou da noite. Por telefone, chat ou e-mail — alguém escuta, sem julgamento."
+          sus_caps:
+            name: "SUS — CAPS-AD"
+            description: "Atendimento público e gratuito de saúde mental e cuidado com dependência pelo SUS. Procure a UBS mais próxima ou a Secretaria de Saúde do seu município pra encontrar o CAPS-AD perto de você."
+          gamblers_anonymous:
+            name: "Jogadores Anônimos"
+            description: "Um grupo gratuito de apoio entre pessoas que querem parar de apostar. Os encontros acontecem online e presencialmente pelo Brasil — no seu ritmo."
+          self_exclusion:
+            name: "Autoexclusão"
+            description: "Quer um basta? A plataforma federal pode bloquear o seu CPF em todas as casas de apostas licenciadas de uma vez — por um período definido ou por tempo indeterminado."

@@ -27,6 +27,21 @@ module SimulationsHelper
   # Slot selected when the form loads — 1 year, the default horizon.
   TIMEFRAME_DEFAULT_INDEX = 2
 
+  # FE-09 harm-reduction support resources — always visible on results. URLs/short-code verified
+  # against each official primary source (see PR). Prose lives in i18n; only stable data lives here.
+  HELP_RESOURCES = [
+    { key: :cvv, url: 'https://cvv.org.br/', phone: '188' },
+    { key: :sus_caps, url: 'https://www.gov.br/saude/pt-br/composicao/saes/desmad/raps/caps' },
+    { key: :gamblers_anonymous, url: 'https://jogadoresanonimos.com.br/' },
+    { key: :self_exclusion,
+      url: 'https://www.gov.br/fazenda/pt-br/composicao/orgaos/secretaria-de-premios-e-apostas/autoexclusao' }
+  ].freeze
+
+  # Keeps the partial free of constant lookups (mirrors timeframe_slots).
+  def help_resources
+    HELP_RESOURCES
+  end
+
   # Slider view helpers — keep the template free of constant lookups and JSON coercion.
   def timeframe_slots
     TIMEFRAME_SLOTS.to_a

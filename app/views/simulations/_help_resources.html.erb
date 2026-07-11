@@ -1,0 +1,25 @@
+<%# FE-09 — real support resources, always visible on results. Warm, non-stigmatizing; whimsy dialed down. %>
+<section class="mt-10 border-[3px] border-border bg-surface [background-image:var(--paper-grain)] p-5 shadow-[4px_4px_0_rgba(0,0,0,0.2)]" aria-labelledby="help-resources-heading">
+  <h2 id="help-resources-heading" class="text-lg font-extrabold text-text"><%= t("simulations.results.help.heading") %></h2>
+  <p class="mt-2 text-base text-muted"><%= t("simulations.results.help.intro") %></p>
+
+  <ul class="mt-5 space-y-4">
+    <% help_resources.each do |resource| %>
+      <li class="border-l-[3px] border-cyan pl-4">
+        <h3 class="font-bold text-text">
+          <%= link_to "#{t("simulations.results.help.resources.#{resource[:key]}.name")} ↗",
+                      resource[:url],
+                      class: "text-cyan-ink underline",
+                      target: "_blank", rel: "noopener" %>
+        </h3>
+        <p class="mt-1 text-base text-text"><%= t("simulations.results.help.resources.#{resource[:key]}.description") %></p>
+        <% if resource[:phone] %>
+          <p class="mt-1 text-base text-text">
+            <%= t("simulations.results.help.call_label") %>
+            <%= link_to resource[:phone], "tel:#{resource[:phone]}", class: "font-bold text-cyan-ink underline" %>
+          </p>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</section>
