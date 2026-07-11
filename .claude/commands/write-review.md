@@ -14,7 +14,7 @@ Relationship: `/ghost-bet` **writes** copy against the Standards; this skill **g
 - `static` → `docs/*.md` except devlogs (PROPOSAL, ARCHITECTURE, SPRINT, DESIGN, DATA, TECH_DEBT, COPY_STANDARDS)
 - `pr <N>` → the body of PR #N, pulled with `gh pr view <N> --json body -q .body` (not a file — fixes apply via `gh pr edit <N> --body`)
 - `all` or empty → every `.md` under `docs/` + `README.md`
-
+- locale .yml files, user facing copies
 List the sources under review before starting. PR bodies count — the same prose ships in the PR thread and the public repo. **Devlogs keep their own voice** — they are the raw evolution record; gate them for fact/privacy/tone only, not de-AI or plain-language.
 
 ---
