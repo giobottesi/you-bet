@@ -60,7 +60,8 @@ Numbered list of changes in present tense, one item per logical change:
 
 - `/place-bet` — PR-description convention: turns a diff into a body at the team bar (context line → `## What` → numbered present-tense `## Technical summary` → optional `## References`), or audits an existing body against its diff. `/sure-bet` Step 6 delegates here.
 - `/safe-bet` — pre-PR review flow: coherence, duplication, sensitive info, convention checks. Run before opening any PR.
-- `/write-review` — prose-quality pass over written material (devlogs, docs, PR bodies): fact-check, duplication, cohesion, privacy/identity leak, tone.
+- `/ghost-bet` — copy ghostwriter. Drafts or revises public-facing copy by fanning across two models (Opus + Sonnet, no Haiku), cross-reviewing them adversarially, and merging best-of-both with an Opus adjudicator. Self-improving via `docs/COPY_STANDARDS.md`. The heavy, high-stakes counterpart to `/write-review`: `/ghost-bet` writes, `/write-review` gates.
+- `/write-review` — copy compliance gate. Checks written material against `docs/COPY_STANDARDS.md` (source, cohesion, flow, tone, plain-language, no-AI-tells) + a hard privacy/identity-leak scan. Run once per PR-finish, batched. Returns pass/fail + findings.
 - `/sure-bet` — the definition of done. Orchestrates tests/lint + `/safe-bet` + `/write-review` + privacy + conventions + PR hygiene into one gate. Run before any PR so contributors ship at the team bar.
 - `/my-bet` — EOD devlog ritual: journal + progress snapshot.
 

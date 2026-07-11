@@ -1,88 +1,66 @@
-You are running a **write review** on the You-Bet project — a prose-quality pass over written material (devlogs, static docs, PR bodies, About/landing copy) before it goes public. This is a competition entry and the repo is public, so the writing is part of the submission. Run every step, report findings grouped by type, and surface before fixing — don't rewrite silently.
+You are running **`/write-review`** — the You-Bet **copy compliance gate**. It checks written material against `docs/COPY_STANDARDS.md` and returns a pass/fail verdict with findings. This is a competition entry and the repo is public, so the writing is part of the submission.
 
-`/write-review` complements the other skills: `/safe-bet` reviews the branch diff (code coherence, dup, sensitive info) before a PR; `/my-bet` writes the daily devlog and runs this flow before committing it. This one reviews the *text itself*.
+Run it **once per PR-finish**, batched over everything the PR touched — not per-edit. `/ghost-bet` does the writing and is built to satisfy the Standards at write time, so this gate is meant to be a mostly-green rubber-stamp; a failure here means the copy skipped the writer or drifted. Report findings grouped by standard, surface before fixing — don't rewrite silently.
+
+Relationship: `/ghost-bet` **writes** copy against the Standards; this skill **gates** it. `/safe-bet` reviews the code diff; `/my-bet` writes the devlog and runs this before committing it. `/sure-bet` Step 3 calls this skill. All four point at the same bar: `docs/COPY_STANDARDS.md`.
 
 ---
 
 ## Step 0 — Scope
 
-`$ARGUMENTS` sets what to review. Resolve it:
+`$ARGUMENTS` sets what to gate. Resolve it:
 - a path or glob → just those files
 - `devlogs` → `docs/devlog/*.md`
-- `static` → `docs/*.md` except devlogs (PROPOSAL, ARCHITECTURE, SPRINT, DESIGN, DATA, TECH_DEBT)
+- `static` → `docs/*.md` except devlogs (PROPOSAL, ARCHITECTURE, SPRINT, DESIGN, DATA, TECH_DEBT, COPY_STANDARDS)
 - `pr <N>` → the body of PR #N, pulled with `gh pr view <N> --json body -q .body` (not a file — fixes apply via `gh pr edit <N> --body`)
 - `all` or empty → every `.md` under `docs/` + `README.md`
 
-List the sources under review before starting. PR bodies count — the same prose ships in the PR thread and the public repo.
+List the sources under review before starting. PR bodies count — the same prose ships in the PR thread and the public repo. **Devlogs keep their own voice** — they are the raw evolution record; gate them for fact/privacy/tone only, not de-AI or plain-language.
 
 ---
 
-## Step 1 — Fact-check against reality (highest priority)
+## Step 1 — Gate against the six Standards
 
-Never trust the prose or your own memory. Verify every concrete claim against a real source:
-- **Code/behavior** — does the file/method/flag/port/value the text names still exist and behave as described? (Read the code, don't assume.)
-- **Git/PRs** — PR numbers, merge state, dates, "N lines" claims → `gh pr view`, `git log`, `git diff --stat`.
-- **Numbers & settings** — ports, Ruby/gem versions, counts ("56 examples", "10 comparison prices"), house edges, dates. Cross-check the actual config/seed/spec.
-- **Cross-doc facts** — the same fact stated in two docs must match (e.g. hosting target, Ruby version, port, model names).
+Read `docs/COPY_STANDARDS.md` and check the copy against each. The rubric holds the full definition of each standard; below is how to *enforce* them and where the judgment calls are.
 
-Flag every claim that is wrong, stale, or unverifiable. This is the failure that matters most: a devlog once shipped saying the pre-commit hook "skips when the DB is down" *after* it was changed to require the DB — the text contradicted the code.
+- **Source / fact (highest priority).** Never trust the prose or your own memory. Verify every concrete claim against reality: code/behavior (does the file/method/route/flag/port/value still exist and behave as described? Read it), git/PRs (`gh pr view`, `git log`, `git diff --stat` for PR numbers, merge state, dates, "N lines"), numbers/settings (ports, versions, counts, house edges, dates against the actual config/seed/spec), and cross-doc consistency (the same fact in two docs must match). Flag every claim that is wrong, stale, or unverifiable. The worst failure is copy that contradicts the code.
+- **Cohesion.** Internal contradictions, dangling refs, terminology drift. **Dead anchor links** — `[text](# "tooltip")` used only to hang a tooltip: strip them (they resolve nowhere, GitHub underlines them, the tooltip is invisible on mobile). **Exempt: the betina sign-off** `— betina, gio's intern [<emoji>](# "<ironic one-liner>")` — intentional and required; never strip or flatten it.
+- **Flow.** Illogical order (problem should precede fix), padding, throat-clearing.
+- **Tone.** Against `docs/PROPOSAL.md` → Tone table: target the industry and its math, never the bettor. Betina's desabafos punch up, never down.
+- **Plain language** (user-facing pages only). Native jargon framing, internal-app detail out, estrangeirismos only when flow-neutral.
+- **No AI tells.** Em-dash overuse, flourish closers, antithesis padding, buzzwords, conectivo dump, decorative emoji. A de-AI filter, not a detector — cut the overuse/formula, not the legit device.
 
-## Step 2 — Duplication
+**Devlog-specific structure** (when gating `docs/devlog/*.md`): the `Gio's contributions` section is a headline reviewers read first — it must be *highlighted*, not a flat list: a one-line bold callout lead, calls grouped by theme (product/scope, sequencing/execution, judgment), each impact on its own `→ *arrow*` line. Flag a flat `- **x.** Impact: y` list and restructure.
 
-- **Internal** — the same point stated more than once in one file (TL;DR vs body vs Decisions is the usual offender). Each section should add, not restate. Merge or cut.
-- **Cross-doc** — the same explanation copy-pasted across docs, or the same fact narrated three different ways. Pick one home; reference it from the others.
+**Not a finding — don't "fix" it:** GitHub's markdown CSS draws a `border-bottom` under every `#`/`##` heading. That's every repo's rendering, not a defect.
 
-## Step 3 — Cohesion, structure & rendering
+---
 
-- Internal contradictions (one paragraph describes a safety-net the next paragraph makes moot).
-- Illogical order — reveal-then-explain vs explain-then-reveal; problem should precede fix.
-- Dangling references (links, "see above", PR numbers) that don't resolve. **Dead anchor links** — `[text](# "tooltip")` used only to hang a tooltip: strip them. They resolve nowhere, GitHub underlines them like real links, and the `title` tooltip is invisible on mobile. **Exempt: the betina sign-off** `— betina, gio's intern [<emoji>](# "<ironic one-liner>")` — the ironic-hover form is intentional and required; never strip or flatten it to a plain emoji.
-- Terminology drift — the same thing called different names across the doc.
-- **`Gio's contributions` structure** (devlogs) — the section is a headline reviewers read first, so it must be *highlighted*, not a flat list: a one-line bold callout lead, calls grouped by theme (product/scope, sequencing/execution, judgment), and each impact on its own `→ *arrow*` line. Flag a flat `- **x.** Impact: y` list and restructure.
+## Step 2 — Privacy & identity leak (hard gate, public repo)
 
-**Not a finding — don't "fix" it:** GitHub's markdown CSS draws a `border-bottom` under every `#`/`##` heading (looks like an underline). That's every repo's rendering, not a defect. `###`+ have no rule; demote heads only if the owner asks.
+Separate from copy quality — this is a security gate, so it lives here, not in the Standards. The repo and PR threads are public. Prose leaks affiliation in ways secret-scanning misses: a company name is not an API key, so `/safe-bet`'s grep skips it and it ships. This step is that gap.
 
-## Step 4 — Privacy & identity leak (public repo)
-
-The repo and PR threads are public. Prose leaks affiliation in ways secrets scanning misses — a company name is not an API key, so `/safe-bet`'s secret grep skips it and it ships. This step is that gap.
-
-Scan every source (and, for committed devlogs / PR bodies, the commit history — a leak survives in history until force-pushed) for:
-- **Employer / day-job / client / third-party company names** — the owner's day job and any company not this project. The concrete denylist (specific names, domains, corporate SSO / ticket hosts) lives in the session's private memory, not this public file — spelling those names out here would be the exact leak this step exists to catch.
+Scan every source (and, for committed devlogs / PR bodies, the commit history — a leak survives until force-pushed) for:
+- **Employer / day-job / client / third-party company names** — the owner's day job and any company not this project. The concrete denylist lives in the session's private memory, not this public file — spelling those names here would be the leak this step exists to catch.
 - **Real full names** of anyone besides the project owner (Gio).
-- **Private/internal hostnames, IPs, or paths** that identify another environment (e.g. naming *which* app owns a clashing port, internal dashboards).
+- **Private/internal hostnames, IPs, or paths** identifying another environment (naming *which* app owns a clashing port, internal dashboards).
 
-Rewrite to the neutral form — "another app on this machine", not the app's name. If a leak is **already committed**, flag that a new commit isn't enough: the branch (and any open PR body) needs history rewrite / `gh pr edit`. Say so explicitly.
+Rewrite to the neutral form — "another app on `:3000`", not the app's name. If a leak is **already committed**, flag that a new commit isn't enough: the branch (and any open PR body) needs history rewrite / `gh pr edit`. Say so explicitly.
 
-## Step 5 — Tone (public / competition material)
+---
 
-Check against the brief's hard rules (`docs/PROPOSAL.md` → Tone table):
-- **Target the industry and its math — never blame, ridicule, or judge the bettor.** No moralizing, no lecture, no spectacle. Empathy.
-- Betina's desabafos / quotes must punch **up** (house, odds, predatory design), never **down** (the gambler). Keep the wit; redirect the target.
-- Voice consistent with the brand (warm, knowing, anti-Tigrinho — see `docs/DESIGN.md`).
+## Step 3 — Verdict, then fix
 
-## Step 6 — Plain language (user-facing pages)
-
-Applies to pages a visitor reads (privacy, sources, about, help, in-app copy) — **not** internal docs or devlogs, which keep their register. The bar is comprehension by someone with zero tech literacy, in **both** locales.
-
-- **Define jargon natively, in everyday terms.** Any term a layperson can't picture (cookie, session, cache, identifier) gets a one-line plain definition in the reader's own language — a *native* framing, not a translated analogy. pt-BR: "cookie é um pequeno arquivo de texto que o site salva no seu navegador", not an English-derived metaphor like "ficha do guarda-volumes" (reads translated). Match the local authority's register — ANPD for pt-BR privacy.
-- **Strip AI text markers** (readers are sick of them; they read machine-written). This is a de-AI style *filter*, not a detector — em-dashes and triads are legit human devices; cut the overuse/formula, not the tool:
-  - Em-dash overuse for dramatic pauses → periods + short sentences.
-  - Flourish closers ("Só isso.", "É simples assim.", "e isso muda tudo", "That's all.") → cut.
-  - Antithesis padding ("não é apenas X, mas Y" / "not just X — it's Y") → say it plainly.
-  - Conectivo/transition dump (pt-BR "além disso, no entanto, dessa forma"; en "moreover, furthermore") → trim.
-  - Rule-of-three padding, buzzwords (leverage, seamless, robust, delve, elevate).
-- **Estrangeirismos are fine when widely understood and they don't break the flow** (cookie, site, link, e-mail). Don't force-translate a word everyone already uses; force-translate only jargon that genuinely blocks comprehension.
-- **Less internal-app detail.** Tell the user what they need to know about their data, not how storage works. Cut cache/keying/architecture detail from user copy.
-
-## Step 7 — Report, then fix
-
-Group findings by type, one line each: `path:line — <issue>. <fix>.`
+Return a per-standard pass/fail, then findings grouped by type, one line each: `path:line — <issue>. <fix>.`
 ```
+VERDICT: PASS | FAIL  (per standard: source ✓ / cohesion ✓ / flow ✓ / tone ✓ / plain-language ✓ / no-ai-tells ✓ / privacy ✓)
+
 FACT
-DUPLICATION
 COHESION
-PRIVACY
+FLOW
 TONE
 PLAIN-LANGUAGE
+AI-TELLS
+PRIVACY
 ```
-Surface first. Apply fixes only after go-ahead. Devlog edits stay on the devlog's branch; static-doc edits get their own branch off main (docs-only). Never bundle unrelated code.
+Surface first. Apply fixes only after go-ahead. Devlog edits stay on the devlog's branch; static-doc edits get their own branch off main (docs-only). Never bundle unrelated code. A clean PASS with no findings is a valid, expected result when `/ghost-bet` wrote the copy.

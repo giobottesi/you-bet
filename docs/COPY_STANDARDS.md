@@ -1,0 +1,47 @@
+# You-Bet — Copy Standards
+
+The single source of truth for what good written copy is in this repo. `/ghost-bet` **writes to** these standards; `/write-review` **gates against** them. Keep the two in sync by keeping them both pointed here.
+
+Scope: every public-facing or committed word — user-facing UI copy (locales), static docs, README, PR bodies. **Not devlogs** — those are the raw evolution record and keep their own voice.
+
+---
+
+## Standards (the compliance bar)
+
+A piece of copy passes when it clears all six. `/write-review` checks these once per PR; `/ghost-bet` is built to satisfy them at write time so the gate rarely fails.
+
+1. **Source / fact** — every concrete claim (number, PR ref, route, model/method name, date, house edge) is true against the code or a cited primary source. Deep-link citations, don't homepage them. Verify, never trust prose or memory. This is the highest-priority check: the worst failure is copy that contradicts the code (a doc once said the pre-commit hook "skips when the DB is down" after it was changed to require the DB).
+2. **Cohesion** — no internal contradictions, no dangling refs (links, "see above", anchors, PR numbers that don't resolve), no terminology drift (the same thing named two ways). One home per fact; reference it elsewhere.
+3. **Flow** — problem precedes fix, reveal follows setup, order is logical. Short sentences carry weight. Cut throat-clearing and padding.
+4. **Tone** (competition rule, `docs/PROPOSAL.md`) — target the industry and its math; **never** blame, ridicule, or judge the bettor. Wit punches up (house, odds, predatory design), never down. Warm, knowing, anti-Tigrinho.
+5. **Plain language** (user-facing pages only — privacy, sources, about, help, in-app copy) — comprehension by someone with zero tech literacy, in both locales. Define jargon in the **native** everyday framing, not an invented or translated analogy (cookie = "pequeno arquivo de texto que o site salva no seu navegador", per ANPD — not "coat-check ticket", which reads translated). Keep internal-app detail out of user copy. Widely-understood estrangeirismos (cookie, site, link) are fine when they don't break flow.
+6. **No AI tells** — readers are sick of them; they read machine-written. This is a de-AI *filter*, not a detector — em-dashes and triads are legit human devices, so cut the *overuse/formula*, not the tool:
+   - Em-dash overuse for dramatic pauses → periods + short sentences.
+   - Flourish closers ("That's all.", "Simple as that.", "e isso muda tudo", "É simples assim.") → cut.
+   - Antithesis padding ("not just X — it's Y", "não é apenas X, mas Y", "a force multiplier, not a replacement") → say it plainly.
+   - Rule-of-three padding, buzzwords (leverage, seamless, robust, delve, elevate, testament to, tapestry, navigate the landscape).
+   - Throat-clearing ("it's important to note that", "vale ressaltar").
+   - PT conectivo dump (além disso / no entanto / dessa forma / por outro lado).
+   - Decorative emoji in prose. (The betina sign-off's ironic-hover emoji is exempt.)
+
+Privacy/identity leak is enforced separately by `/write-review` Step (public-repo employer/name/host scan) and `/safe-bet` — it's a hard gate, not a copy-quality standard, so it lives in the review flow, not here.
+
+---
+
+## Model notes (for the `/ghost-bet` fan-out)
+
+Empirically calibrated from the multi-model docs-refinement run (8 targets × 3 models, 2026-07-11):
+
+- **Opus 4.8 — adjudicates truth.** Best at fact-verification: caught stale `DevlogController`/`SimulationRun`/route drift by checking against the code, and rejected its own weak findings. **Use as the merger** (skeptical synthesis: combine best-of-both, discard false positives, verify facts). Also a strong writer/reviewer.
+- **Sonnet 5 — widest valid coverage.** Best at cohesion + catching what others miss (self-contradictions, buzzwords, terminology drift), with a low false-positive rate. **Use as a writer and reviewer.**
+- **Haiku 4.5 — dropped.** False-negatives on docs (clean-verdicted files that had real stale refs) and false-positive padding on copy (invented grammar "fixes", flagged out-of-scope keys). Not worth a fan-out slot for copy work.
+
+The merge is a *separate skeptical stage* precisely because every model — Opus included — emits findings worth discarding. Never union raw reviews.
+
+---
+
+## Learned (append-only)
+
+`/ghost-bet` appends a dated line here each run: a confirmed style rule, a recurring false-positive pattern to pre-empt, or a per-model observation. Promote durable ones up into Standards or Model notes periodically.
+
+- **2026-07-11** — Coat-check-ticket analogy for "cookie" reads as an English translation in pt-BR; native framing ("pequeno arquivo de texto que o site salva no navegador", ANPD register) is the fix. Recurring discard: a lone reviewer flagging localhost:3000→3001 is a false positive (3001 is a host-local remap, not in committed compose).

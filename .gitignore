@@ -36,3 +36,5 @@
 !/app/assets/builds/.keep
 mock.html
 palette-preview.html
+
+.claude/worktrees/
