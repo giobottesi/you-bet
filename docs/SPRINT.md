@@ -176,29 +176,29 @@ Each card: controller (inherits ContentController) + view + route.
 | BE 11 | ✅ Done | #28 | Jul 01 |
 | BE 12 | ✅ Done | #11 | Jun 30 |
 | BE 13 | ✅ Done | #11 | Jun 30 |
-| BE 14 | 🔵 In review | #30 | Jul 02 |
-| BE 15 | 🔵 In review | #31 | Jul 02 |
+| BE 14 | ✅ Done | #30 | Jul 02 |
+| BE 15 | ✅ Done | #31 | Jul 02 |
 | BE 16 | ⬜ | | |
 | BE 17 | ⬜ | | |
 | BE 18 | ⬜ | | |
-| BE 19 | ⬜ | | |
+| BE 19 | ✅ Done | #32 | Jul 02 |
 | BE 20 | ⬜ | | |
 | BE 21 | ⬜ | | |
-| FE 01 | ⬜ | | |
-| FE 02 | ⬜ | | |
-| FE 03 | ⬜ | | |
-| FE 04 | ⬜ | | |
-| FE 05 | ⬜ | | |
-| FE 06 | ⬜ | | |
+| FE 01 | ✅ Done | #38 | Jul 05 |
+| FE 02 | ✅ Done | #54 | Jul 06 |
+| FE 03 | ✅ Done | #59 | Jul 08 |
+| FE 04 | ✅ Done | #61 | Jul 08 |
+| FE 05 | ✅ Done | #63 | Jul 09 |
+| FE 06 | ✅ Done | #67 | Jul 09 |
 | FE 07 | ⬜ | | |
 | FE 08 | ⬜ | | |
-| FE 09 | ⬜ | | |
+| FE 09 | 🔵 In review | #77 | |
 | FE 10 | ⬜ | | |
 | FE 11 | ⬜ | | |
-| FE 12 | ⬜ | | |
-| FE 13 | ⬜ | | |
-| FE 14 | ⬜ | | |
-| FE 15 | ⬜ | | |
+| FE 12 | ✅ Done | #66 | Jul 10 |
+| FE 13 | 🔵 In review | #76 | |
+| FE 14 | 🔵 In review | #68 | |
+| FE 15 | ✅ Done | #69 | Jul 10 |
 | FE 16 | ⬜ | | |
 | FE 17 | ⬜ | | |
 | FE 18 | ⬜ | | |
