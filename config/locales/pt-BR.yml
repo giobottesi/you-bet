@@ -24,7 +24,7 @@ pt-BR:
   sources:
     title: "Fontes"
     heading: "De onde vêm nossos números"
-    intro: "Cada número no You-Bet tem por trás uma fonte pública verificada. Aqui está cada uma, o que fornece e como a conciliamos."
+    intro: "Cada número no You-Bet tem por trás uma fonte pública verificada. Aqui está cada uma, o que fornece e como cruzamos os números."
     list_label: "Fontes de dados"
     provides_label: "O que fornece"
     figures_label: "Números principais"
@@ -40,7 +40,7 @@ pt-BR:
         body: "O estudo da CNC recebeu uma réplica pública da associação da indústria de apostas (IBJR), que contesta a escala. Citamos a CNC, mas sinalizamos a disputa em vez de apresentá-la como consenso."
       tigrinho_edge:
         subject: "Margem da casa no tigrinho"
-        body: "A PG Soft alega RTP de 96,81%, mas plataformas não reguladas podem definir RTPs menores. Usamos 5% como meio-termo conservador e declaramos isso de forma transparente."
+        body: "A PG Soft alega uma taxa de retorno ao jogador (RTP) de 96,81%, mas plataformas não reguladas podem definir RTPs menores. Usamos 5% como meio-termo conservador e declaramos isso de forma transparente."
       bolsa_familia:
         subject: "O que é o Bolsa Família"
         body: "O Bolsa Família é o programa federal de transferência de renda do Brasil para famílias de baixa renda."
@@ -122,7 +122,7 @@ pt-BR:
       custom_invalid: "Digite um valor acima de zero."
     timeframe_slider:
       heading: "Por quanto tempo?"
-      hint: "Arraste para escolher o seu horizonte de apostas — as perdas se acumulam quanto mais você joga."
+      hint: "Arraste para escolher por quanto tempo você aposta — as perdas se acumulam quanto mais você joga."
       group_label: "Prazo"
       slots:
         one_month: "1 mês"

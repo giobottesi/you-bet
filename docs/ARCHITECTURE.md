@@ -41,9 +41,9 @@ graph TD
         CC --> SRC["SourcesController → /sources"]
         CC --> ABT["AboutController → /about"]
         CC --> PRV["PrivacyController → /privacy"]
-        CC --> DIA["DiarioController → /diario"]
+        CC --> DIA["DevlogController → /devlog"]
 
-        SC --> MCS["MonteCarloSimulator\n1. Check cache\n2. 1K sims × 5 timeframes\n3. Extract percentiles\n4. Poupança alternative\n5. Store + return"]
+        SC --> MCS["MonteCarloSimulator\n1. Check cache\n2. 1K sims × 5 timeframes\n3. Extract percentiles\n4. Store + return"]
         SC --> OCC["OpportunityCostCalculator\n1. Load prices from reference_values\n2. Filter by loss amount\n3. Pick 3 random + poupança"]
         SC --> SCG["ShareCardGenerator\nOG meta tags + permalink\nDownloadable image card"]
 
@@ -83,7 +83,7 @@ params (bet_type, weekly_amount, horizon)
   → [ PoupancaCalculator,          # composed comparisons, forward-only
       OpportunityCostCalculator ]  #   prices ← ReferenceValue (pure leaf)
   → ShareCardGenerator / presenter
-  → response  +  SimulationRun record   # the audit line
+  → response  +  Simulation record      # the audit line
 ```
 
 ### Read vs. write (CQS)
@@ -239,7 +239,7 @@ Reference: [OWASP Top 10:2025](https://owasp.org/Top10/2025/)
 
 ### Rate Limiting (Rack::Attack)
 
-**Why Rack::Attack?** Rack middleware that runs before the Rails stack — blocks abuse before it hits controllers or the database. Used in production by GitLab, Discourse, and Mastodon. ([Rack::Attack gem](https://github.com/rack/rack-attack))
+Gem rationale lives in the Stack table above — this section covers the concrete throttle config.
 
 **Open source safety:** Throttle rules (paths, limits, periods) are safe to expose — attackers can discover limits through testing anyway. Fail2Ban probe signatures are well-known scanner paths (`/wp-*`, `/xmlrpc`, `/.env`, `/.git`, `/phpmyadmin`) — nothing secret to hide — but the blocklist is **ENV-gated** (`FAIL2BAN_ENABLED`) so it stays off until abuse appears. This follows GitLab and Mastodon's approach. ([OWASP API Security — API4:2023](https://owasp.org/API-Security/editions/2023/en/0xa4-unrestricted-resource-consumption/))
 

@@ -11,9 +11,9 @@ A betting simulator that shows people the real financial math of gambling in Bra
 
 You input what you'd bet on and how much per week. The app runs 1,000 Monte Carlo simulations and shows you what happens across every timeframe — 1 month, 6 months, 1 year, 2 years, 5 years — all at once. Then it converts your losses into things you could've bought or saved instead.
 
-Every simulation is stored anonymously — no login, no income questions, no identifying data — so we can surface aggregate impact ("this week, 5,000 people simulated R$12M in projected losses"). Each result generates a shareable card you can post to social media with #DesafioContraBets, turning every user into a content amplifier.
+Every simulation is stored anonymously — no login, no income questions, no identifying data — so we can surface aggregate impact ("this week, 5,000 people simulated R$12M in projected losses"). Each result generates a shareable card you can post to social media with #DesafioContraBets.
 
-No login. No income questions. No moralizing. Just math.
+No moralizing. Just math.
 
 ---
 
@@ -150,8 +150,6 @@ The challenge requires content formats: video, reels, carousel, meme, or image. 
 - **Strategy A**: Create a short video/reel demoing the app → formal submission
 - **Strategy B**: The app generates shareable result cards → every user becomes a content amplifier with #DesafioContraBets
 
-The app is the creative work. The video is the submission format. The shareable cards are the viral loop.
-
 ### "IA em Campo" Requirements
 - [x] Declare AI usage visibly in the app (footer badge + `/about` page)
 - [x] Declare AI usage in submission post
@@ -164,7 +162,7 @@ The app is the creative work. The video is the submission format. The shareable 
 
 AI declaration (footer badge + `/about` page + README + submission post). Two sections:
 - **"Como a IA foi usada"**: research, code, copy — and what AI did NOT do (editorial, data validation, design, UX)
-- **"Quem construiu isso"**: developer advocacy — AI is a force multiplier, not a replacement. Links to GitHub + devlog.
+- **"Quem construiu isso"**: developer advocacy — AI accelerated the build, it didn't replace the developer. Links to GitHub + devlog.
 
 ### Tone (Hard Rules from Brief)
 

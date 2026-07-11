@@ -8,7 +8,7 @@ en:
   sources:
     title: "Sources"
     heading: "Where our numbers come from"
-    intro: "Every figure in You-Bet is backed by a verified public source. Here is each one, what it provides, and how we reconciled it."
+    intro: "Every figure in You-Bet is backed by a verified public source. Here is each one, what it provides, and how we cross-checked it."
     list_label: "Data sources"
     provides_label: "What it provides"
     figures_label: "Key figures"
@@ -24,7 +24,7 @@ en:
         body: "The CNC study drew a public rebuttal from the betting industry association (IBJR), which disputes the scale. We cite CNC but flag the dispute rather than present it as settled."
       tigrinho_edge:
         subject: "Tigrinho house edge"
-        body: "PG Soft claims 96.81% RTP, but unregulated platforms can set lower RTPs. We use 5% as a conservative middle ground and disclose it transparently."
+        body: "PG Soft claims a 96.81% payout rate (RTP), but unregulated platforms can set lower RTPs. We use 5% as a conservative middle ground and disclose it transparently."
       bolsa_familia:
         subject: "What is Bolsa Família"
         body: "Bolsa Família is Brazil's federal cash-transfer program for low-income families."
@@ -106,7 +106,7 @@ en:
       custom_invalid: "Enter an amount above zero."
     timeframe_slider:
       heading: "Over how long?"
-      hint: "Drag to pick your betting horizon — losses compound the longer you play."
+      hint: "Drag to pick how long you keep betting — losses compound the longer you play."
       group_label: "Timeframe"
       slots:
         one_month: "1 month"

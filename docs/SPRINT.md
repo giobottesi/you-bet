@@ -3,7 +3,7 @@
 **Duration**: 17 days | Jun 25 → Jul 12, 2026
 **Approach**: TDD throughout — tests are written with features, not after.
 **Assets**: Free/open-source only. No paid fonts, icons, images, or services.
-**Track reality**: devlog (`/diario`). Compare planned vs actual at the end.
+**Track reality**: devlog (`/devlog`). Compare planned vs actual at the end.
 
 ---
 
@@ -123,7 +123,7 @@ Each card: controller (inherits ContentController) + view + route.
 | **FE 12** | Sources page — `/sources`, all 7 data sources with citations + methodological notes | All sources listed |
 | **FE 13** | About page — `/about`, AI declaration, developer story, Gatinho, GitHub + devlog links | AI disclosure present |
 | **FE 14** | Privacy page — `/privacy`, LGPD notice, data collected, retention, deletion | Deletion instructions present |
-| **FE 15** | Devlog page — `/diario`, daily journal entries from markdown/YAML | Entries display chronologically |
+| **FE 15** | Devlog page — `/devlog`, daily journal entries from markdown/YAML | Entries display chronologically |
 
 ---
 
@@ -306,7 +306,7 @@ If time allows or post-competition:
 
 ## How to Use This Document
 
-Track daily reality in the devlog (`/diario`). At the end of the sprint, compare this plan to what happened:
+Track daily reality in the devlog (`/devlog`). At the end of the sprint, compare this plan to what happened:
 - Which cards took longer/shorter?
 - What was added that wasn't planned?
 - What was cut?
