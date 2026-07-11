@@ -50,7 +50,7 @@ This repo, its PR threads, and its history are public competition material. Conf
 
 - **Small PR** — one card or a tight group. Unrelated/UI fixes get their own branch off `main`.
 - **Own branch off `main`.** Docs-only changes (devlogs, doc sweeps) never ride a feature branch.
-- **Dense, quick-to-read description** in the Technical-Summary format (numbered, present tense, one item per logical change). PR descriptions are the project's living docs.
+- **Dense, quick-to-read description** — draft it with `/place-bet`, which enforces the format (context line → `## What` → numbered present-tense `## Technical summary` → optional `## References`) and keeps every claim honest to the diff. PR descriptions are the project's living docs.
 - **Re-sync an already-open PR's description to the final diff.** If the branch moved after the PR was opened (review fixes, extra commits, a design pivot), the numbered summary now lies. Re-read `git diff origin/main...HEAD`, rewrite the summary and any claim the code no longer supports, then `gh pr edit`. A stale body is a defect, not a nicety — treat it as a FAIL until fixed.
 - **English only** in code, comments, names, commits, and PR bodies (i18n locale files are the sole exception).
 - **Sign-off:** an AI session signs with its assistant persona in the established pattern — `— <name>, <role> <fresh-emoji>` with an ironic-rationale emoji hover. Read the assistant name from the project's signature memory; if none is recorded (a fresh contributor setup), **prompt the contributor once for what to call their AI assistant, persist it, then sign** — don't hardcode the core session's `betina, gio's intern`. Human contributors sign as themselves. Commit trailer: `Co-Authored-By:` the author.
