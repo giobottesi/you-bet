@@ -29,6 +29,28 @@ pt-BR:
     provides_label: "O que fornece"
     figures_label: "Números principais"
     source_link: "Ver a fonte ↗"
+    data:
+      bcb:
+        provides: "Fluxos financeiros, tamanho do mercado"
+        figures: "R$18-21 bi/mês via Pix (2024); 5 milhões de pessoas em famílias do Bolsa Família enviaram R$3 bi para bets"
+      datasenado:
+        provides: "Perfil, gasto e dívida do apostador"
+        figures: "22,1 mi apostaram no último mês; 52% ganham ≤2 salários mínimos; 42% têm dívida há mais de 90 dias"
+      cnc:
+        provides: "Tendências de endividamento familiar"
+        figures: "Mais de R$30 bi/mês; crescimento de +500% nos gastos em 3 anos; ~269 mil famílias em inadimplência grave"
+      unifesp:
+        provides: "Comportamento clínico do jogo"
+        figures: "10,9 mi de jogadores em risco (6,8% dos 14+ anos); 66,8% dos apostadores apresentam jogo de risco ou problemático"
+      ibevar:
+        provides: "Análise de regressão do endividamento"
+        figures: "Coeficiente de peso na dívida: bets 0,2255 vs juros 0,0709 (bets pesam cerca de 3x)"
+      inss:
+        provides: "Benefícios por ludopatia"
+        figures: "Benefícios mensais por ludopatia cresceram +2.300% (2023 a 2025); 73% dos beneficiários são homens"
+      atlasintel:
+        provides: "Percepção pública"
+        figures: "86,7% consideram as bets prejudiciais; 70% apoiam proibição total; 76% querem limites de publicidade; 85,2% associam as bets ao endividamento familiar"
     methodology_heading: "Notas metodológicas"
     cited_label: "Fontes:"
     notes:

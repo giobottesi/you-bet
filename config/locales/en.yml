@@ -13,6 +13,28 @@ en:
     provides_label: "What it provides"
     figures_label: "Key figures"
     source_link: "See the source ↗"
+    data:
+      bcb:
+        provides: "Financial flows, market size"
+        figures: "R$18-21 bi/month via Pix (2024); 5 million people in Bolsa Família households sent R$3 bi to bets"
+      datasenado:
+        provides: "Bettor demographics, spending, debt"
+        figures: "22.1M bet in the last month; 52% earn ≤2 minimum wages; 42% carry 90+ day debt"
+      cnc:
+        provides: "Family debt trends"
+        figures: "Over R$30 bi/month; +500% spending growth in 3 years; ~269K families in severe default"
+      unifesp:
+        provides: "Clinical gambling behavior"
+        figures: "10.9M at-risk gamblers (6.8% of ages 14+); 66.8% of bettors show risky or problem gambling"
+      ibevar:
+        provides: "Debt regression analysis"
+        figures: "Debt-driver coefficient: bets 0.2255 vs interest 0.0709 — bets weigh roughly 3x"
+      inss:
+        provides: "Ludopatia benefits"
+        figures: "+2,300% monthly ludopatia benefits (2023 to 2025); 73% of beneficiaries are men"
+      atlasintel:
+        provides: "Public perception"
+        figures: "86.7% consider bets harmful; 70% support a total ban; 76% want ad limits; 85.2% link bets to family debt"
     methodology_heading: "Methodological notes"
     cited_label: "Sources:"
     notes:

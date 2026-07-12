@@ -18,9 +18,10 @@ RSpec.describe 'Sources', type: :request do
       end
     end
 
-    it 'renders the key figures for each source' do
+    it 'renders the localized provides + key figures for each source' do
       SourcesController::DATA_SOURCES.each do |source|
-        expect(response.body).to include(CGI.escapeHTML(source[:figures]))
+        expect(response.body).to include(CGI.escapeHTML(I18n.t("sources.data.#{source[:key]}.provides")))
+        expect(response.body).to include(CGI.escapeHTML(I18n.t("sources.data.#{source[:key]}.figures")))
       end
     end
 
@@ -50,10 +51,14 @@ RSpec.describe 'Sources', type: :request do
       expect(SourcesController::DATA_SOURCES.size).to eq(7)
     end
 
-    it 'gives every source a name, a provides descriptor, figures, and a source link' do
+    it 'gives every source a key, a name, a source link, and localized provides/figures in both locales' do
       SourcesController::DATA_SOURCES.each do |source|
-        expect(source).to include(:name, :provides, :figures, :url)
+        expect(source).to include(:key, :name, :url)
         expect(source[:url]).to start_with('https://')
+        %i[en pt-BR].each do |locale|
+          expect(I18n.t("sources.data.#{source[:key]}.provides", locale: locale)).to be_present
+          expect(I18n.t("sources.data.#{source[:key]}.figures", locale: locale)).to be_present
+        end
       end
     end
 
