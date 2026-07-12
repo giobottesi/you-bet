@@ -21,36 +21,41 @@
   </ul>
 </section>
 
-<%# AI declaration — competition-required + factual. Lifted paper poster. %>
-<section class="note-poster py-6" aria-label="<%= t('about.ai.heading') %>">
-  <h2 class="mb-4 text-[1.5rem]/[1.4] font-extrabold text-purple-ink"><%= t("about.ai.heading") %></h2>
-  <p class="text-base text-text"><%= t("about.ai.intro") %></p>
-  <p class="mt-4 text-[0.8rem] font-bold uppercase tracking-[0.06em] text-purple-ink"><%= t("about.ai.roles_label") %></p>
-  <ul class="mt-2 flex flex-col gap-2">
-    <% t("about.ai.roles").each do |role| %>
-      <li class="border-l-[4px] border-purple-ink pl-4 text-base text-text"><%= role %></li>
-    <% end %>
-  </ul>
-  <p class="mt-4 text-base text-text"><%= t("about.ai.betina") %></p>
-</section>
-
 <%# Brand touchstone — Gatinho, the friendly counterpoint to Tigrinho (text-art until the illustration ships). %>
 <section class="py-4" aria-label="<%= t('about.gatinho.heading') %>">
-  <div class="flex items-center gap-5 bg-surface [background-image:var(--rough-paper)] [background-blend-mode:soft-light] [background-size:320px_320px] border-[3px] border-text p-5 shadow-[6px_6px_0_var(--color-coral)]">
+  <div class="flex items-center gap-5 bg-surface [background-image:var(--rough-paper)] [background-blend-mode:soft-light] [background-size:320px_320px] border-[3px] border-coral p-5 shadow-[6px_6px_0_var(--color-coral)]">
     <pre aria-hidden="true" class="flex-none text-[0.7rem]/[1.1] font-bold text-coral-ink">
  /\_/\
 ( o.o )
  =^.^=</pre>
     <div>
-      <h2 class="text-[1.15rem] font-extrabold text-text"><%= t("about.gatinho.heading") %></h2>
+      <h2 class="text-[1.15rem] font-extrabold text-coral-ink"><%= t("about.gatinho.heading") %></h2>
       <p class="mt-1 text-base text-muted"><%= t("about.gatinho.body") %></p>
+    </div>
+  </div>
+</section>
+
+<%# AI declaration — competition-required + factual. Notepad style: kraft binding bar + readable body, color inside. %>
+<section class="py-6" aria-label="<%= t('about.ai.heading') %>">
+  <div class="notepad" style="--bar: var(--color-purple)">
+    <div class="notepad__bar"></div>
+    <div class="bg-surface [background-image:var(--rough-paper)] [background-blend-mode:soft-light] [background-size:320px_320px] border-[3px] border-t-0 border-text p-6">
+      <h2 class="mb-4 text-[1.5rem]/[1.3] font-extrabold text-purple-ink"><%= t("about.ai.heading") %></h2>
+      <p class="text-base text-text"><%= t("about.ai.intro") %></p>
+      <p class="mt-4 text-[0.8rem] font-bold uppercase tracking-[0.06em] text-purple-ink"><%= t("about.ai.roles_label") %></p>
+      <ul class="mt-2 flex flex-col gap-2">
+        <% t("about.ai.roles").each do |role| %>
+          <li class="border-l-[4px] border-purple pl-4 text-base text-text"><%= role %></li>
+        <% end %>
+      </ul>
+      <p class="mt-4 text-base text-text"><%= t("about.ai.betina") %></p>
     </div>
   </div>
 </section>
 
 <%# Naming — the "you bet" pun. %>
 <section class="py-4" aria-label="<%= t('about.naming.heading') %>">
-  <div class="bg-surface [background-image:var(--rough-paper)] [background-blend-mode:soft-light] [background-size:320px_320px] border-[3px] border-text p-5 shadow-[6px_6px_0_var(--color-cyan)]">
+  <div class="bg-surface [background-image:var(--rough-paper)] [background-blend-mode:soft-light] [background-size:320px_320px] border-[3px] border-cyan p-5 shadow-[6px_6px_0_var(--color-cyan)]">
     <h2 class="text-[1.15rem] font-extrabold text-cyan-ink"><%= t("about.naming.heading") %></h2>
     <p class="mt-1 text-base text-text"><%= t("about.naming.body") %></p>
   </div>
@@ -58,8 +63,8 @@
 
 <%# Logo — made from scratch, with the concepts that didn't ship. %>
 <section class="py-4" aria-label="<%= t('about.logo.heading') %>">
-  <div class="bg-surface [background-image:var(--rough-paper)] [background-blend-mode:soft-light] [background-size:320px_320px] border-[3px] border-text p-5 shadow-[6px_6px_0_var(--color-purple)]">
-    <h2 class="text-[1.15rem] font-extrabold text-purple-ink"><%= t("about.logo.heading") %></h2>
+  <div class="bg-surface [background-image:var(--rough-paper)] [background-blend-mode:soft-light] [background-size:320px_320px] border-[3px] border-green p-5 shadow-[6px_6px_0_var(--color-green)]">
+    <h2 class="flex items-center gap-2 text-[1.15rem] font-extrabold text-green-ink"><span aria-hidden="true" class="flex h-7 w-7 flex-none items-center justify-center border-2 border-green-ink text-base">✏️</span><%= t("about.logo.heading") %></h2>
     <p class="mt-1 text-base text-text"><%= t("about.logo.body") %></p>
     <div class="mt-4 flex flex-wrap items-end gap-5">
       <%# The shipped logo — prominent. %>
