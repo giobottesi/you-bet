@@ -43,7 +43,7 @@ class SimulationsController < ApplicationController
 
     comparisons = OpportunityCostMapper.run(loss_cents: @worst_case_loss_cents, poupanca_balance_cents: balance_cents)
     @poupanca_comparison = comparisons.find { |comparison| comparison[:key] == 'poupanca' }
-    @item_comparisons = comparisons.reject { |comparison| comparison[:key] == 'poupanca' }
+    @item_comparisons = comparisons.reject { |comparison| comparison[:key] == 'poupanca' }.first(2)
   end
 
   # Balance the same weekly amount would reach in poupança over the chosen horizon; nil if the rate isn't seeded.

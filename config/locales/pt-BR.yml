@@ -244,7 +244,7 @@ pt-BR:
       bar:
         staked_cap: "apostado"
         lost_cap: "vira pó"
-        headline_single: "%{max} viram pó"
+        headline_single: "%{max} viram poeira espacial"
         sub_single: "%{max_pct} de tudo que entrou"
       timeline:
         heading: "Quanto mais tempo, pior"

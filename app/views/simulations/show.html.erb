@@ -7,15 +7,19 @@
   <% fractions = @bet_type_results.filter_map { |_bet_type, result| result.loss_fraction(weeks) } %>
 
   <%# Brand wordmark — results get shared as links/screenshots, so the mark travels with them. %>
-  <%= link_to root_path, class: "inline-block", "aria-label": "You-Bet" do %>
-    <img src="/you-bet-logo.svg" alt="You-Bet" class="h-9 w-auto">
-  <% end %>
+  <div class="flex items-end justify-between p-0">
+    <h1 class="mt-5 text-[2rem]/[1.2] font-extrabold text-text">
+      <span class="brand-heading" style="--mark: var(--color-coral)">
+        <%= t("simulations.results.heading") %>
+      </span>
+    </h1>
 
-  <h1 class="mt-5 text-[2rem]/[1.2] font-extrabold text-text">
-    <span class="brand-heading" style="--mark: var(--color-coral)">
-      <%= t("simulations.results.heading") %>
+    <span>
+      <%= link_to root_path, class: "inline-block", "aria-label": "You-Bet" do %>
+        <img src="/you-bet-logo.svg" alt="You-Bet" class="h-9 w-auto">
+      <% end %>
     </span>
-  </h1>
+  </div>
 
   <%# Input receipt — the anchor: what a cold viewer needs to read the numbers below. %>
   <div class="mt-5 flex items-baseline gap-3">
@@ -55,7 +59,7 @@
     <% best_bet_type, best_result = best_case %>
     <details class="group mt-12">
       <summary class="flex cursor-pointer list-none items-center justify-between gap-3">
-        <h2 class="text-[1.15rem] font-extrabold uppercase tracking-[0.04em] text-muted"><%= t("simulations.results.timeline.heading") %></h2>
+        <h2 class="text-marker-effect text-[1.15rem] font-extrabold uppercase tracking-[0.04em] text-text" style="--mark: var(--color-green)"><%= t("simulations.results.timeline.heading") %></h2>
         <span aria-hidden="true" class="flex-none text-[1.6rem] font-black leading-none text-muted transition-transform group-open:rotate-45">+</span>
       </summary>
       <p class="mt-3 text-sm text-muted">
@@ -83,7 +87,7 @@
   <%# Math disclosure — how the number is built, and why withdrawing winnings doesn't save you (edge on every turnover). %>
   <details class="group mt-6">
     <summary class="flex cursor-pointer list-none items-center justify-between gap-3">
-      <h2 class="text-[1.15rem] font-extrabold uppercase tracking-[0.04em] text-muted"><%= t("simulations.results.math.heading") %></h2>
+      <h2 class="text-marker-effect text-[1.15rem] font-extrabold uppercase tracking-[0.04em] text-text" style="--mark: var(--color-purple)"><%= t("simulations.results.math.heading") %></h2>
       <span aria-hidden="true" class="flex-none text-[1.6rem] font-black leading-none text-muted transition-transform group-open:rotate-45">+</span>
     </summary>
     <div class="mt-3 flex flex-col gap-3 text-base text-text">

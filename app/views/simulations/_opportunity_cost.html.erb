@@ -1,8 +1,10 @@
 <%# FE-07 — the payoff: what the lost money could have bought, and what it would have grown to in poupança. %>
 <section class="mt-10" aria-labelledby="opportunity-heading">
-  <h2 id="opportunity-heading" class="text-[1.5rem] font-extrabold text-text [text-shadow:2px_2px_0_var(--color-cyan)]"><%= t("simulations.results.opportunity.heading") %></h2>
+  <h2 id="opportunity-heading" class="text-[1.5rem] font-extrabold text-text text-marker-effect" style="--mark: var(--color-cyan)">
+    <%= t("simulations.results.opportunity.heading") %>
+  </h2>
 
-  <ul class="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3">
+  <ul class="mt-5 grid grid-cols-2 gap-4">
     <% @item_comparisons.each_with_index do |comparison, index| %>
       <li class="result-card flex flex-col justify-end" style="<%= notepad_accent_style(index, "--card-accent") %>">
         <p class="text-[1.75rem]/[1] font-extrabold text-text"><%= comparison[:quantity] %></p>
