@@ -41,11 +41,24 @@
     --paper-grain:
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.35 0 0 0 0 0.26 0 0 0 0 0.16 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E"),
       repeating-linear-gradient(to bottom, transparent 0 2px, rgba(30, 23, 20, 0.045) 2px 3px);
+
+    /* Faint hatch lines only (kept on the page bg under the rough texture). */
+    --paper-lines: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(30, 23, 20, 0.045) 2px 3px);
+
+    /* Rough recycled paper, baked once into a stitched tiling image (feDiffuseLighting relief).
+       Applied as a repeating background blended soft-light — clips to the box, one scale everywhere, no filter bleed. */
+    --rough-paper: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='rp'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.045' numOctaves='5' stitchTiles='stitch' result='n'/%3E%3CfeDiffuseLighting in='n' lighting-color='%23fff' surfaceScale='2.4'%3E%3CfeDistantLight azimuth='45' elevation='58'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23rp)'/%3E%3C/svg%3E");
+
+    /* Notepad rhythm: ruled-line gap == text line-height so rows rest on the lines. */
+    --note-gap: 1.75rem;
+    --note-line: color-mix(in srgb, var(--color-muted) 50%, transparent);
   }
 
   body {
     background-color: var(--color-bg);
-    background-image: var(--paper-grain);
+    background-image: var(--rough-paper), var(--paper-lines);
+    background-blend-mode: soft-light, normal;
+    background-size: 320px 320px, auto;
     color: var(--color-text);
     font-family: "Libre Franklin", system-ui, sans-serif;
   }
@@ -414,52 +427,79 @@
     box-shadow: inset 0 -0.5em 0 color-mix(in srgb, var(--bet-accent) 55%, transparent);
   }
 
-  /* Washi tape — translucent strips pinned over a flat surface (no drop shadow; the tape, not a float, attaches the card). Zone B static surfaces only. */
-  .taped {
-    position: relative;
-    border: 3px solid var(--color-muted);
-    /* Corrugated kraft rim: a paper groove + an inner rule read as a cardboard edge (hard, in-palette). */
+  /* Notepad source card: a bright kraft binding bar folded onto a ruled paper body. */
+  .notepad { position: relative; }
+
+  .notepad__bar {
+    height: var(--note-gap);
+    background-color: var(--bar, var(--color-purple));
+    background-image: var(--rough-paper);
+    background-blend-mode: soft-light;
+    background-size: 320px 320px;
+    border-bottom: 3px solid var(--color-text);
+  }
+
+  .notepad__body {
+    padding: var(--note-gap) 1.25rem;
+    background-color: var(--color-surface);
+    /* ruled lines on top so the grain can't wash them; two grain passes for tooth */
+    background-image:
+      repeating-linear-gradient(transparent 0 calc(var(--note-gap) - 1.5px), var(--note-line) calc(var(--note-gap) - 1.5px) var(--note-gap)),
+      var(--rough-paper),
+      var(--rough-paper);
+    background-blend-mode: normal, soft-light, overlay;
+    background-size: 100% var(--note-gap), 320px 320px, 320px 320px;
+    /* crease where the bar folds onto the paper */
     box-shadow:
-      inset 0 0 0 2px var(--color-bg),
-      inset 0 0 0 4px color-mix(in srgb, var(--color-muted) 45%, transparent);
+      inset 0 5px 6px -5px rgba(30, 23, 20, 0.4),
+      inset 0 7px 0 -6px rgba(255, 255, 255, 0.5);
   }
 
-  .taped::before,
-  .taped::after {
-    content: "";
+  /* Every content row is one --note-gap tall so it rests on a ruled line. */
+  .notepad__body > * { margin: 0; line-height: var(--note-gap); }
+
+  /* Methodology poster: a paper sheet lifted off the page (hard-offset shadow, no hard outline). */
+  .note-poster {
+    position: relative;
+    padding: 1.75rem 1.5rem;
+    background-color: var(--color-surface);
+    background-image: var(--rough-paper);
+    background-blend-mode: soft-light;
+    background-size: 320px 320px;
+    box-shadow:
+      6px 6px 0 color-mix(in srgb, var(--color-muted) 50%, transparent),
+      inset 0 0 0 1px color-mix(in srgb, var(--color-muted) 22%, transparent);
+  }
+
+  /* A note inside the poster: dashed accent frame, washi tape pinned to a corner. */
+  .note-card {
+    position: relative;
+    padding: 1rem 1.1rem;
+    background-color: var(--color-bg);
+    background-image: var(--rough-paper);
+    background-blend-mode: soft-light;
+    background-size: 320px 320px;
+    border: 2px dashed var(--dash, var(--color-muted));
+  }
+  .note-card + .note-card { margin-top: 1.5rem; }
+
+  /* Washi tape — vivid translucent accent; the rough grain over it reads as real tape. */
+  .washi {
     position: absolute;
-    width: 4.5rem;
-    height: 1.4rem;
-    background-color: color-mix(in srgb, var(--tape, var(--color-yellow)) 55%, transparent);
-    background-image: var(--paper-grain);
-    border: 1px solid rgba(30, 23, 20, 0.14);
+    z-index: 3;
+    width: 6rem;
+    height: 1.6rem;
+    background-color: color-mix(in srgb, var(--tape, var(--color-coral)) 55%, transparent);
+    background-image:
+      var(--rough-paper),
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.18) 0 1px, transparent 1px 5px),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.4), transparent 45%, rgba(255, 255, 255, 0.15));
+    background-blend-mode: soft-light, normal, normal;
+    background-size: 320px 320px, auto, auto;
+    mask: linear-gradient(90deg, transparent, #000 4px, #000 calc(100% - 4px), transparent);
   }
-
-  /* Tape pins two diagonal corners: top-left and bottom-right. */
-  .taped::before {
-    top: -0.65rem;
-    left: 1.5rem;
-    transform: rotate(-5deg);
-  }
-
-  .taped::after {
-    bottom: -0.65rem;
-    right: 1.5rem;
-    transform: rotate(4deg);
-  }
-
-  /* Each card a different pastel tape; angle + offset jittered so no two look stamped from the same die. */
-  .taped:nth-child(6n+1) { --tape: var(--color-soft-yellow); }
-  .taped:nth-child(6n+2) { --tape: var(--color-mint); }
-  .taped:nth-child(6n+3) { --tape: var(--color-salmon); }
-  .taped:nth-child(6n+4) { --tape: var(--color-light-purple); }
-  .taped:nth-child(6n+5) { --tape: var(--color-light-green); }
-  .taped:nth-child(6n)   { --tape: var(--color-cyan); }
-
-  .taped:nth-child(2n)::before { transform: rotate(-2.5deg); top: -0.72rem; }
-  .taped:nth-child(2n)::after  { transform: rotate(6deg); bottom: -0.55rem; right: 1.2rem; }
-  .taped:nth-child(3n)::before { transform: rotate(-7deg); left: 1.1rem; }
-  .taped:nth-child(3n)::after  { transform: rotate(1.5deg); }
+  .washi--left  { top: -0.7rem; left: 1.5rem;  transform: rotate(-4deg); }
+  .washi--right { top: -0.7rem; right: 1.5rem; transform: rotate(4deg); }
 }
 
 @keyframes bet-pop {
