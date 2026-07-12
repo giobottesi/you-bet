@@ -16,4 +16,5 @@ Rails.application.routes.draw do
   get "devlog", to: "devlog#index"
   get "privacy", to: "privacy#show"
   get "about", to: "about#index"
+  get "help", to: "help#show"
 end

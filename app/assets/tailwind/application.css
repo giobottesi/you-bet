@@ -172,7 +172,6 @@
 
   .bet-picker__label {
     @apply text-2xl/[1.15] font-extrabold;
-    text-shadow: 2px 2px 0 var(--color-yellow);
   }
 
   .bet-picker__count {
@@ -326,7 +325,6 @@
 
   .amount-picker__label {
     @apply text-2xl/[1.15] font-extrabold;
-    text-shadow: 2px 2px 0 var(--color-cyan);
   }
 
   .amount-picker__hint {
@@ -433,7 +431,6 @@
 
   .timeframe__label {
     @apply text-2xl/[1.15] font-extrabold;
-    text-shadow: 2px 2px 0 var(--color-purple);
   }
 
   .timeframe__hint {

@@ -1,0 +1,10 @@
+<%# Shared help bar + tagline — footer-anchored, cyan-ink links (DESIGN.md Help Bar). Rendered on every page. %>
+<footer class="mt-12 border-t-[3px] border-border pt-6 text-[0.85rem] text-muted" id="help">
+  <p>
+    <%= t("footer.help_prompt") %>
+    <%= link_to t("footer.cvv"), "https://cvv.org.br/", target: "_blank", rel: "noopener" %> ·
+    <%= link_to t("footer.gamblers_anonymous"), "https://jogadoresanonimos.com.br/", target: "_blank", rel: "noopener" %> ·
+    <%= link_to t("footer.privacy"), privacy_path %>
+  </p>
+  <p class="mt-3"><%= t("footer.tagline") %></p>
+</footer>

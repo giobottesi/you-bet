@@ -2,7 +2,7 @@
 <%# FE-04 — timeframe slider: index-based range over the five slots; hidden timeframe_weeks carries the real value. %>
 <section class="timeframe" data-controller="timeframe-slider"
          data-timeframe-slider-weeks-value="<%= timeframe_weeks_json %>">
-  <h2 class="timeframe__label"><%= t(".heading") %></h2>
+  <h2 class="timeframe__label text-marker-effect" style="--mark: var(--color-purple)"><%= t(".heading") %></h2>
   <p class="timeframe__hint"><span class="timeframe__hint-mark" aria-hidden="true">→</span> <%= t(".hint") %></p>
 
   <%= hidden_field_tag "timeframe_weeks", timeframe_slots[timeframe_default_index].last,
