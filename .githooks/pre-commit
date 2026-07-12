@@ -35,6 +35,7 @@ build_row() {
     running) _g="$3";                _l="${CREAM}${_label}${X}"; _s="${MUTED}running${X}"; _spd=7 ;;
     done)    _g="${MINT}✓${X}";      _l="${CREAM}${_label}${X}"; _t="${3}s"; _s="${MINT}${_t}${X}";  _spd=$(( 14 - ${#_t} )) ;;
     fail)    _g="${CORAL}${B}✗${X}"; _l="${CREAM}${_label}${X}"; _t="${3}s"; _s="${CORAL}${_t}${X}"; _spd=$(( 14 - ${#_t} )) ;;
+    skip)    _g="${MUTED}◦${X}";     _l="${MUTED}${_label}${X}"; _s="${MUTED}skipped${X}"; _spd=7 ;;
   esac
   ROW="${PURPLE}${B}┃${X}    ${_g}   ${_l}$(sp "$_lblpad")${_s}$(sp "$_spd")${PURPLE}${B}┃${X}${SHADOW}█${X}"
 }
@@ -70,7 +71,22 @@ run_step() {
   if [ "$TTY" = 1 ]; then redraw "$_off" "$ROW"; else printf "  ✓ %s  %ss\n" "$_rl" "$_secs"; fi
 }
 
+# skip_step <offset_up> <label> — mark a row skipped (nothing to check), no command run.
+skip_step() {
+  build_row skip "$2"
+  if [ "$TTY" = 1 ]; then redraw "$1" "$ROW"; else printf "  ◦ %s  skipped\n" "$2"; fi
+}
+
 die() { printf "  ${CORAL}${B}✗${X} %s\n" "$1"; rm -f "$OUT"; exit 1; }
+
+# spec_for <path> — mirror a source path to its RSpec file (app/x.rb→spec/x_spec.rb, else spec/<path>_spec.rb).
+spec_for() {
+  case "$1" in
+    spec/*_spec.rb) printf '%s\n' "$1" ;;
+    app/*.rb)       printf 'spec/%s_spec.rb\n' "$(printf '%s' "${1#app/}" | sed 's/\.rb$//')" ;;
+    *.rb)           printf 'spec/%s_spec.rb\n' "$(printf '%s' "$1" | sed 's/\.rb$//')" ;;
+  esac
+}
 
 # db-down is the one prep step that can't animate (it prompts) — handle it before the box.
 if ! pg_isready -h localhost -p 5433 -q 2>/dev/null; then
@@ -84,6 +100,17 @@ if ! pg_isready -h localhost -p 5433 -q 2>/dev/null; then
   pg_isready -h localhost -p 5433 -q 2>/dev/null || die "postgres didn't come up"
 fi
 export DATABASE_HOST=localhost DATABASE_PORT=5433
+
+# Scope checks to staged files (added/copied/modified/renamed) — CI runs the full suite.
+# RuboCop: staged .rb/.rake only. RSpec: mirrored specs that exist on disk.
+STAGED="$(git diff --cached --name-only --diff-filter=ACMR)"
+RB_FILES="$(printf '%s\n' "$STAGED" | grep -E '\.(rb|rake)$' || true)"
+SPEC_FILES=""
+for _f in $STAGED; do
+  case "$_f" in *.rb) _s="$(spec_for "$_f")"; [ -n "$_s" ] && [ -f "$_s" ] && SPEC_FILES="$SPEC_FILES
+$_s" ;; esac
+done
+SPEC_FILES="$(printf '%s\n' $SPEC_FILES | grep -E '_spec\.rb$' | sort -u || true)"
 
 # --- coral box: header only ---
 if [ "$TTY" = 1 ]; then
@@ -113,8 +140,16 @@ fi
 
 run_step 9 gems    sh -c 'bundle check || bundle install'
 run_step 8 db      pg_isready -h localhost -p 5433 -q
-run_step 7 rubocop bundle exec rubocop --format simple
-run_step 6 rspec   bundle exec rspec --format progress
+if [ -n "$RB_FILES" ]; then
+  run_step 7 rubocop bundle exec rubocop --force-exclusion --format simple $RB_FILES
+else
+  skip_step 7 rubocop
+fi
+if [ -n "$SPEC_FILES" ]; then
+  run_step 6 rspec bundle exec rspec --format progress $SPEC_FILES
+else
+  skip_step 6 rspec
+fi
 
 # finalize summary row → all clear (coral pop)
 if [ "$TTY" = 1 ]; then
