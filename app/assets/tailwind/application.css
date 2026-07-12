@@ -440,7 +440,7 @@
   }
 
   .notepad__body {
-    padding: var(--note-gap) 1.25rem;
+    padding: var(--note-gap) 1.25rem calc(var(--note-gap) + 0.5rem);
     background-color: var(--color-surface);
     /* ruled lines on top so the grain can't wash them; two grain passes for tooth */
     background-image:

@@ -36,15 +36,15 @@ pt-BR:
         figures:
           - "De R$18 a 21 bilhões por mês entram nas bets via Pix (2024)."
           - "Das famílias do Bolsa Família, as bets tiraram R$3 bilhões, atingindo 5 milhões de pessoas."
-        conclusion: "As bets já são um mercado de bilhões, e parte sai de quem tem menos."
+        conclusion: "Parte do dinheiro apostado vem de famílias de baixa renda."
         exact: "R$18–21 bi/mês via Pix (2024); R$3 bi de 5 milhões de pessoas em lares do Bolsa Família"
       datasenado:
         provides: "Quem aposta, quanto gasta, quanto deve"
         figures:
           - "Em 2024, as bets alcançaram 22,1 milhões de pessoas em um só mês."
           - "Mais da metade ganha até 2 salários mínimos."
-          - "E 42% estão com contas atrasadas há mais de 90 dias."
-        conclusion: "Quem mais aposta é quem menos pode perder."
+          - "42% estão com contas atrasadas há mais de 90 dias."
+        conclusion: "Grande parte de quem aposta tem baixa renda e já convive com dívidas."
         exact: "22,1 milhões em 30 dias (2024); 52% ganham até 2 salários mínimos; 42% com dívida acima de 90 dias"
       cnc:
         provides: "Dívida das famílias"
@@ -52,34 +52,34 @@ pt-BR:
           - "Mais de R$30 bilhões por mês vão para as bets."
           - "O gasto cresceu mais de 500% em 3 anos."
           - "As bets já empurraram quase 270 mil famílias para dívidas graves."
-        conclusion: "O dinheiro das apostas está virando dívida de família."
+        conclusion: "O gasto com apostas cresce junto com o endividamento das famílias."
         exact: "R$30 bi/mês; +500% de gasto em 3 anos; 269 mil famílias em inadimplência grave"
       unifesp:
         provides: "Impacto na saúde"
         figures:
           - "O jeito como as bets funcionam já põe quase 11 milhões de pessoas em risco de saúde e de dinheiro."
           - "Entre quem aposta, 2 em cada 3 mostram sinais de alerta."
-        conclusion: "Para muita gente, apostar já é risco de saúde, não passatempo."
+        conclusion: "Uma parcela grande dos apostadores já apresenta comportamento de risco."
         exact: "10,9 milhões em risco (6,8% dos maiores de 14 anos); 66,8% dos apostadores com jogo de risco ou problemático"
       ibevar:
         provides: "O que mais endivida"
         figures:
           - "No endividamento das famílias, as apostas pesam cerca de 3 vezes o peso dos juros."
-        conclusion: "As apostas endividam mais que os próprios juros."
+        conclusion: "No estudo, as apostas pesam mais no endividamento do que os juros."
         exact: "peso no endividamento: apostas 0,2255 vs juros 0,0709 (cerca de 3x)"
       inss:
         provides: "Auxílios por vício em apostas"
         figures:
           - "Os auxílios do INSS por vício em apostas cresceram mais de 2.300% entre 2023 e 2025."
-          - "E 73% de quem recebe são homens."
-        conclusion: "O vício em apostas já pesa até no INSS."
+          - "73% de quem recebe são homens."
+        conclusion: "O vício em apostas já aparece nos pedidos de auxílio ao INSS."
         exact: "+2.300% em auxílios por ludopatia (2023 a 2025); 73% dos beneficiários são homens"
       atlasintel:
         provides: "Opinião dos brasileiros"
         figures:
           - "Quase 87% das pessoas acham as bets prejudiciais."
-          - "E 70% querem proibir de vez."
-        conclusion: "O país já enxergou o problema e quer freio."
+          - "70% querem proibir de vez."
+        conclusion: "A maioria dos brasileiros considera as bets prejudiciais e quer mais regras."
         exact: "86,7% acham prejudicial; 70% por proibição total; 76% por limites de publicidade; 85,2% associam ao endividamento familiar"
     methodology_heading: "Como conferimos os números"
     cited_label: "Fontes:"

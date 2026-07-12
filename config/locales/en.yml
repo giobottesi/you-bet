@@ -20,15 +20,15 @@ en:
         figures:
           - "R$18 to 21 billion a month goes into bets via Pix (2024)."
           - "From Bolsa Família families, bets took R$3 billion, hitting 5 million people."
-        conclusion: "Betting is already a billion-real market, and part of it comes from those who have the least."
+        conclusion: "Part of the money bet comes from low-income families."
         exact: "R$18–21 bn/month via Pix (2024); R$3 bn from 5 million people in Bolsa Família households"
       datasenado:
         provides: "Who bets, what they spend, what they owe"
         figures:
           - "In 2024, bets reached 22.1 million people in a single month."
           - "More than half earn up to 2 minimum wages."
-          - "And 42% are over 90 days behind on bills."
-        conclusion: "The people betting most are the ones who can least afford to lose."
+          - "42% are over 90 days behind on bills."
+        conclusion: "Many who bet are low-income and already carry debt."
         exact: "22.1M in 30 days (2024); 52% earn up to 2 minimum wages; 42% carry 90+ day debt"
       cnc:
         provides: "Family debt"
@@ -36,34 +36,34 @@ en:
           - "More than R$30 billion a month goes into bets."
           - "Spending grew over 500% in 3 years."
           - "Bets have pushed nearly 270,000 families into serious debt."
-        conclusion: "Betting money is turning into family debt."
+        conclusion: "Spending on bets rises alongside family debt."
         exact: "R$30 bn/month; +500% spending in 3 years; 269K families in severe default"
       unifesp:
         provides: "Health impact"
         figures:
           - "The way bets are built already puts nearly 11 million people's health and money at risk."
           - "Among bettors, 2 in 3 show warning signs."
-        conclusion: "For many, betting is already a health risk, not a pastime."
+        conclusion: "A large share of bettors already show risky behavior."
         exact: "10.9M at risk (6.8% of ages 14+); 66.8% of bettors show risky or problem gambling"
       ibevar:
         provides: "What drives debt most"
         figures:
           - "In driving families into debt, betting weighs about 3 times as much as interest."
-        conclusion: "Bets drive debt more than interest itself."
+        conclusion: "In the study, bets weigh more on debt than interest does."
         exact: "debt-driver weight: bets 0.2255 vs interest 0.0709 (about 3x)"
       inss:
         provides: "Benefits for betting addiction"
         figures:
           - "Disability benefits for betting addiction grew over 2,300% from 2023 to 2025."
-          - "And 73% of recipients are men."
-        conclusion: "Betting addiction now weighs even on social security."
+          - "73% of recipients are men."
+        conclusion: "Betting addiction now shows up in INSS benefit claims."
         exact: "+2,300% ludopatia (gambling-disorder) benefits (2023 to 2025); 73% of recipients are men"
       atlasintel:
         provides: "What Brazilians think"
         figures:
           - "Nearly 87% of people consider bets harmful."
-          - "And 70% want them banned outright."
-        conclusion: "The country already sees the problem, and wants brakes."
+          - "70% want them banned outright."
+        conclusion: "Most Brazilians consider bets harmful and want more rules."
         exact: "86.7% consider bets harmful; 70% support a total ban; 76% want ad limits; 85.2% link bets to family debt"
     methodology_heading: "How we checked the numbers"
     cited_label: "Sources:"
