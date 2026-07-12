@@ -13,7 +13,10 @@ module SourcesHelper
   end
 
   # CSS custom property setting a card/note accent from its position in the list.
-  def notepad_accent_style(index, property)
-    "#{property}: var(--color-#{NOTEPAD_ACCENTS[index % NOTEPAD_ACCENTS.size]})"
+  # ink: true picks the AA-legible ink variant (for accent-colored label text on the light paper).
+  def notepad_accent_style(index, property, ink: false)
+    accent = NOTEPAD_ACCENTS[index % NOTEPAD_ACCENTS.size]
+    accent = "#{accent}-ink" if ink
+    "#{property}: var(--color-#{accent})"
   end
 end

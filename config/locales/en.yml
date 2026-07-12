@@ -10,10 +10,60 @@ en:
     heading: "Where our numbers come from"
     intro: "Every figure in You-Bet is backed by a verified public source. Here is each one, what it provides, and how we cross-checked it."
     list_label: "Data sources"
-    provides_label: "What it provides"
-    figures_label: "Key figures"
+    provides_label: "What it shows"
+    figures_label: "The numbers"
+    conclusion_label: "What it means"
     source_link: "See the source ↗"
-    methodology_heading: "Methodological notes"
+    data:
+      bcb:
+        provides: "How much money bets pull in"
+        figures:
+          - "In one month of 2024, between R$18 and R$21 billion was bet via Pix."
+          - "From Bolsa Família families, bets took R$3 billion, hitting 5 million people."
+        conclusion: "Part of the money bet comes from low-income families."
+        exact: "R$18–21 bn in Pix transfers in one month (2024); R$3 bn from 5 million people in Bolsa Família families"
+      datasenado:
+        provides: "Who bets, what they spend, what they owe"
+        figures:
+          - "In 2024, 22.1 million people bet in a single month."
+          - "More than half earn up to 2 minimum wages."
+          - "42% are over 90 days behind on bills."
+        conclusion: "Many who bet are low-income and already carry debt."
+        exact: "13% of Brazilians 16+ (22.13M) bet in 30 days; 52% earn up to 2 minimum wages; 42% carry 90+ day debt"
+      cnc:
+        provides: "Family debt"
+        figures:
+          - "Monthly spending on bets grew by more than R$30 billion over the period."
+          - "That may have pushed around 270,000 families into serious debt."
+        conclusion: "Spending on bets rises alongside family debt."
+        exact: "monthly-spending growth over R$30 bn; around 270K families in possible severe default"
+      unifesp:
+        provides: "Health impact"
+        figures:
+          - "Nearly 11 million people (6.8% of those over 14) already bet in ways that create health and money problems."
+        conclusion: "For millions, betting already creates health and money problems."
+        exact: "10.9M (6.8% of those over 14) gamble in ways that create problems for themselves"
+      ibevar:
+        provides: "What drives debt most"
+        figures:
+          - "In the debt study, bets carried the greatest weight, above interest and credit."
+        conclusion: "In the study, bets weighed more on debt than interest did."
+        exact: "debt coefficients: bets 0.2255; consumer interest 0.0709; credit-to-income 0.0440"
+      inss:
+        provides: "Benefits for betting addiction"
+        figures:
+          - "Disability benefits for betting addiction grew over 2,300% between June 2023 and April 2025."
+          - "73% of recipients are men."
+        conclusion: "Betting addiction now shows up in INSS benefit claims."
+        exact: "+2,300% ludopatia (gambling-disorder) benefits (Jun 2023–Apr 2025); 73% of recipients are men"
+      atlasintel:
+        provides: "What Brazilians think"
+        figures:
+          - "Nearly 87% of people consider bets harmful."
+          - "70% want them banned outright."
+        conclusion: "Most Brazilians consider bets harmful and want more rules."
+        exact: "86.7% consider bets harmful; 70% support a total ban; 76% want ad limits; 85.2% link bets to family debt"
+    methodology_heading: "How we checked the numbers"
     cited_label: "Sources:"
     notes:
       bettor_count:
@@ -22,9 +72,6 @@ en:
       cnc_contested:
         subject: "CNC magnitude is contested"
         body: "The CNC study drew a public rebuttal from the betting industry association (IBJR), which disputes the scale. We cite CNC but flag the dispute rather than present it as settled."
-      tigrinho_edge:
-        subject: "Tigrinho house edge"
-        body: "PG Soft claims a 96.81% payout rate (RTP), but unregulated platforms can set lower RTPs. We use 5% as a conservative middle ground and disclose it transparently."
       bolsa_familia:
         subject: "What is Bolsa Família"
         body: "Bolsa Família is Brazil's federal cash-transfer program for low-income families."
