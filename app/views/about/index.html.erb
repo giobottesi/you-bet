@@ -7,7 +7,7 @@
 
 <%# AI declaration — competition-required + factual. Lifted paper poster. %>
 <section class="note-poster py-6" aria-label="<%= t('about.ai.heading') %>">
-  <h2 class="mb-4 text-[1.5rem] font-extrabold uppercase tracking-[0.04em] text-text"><%= t("about.ai.heading") %></h2>
+  <h2 class="mb-4 text-[1.5rem]/[1.4] font-extrabold text-text"><span class="brand-heading" style="--mark: var(--color-purple)"><%= t("about.ai.heading") %></span></h2>
   <p class="text-base text-text"><%= t("about.ai.intro") %></p>
   <p class="mt-4 text-[0.8rem] font-bold uppercase tracking-[0.06em] text-purple-ink"><%= t("about.ai.roles_label") %></p>
   <ul class="mt-2 flex flex-col gap-2">
@@ -73,7 +73,7 @@
 
 <%# Outbound links — public repo, the devlog, the sources. %>
 <section class="py-6" aria-label="<%= t('about.links.heading') %>">
-  <h2 class="mb-4 text-[1.5rem] font-extrabold text-text"><%= t("about.links.heading") %></h2>
+  <h2 class="mb-4 text-[1.5rem]/[1.4] font-extrabold text-text"><span class="brand-heading" style="--mark: var(--color-green)"><%= t("about.links.heading") %></span></h2>
   <ul class="flex flex-col gap-3">
     <li><%= link_to t("about.links.repository"), @repository_url, class: "font-bold text-cyan-ink underline", target: "_blank", rel: "noopener" %></li>
     <li><%= link_to t("about.links.devlog"), devlog_path, class: "font-bold text-cyan-ink underline" %></li>
@@ -83,7 +83,7 @@
 
 <%# FAQ — Betina asks, Gio answers, on a lifted poster with washi-taped note-cards. %>
 <section class="note-poster py-6" aria-label="<%= t('about.faq.heading') %>">
-  <h2 class="mb-2 text-[1.5rem] font-extrabold uppercase tracking-[0.04em] text-text"><%= t("about.faq.heading") %></h2>
+  <h2 class="mb-2 text-[1.5rem]/[1.4] font-extrabold text-text"><span class="brand-heading" style="--mark: var(--color-coral)"><%= t("about.faq.heading") %></span></h2>
   <p class="mb-5 text-base text-muted"><%= t("about.faq.intro") %></p>
   <ul class="flex flex-col gap-4">
     <% @faq_questions.each_with_index do |question, index| %>

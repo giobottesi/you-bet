@@ -54,6 +54,12 @@
     --note-line: color-mix(in srgb, var(--color-muted) 50%, transparent);
   }
 
+  /* Display face on every heading (self-hosted); body stays Libre Franklin. */
+  h1, h2, h3 {
+    font-family: "Bricolage Grotesque", "Libre Franklin", system-ui, sans-serif;
+    letter-spacing: -0.01em;
+  }
+
   body {
     background-color: var(--color-bg);
     background-image: var(--rough-paper), var(--paper-lines);
