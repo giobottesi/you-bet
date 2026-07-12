@@ -204,4 +204,53 @@ RSpec.describe 'Simulations', type: :request do
       expect(response.body).to include('1 year')
     end
   end
+
+  describe 'GET /simulations/:id help resources (#show, FE-09)' do
+    let(:simulation) { create(:simulation) }
+    let(:resources) { SimulationsHelper::HELP_RESOURCES }
+
+    before { get simulation_path(simulation, locale: 'en') }
+
+    it 'always renders the help section heading and supportive intro' do
+      expect(response.body).to include(CGI.escapeHTML(I18n.t('simulations.results.help.heading', locale: :en)))
+      expect(response.body).to include(CGI.escapeHTML(I18n.t('simulations.results.help.intro', locale: :en)))
+    end
+
+    it 'names every support resource' do
+      resources.each do |resource|
+        name = I18n.t("simulations.results.help.resources.#{resource[:key]}.name", locale: :en)
+        expect(response.body).to include(CGI.escapeHTML(name))
+      end
+    end
+
+    it 'links every resource to its verified official source' do
+      resources.each do |resource|
+        expect(response.body).to include("href=\"#{resource[:url]}\"")
+      end
+    end
+
+    it 'renders the CVV short-code as a tap-to-call link' do
+      expect(response.body).to include('href="tel:188"')
+      expect(response.body).to include('188')
+    end
+  end
+
+  describe 'help resource constants (FE-09)' do
+    let(:resources) { SimulationsHelper::HELP_RESOURCES }
+
+    it 'carries the four Brazilian support resources' do
+      expect(resources.size).to eq(4)
+      expect(resources.map { |resource| resource[:key] })
+        .to contain_exactly(:cvv, :sus_caps, :gamblers_anonymous, :self_exclusion)
+    end
+
+    it 'gives every resource a verified https source link' do
+      resources.each { |resource| expect(resource[:url]).to start_with('https://') }
+    end
+
+    it 'carries the CVV emotional-support short-code' do
+      cvv = resources.find { |resource| resource[:key] == :cvv }
+      expect(cvv[:phone]).to eq('188')
+    end
+  end
 end

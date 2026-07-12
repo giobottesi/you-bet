@@ -225,3 +225,20 @@ en:
       heading: "Here's the damage"
       summary: "Betting %{amount}/week over %{timeframe}, here's what the math says you'd lose:"
       loss_share: "%{percentage} of everything you'd wager"
+      help:
+        heading: "You're not alone in this"
+        intro: "The house is built to win — that's on them, not on you. If betting has stopped feeling like a choice, or you just want to talk to someone, here are real, free, and confidential places to start. Reaching out is a normal thing to do."
+        call_label: "Call"
+        resources:
+          cvv:
+            name: "CVV — Centro de Valorização da Vida"
+            description: "Free, confidential emotional support, any hour of the day or night. Call, chat, or email — someone will listen, no judgment."
+          sus_caps:
+            name: "SUS — CAPS-AD"
+            description: "Free public mental-health and addiction care through Brazil's health system (SUS). Ask at your nearest UBS or city health office to find the CAPS-AD closest to you."
+          gamblers_anonymous:
+            name: "Jogadores Anônimos"
+            description: "A free peer-support group for anyone who wants to stop betting. Meetings run online and in person across Brazil — you set the pace."
+          self_exclusion:
+            name: "Self-exclusion"
+            description: "Want a clean break? Brazil's federal platform can block your CPF from every licensed betting site at once — for a set period, or indefinitely."
