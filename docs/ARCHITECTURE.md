@@ -26,8 +26,8 @@ graph TD
     subgraph BROWSER ["BROWSER (Mobile-first)"]
         LP["Landing Page\nBet type + Amount inputs\nHelp guide + Menu"]
         LP -->|Turbo Frame| RES["Results\nCascade + Cards + Share + Help"]
-        STIM["Stimulus: form validation, localStorage sync, share, locale"]
-        COOKIE["cookie ↔ localStorage (visitor_id sync)"]
+        STIM["Stimulus: form validation, share, locale"]
+        COOKIE["signed cookie (visitor_id)"]
     end
 
     BROWSER -->|"Turbo (HTML over the wire)"| RAILS
@@ -36,8 +36,6 @@ graph TD
         AC["ApplicationController\ninclude VisitorIdentifiable"]
         AC --> SC["SimulationsController\nnew/create, show (/s/:id)"]
         AC --> CC["ContentController (base)"]
-        AC --> VC["VisitorController\n/restore, /delete"]
-
         CC --> SRC["SourcesController → /sources"]
         CC --> ABT["AboutController → /about"]
         CC --> PRV["PrivacyController → /privacy"]
@@ -55,8 +53,8 @@ graph TD
     subgraph DB ["POSTGRESQL (Heroku Postgres)"]
         T1["app_configs — PaperTrail versioned\nkey, value, value_type, description, data_source"]
         T2["reference_values — PaperTrail versioned\nkey, value, value_type, category, bet_type, description, data_source"]
-        T3["simulation_results — cached Monte Carlo\ncache_key (unique), bet_types[], weekly_amount_cents, results (jsonb)"]
-        T4["simulations — per-visitor\nvisitor_id (indexed), simulation_result_id, locale"]
+        T3["simulation_results — cached Monte Carlo\ninputs_signature (unique), results (jsonb)"]
+        T4["simulations — per-visitor\nvisitor_id (indexed), bet_type_keys[], timeframe_weeks, weekly_amount_cents, uuid (unique)"]
         T5["versions — PaperTrail audit trail"]
     end
 ```
@@ -125,31 +123,35 @@ end
 # --- Reference values (externally-sourced cited data — prices, house edges) ---
 
 create_table :reference_values do |t|
-  t.string :key, null: false, index: { unique: true }
+  t.string :bet_type                                     # null for global values; set for per-bet-type ones
+  t.string :key, null: false
   t.string :value, null: false
   t.string :value_type, null: false, default: "string"
   t.string :category, null: false, index: true           # comparison, bet_type
   t.string :description
   t.string :data_source                                  # citation for this value
   t.timestamps
+  # Unique per (bet_type, key) when scoped to a bet type; unique on key alone for global values.
+  t.index [:bet_type, :key], unique: true, where: "bet_type IS NOT NULL"
+  t.index :key, unique: true, where: "bet_type IS NULL"
 end
 
-# --- Cached Monte Carlo results ---
+# --- Cached Monte Carlo results (keyed by a signature of the inputs, not the inputs themselves) ---
 
 create_table :simulation_results do |t|
-  t.string :cache_key, null: false, index: { unique: true }
-  t.string :bet_types, array: true, default: []
-  t.integer :weekly_amount_cents, null: false
-  t.jsonb :results, default: {}  # all 5 timeframes
+  t.string :inputs_signature, null: false, index: { unique: true }
+  t.jsonb :results, default: {}, null: false  # all 5 timeframes
   t.timestamps
 end
 
-# --- Per-visitor simulation records ---
+# --- Per-visitor simulation records (stores the inputs; relates to the cache by recomputed signature, no FK) ---
 
 create_table :simulations do |t|
+  t.string :bet_type_keys, array: true, default: [], null: false
+  t.integer :timeframe_weeks
+  t.integer :weekly_amount_cents
+  t.uuid :uuid, null: false, default: -> { "gen_random_uuid()" }, index: { unique: true }
   t.string :visitor_id, null: false, index: true
-  t.references :simulation_result, null: false, foreign_key: true
-  t.string :locale, default: "pt-BR"
   t.timestamps
 end
 
@@ -196,20 +198,18 @@ The three-layer model (expected value → Monte Carlo distribution → poupança
 
 **Why anonymous?** No login = no friction = more simulations = more impact. The app's goal is reach, not user profiles. UUID-based tracking gives us aggregate data without PII. ([Privacy by Design — Cavoukian, 2011](https://iapp.org/resources/article/privacy-by-design-the-7-foundational-principles/))
 
-UUID in cookie + localStorage (dual-storage):
+UUID in a signed cookie:
 
 1. First visit → generate UUID, set `cookies.signed.permanent[:visitor_id]`
-2. JS syncs to localStorage as fallback
-3. If cookie cleared but localStorage has it → restore via API
-4. All simulations linked by `visitor_id`
-5. "Apagar meus dados" → destroys all records + clears cookie
+2. Simulations are linked by `visitor_id`
+3. Erasure → the visitor clears the site's cookies in their browser; that drops the identifier and unlinks any saved simulation. There is no in-app delete button and no server-side visitor endpoint (see the `/privacy` page)
 
 ### LGPD Compliance
 
 Reference: [LGPD — Lei nº 13.709/2018](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm)
 
 - Privacy notice in footer + dedicated `/privacy` page
-- What we collect: anonymous UUID + simulation data. Why: save results + aggregate stats + security. Retention: 180 days. Deletion: button.
+- What we collect: anonymous UUID + simulation data. Why: save results + aggregate stats + security. Retention: kept in the browser cookie until the visitor clears it. Deletion: the visitor clears their browser cookies (no in-app button).
 - Cookies for security (rate limiting, abuse prevention) — legitimate interest under LGPD Art. 7(IX)
 - Request logs (IP, path, status) kept separately for security, NOT tied to visitor_id
 - Data is anonymized: visitor_id is a random UUID with no link to identity

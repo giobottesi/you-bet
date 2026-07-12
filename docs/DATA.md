@@ -268,17 +268,17 @@ One `simulation_results` row holds all five timeframes as JSONB — read-optimiz
 
 ### Caching
 
-Same inputs → statistically equivalent results, so we cache by composite key:
+Same inputs → statistically equivalent results, so each bet type is cached under a signature of its inputs:
 
 ```
-cache_key = "#{bet_types.sort.join(',')}:#{weekly_amount_cents}"
+inputs_signature = "#{bet_type_key}:#{house_edge}:#{weekly_amount_cents}:#{simulation_count}"
 ```
 
 - **Cache miss** → run `MonteCarloSimulator`, store in `simulation_results`
 - **Cache hit** → reuse the stored results, but still create a new `simulations` record for aggregate tracking
 - Popular combos (R$50/week accumulators) are computed once, served many times
 
-The split matters: `simulation_results` is the cache (dedup by inputs); `simulations` is the per-visitor audit row (one per request, for impact stats). Sorting `bet_types` makes the key order-independent.
+The split matters: `simulation_results` is the cache (dedup by `inputs_signature`); `simulations` is the per-visitor audit row (one per request, for impact stats). Each bet type is simulated and cached on its own signature.
 
 ---
 

@@ -19,7 +19,7 @@ No moralizing. Just math.
 
 ## Why This Exists
 
-Betting in Brazil went from near-zero to R$30 billion/month in 3 years. 52% of bettors earn up to 2 minimum wages. 42% have debts overdue by more than 90 days. 5 million Bolsa Família families sent money to betting platforms.
+Betting in Brazil went from near-zero to R$30 billion/month in 3 years. 52% of bettors earn up to 2 minimum wages. 42% have debts overdue by more than 90 days. 5 million people in Bolsa Família households sent money to betting platforms.
 
 The industry's marketing only shows who won. We show the other side — through math, not lectures.
 
@@ -108,7 +108,7 @@ Pool includes: pizzas, cesta básica, smartphone, iPhone, passagem de avião, ge
 | Apostadores com dívidas 90+ dias | 42% | DataSenado 2024, p.25 |
 | Impacto das apostas vs juros no endividamento | 3x maior | Ibevar/FIA 2026 |
 | Apostadores online com comportamento problemático | 66.8% | LENAD III / UNIFESP |
-| Famílias do Bolsa Família que mandaram $ para bets | 5 milhões | BCB Estudo Especial nº 119 |
+| Pessoas em lares do Bolsa Família que mandaram $ para bets | 5 milhões | BCB Estudo Especial nº 119 |
 
 **Every number MUST be double-checked against primary sources before launch.**
 
@@ -176,7 +176,7 @@ AI declaration (footer badge + `/about` page + README + submission post). Two se
 ### Responsibility
 - Help resources always visible (CVV 188, SUS/CAPS, Jogadores Anônimos)
 - Autoexclusão por CPF on .bet.br platforms
-- Feminine perspective acknowledged: 53.9% of those in betting debt are women
+- Feminine perspective acknowledged (women are heavily represented among indebted bettors; the specific 53.9% figure is a Procon-SP number, not our DataSenado source, so it is not cited on the page)
 
 ---
 

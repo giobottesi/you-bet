@@ -197,7 +197,7 @@ Each card: controller (inherits ContentController) + view + route.
 | FE 11 | ⬜ | | |
 | FE 12 | ✅ Done | #66 | Jul 10 |
 | FE 13 | 🔵 In review | #76 | |
-| FE 14 | 🔵 In review | #68 | |
+| FE 14 | ✅ Done | #68 | Jul 11 |
 | FE 15 | ✅ Done | #69 | Jul 10 |
 | FE 16 | ⬜ | | |
 | FE 17 | ⬜ | | |
