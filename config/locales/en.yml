@@ -30,6 +30,13 @@ en:
     gatinho:
       heading: "Meet Gatinho"
       body: "Gatinho is You-Bet's mascot — the friendly, knowing counterpoint to Tigrinho. He's a placeholder in text art until the illustrated version lands."
+    naming:
+      heading: "Why \"You-Bet\"?"
+      body: "\"You bet\" means two things at once: it's the bet itself, and it's that \"you bet / for sure\". The name plays on both — it's about betting, but it's also the slightly ironic answer the math gives."
+    logo:
+      heading: "The logo, made from scratch"
+      body: "Gio designed the logo from scratch. Before the green version you see around, other concepts were tried — a few of them below."
+      concept_alt: "You-Bet logo concept"
     links:
       heading: "Poke around"
       repository: "Read the source on GitHub ↗"

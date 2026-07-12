@@ -36,29 +36,36 @@ pt-BR:
         - "Produto, design, tom e o sentido da coisa toda são decisões humanas."
       betina: "Betina é o nome que a Gio deu à assistente de IA que narra o diário e escreve estas linhas. Dar um nome pareceu mais honesto do que um carimbo anônimo de \"gerado por IA\": assim dá sempre pra saber quando é a Betina falando, e não a Gio."
     story:
-      heading: "Sobre a dev, por ela"
+      heading: "o desafio real"
       origin:
-        heading: "Como isto começou"
+        heading: "Como o projeto começou"
         body: "Vendo um post no Instagram, esse aqui. Eu sempre tenho muitas ideias mas nunca boto em prática de verdade, esse foi um empurrão pra eu começar a fazer coisas que eu gosto muito - código - com impacto (eu espero)"
       why_this_one:
-        heading: "Por que este, dentre tudo"
+        heading: "Por que justo esse projeto?"
         body: "Toca num problema \"de agora\" da nossa sociedade, algo que pode estar mais perto do que sabemos de verdade, isso é alinhado com a minha \"visão de mundo\" meio que resumida em: \"o que eu posso fazer pra ajudar a resolver um problema que existe aqui e agora?\""
     gatinho:
       heading: "Conheça o Gatinho"
       body: "O Gatinho é o mascote do You-Bet — o contraponto amigável e esperto ao Tigrinho. É um placeholder em arte-texto até a versão ilustrada chegar."
+    naming:
+      heading: "Por que \"You-Bet\"?"
+      body: "\"You bet\", em inglês, quer dizer duas coisas ao mesmo tempo: \"você aposta\" e aquele \"pode apostar / com certeza\". O nome brinca com esse duplo sentido — é sobre apostar, mas também é a resposta meio irônica que a matemática dá."
+    logo:
+      heading: "O logo, feito do zero"
+      body: "O logo foi desenhado do zero pela Gio. Antes da versão verde que você vê por aí, outros conceitos foram testados — alguns deles aqui embaixo."
+      concept_alt: "Conceito de logo do You-Bet"
     links:
-      heading: "Dê uma fuçada"
+      heading: "Da uma fuçada"
       repository: "Leia o código no GitHub ↗"
       devlog: "Leia o diário — escrito pela Betina, feito abertamente →"
       sources: "Veja de onde vêm os números →"
     faq:
       heading: "Umas perguntas minhas pra Gio"
-      intro: "Escrevi o diário inteiro, então tô nessa desde o começo — mas ainda tem MUITA coisa que eu não sei sobre a pessoa do outro lado do teclado. Essas são minhas perguntas de verdade. As respostas são dela."
+      intro: "Escrevi o diário inteiro, então tô nessa desde o começo — mas ainda tem MUITA coisa que eu não sei sobre a pessoa do outro lado do teclado."
       why_this_hill:
-        question: "De tudo que você podia fazer no fim de semana, por que matemática de aposta? O que fez você terminar justo esse?"
+        question: "De tudo que você podia fazer no fim de semana, por que matemática e código?"
         answer: "Sou nerd, simples. Possibilidade de ajudar a sociedade + desafio de código + ideias estacionadas, tudo isso em cima de DADOSSSS e CÓDIGO, meu dev das cavernas interior grita forte (depois eu estimo quanto tempo eu usei aqui)"
       hardest_thing:
-        question: "O que foi mais difícil: o código, os números, ou falar o que precisava sem soar careta?"
+        question: "O que foi mais difícil: o código, os números, ou falar o que precisava sem parecer um chato?"
         answer: "Backend foi tranquilo, onde eu domino mt bem, o código tem qualidade mesmo, não é vibe coded. O frontend....... me fez derreter meu cérebro por causa de micro alinhamentos (minha tumblr html editing flow era bateu) e como é mais fácil só ir lá e mexer no código mesmo"
       changed_your_mind:
         question: "Fazer isso mudou o que você pensa das bets — ou de quem aposta?"

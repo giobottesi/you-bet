@@ -48,6 +48,27 @@
   </div>
 </section>
 
+<%# Naming — the "you bet" pun. %>
+<section class="py-4" aria-label="<%= t('about.naming.heading') %>">
+  <div class="bg-surface [background-image:var(--rough-paper)] [background-blend-mode:soft-light] [background-size:320px_320px] border-[3px] border-text p-5 shadow-[6px_6px_0_var(--color-cyan)]">
+    <h2 class="text-[1.15rem] font-extrabold text-cyan-ink"><%= t("about.naming.heading") %></h2>
+    <p class="mt-1 text-base text-text"><%= t("about.naming.body") %></p>
+  </div>
+</section>
+
+<%# Logo — made from scratch, with the concepts that didn't ship. %>
+<section class="py-4" aria-label="<%= t('about.logo.heading') %>">
+  <div class="bg-surface [background-image:var(--rough-paper)] [background-blend-mode:soft-light] [background-size:320px_320px] border-[3px] border-text p-5 shadow-[6px_6px_0_var(--color-purple)]">
+    <h2 class="text-[1.15rem] font-extrabold text-purple-ink"><%= t("about.logo.heading") %></h2>
+    <p class="mt-1 text-base text-text"><%= t("about.logo.body") %></p>
+    <div class="mt-4 flex flex-wrap items-center gap-4">
+      <img src="/you-bet-logo.svg" alt="<%= t("about.logo.concept_alt") %>" class="h-12 w-auto border-2 border-text bg-bg p-2">
+      <img src="/concept-purple-line.svg" alt="<%= t("about.logo.concept_alt") %>" class="h-12 w-auto border-2 border-text bg-bg p-2">
+      <img src="/concept-purple-square.svg" alt="<%= t("about.logo.concept_alt") %>" class="h-12 w-auto border-2 border-text bg-bg p-2">
+    </div>
+  </div>
+</section>
+
 <%# Outbound links — public repo, the devlog, the sources. %>
 <section class="py-6" aria-label="<%= t('about.links.heading') %>">
   <h2 class="mb-4 text-[1.5rem] font-extrabold text-text"><%= t("about.links.heading") %></h2>
