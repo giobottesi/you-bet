@@ -107,4 +107,17 @@ module SimulationsHelper
       { weeks: weeks, fraction: result.loss_fraction(weeks) }
     end
   end
+
+  # FE-10 WhatsApp share — prefilled message carrying the on-brand text and the permalink.
+  def whatsapp_share_url(permalink)
+    message = "#{t('simulations.results.share.text')} #{permalink}"
+    "https://wa.me/?text=#{ERB::Util.url_encode(message)}"
+  end
+
+  # FE-10 X/Twitter share — intent link with the text and permalink as separate params.
+  def twitter_share_url(permalink)
+    text = ERB::Util.url_encode(t('simulations.results.share.text'))
+    url = ERB::Util.url_encode(permalink)
+    "https://twitter.com/intent/tweet?text=#{text}&url=#{url}"
+  end
 end

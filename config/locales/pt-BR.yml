@@ -308,3 +308,11 @@ pt-BR:
           self_exclusion:
             name: "Autoexclusão"
             description: "Quer um basta? A plataforma federal pode bloquear o seu CPF em todas as casas de apostas licenciadas de uma vez — por um período definido ou por tempo indeterminado."
+      share:
+        heading: "Mostra a conta pra alguém"
+        intro: "A casa aposta que ninguém vai fazer as contas. Estraga o plano — passa pra frente."
+        text: "Fiz as contas das bets no You-Bet. Olha o que a matemática diz: #DesafioContraBets"
+        whatsapp: "WhatsApp"
+        twitter: "X"
+        copy: "Copiar link"
+        copied: "Copiado!"
