@@ -1,0 +1,104 @@
+<% content_for :title, "You-Bet — #{t('about.title')}" %>
+
+<section class="py-8">
+  <h1 class="mb-4 text-[2rem]/[1.3] font-extrabold text-text sm:text-[2.5rem]"><span class="brand-heading" style="--mark: var(--color-coral)"><%= t("about.heading") %></span></h1>
+  <p class="text-base text-muted"><%= t("about.intro") %></p>
+</section>
+
+<%# Developer story — Gio's own voice, notepad cards. %>
+<section class="py-6" aria-label="<%= t('about.story.heading') %>">
+  <h2 class="mb-5 text-[1.5rem]/[1.4] font-extrabold text-text"><span class="brand-heading" style="--mark: var(--color-cyan)"><%= t("about.story.heading") %></span></h2>
+  <ul class="flex flex-col gap-8">
+    <% @story_sections.each_with_index do |section, index| %>
+      <li class="notepad" style="<%= notepad_accent_style(index, "--bar") %>; <%= notepad_accent_style(index, "--label-accent", ink: true) %>">
+        <div class="notepad__bar"></div>
+        <div class="notepad__body">
+          <h3 class="text-[1.15rem]/[var(--note-gap)] font-extrabold [color:var(--label-accent)]"><%= t("about.story.#{section}.heading") %></h3>
+          <p class="text-base/[var(--note-gap)] text-text"><%= story_body(section) %></p>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</section>
+
+<%# Brand touchstone — Gatinho, the friendly counterpoint to Tigrinho (text-art until the illustration ships). %>
+<section class="py-4" aria-label="<%= t('about.gatinho.heading') %>">
+  <div class="flex items-center gap-5 bg-surface [background-image:var(--rough-paper)] [background-blend-mode:soft-light] [background-size:320px_320px] border-[3px] border-coral p-5 shadow-[6px_6px_0_var(--color-coral)]">
+    <pre aria-hidden="true" class="flex-none text-[0.7rem]/[1.1] font-bold text-coral-ink">
+ /\_/\
+( o.o )
+ =^.^=</pre>
+    <div>
+      <h2 class="text-[1.15rem] font-extrabold text-coral-ink"><%= t("about.gatinho.heading") %></h2>
+      <p class="mt-1 text-base text-muted"><%= t("about.gatinho.body") %></p>
+    </div>
+  </div>
+</section>
+
+<%# AI declaration — competition-required + factual. Notepad style: kraft binding bar + readable body, color inside. %>
+<section class="py-6" aria-label="<%= t('about.ai.heading') %>">
+  <div class="notepad" style="--bar: var(--color-purple)">
+    <div class="notepad__bar"></div>
+    <div class="bg-surface [background-image:var(--rough-paper)] [background-blend-mode:soft-light] [background-size:320px_320px] border-[3px] border-t-0 border-text p-6">
+      <h2 class="mb-4 text-[1.5rem]/[1.3] font-extrabold text-purple-ink"><%= t("about.ai.heading") %></h2>
+      <p class="text-base text-text"><%= t("about.ai.intro") %></p>
+      <p class="mt-4 text-[0.8rem] font-bold uppercase tracking-[0.06em] text-purple-ink"><%= t("about.ai.roles_label") %></p>
+      <ul class="mt-2 flex flex-col gap-2">
+        <% t("about.ai.roles").each do |role| %>
+          <li class="border-l-[4px] border-purple pl-4 text-base text-text"><%= role %></li>
+        <% end %>
+      </ul>
+      <p class="mt-4 text-base text-text"><%= t("about.ai.betina") %></p>
+    </div>
+  </div>
+</section>
+
+<%# Naming — the "you bet" pun. %>
+<section class="py-4" aria-label="<%= t('about.naming.heading') %>">
+  <div class="bg-surface [background-image:var(--rough-paper)] [background-blend-mode:soft-light] [background-size:320px_320px] border-[3px] border-cyan p-5 shadow-[6px_6px_0_var(--color-cyan)]">
+    <h2 class="text-[1.15rem] font-extrabold text-cyan-ink"><%= t("about.naming.heading") %></h2>
+    <p class="mt-1 text-base text-text"><%= t("about.naming.body") %></p>
+  </div>
+</section>
+
+<%# Logo — made from scratch, with the concepts that didn't ship. %>
+<section class="py-4" aria-label="<%= t('about.logo.heading') %>">
+  <div class="bg-surface [background-image:var(--rough-paper)] [background-blend-mode:soft-light] [background-size:320px_320px] border-[3px] border-green p-5 shadow-[6px_6px_0_var(--color-green)]">
+    <h2 class="flex items-center gap-2 text-[1.15rem] font-extrabold text-green-ink">
+      <%= t("about.logo.heading") %>
+    </h2>
+    <p class="mt-1 text-base text-text"><%= t("about.logo.body") %></p>
+    <div class="mt-4 flex flex-wrap items-end gap-5">
+      <%# The shipped logo — prominent. %>
+      <img src="/you-bet-logo.svg" alt="<%= t("about.logo.concept_alt") %>" class="h-16 w-auto border-[3px] border-text bg-bg p-3 shadow-[4px_4px_0_var(--color-green)]">
+      <%# The concepts that didn't ship — smaller, lightly pinned. %>
+      <img src="/concept-purple-line.svg" alt="<%= t("about.logo.concept_alt") %>" class="h-11 w-auto rotate-[-3deg] border-2 border-muted bg-bg p-2 opacity-80">
+      <img src="/concept-purple-square.svg" alt="<%= t("about.logo.concept_alt") %>" class="h-11 w-auto rotate-[2deg] border-2 border-muted bg-bg p-2 opacity-80">
+    </div>
+  </div>
+</section>
+
+<%# Outbound links — public repo, the devlog, the sources. %>
+<section class="py-6" aria-label="<%= t('about.links.heading') %>">
+  <h2 class="mb-4 text-[1.5rem]/[1.4] font-extrabold text-text"><span class="brand-heading" style="--mark: var(--color-green)"><%= t("about.links.heading") %></span></h2>
+  <ul class="flex flex-col gap-3">
+    <li><%= link_to t("about.links.repository"), @repository_url, class: "font-bold text-cyan-ink underline", target: "_blank", rel: "noopener" %></li>
+    <li><%= link_to t("about.links.devlog"), devlog_path, class: "font-bold text-cyan-ink underline" %></li>
+    <li><%= link_to t("about.links.sources"), sources_path, class: "font-bold text-cyan-ink underline" %></li>
+  </ul>
+</section>
+
+<%# FAQ — Betina asks, Gio answers, on a lifted poster with washi-taped note-cards. %>
+<section class="note-poster py-6" aria-label="<%= t('about.faq.heading') %>">
+  <h2 class="mb-2 text-[1.5rem]/[1.4] font-extrabold text-coral-ink"><%= t("about.faq.heading") %></h2>
+  <p class="mb-5 text-base text-muted"><%= t("about.faq.intro") %></p>
+  <ul class="flex flex-col gap-4">
+    <% @faq_questions.each_with_index do |question, index| %>
+      <li class="note-card" style="<%= notepad_accent_style(index, "--dash") %>">
+        <span class="washi <%= index.even? ? "washi--left" : "washi--right" %>" style="<%= notepad_accent_style(index + 1, "--tape") %>"></span>
+        <p class="text-[1.05rem] font-extrabold text-text"><%= t("about.faq.#{question}.question") %></p>
+        <p class="mt-2 text-base text-text"><%= t("about.faq.#{question}.answer") %></p>
+      </li>
+    <% end %>
+  </ul>
+</section>
