@@ -8,7 +8,7 @@
 <section aria-label="<%= t('sources.list_label') %>">
   <ul class="flex flex-col gap-4">
     <% @data_sources.each do |source| %>
-      <li class="taped bg-surface [background-image:var(--paper-grain)] border-[3px] border-border p-5">
+      <li class="taped bg-surface [background-image:var(--paper-grain)] p-5">
         <h2 class="text-[1.15rem] font-extrabold text-text"><%= source[:name] %></h2>
         <p class="mt-2 text-[0.8rem] font-bold uppercase tracking-[0.06em] text-muted"><%= t("sources.provides_label") %></p>
         <p class="text-base text-text"><%= source[:provides] %></p>
@@ -30,7 +30,7 @@
         <% if note[:citations] %>
           <p class="mt-2 text-[0.85rem] text-muted">
             <span class="font-bold uppercase tracking-[0.04em]"><%= t("sources.cited_label") %></span>
-            <%= safe_join(note[:citations].map { |citation| link_to citation[:label], citation[:url], class: "font-bold underline", target: "_blank", rel: "noopener" }, " · ") %>
+            <%= note_citation_links(note) %>
           </p>
         <% end %>
       </li>
