@@ -5,6 +5,71 @@ en:
   content:
     back_to_simulator: "Back to simulator"
 
+  about:
+    title: "About"
+    heading: "Who's behind You-Bet"
+    intro: "You-Bet is a one-person side project. This page is the honest version of who made it, how, and what it's for — including where AI helped, because a project about not being fooled shouldn't fool you about that."
+    placeholder_tag: "Gio's to write"
+    ai:
+      heading: "How AI was used"
+      intro: "This app was built by pairing with an AI coding assistant. The competition asks for an AI-usage declaration, and here it is — no asterisks. AI drafted a lot of the code and all of the devlog; a human made the calls and checked the work."
+      roles_label: "What the AI did — and didn't"
+      roles:
+        - "The code shipped in a pairing loop: I set the direction and made the decisions, the assistant drafted, and I reviewed and edited every line that made it in."
+        - "The devlog is written by the AI in the first person under the name Betina. That's her voice, not mine, and the devlog says so up front."
+        - "Every statistic in the app was checked by a human against its primary public source. The assistant drafted the words around the numbers; it did not get to invent the numbers."
+        - "Product, design, tone, and the whole point of the thing are human decisions."
+      betina: "Betina is the name I gave the assistant that narrates the devlog. Naming her felt more honest than a faceless \"AI-generated\" stamp — you can always tell when you're reading her and not me."
+    story:
+      heading: "The person, not the pipeline"
+      # GIO: fill — how this actually started (the moment, the itch, the thing you saw that annoyed you enough to build).
+      origin:
+        heading: "How this started"
+        body: "[Gio writes this — the real origin story, not the pitch-deck version.]"
+      # GIO: fill — who you are, in your own voice. Personal is good; readers should come away knowing a person, not a résumé.
+      who_i_am:
+        heading: "Who I am"
+        body: "[Gio writes this — who you are, off the clock.]"
+      # GIO: fill — why THIS project out of everything you could have built. What made it worth finishing?
+      why_this_one:
+        heading: "Why this one, out of everything"
+        body: "[Gio writes this — why this project earned the weekends.]"
+    gatinho:
+      heading: "Meet Gatinho"
+      body: "Gatinho is You-Bet's mascot — the friendly, knowing counterpoint to Tigrinho. He's a placeholder in text art until the illustrated version lands."
+    links:
+      heading: "Poke around"
+      repository: "Read the source on GitHub ↗"
+      devlog: "Read the devlog — built in the open →"
+      sources: "See where the numbers come from →"
+    faq:
+      heading: "Betina's questions for Gio"
+      intro: "I wrote the devlog, so I've been in this the whole time — but there's a lot I still don't know about the person on the other side of the keyboard. These are my real questions. The answers are hers."
+      # GIO: fill — answer in your own voice. Short and honest beats polished.
+      why_this_hill:
+        question: "Of everything you could have spent your weekends on, why gambling math? What made this the project you actually finished?"
+        answer: "[Gio answers.]"
+      # GIO: fill —
+      hardest_thing:
+        question: "What was the hardest thing to get right — the code, the numbers, or saying the point out loud without sounding preachy?"
+        answer: "[Gio answers.]"
+      # GIO: fill —
+      changed_your_mind:
+        question: "Did building this change how you think about the bets — or about the people making them?"
+        answer: "[Gio answers.]"
+      # GIO: fill —
+      pairing_with_betina:
+        question: "Honestly: what's it like building something you care about with an AI in the loop? Where did I actually help, and where did I get in your way?"
+        answer: "[Gio answers.]"
+      # GIO: fill —
+      what_success_looks_like:
+        question: "If one person changed one decision because of this page, is that enough? What does \"this worked\" look like to you?"
+        answer: "[Gio answers.]"
+      # GIO: fill —
+      what_you_want_asked:
+        question: "What's the question you wish people asked you about this project, that nobody does?"
+        answer: "[Gio answers.]"
+
   sources:
     title: "Sources"
     heading: "Where our numbers come from"
