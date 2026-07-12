@@ -64,12 +64,23 @@
   }
 }
 
+/* Self-hosted display font for headings (no Google CDN → no visitor-IP leak, keeps the privacy claim honest). */
+@font-face {
+  font-family: "Bricolage Grotesque";
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/bricolage-grotesque-800.woff2") format("woff2");
+}
+
 @layer components {
 
   /* Brand heading — a hand-swiped highlighter marker behind the text (no drop shadow).
      --mark sets the accent (defaults to yellow); the swipe hugs the words and wraps per line. */
   .brand-heading {
     display: inline;
+    font-family: "Bricolage Grotesque", "Libre Franklin", system-ui, sans-serif;
+    letter-spacing: -0.01em;
     padding: 0 0.1em;
     background-repeat: no-repeat;
     background-position: 0 82%;
