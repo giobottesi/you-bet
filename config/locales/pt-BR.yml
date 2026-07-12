@@ -18,8 +18,23 @@ pt-BR:
   app_name: "You Bet"
   tagline: "A matemática que as casas de apostas não mostram"
 
-  content:
-    back_to_simulator: "Voltar ao simulador"
+  nav:
+    label: "Links do site"
+    home: "Início You-Bet"
+    about: "Sobre"
+    sources: "Fontes"
+    devlog: "Diário"
+    help: "Ajuda"
+
+  help:
+    title: "Ajuda"
+
+  footer:
+    help_prompt: "A aposta deixou de ser diversão?"
+    cvv: "CVV 188"
+    gamblers_anonymous: "Jogadores Anônimos"
+    privacy: "Privacidade"
+    tagline: "You-Bet — a casa sempre ganha. Veja por quanto."
 
   about:
     title: "Sobre"
@@ -205,6 +220,13 @@ pt-BR:
     roulette: "Roleta"
 
   simulations:
+    new:
+      title: "You-Bet — Faça as contas"
+      heading: "Veja o custo real das suas apostas."
+      intro: >-
+        "Só um pouquinho por semana" vai somando. O You-Bet transforma seu hábito de apostar
+        no valor que você teria de verdade se esse dinheiro tivesse ido pra um lugar que rende.
+      submit: "Ver o estrago"
     bet_type_picker:
       heading: "No que você aposta?"
       hint: "Escolha todo tipo de aposta que você faz — cada um tem a sua vantagem da casa."

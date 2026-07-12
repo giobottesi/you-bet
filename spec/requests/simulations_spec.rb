@@ -10,7 +10,7 @@ RSpec.describe 'Simulations', type: :request do
 
     it 'renders the simulation form' do
       expect(response.body).to include('<form')
-      expect(response.body).to include('See the damage')
+      expect(response.body).to include(I18n.t('simulations.new.submit'))
     end
 
     it 'renders the three form section partials by their Stimulus identifiers' do

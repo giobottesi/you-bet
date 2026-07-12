@@ -1,42 +1,15 @@
-<% content_for :title, "You-Bet — Run the numbers" %>
+<% content_for :title, t("simulations.new.title") %>
 
-<div class="page mx-auto w-full max-w-3xl p-5 sm:p-8">
-  <header class="flex items-center justify-between gap-4 border-b-[3px] border-border pb-6">
-    <button type="button" class="cursor-pointer border-none bg-transparent p-0 text-2xl/none text-text" aria-label="Menu">☰</button>
-    <a class="flex-none leading-none" href="<%= root_path %>">
-      <img src="/you-bet-mark.svg" alt="You-Bet" width="44" height="41" class="block h-11 w-auto">
-    </a>
-    <a class="text-[0.85rem] font-bold uppercase tracking-[0.06em] no-underline" href="#help">Help</a>
-  </header>
+<section class="py-8">
+  <h1 class="mb-4 text-[2rem]/[1.2] font-extrabold text-text sm:text-[2.5rem]"><span class="brand-heading" style="--mark: var(--color-coral)"><%= t("simulations.new.heading") %></span></h1>
+  <p class="text-base text-muted"><%= t("simulations.new.intro") %></p>
+</section>
 
-  <section class="py-8">
-    <h1 class="mb-4 text-[2rem]/[1.2] font-extrabold text-text [text-shadow:3px_3px_0_var(--color-coral)] sm:text-[2.5rem]">See the real cost of your bets.</h1>
-    <p class="text-base text-muted">
-      "Just a little each week" adds up. You-Bet turns your betting habit into the
-      number you'd actually have if that money had gone somewhere that pays you back.
-    </p>
-  </section>
-
-  <section class="bg-surface [background-image:var(--paper-grain)] border-[3px] border-border p-6 shadow-[6px_6px_0_var(--shadow-25)]" aria-label="Simulation form">
-    <%= form_with model: @simulation, url: simulations_path, method: :post, data: { turbo: false } do |form| %>
-      <%= render "bet_type_picker", form: form %>
-      <%= render "weekly_amount", form: form %>
-      <%= render "timeframe_slider", form: form %>
-      <%= form.button "See the damage", type: "submit", class: "cta" %>
-    <% end %>
-  </section>
-
-  <nav class="flex flex-wrap gap-5 pt-8 pb-4 text-[0.9rem]" aria-label="Site links">
-    <a href="#about">About</a>
-    <a href="#how">How it works</a>
-    <a href="#sources">Sources</a>
-  </nav>
-
-  <footer class="border-t-[3px] border-border pt-6 text-[0.85rem] text-muted" id="help">
-    <p>
-      Betting stops being fun? <a href="https://www.cvv.org.br">CVV 188</a> ·
-      <a href="https://jogadoresanonimos.com.br">Jogadores Anônimos</a>
-    </p>
-    <p class="mt-3">You-Bet — the house always wins. See by how much.</p>
-  </footer>
-</div>
+<section class="bg-surface [background-image:var(--rough-paper)] [background-blend-mode:soft-light] [background-size:320px_320px] border-[3px] border-border p-6 shadow-[6px_6px_0_var(--shadow-25)]" aria-label="Simulation form">
+  <%= form_with model: @simulation, url: simulations_path, method: :post, data: { turbo: false } do |form| %>
+    <%= render "bet_type_picker", form: form %>
+    <%= render "weekly_amount", form: form %>
+    <%= render "timeframe_slider", form: form %>
+    <%= form.button t("simulations.new.submit"), type: "submit", class: "cta" %>
+  <% end %>
+</section>

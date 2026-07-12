@@ -2,8 +2,23 @@ en:
   app_name: "You Bet"
   tagline: "The math betting companies don't show you"
 
-  content:
-    back_to_simulator: "Back to simulator"
+  nav:
+    label: "Site links"
+    home: "You-Bet home"
+    about: "About"
+    sources: "Sources"
+    devlog: "Devlog"
+    help: "Help"
+
+  help:
+    title: "Help"
+
+  footer:
+    help_prompt: "Betting stops being fun?"
+    cvv: "CVV 188"
+    gamblers_anonymous: "Jogadores Anônimos"
+    privacy: "Privacy"
+    tagline: "You-Bet — the house always wins. See by how much."
 
   about:
     title: "About"
@@ -189,6 +204,13 @@ en:
     roulette: "Roulette"
 
   simulations:
+    new:
+      title: "You-Bet — Run the numbers"
+      heading: "See the real cost of your bets."
+      intro: >-
+        "Just a little each week" adds up. You-Bet turns your betting habit into the
+        number you'd actually have if that money had gone somewhere that pays you back.
+      submit: "See the damage"
     bet_type_picker:
       heading: "What do you bet on?"
       hint: "Pick every kind of bet you make — each carries its own house edge."

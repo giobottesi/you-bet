@@ -1,0 +1,12 @@
+<%# Shared page chrome — brand wordmark + site nav. Rendered on every page from the layout. %>
+<header class="flex items-center justify-between gap-4 border-b-[3px] border-border pb-6">
+  <%= link_to root_path, class: "flex-none leading-none", "aria-label": t("nav.home") do %>
+    <img src="/you-bet-logo.svg" alt="You-Bet" class="block h-9 w-auto">
+  <% end %>
+  <nav class="flex flex-wrap items-center gap-5 text-[0.85rem] font-bold uppercase tracking-[0.06em]" aria-label="<%= t("nav.label") %>">
+    <%= link_to t("nav.about"), about_path %>
+    <%= link_to t("nav.sources"), sources_path %>
+    <%= link_to t("nav.devlog"), devlog_path %>
+    <%= link_to t("nav.help"), help_path %>
+  </nav>
+</header>
