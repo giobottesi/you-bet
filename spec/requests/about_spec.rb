@@ -51,8 +51,12 @@ RSpec.describe 'About', type: :request do
     end
 
     it "renders Gio's authored story + FAQ answers" do
-      expect(response.body).to include(CGI.escapeHTML(I18n.t('about.story.origin.body')))
+      expect(response.body).to include(CGI.escapeHTML(I18n.t('about.story.why_this_one.body')))
       expect(response.body).to include(CGI.escapeHTML(I18n.t('about.faq.why_this_hill.answer')))
+    end
+
+    it 'links the origin story to the Instagram post that sparked it' do
+      expect(response.body).to include("href=\"#{AboutController::ORIGIN_POST_URL}\"")
     end
   end
 

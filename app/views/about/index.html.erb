@@ -14,7 +14,7 @@
         <div class="notepad__bar"></div>
         <div class="notepad__body">
           <h3 class="text-[1.15rem]/[var(--note-gap)] font-extrabold [color:var(--label-accent)]"><%= t("about.story.#{section}.heading") %></h3>
-          <p class="text-base/[var(--note-gap)] text-text"><%= t("about.story.#{section}.body") %></p>
+          <p class="text-base/[var(--note-gap)] text-text"><%= story_body(section) %></p>
         </div>
       </li>
     <% end %>
