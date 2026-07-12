@@ -9,16 +9,19 @@
   </p>
 
   <% weeks = @simulation.timeframe_weeks %>
-  <ul class="mt-6 space-y-4">
-    <% @bet_type_results.each do |bet_type, simulation_result| %>
+  <ul class="mt-6 flex flex-col gap-8">
+    <% @bet_type_results.each_with_index do |(bet_type, simulation_result), index| %>
       <% next unless simulation_result.result_by_timeframe(weeks) %>
-      <li class="border-[3px] border-border bg-card p-5 shadow-[4px_4px_0_rgba(0,0,0,0.2)]">
-        <h2 class="text-lg font-bold text-text"><%= bet_type.display_name %></h2>
-        <p class="mt-1 text-[2rem]/[1.1] font-extrabold text-loss"><%= reais_label(simulation_result.loss_cents(weeks)) %></p>
-        <p class="text-sm text-muted">
-          <%= t("simulations.results.loss_share",
-                percentage: loss_percentage_label(simulation_result.loss_fraction(weeks))) %>
-        </p>
+      <li class="notepad" style="<%= notepad_accent_style(index, "--bar") %>; <%= notepad_accent_style(index, "--label-accent", ink: true) %>">
+        <div class="notepad__bar"></div>
+        <div class="notepad__body">
+          <h2 class="text-[1.15rem]/[var(--note-gap)] font-extrabold text-text"><%= bet_type.display_name %></h2>
+          <p class="text-[2rem]/[calc(var(--note-gap)*2)] font-extrabold text-loss"><%= reais_label(simulation_result.loss_cents(weeks)) %></p>
+          <p class="text-base/[var(--note-gap)] text-muted">
+            <%= t("simulations.results.loss_share",
+                  percentage: loss_percentage_label(simulation_result.loss_fraction(weeks))) %>
+          </p>
+        </div>
       </li>
     <% end %>
   </ul>
