@@ -30,7 +30,6 @@
     </div>
     <div class="mt-2 flex justify-between text-[0.8rem] font-bold uppercase tracking-[0.06em]">
       <span class="text-muted"><%= reais_label(staked_cents) %> <%= t("simulations.results.bar.staked_cap") %></span>
-      <span class="text-loss"><%= t("simulations.results.bar.lost_cap") %></span>
     </div>
     <p class="mt-4 text-[1.5rem]/[1.15] font-extrabold text-loss">
       <%= t("simulations.results.bar.headline_single", max: reais_label(losses.max)) %>

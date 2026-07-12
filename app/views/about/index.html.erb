@@ -6,7 +6,7 @@
 </section>
 
 <%# Developer story — Gio's own voice, notepad cards. %>
-<section class="py-6" aria-label="<%= t('about.story.heading') %>">
+<section aria-label="<%= t('about.story.heading') %>">
   <h2 class="mb-5 text-[1.5rem]/[1.4] font-extrabold text-text"><span class="brand-heading" style="--mark: var(--color-cyan)"><%= t("about.story.heading") %></span></h2>
   <ul class="flex flex-col gap-8">
     <% @story_sections.each_with_index do |section, index| %>
@@ -82,9 +82,9 @@
 <section class="py-6" aria-label="<%= t('about.links.heading') %>">
   <h2 class="mb-4 text-[1.5rem]/[1.4] font-extrabold text-text"><span class="brand-heading" style="--mark: var(--color-green)"><%= t("about.links.heading") %></span></h2>
   <ul class="flex flex-col gap-3">
+    <li><%= link_to t("about.links.sources"), sources_path, class: "font-bold text-cyan-ink underline" %></li>
     <li><%= link_to t("about.links.repository"), @repository_url, class: "font-bold text-cyan-ink underline", target: "_blank", rel: "noopener" %></li>
     <li><%= link_to t("about.links.devlog"), devlog_path, class: "font-bold text-cyan-ink underline" %></li>
-    <li><%= link_to t("about.links.sources"), sources_path, class: "font-bold text-cyan-ink underline" %></li>
   </ul>
 </section>
 

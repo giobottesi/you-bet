@@ -228,9 +228,9 @@ en:
       group_label: "Weekly amount"
       comparisons:
         streaming: "a streaming subscription"
-        two_pizzas: "the price of two pizzas"
+        ice_cream_for_two: "the price of ice cream for two"
         phone_installment: "a phone installment"
-        moto_installment: "almost a motorcycle installment"
+        termical_tumbler: "a famous brand tumbler"
       custom_label: "Other amount"
       custom_placeholder: "0.00"
       custom_invalid: "Enter an amount above zero."
@@ -279,9 +279,9 @@ en:
           cesta_basica_cents:
             one: "food basket"
             other: "food baskets"
-          netflix_spotify_cents:
-            one: "month of Netflix + Spotify"
-            other: "months of Netflix + Spotify"
+          music_video_stream:
+            one: "month of video + music streaming"
+            other: "months of video + music streaming"
           motorcycle_price_cents:
             one: "motorcycle"
             other: "motorcycles"
@@ -319,6 +319,6 @@ en:
         intro: "The house counts on nobody running the numbers. Ruin the plan — pass it on."
         text: "I ran the numbers on betting at You-Bet. Here's what the math actually says: #DesafioContraBets"
         whatsapp: "WhatsApp"
-        twitter: "X"
+        twitter: "Twitter (X)"
         copy: "Copy link"
         copied: "Copied!"

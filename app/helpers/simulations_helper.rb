@@ -10,9 +10,9 @@ module SimulationsHelper
   # DataSenado weekly-spend tiers (PROPOSAL.md) — comparison key => weekly amount in cents. Custom field covers exact amounts.
   WEEKLY_AMOUNT_ANCHORS = {
     streaming: 1200,
-    two_pizzas: 2500,
+    ice_cream_for_two: 2500,
     phone_installment: 5000,
-    moto_installment: 12500
+    termical_tumbler: 12500
   }.freeze
 
   # FE-04 timeframe slots — slot key => horizon in weeks, matching MonteCarloSimulator's 5 timeframes (BE 10).
