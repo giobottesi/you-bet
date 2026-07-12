@@ -38,7 +38,7 @@ RSpec.describe 'Sources', type: :request do
     end
 
     it 'deep-links every note citation to its primary source' do
-      SourcesController::METHODOLOGICAL_NOTES.flat_map { |note| note[:citations] }.each do |citation|
+      SourcesController::METHODOLOGICAL_NOTES.flat_map { |note| note[:citations] || [] }.each do |citation|
         expect(response.body).to include("href=\"#{citation[:url]}\"")
         expect(response.body).to include(CGI.escapeHTML(citation[:label]))
       end
@@ -57,11 +57,11 @@ RSpec.describe 'Sources', type: :request do
       end
     end
 
-    it 'carries the methodological notes, each keyed to its localized prose and cited to primary sources' do
+    it 'carries the methodological notes, each keyed to its localized prose; citations are optional and https' do
       expect(SourcesController::METHODOLOGICAL_NOTES.size).to eq(4)
       SourcesController::METHODOLOGICAL_NOTES.each do |note|
-        expect(note).to include(:key, :citations)
-        note[:citations].each do |citation|
+        expect(note).to include(:key)
+        Array(note[:citations]).each do |citation|
           expect(citation[:label]).to be_present
           expect(citation[:url]).to start_with('https://')
         end

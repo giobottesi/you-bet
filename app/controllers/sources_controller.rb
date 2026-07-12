@@ -34,20 +34,13 @@ class SourcesController < ContentController
       url: 'https://atlasintel.org/poll/latam-pulse-brazil-april-2026-2026-04-30' }
   ].freeze
 
-  # Order + primary-source citations per note; the prose is localized (sources.notes.*).
-  # BCB/DataSenado/CNC URLs mirror DATA_SOURCES above (same verified primaries, cited here as inline references).
-  # IBJR has no self-hosted rebuttal to link (only trade-press coverage) — omitted rather than cite a non-primary.
+  # Order per note; prose localized (sources.notes.*). A note only cites a source NOT already shown as a card
+  # above — BCB/DataSenado/CNC are cards, so they aren't re-linked here; Bolsa Família is the one added source.
+  # PG Soft's Fortune Tiger RTP link is parked (the primary page 404s); IBJR has no self-hosted rebuttal to cite.
   METHODOLOGICAL_NOTES = [
-    { key: 'bettor_count', citations: [
-      { label: 'Banco Central — EE119', url: 'https://www.bcb.gov.br/conteudo/relatorioinflacao/EstudosEspeciais/EE119_Analise_tecnica_sobre_o_mercado_de_apostas_online_no_Brasil_e_o_perfil_dos_apostadores.pdf' },
-      { label: 'DataSenado', url: 'https://www.senado.leg.br/institucional/datasenado/relatorio_online/pesquisa_aposta_esportiva/2024/interativo.html' }
-    ] },
-    { key: 'cnc_contested', citations: [
-      { label: 'CNC', url: 'https://portaldocomercio.org.br/diario-executivo/para-cnc-bets-agravam-endividamento-das-familias-brasileiras/' }
-    ] },
-    { key: 'tigrinho_edge', citations: [
-      { label: 'PG Soft — Fortune Tiger RTP', url: 'https://www.pgsoft.com/en/games/110/' }
-    ] },
+    { key: 'bettor_count' },
+    { key: 'cnc_contested' },
+    { key: 'tigrinho_edge' },
     { key: 'bolsa_familia', citations: [
       { label: 'gov.br — Bolsa Família', url: 'https://www.gov.br/mds/pt-br/acoes-e-programas/bolsa-familia' }
     ] }
