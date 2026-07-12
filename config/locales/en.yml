@@ -14,7 +14,7 @@ en:
     figures_label: "Key figures"
     source_link: "See the source ↗"
     methodology_heading: "Methodological notes"
-    learn_more: "Learn more ↗"
+    cited_label: "Sources:"
     notes:
       bettor_count:
         subject: "BCB vs DataSenado bettor count"

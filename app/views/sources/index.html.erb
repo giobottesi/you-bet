@@ -27,8 +27,11 @@
       <li class="border-2 border-dashed border-border p-5">
         <p class="font-bold text-text"><%= t("sources.notes.#{note[:key]}.subject") %></p>
         <p class="text-base text-muted"><%= t("sources.notes.#{note[:key]}.body") %></p>
-        <% if note[:url] %>
-          <p class="mt-1"><%= link_to t("sources.learn_more"), note[:url], class: "underline", target: "_blank", rel: "noopener" %></p>
+        <% if note[:citations] %>
+          <p class="mt-2 text-[0.85rem] text-muted">
+            <span class="font-bold uppercase tracking-[0.04em]"><%= t("sources.cited_label") %></span>
+            <%= safe_join(note[:citations].map { |citation| link_to citation[:label], citation[:url], class: "font-bold underline", target: "_blank", rel: "noopener" }, " · ") %>
+          </p>
         <% end %>
       </li>
     <% end %>

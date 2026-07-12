@@ -104,7 +104,7 @@ bet_type=roulette        key=house_edge  = 0.0526 | source: "American: 38 pocket
 | `sports_singles` | 6% | Standard bookmaker vigorish (~1.91 odds on a coin-flip = ~4.5–6% margin). |
 | `accumulator_3` | 15% | A 3-leg parlay compounds the per-leg margin: `1 − (1 − 0.05)³ ≈ 0.14`, rounded up for correlated legs. |
 | `accumulator_5` | 23% | Same compounding at 5 legs: `1 − (1 − 0.05)⁵ ≈ 0.23`. Edge grows fast with legs — the core "accumulators are a trap" story. |
-| `slots_tigrinho` | 5% | PG Soft published RTP ~95%, but unregulated clones run lower; 5% is the optimistic floor. |
+| `slots_tigrinho` | 5% | PG Soft's published Fortune Tiger RTP is 96.81%, but unregulated clones run lower; 5% is the optimistic floor. |
 | `crash_aviator` | 4% | Operator-configurable RTP; 4% is a conservative public figure. Real edge can be far higher. |
 | `lottery` | 54% | Caixa retains ~54% of the prize pool — by far the worst expected value. |
 | `roulette` | 5.26% | American wheel: 38 pockets, payouts as if 36 → `2/38 = 0.0526`. |

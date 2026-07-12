@@ -426,7 +426,8 @@
     top: -0.65rem;
     width: 4.5rem;
     height: 1.4rem;
-    background: color-mix(in srgb, var(--color-yellow) 45%, transparent);
+    background-color: color-mix(in srgb, var(--tape, var(--color-yellow)) 55%, transparent);
+    background-image: var(--paper-grain);
     border: 1px solid rgba(30, 23, 20, 0.14);
   }
 
@@ -439,6 +440,19 @@
     right: 1.5rem;
     transform: rotate(4deg);
   }
+
+  /* Each card a different pastel tape; angle + offset jittered so no two look stamped from the same die. */
+  .taped:nth-child(6n+1) { --tape: var(--color-soft-yellow); }
+  .taped:nth-child(6n+2) { --tape: var(--color-mint); }
+  .taped:nth-child(6n+3) { --tape: var(--color-salmon); }
+  .taped:nth-child(6n+4) { --tape: var(--color-light-purple); }
+  .taped:nth-child(6n+5) { --tape: var(--color-light-green); }
+  .taped:nth-child(6n)   { --tape: var(--color-cyan); }
+
+  .taped:nth-child(2n)::before { transform: rotate(-2.5deg); top: -0.72rem; }
+  .taped:nth-child(2n)::after  { transform: rotate(6deg); top: -0.55rem; right: 1.2rem; }
+  .taped:nth-child(3n)::before { transform: rotate(-7deg); left: 1.1rem; }
+  .taped:nth-child(3n)::after  { transform: rotate(1.5deg); }
 }
 
 @keyframes bet-pop {
