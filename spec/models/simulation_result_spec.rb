@@ -11,7 +11,7 @@ RSpec.describe SimulationResult do
   describe 'horizon readers' do
     subject(:simulation_result) do
       build(:simulation_result, results: {
-              'year_1' => { 'expected_value_cents' => -13_000, 'total_wagered_cents' => 260_000 }
+              'year_1' => { 'expected_value_cents' => -13_000, 'total_deposited_cents' => 260_000, 'profit_percentage' => 38.5 }
             })
     end
 
@@ -29,6 +29,10 @@ RSpec.describe SimulationResult do
 
     it 'exposes the loss as a fraction of everything wagered' do
       expect(simulation_result.loss_fraction(52)).to eq(0.05)
+    end
+
+    it 'exposes the share of runs that ended in profit' do
+      expect(simulation_result.profit_percentage(52)).to eq(38.5)
     end
   end
 end

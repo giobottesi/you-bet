@@ -55,13 +55,19 @@ RSpec.describe MonteCarloSimulator do
       expect(results['years_5'][:profit_percentage]).to be < results['month_1'][:profit_percentage]
     end
 
-    it 'computes the expected value for the first month' do
-      expect(results['month_1'][:expected_value_cents]).to eq(-(weekly_amount_cents * 4 * house_edge).round)
+    it 'loses more than a single-turnover edge because winnings are re-wagered' do
+      expect(results['month_1'][:expected_value_cents]).to be < -(weekly_amount_cents * 4 * house_edge)
     end
 
-    it 'tracks the total wagered per timeframe' do
-      expect(results['month_1'][:total_wagered_cents]).to eq(weekly_amount_cents * 4)
-      expect(results['years_5'][:total_wagered_cents]).to eq(weekly_amount_cents * 260)
+    it 'trends toward losing most of the deposits over five years (gambler\'s ruin)' do
+      years_5 = results['years_5']
+      loss_fraction = years_5[:expected_value_cents].abs.to_f / years_5[:total_deposited_cents]
+      expect(loss_fraction).to be > 0.8
+    end
+
+    it 'tracks the total deposited per timeframe' do
+      expect(results['month_1'][:total_deposited_cents]).to eq(weekly_amount_cents * 4)
+      expect(results['years_5'][:total_deposited_cents]).to eq(weekly_amount_cents * 260)
     end
   end
 
@@ -141,9 +147,9 @@ RSpec.describe MonteCarloSimulator do
 
       it 'loses the full wager every run' do
         results.each_value do |timeframe|
-          expect(timeframe[:expected_value_cents]).to eq(-timeframe[:total_wagered_cents])
+          expect(timeframe[:expected_value_cents]).to eq(-timeframe[:total_deposited_cents])
           expect(timeframe[:profit_percentage]).to eq(0.0)
-          expect(timeframe[:percentiles].values).to all(eq(-timeframe[:total_wagered_cents]))
+          expect(timeframe[:percentiles].values).to all(eq(-timeframe[:total_deposited_cents]))
         end
       end
     end

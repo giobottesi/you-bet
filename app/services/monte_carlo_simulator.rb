@@ -46,9 +46,9 @@ class MonteCarloSimulator
     @win_probability ||= WIN_PROBABILITIES.fetch(bet_type_key, 0.45)
   end
 
-  # Payout on win = amount * (1 - house_edge) / p, so E[net] = -amount * house_edge.
-  def payout_on_win
-    @payout_on_win ||= (weekly_amount_cents * (1.0 - house_edge) / win_probability).round
+  # A won bet returns the stake times (1 - house_edge) / p, so E[balance] *= (1 - house_edge) per turnover.
+  def win_multiplier
+    @win_multiplier ||= (1.0 - house_edge) / win_probability
   end
 
   def simulate_timeframe(weeks)
@@ -56,7 +56,7 @@ class MonteCarloSimulator
 
     {
       weeks: weeks,
-      total_wagered_cents: weekly_amount_cents * weeks,
+      total_deposited_cents: weekly_amount_cents * weeks,
       percentiles: extract_percentiles(outcomes),
       profit_percentage: profit_percentage(outcomes),
       expected_value_cents: expected_value_cents(weeks)
@@ -67,19 +67,30 @@ class MonteCarloSimulator
     simulation_count.times.map { single_run_net(weeks) }
   end
 
-  # One run's net over `weeks`: each week wins the payout or forfeits the stake.
+  # One run's net over `weeks`: each week deposits the weekly amount, then re-wagers the whole
+  # bankroll — a win lets it ride, a loss zeroes it. Net = final bankroll minus everything deposited.
   def single_run_net(weeks)
-    weeks.times.sum do
-      rand < win_probability ? payout_on_win - weekly_amount_cents : -weekly_amount_cents
+    bankroll = 0
+    weeks.times do
+      bankroll += weekly_amount_cents
+      bankroll = rand < win_probability ? (bankroll * win_multiplier).round : 0
     end
+    bankroll - weekly_amount_cents * weeks
   end
 
   def profit_percentage(outcomes)
     (outcomes.count(&:positive?).to_f / simulation_count * 100).round(1)
   end
 
+  # Closed-form expected net: E[balance] follows B_t = (B_{t-1} + deposit)(1 - edge). Recycled winnings
+  # compound the edge over turnover, so cumulative loss trends toward the full deposits (gambler's ruin).
   def expected_value_cents(weeks)
-    -(weekly_amount_cents * weeks * house_edge).round
+    deposited = weekly_amount_cents * weeks
+    retention = 1.0 - house_edge
+    return 0 if retention == 1.0
+
+    expected_balance = weekly_amount_cents * retention * (1 - retention**weeks) / house_edge
+    (expected_balance - deposited).round
   end
 
   def extract_percentiles(sorted_outcomes)

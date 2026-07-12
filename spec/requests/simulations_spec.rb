@@ -188,15 +188,17 @@ RSpec.describe 'Simulations', type: :request do
       expect(response.body).to include(BetType.new(key: 'roulette').display_name(:en))
     end
 
-    it 'renders the deterministic R$ loss for the selected 1-year horizon' do
-      # 5000c/week * 52 weeks * 0.05 edge = R$130; * 0.027 edge = R$70.
-      expect(response.body).to include('R$130')
-      expect(response.body).to include('R$70')
-    end
+    it 'renders the recycled projected loss and its share of deposits per bet type' do
+      helpers = ActionController::Base.helpers
+      { 'sports_singles' => 0.05, 'roulette' => 0.027 }.each do |bet_type_key, edge|
+        result = MonteCarloSimulator.new(bet_type_key: bet_type_key, house_edge: edge, weekly_amount_cents: 5000).run['year_1']
+        loss_label = helpers.number_to_currency(result[:expected_value_cents].abs / 100.0, unit: 'R$', precision: 0, format: '%u%n')
+        share = result[:expected_value_cents].abs.to_f / result[:total_deposited_cents]
+        share_label = helpers.number_to_percentage(share * 100, precision: 1, strip_insignificant_zeros: true)
 
-    it 'renders each loss as a percentage of everything wagered (the realized edge)' do
-      expect(response.body).to include('5%')
-      expect(response.body).to include('2.7%')
+        expect(response.body).to include(loss_label)
+        expect(response.body).to include(share_label)
+      end
     end
 
     it 'renders the selected weekly amount and horizon' do
