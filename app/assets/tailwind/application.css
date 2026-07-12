@@ -55,7 +55,9 @@
   }
 
   /* Display face on every heading (self-hosted); body stays Libre Franklin. */
-  h1, h2, h3 {
+  h1,
+  h2,
+  h3 {
     font-family: "Bricolage Grotesque", "Libre Franklin", system-ui, sans-serif;
     letter-spacing: -0.01em;
   }
@@ -77,7 +79,7 @@
   font-style: normal;
   font-display: swap;
   src: url("/fonts/bricolage-grotesque-800.ttf") format("truetype"),
-       url("/fonts/bricolage-grotesque-800.woff2") format("woff2");
+    url("/fonts/bricolage-grotesque-800.woff2") format("woff2");
 }
 
 @layer components {
@@ -93,13 +95,11 @@
     /* Fixed-height band (em) so big headings get a proportionally thinner, lighter swipe. */
     background-position: 0 92%;
     background-size: 100% 0.42em;
-    background-image: linear-gradient(
-      100deg,
-      color-mix(in srgb, var(--mark, var(--color-yellow)) 72%, transparent) 0,
-      color-mix(in srgb, var(--mark, var(--color-yellow)) 66%, transparent) 45%,
-      color-mix(in srgb, var(--mark, var(--color-yellow)) 30%, transparent) 88%,
-      transparent 100%
-    );
+    background-image: llinear-gradient(100deg,
+        color-mix(in srgb, var(--mark, var(--color-yellow)) 72%, transparent) 0,
+        color-mix(in srgb, var(--mark, var(--color-yellow)) 66%, transparent) 45%,
+        color-mix(in srgb, var(--mark, var(--color-yellow)) 96%, transparent) 99%,
+        transparent 100%);
     box-decoration-break: clone;
     -webkit-box-decoration-break: clone;
   }
@@ -126,7 +126,7 @@
   }
 
   .cta {
-    @apply mt-6 block w-full cursor-pointer border-2 border-black bg-coral px-4 py-[0.9rem] text-base font-extrabold uppercase tracking-[0.06em] text-black shadow-[4px_4px_0_rgba(0,0,0,0.25)];
+    @apply mt-6 block w-full cursor-pointer border-2 border-black bg-coral px-4 py-[0.9rem] text-base font-extrabold uppercase tracking-[0.06em] text-black shadow-[4px_4px_0_rgba(0, 0, 0, 0.25)];
   }
 
   .cta:disabled {
@@ -165,7 +165,7 @@
 
   /* Square chevron buttons at the slider's mid-height edges */
   .bet-slider__arrow {
-    @apply absolute z-[3] flex h-7 w-7 cursor-pointer items-center justify-center border-2 border-text text-xl/none font-black text-text shadow-[2px_2px_0_rgba(0,0,0,0.3)];
+    @apply absolute z-[3] flex h-7 w-7 cursor-pointer items-center justify-center border-2 border-text text-xl/none font-black text-text shadow-[2px_2px_0_rgba(0, 0, 0, 0.3)];
     top: calc(50% - 8px);
     transform: translateY(-50%);
     background: var(--color-card);
@@ -173,7 +173,7 @@
   }
 
   .bet-slider__arrow:active {
-    @apply shadow-[1px_1px_0_rgba(0,0,0,0.3)];
+    @apply shadow-[1px_1px_0_rgba(0, 0, 0, 0.3)];
     transform: translateY(-50%) translate(1px, 1px);
   }
 
@@ -209,7 +209,7 @@
   /* Card sized so the next one peeks — the "there's more" scroll signal */
   .bet-card {
     --bet-accent: var(--color-coral);
-    @apply relative flex cursor-pointer select-none flex-col gap-[0.8rem] border-[2.5px] border-text p-[1.05rem] shadow-[5px_5px_0_rgba(0,0,0,0.28)];
+    @apply relative flex cursor-pointer select-none flex-col gap-[0.8rem] border-[2.5px] border-text p-[1.05rem] shadow-[5px_5px_0_rgba(0, 0, 0, 0.28)];
     flex: 0 0 9.5rem;
     min-height: 10rem;
     scroll-snap-align: start;
@@ -219,7 +219,7 @@
   }
 
   .bet-card:hover {
-    @apply shadow-[8px_8px_0_rgba(0,0,0,0.28)];
+    @apply shadow-[8px_8px_0_rgba(0, 0, 0, 0.28)];
     transform: translateY(-3px);
   }
 
@@ -313,14 +313,14 @@
   /* Radio card — sibling of .bet-card's checkbox idiom (paper, accent-on-select), round dot not ✓ */
   .amount-card {
     --bet-accent: var(--color-coral);
-    @apply relative flex cursor-pointer select-none flex-col gap-1 border-[2.5px] border-text p-4 pl-12 shadow-[5px_5px_0_rgba(0,0,0,0.28)];
+    @apply relative flex cursor-pointer select-none flex-col gap-1 border-[2.5px] border-text p-4 pl-12 shadow-[5px_5px_0_rgba(0, 0, 0, 0.28)];
     background-color: var(--color-card);
     background-image: var(--paper-grain);
     transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   }
 
   .amount-card:hover {
-    @apply shadow-[8px_8px_0_rgba(0,0,0,0.28)];
+    @apply shadow-[8px_8px_0_rgba(0, 0, 0, 0.28)];
     transform: translateY(-3px);
   }
 
@@ -426,7 +426,7 @@
   }
 
   .timeframe__range::-webkit-slider-thumb {
-    @apply h-11 w-11 appearance-none border-[2.5px] border-text shadow-[3px_3px_0_rgba(0,0,0,0.28)];
+    @apply h-11 w-11 appearance-none border-[2.5px] border-text shadow-[3px_3px_0_rgba(0, 0, 0, 0.28)];
     background-color: var(--bet-accent, var(--color-purple));
     background-image: var(--timeframe-grip);
     background-repeat: no-repeat;
@@ -435,7 +435,7 @@
   }
 
   .timeframe__range::-moz-range-thumb {
-    @apply h-11 w-11 border-[2.5px] border-text shadow-[3px_3px_0_rgba(0,0,0,0.28)];
+    @apply h-11 w-11 border-[2.5px] border-text shadow-[3px_3px_0_rgba(0, 0, 0, 0.28)];
     background-color: var(--bet-accent, var(--color-purple));
     background-image: var(--timeframe-grip);
     background-repeat: no-repeat;
@@ -466,7 +466,9 @@
   }
 
   /* Notepad source card: a bright kraft binding bar folded onto a ruled paper body. */
-  .notepad { position: relative; }
+  .notepad {
+    position: relative;
+  }
 
   .notepad__bar {
     height: var(--note-gap);
@@ -495,7 +497,9 @@
 
   /* Kill default block margins so rows stay on the ruled grid (line-height set per element in the view,
      via text-size/leading utilities — a component rule here loses to Tailwind's utility layer). */
-  .notepad__body > * { margin: 0; }
+  .notepad__body>* {
+    margin: 0;
+  }
 
   /* Lifted paper sheet: hard-offset shadow in an accent (--poster-accent), no hard outline. */
   .note-poster {
@@ -520,7 +524,10 @@
     background-size: 320px 320px;
     border: 2px dashed var(--dash, var(--color-muted));
   }
-  .note-card + .note-card { margin-top: 1.5rem; }
+
+  .note-card+.note-card {
+    margin-top: 1.5rem;
+  }
 
   /* Washi tape — vivid translucent accent; the rough grain over it reads as real tape. */
   .washi {
@@ -537,8 +544,18 @@
     background-size: 320px 320px, auto, auto;
     mask: linear-gradient(90deg, transparent, #000 4px, #000 calc(100% - 4px), transparent);
   }
-  .washi--left  { top: -0.7rem; left: 1.5rem;  transform: rotate(-4deg); }
-  .washi--right { top: -0.7rem; right: 1.5rem; transform: rotate(4deg); }
+
+  .washi--left {
+    top: -0.7rem;
+    left: 1.5rem;
+    transform: rotate(-4deg);
+  }
+
+  .washi--right {
+    top: -0.7rem;
+    right: 1.5rem;
+    transform: rotate(4deg);
+  }
 }
 
 @keyframes bet-pop {
