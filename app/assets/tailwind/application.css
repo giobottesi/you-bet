@@ -158,7 +158,8 @@
 
   /* ===== FE-10 share buttons — paper aesthetic, one accent per action ===== */
   .share-button {
-    @apply inline-flex cursor-pointer items-center gap-2 border-2 border-black px-3 py-1 text-sm font-extrabold uppercase tracking-[0.04em] no-underline shadow-[3px_3px_0_rgba(0, 0, 0, 0.25)];
+    @apply inline-flex cursor-pointer items-center gap-2 border-2 border-black px-3 py-1 text-sm font-extrabold uppercase tracking-[0.04em] no-underline;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.25);
   }
 
   .page .share-button {
