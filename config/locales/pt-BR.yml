@@ -23,7 +23,7 @@ pt-BR:
 
   about:
     title: "Sobre"
-    heading: "Quem está por trás do You-Bet"
+    heading: "O que é a you-bet e quem fez"
     intro: "O You-Bet é um projeto paralelo, de uma pessoa só. Esta página conta quem fez, como e por quê — inclusive onde a IA entrou."
     ai:
       heading: "Como a IA foi usada"
@@ -36,22 +36,22 @@ pt-BR:
         - "Produto, design, tom e o sentido da coisa toda são decisões humanas."
       betina: "Betina é o nome que a Gio deu à assistente de IA que narra o diário e escreve estas linhas. Dar um nome pareceu mais honesto do que um carimbo anônimo de \"gerado por IA\": assim dá sempre pra saber quando é a Betina falando, e não a Gio."
     story:
-      heading: "o desafio real"
+      heading: "o desafio real, pq esse app existe?"
       origin:
         heading: "Como o projeto começou"
         body: "Vendo um post no Instagram, esse aqui. Eu sempre tenho muitas ideias mas nunca boto em prática de verdade, esse foi um empurrão pra eu começar a fazer coisas que eu gosto muito - código - com impacto (eu espero)"
       why_this_one:
-        heading: "Por que justo esse projeto?"
+        heading: "Por que agora e com esse projeto?"
         body: "Toca num problema \"de agora\" da nossa sociedade, algo que pode estar mais perto do que sabemos de verdade, isso é alinhado com a minha \"visão de mundo\" meio que resumida em: \"o que eu posso fazer pra ajudar a resolver um problema que existe aqui e agora?\""
     gatinho:
       heading: "Conheça o Gatinho"
-      body: "O Gatinho é o mascote do You-Bet — o contraponto amigável e esperto ao Tigrinho. É um placeholder em arte-texto até a versão ilustrada chegar."
+      body: "O Gatinho é o mascote da You-Bet — o contraponto amigável e esperto ao Tigrinho. É um placeholder em arte-texto até a versão ilustrada chegar."
     naming:
       heading: "Por que \"You-Bet\"?"
-      body: "\"You bet\", em inglês, quer dizer duas coisas ao mesmo tempo: \"você aposta\" e aquele \"pode apostar / com certeza\". O nome brinca com esse duplo sentido — é sobre apostar, mas também é a resposta meio irônica que a matemática dá."
+      body: "\"You bet\", em inglês, quer dizer duas coisas ao mesmo tempo: a traducao direta é \"você aposta\", porém é usado como uma expressao equivalente à \"pode apostar / com certeza / boto fé\". O nome brinca com esse duplo sentido — é sobre apostar, mas também é a resposta meio irônica que a matemática dá."
     logo:
-      heading: "O logo, feito do zero"
-      body: "O logo foi desenhado do zero pela Gio. Antes da versão verde que você vê por aí, outros conceitos foram testados — alguns deles aqui embaixo."
+      heading: "a logo, feita do zero"
+      body: "A logo foi desenhada do zero pela Gio. Antes da versão verde que você vê por aí, outros conceitos foram testados:"
       concept_alt: "Conceito de logo do You-Bet"
     links:
       heading: "Da uma fuçada"
@@ -71,7 +71,7 @@ pt-BR:
         question: "Fazer isso mudou o que você pensa das bets — ou de quem aposta?"
         answer: "Sim, eu sabia que era ruim, mas não tinha ideia da dimensão do problema e de como as pessoas são induzidas ao erro escancaradamente e pior ESTRATEGICAMENTE."
       pairing_with_betina:
-        question: "Sério: como é fazer uma coisa que você curte com uma IA no meio? Onde eu ajudei de verdade, e onde eu atrapalhei?"
+        question: "Como é fazer uma coisa que você gosta e entende com uma IA no meio? Onde eu ajudei de verdade, e onde eu atrapalhei?"
         answer: "Minha cabeça TDAH é muito barulhenta, despejar o barulho na IA, apesar de consumir tokens e contexto absurdo, me ajuda a não perder insights importantes e priorizar as entregas, assim eu foco na qualidade do que vai pro repositório. Desenvolvi muitas skills pra ajudar com texto e verificação de dados que seriam muito legais de compartilhar mais abertamente quando surgir interesse nisso"
       what_success_looks_like:
         question: "Se UMA pessoa mudar de ideia por causa dessa página, já valeu? O que é \"deu certo\" pra você?"

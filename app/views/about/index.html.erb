@@ -5,19 +5,6 @@
   <p class="text-base text-muted"><%= t("about.intro") %></p>
 </section>
 
-<%# AI declaration — competition-required + factual. Lifted paper poster. %>
-<section class="note-poster py-6" aria-label="<%= t('about.ai.heading') %>">
-  <h2 class="mb-4 text-[1.5rem]/[1.4] font-extrabold text-text"><span class="brand-heading" style="--mark: var(--color-purple)"><%= t("about.ai.heading") %></span></h2>
-  <p class="text-base text-text"><%= t("about.ai.intro") %></p>
-  <p class="mt-4 text-[0.8rem] font-bold uppercase tracking-[0.06em] text-purple-ink"><%= t("about.ai.roles_label") %></p>
-  <ul class="mt-2 flex flex-col gap-2">
-    <% t("about.ai.roles").each do |role| %>
-      <li class="border-l-[4px] border-purple-ink pl-4 text-base text-text"><%= role %></li>
-    <% end %>
-  </ul>
-  <p class="mt-4 text-base text-text"><%= t("about.ai.betina") %></p>
-</section>
-
 <%# Developer story — Gio's own voice, notepad cards. %>
 <section class="py-6" aria-label="<%= t('about.story.heading') %>">
   <h2 class="mb-5 text-[1.5rem]/[1.4] font-extrabold text-text"><span class="brand-heading" style="--mark: var(--color-cyan)"><%= t("about.story.heading") %></span></h2>
@@ -32,6 +19,19 @@
       </li>
     <% end %>
   </ul>
+</section>
+
+<%# AI declaration — competition-required + factual. Lifted paper poster. %>
+<section class="note-poster py-6" aria-label="<%= t('about.ai.heading') %>">
+  <h2 class="mb-4 text-[1.5rem]/[1.4] font-extrabold text-purple-ink"><%= t("about.ai.heading") %></h2>
+  <p class="text-base text-text"><%= t("about.ai.intro") %></p>
+  <p class="mt-4 text-[0.8rem] font-bold uppercase tracking-[0.06em] text-purple-ink"><%= t("about.ai.roles_label") %></p>
+  <ul class="mt-2 flex flex-col gap-2">
+    <% t("about.ai.roles").each do |role| %>
+      <li class="border-l-[4px] border-purple-ink pl-4 text-base text-text"><%= role %></li>
+    <% end %>
+  </ul>
+  <p class="mt-4 text-base text-text"><%= t("about.ai.betina") %></p>
 </section>
 
 <%# Brand touchstone — Gatinho, the friendly counterpoint to Tigrinho (text-art until the illustration ships). %>
@@ -83,7 +83,7 @@
 
 <%# FAQ — Betina asks, Gio answers, on a lifted poster with washi-taped note-cards. %>
 <section class="note-poster py-6" aria-label="<%= t('about.faq.heading') %>">
-  <h2 class="mb-2 text-[1.5rem]/[1.4] font-extrabold text-text"><span class="brand-heading" style="--mark: var(--color-coral)"><%= t("about.faq.heading") %></span></h2>
+  <h2 class="mb-2 text-[1.5rem]/[1.4] font-extrabold text-coral-ink"><%= t("about.faq.heading") %></h2>
   <p class="mb-5 text-base text-muted"><%= t("about.faq.intro") %></p>
   <ul class="flex flex-col gap-4">
     <% @faq_questions.each_with_index do |question, index| %>
