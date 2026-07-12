@@ -2,6 +2,9 @@ class AboutController < ContentController
   # Public repository behind the app; the devlog + sources links use path helpers in the view.
   REPOSITORY_URL = 'https://github.com/giobottesi/you-bet'
 
+  # AGPL-3.0 license text — the app's "Appropriate Legal Notices" link the source here.
+  LICENSE_URL = 'https://github.com/giobottesi/you-bet/blob/main/LICENSE'
+
   # The Instagram post that sparked the project — linked from "esse aqui" in the origin story.
   ORIGIN_POST_URL = 'https://www.instagram.com/p/DZ-iq0UlXvt/'
 
@@ -20,6 +23,7 @@ class AboutController < ContentController
 
   def index
     @repository_url = REPOSITORY_URL
+    @license_url = LICENSE_URL
     @story_sections = STORY_SECTIONS
     @faq_questions = FAQ_QUESTIONS
   end

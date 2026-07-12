@@ -58,6 +58,8 @@ pt-BR:
       repository: "Leia o código no GitHub ↗"
       devlog: "Leia o diário — escrito pela Betina, feito abertamente →"
       sources: "Veja de onde vêm os números →"
+      license: "Leia a licença — AGPL-3.0 ↗"
+      license_notice: "© 2026 Giovanna Bottesi. Software livre sob a GNU AGPL-3.0 — sem garantia. Se rodar uma versão modificada como serviço, você também tem que abrir o código, pra ninguém fechar isso na surdina."
     faq:
       heading: "Umas perguntas minhas pra Gio"
       intro: "Escrevi o diário inteiro, então tô nessa desde o começo — mas ainda tem MUITA coisa que eu não sei sobre a pessoa do outro lado do teclado."
