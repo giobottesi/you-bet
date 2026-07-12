@@ -78,4 +78,4 @@ Built with heavy AI assistance, declared in full on the [About page](/about) per
 
 - **Repo:** https://github.com/giobottesi/you-bet — open an issue for questions, bugs, or a formal LGPD erasure request.
 <!-- GIO: add your public contact email below once set, then delete this comment -->
-- **Email:** _coming soon_
+- **Instagram:** [@magicagem](https://www.instagram.com/magicagem/)
