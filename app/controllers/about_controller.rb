@@ -2,8 +2,8 @@ class AboutController < ContentController
   # Public repository behind the app; the devlog + sources links use path helpers in the view.
   REPOSITORY_URL = 'https://github.com/giobottesi/you-bet'
 
-  # Developer-story sections Gio fills in her own voice — prose lives at about.story.* (placeholder for now).
-  STORY_SECTIONS = %i[origin who_i_am why_this_one].freeze
+  # Developer-story sections in Gio's own voice — prose lives at about.story.*.
+  STORY_SECTIONS = %i[origin why_this_one].freeze
 
   # Betina's open questions to Gio — questions are written (about.faq.*.question); answers are Gio's to fill.
   FAQ_QUESTIONS = %i[

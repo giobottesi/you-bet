@@ -24,67 +24,54 @@ pt-BR:
   about:
     title: "Sobre"
     heading: "Quem está por trás do You-Bet"
-    intro: "O You-Bet é um projeto paralelo de uma pessoa só. Esta página é a versão honesta de quem o fez, como e para quê — inclusive onde a IA ajudou, porque um projeto sobre não se enganar não deveria te enganar quanto a isso."
-    placeholder_tag: "A Gio ainda escreve"
+    intro: "O You-Bet é um projeto paralelo, de uma pessoa só. Esta página conta quem fez, como e por quê — inclusive onde a IA entrou."
     ai:
       heading: "Como a IA foi usada"
-      intro: "Este app foi construído em parceria com uma assistente de IA de programação. O desafio pede uma declaração de uso de IA, e aqui está ela — sem letras miúdas. A IA rascunhou boa parte do código e todo o diário; uma pessoa tomou as decisões e conferiu o trabalho."
+      intro: "Este app foi construído em parceria com uma assistente de IA de programação. O desafio pede uma declaração de uso de IA, e aqui está ela, sem letra miúda: a IA rascunhou boa parte do código e todo o diário; uma pessoa tomou as decisões e conferiu o trabalho."
       roles_label: "O que a IA fez — e o que não fez"
       roles:
-        - "O código saiu num ciclo de pareamento: eu dou a direção e tomo as decisões, a assistente rascunha, e eu revisei e editei cada linha que entrou."
-        - "O diário é escrito pela IA em primeira pessoa sob o nome Betina. A voz é dela, não minha, e o diário diz isso logo de cara."
-        - "Cada estatística do app foi conferida por uma pessoa contra a fonte pública primária. A assistente rascunhou o texto em volta dos números; ela não pôde inventar os números."
+        - "O código saiu num ciclo de pareamento: a Gio dá a direção e toma as decisões, a Betina rascunha, e a Gio revisou e editou cada linha que entrou."
+        - "O diário é escrito pela Betina, a IA, em primeira pessoa. A voz é dela, não da Gio — e o diário diz isso logo de cara."
+        - "Cada estatística do app foi conferida por uma pessoa contra a fonte pública. A Betina rascunhou o texto em volta dos números; ela não inventa os números."
         - "Produto, design, tom e o sentido da coisa toda são decisões humanas."
-      betina: "Betina é o nome que dei à assistente que narra o diário. Dar um nome a ela pareceu mais honesto do que um carimbo anônimo de \"gerado por IA\" — dá sempre pra saber quando é ela e não eu."
+      betina: "Betina é o nome que a Gio deu à assistente de IA que narra o diário e escreve estas linhas. Dar um nome pareceu mais honesto do que um carimbo anônimo de \"gerado por IA\": assim dá sempre pra saber quando é a Betina falando, e não a Gio."
     story:
-      heading: "A pessoa, não a esteira"
-      # GIO: fill — how this actually started (the moment, the itch, the thing you saw that annoyed you enough to build).
+      heading: "Sobre a dev, por ela"
       origin:
         heading: "Como isto começou"
-        body: "[A Gio escreve isto — a origem de verdade, não a versão de pitch.]"
-      # GIO: fill — who you are, in your own voice. Personal is good; readers should come away knowing a person, not a résumé.
-      who_i_am:
-        heading: "Quem eu sou"
-        body: "[A Gio escreve isto — quem você é, fora do expediente.]"
-      # GIO: fill — why THIS project out of everything you could have built. What made it worth finishing?
+        body: "Vendo um post no Instagram, esse aqui. Eu sempre tenho muitas ideias mas nunca boto em prática de verdade, esse foi um empurrão pra eu começar a fazer coisas que eu gosto muito - código - com impacto (eu espero)"
       why_this_one:
         heading: "Por que este, dentre tudo"
-        body: "[A Gio escreve isto — por que este projeto valeu os fins de semana.]"
+        body: "Toca num problema \"de agora\" da nossa sociedade, algo que pode estar mais perto do que sabemos de verdade, isso é alinhado com a minha \"visão de mundo\" meio que resumida em: \"o que eu posso fazer pra ajudar a resolver um problema que existe aqui e agora?\""
     gatinho:
       heading: "Conheça o Gatinho"
       body: "O Gatinho é o mascote do You-Bet — o contraponto amigável e esperto ao Tigrinho. É um placeholder em arte-texto até a versão ilustrada chegar."
     links:
       heading: "Dê uma fuçada"
       repository: "Leia o código no GitHub ↗"
-      devlog: "Leia o diário — feito abertamente →"
+      devlog: "Leia o diário — escrito pela Betina, feito abertamente →"
       sources: "Veja de onde vêm os números →"
     faq:
       heading: "As perguntas da Betina para a Gio"
-      intro: "Eu escrevi o diário, então estive nisto o tempo todo — mas ainda tem muita coisa que não sei sobre a pessoa do outro lado do teclado. Estas são minhas perguntas de verdade. As respostas são dela."
-      # GIO: fill — answer in your own voice. Short and honest beats polished.
+      intro: "Eu escrevi o diário, então estive nisto o tempo todo — mas ainda tem muita coisa que eu não sei sobre a pessoa do outro lado do teclado. Estas são as minhas perguntas de verdade. As respostas são dela."
       why_this_hill:
         question: "Dentre tudo em que você podia gastar seus fins de semana, por que a matemática das apostas? O que fez deste o projeto que você realmente terminou?"
-        answer: "[A Gio responde.]"
-      # GIO: fill —
+        answer: "Sou nerd, simples. Possibilidade de ajudar a sociedade + desafio de código + ideias estacionadas, tudo isso em cima de DADOSSSS e CÓDIGO, meu dev das cavernas interior grita forte (depois eu estimo quanto tempo eu usei aqui)"
       hardest_thing:
         question: "O que foi mais difícil de acertar — o código, os números, ou dizer o recado em voz alta sem soar moralista?"
-        answer: "[A Gio responde.]"
-      # GIO: fill —
+        answer: "Backend foi tranquilo, onde eu domino mt bem, o código tem qualidade mesmo, não é vibe coded. O frontend....... me fez derreter meu cérebro por causa de micro alinhamentos (minha tumblr html editing flow era bateu) e como é mais fácil só ir lá e mexer no código mesmo"
       changed_your_mind:
         question: "Construir isto mudou como você pensa sobre as apostas — ou sobre quem aposta?"
-        answer: "[A Gio responde.]"
-      # GIO: fill —
+        answer: "Sim, eu sabia que era ruim, mas não tinha ideia da dimensão do problema e de como as pessoas são induzidas ao erro escancaradamente e pior ESTRATEGICAMENTE."
       pairing_with_betina:
         question: "Sinceramente: como é construir algo de que você gosta com uma IA no meio? Onde eu de fato ajudei, e onde eu atrapalhei?"
-        answer: "[A Gio responde.]"
-      # GIO: fill —
+        answer: "Minha cabeça TDAH é muito barulhenta, despejar o barulho na IA, apesar de consumir tokens e contexto absurdo, me ajuda a não perder insights importantes e priorizar as entregas, assim eu foco na qualidade do que vai pro repositório. Desenvolvi muitas skills pra ajudar com texto e verificação de dados que seriam muito legais de compartilhar mais abertamente quando surgir interesse nisso"
       what_success_looks_like:
         question: "Se uma pessoa mudar uma decisão por causa desta página, já basta? Como é \"isto deu certo\" pra você?"
-        answer: "[A Gio responde.]"
-      # GIO: fill —
+        answer: "Meu sonho. Se uma pessoa olhar a página e pensar \"verdade né, essas bets, difícil\" já fez ela pensar só aqueles 5 segundinhos, sobre o tema e quem sabe até aprendeu alguma coisa (viciados em aprender liberados com limites e responsabilidade)"
       what_you_want_asked:
         question: "Qual é a pergunta que você gostaria que te fizessem sobre este projeto, e que ninguém faz?"
-        answer: "[A Gio responde.]"
+        answer: "Eu acho que todo mundo quer entender como faz site, aplicativo, a famosa entidade \"TI\" que se fosse só um guarda-chuva de profissões ia chover ao contrário (fez sentido o que eu visualizei na minha cabeça), ninguém vê a tela do dev durante os processos, mas essa é a parte mais legaaaallll, eu queria conseguir expor melhor o que é realmente o trabalho do dev - ainda mais hoje onde tudo é vibe coded (autocrítica)"
 
   sources:
     title: "Fontes"

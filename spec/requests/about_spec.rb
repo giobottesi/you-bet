@@ -50,8 +50,9 @@ RSpec.describe 'About', type: :request do
       end
     end
 
-    it 'flags the story and FAQ answers as Gio-authored placeholders' do
-      expect(response.body).to include(CGI.escapeHTML(I18n.t('about.placeholder_tag')))
+    it "renders Gio's authored story + FAQ answers" do
+      expect(response.body).to include(CGI.escapeHTML(I18n.t('about.story.origin.body')))
+      expect(response.body).to include(CGI.escapeHTML(I18n.t('about.faq.why_this_hill.answer')))
     end
   end
 
@@ -61,7 +62,7 @@ RSpec.describe 'About', type: :request do
     end
 
     it 'carries the ordered developer-story sections' do
-      expect(AboutController::STORY_SECTIONS).to eq(%i[origin who_i_am why_this_one])
+      expect(AboutController::STORY_SECTIONS).to eq(%i[origin why_this_one])
     end
 
     it "carries Betina's open questions for Gio" do
