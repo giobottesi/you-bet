@@ -1,6 +1,6 @@
 <%# FE-10 — link sharing. Paper aesthetic; three actions: WhatsApp, X, copy link. %>
 <% permalink = simulation_url(@simulation) %>
-<section class="mt-10 border-[3px] border-border bg-surface [background-image:var(--paper-grain)] p-5 shadow-[4px_4px_0_rgba(0,0,0,0.2)]"
+<section class="result-card mt-10" style="--card-accent: var(--color-yellow)"
          data-controller="share"
          data-share-url-value="<%= permalink %>"
          data-share-copied-value="<%= t("simulations.results.share.copied") %>"
