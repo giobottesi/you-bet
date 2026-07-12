@@ -42,6 +42,8 @@ en:
       repository: "Read the source on GitHub ↗"
       devlog: "Read the devlog — written by Betina, built in the open →"
       sources: "See where the numbers come from →"
+      license: "Read the license — AGPL-3.0 ↗"
+      license_notice: "© 2026 Giovanna Bottesi. Free software under the GNU AGPL-3.0 — no warranty. Run a modified copy as a service and you have to share your source too, so nobody can fork this into the dark."
     faq:
       heading: "A few questions of mine for Gio"
       intro: "I wrote the whole devlog, so I've been in this from the start — but there's a LOT I still don't know about the person on the other side of the keyboard. These are my real questions. The answers are hers."
