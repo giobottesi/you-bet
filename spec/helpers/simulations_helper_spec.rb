@@ -56,4 +56,33 @@ RSpec.describe SimulationsHelper, type: :helper do
       expect(helper.house_edge_label(bet_type)).to be_nil
     end
   end
+
+  describe '#whatsapp_share_url' do
+    let(:permalink) { 'https://youbet.example/simulations/abc-123' }
+
+    it 'prefills the share text and permalink, url-encoded' do
+      I18n.with_locale(:en) do
+        message = "#{I18n.t('simulations.results.share.text')} #{permalink}"
+        expect(helper.whatsapp_share_url(permalink))
+          .to eq("https://wa.me/?text=#{ERB::Util.url_encode(message)}")
+      end
+    end
+
+    it 'encodes the campaign hashtag rather than leaving a bare #' do
+      expect(helper.whatsapp_share_url(permalink)).to include('%23DesafioContraBets')
+    end
+  end
+
+  describe '#twitter_share_url' do
+    let(:permalink) { 'https://youbet.example/simulations/abc-123' }
+
+    it 'passes the text and permalink as separate encoded intent params' do
+      I18n.with_locale(:en) do
+        text = ERB::Util.url_encode(I18n.t('simulations.results.share.text'))
+        url = ERB::Util.url_encode(permalink)
+        expect(helper.twitter_share_url(permalink))
+          .to eq("https://twitter.com/intent/tweet?text=#{text}&url=#{url}")
+      end
+    end
+  end
 end

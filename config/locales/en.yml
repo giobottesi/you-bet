@@ -292,3 +292,11 @@ en:
           self_exclusion:
             name: "Self-exclusion"
             description: "Want a clean break? Brazil's federal platform can block your CPF from every licensed betting site at once — for a set period, or indefinitely."
+      share:
+        heading: "Show a friend the math"
+        intro: "The house counts on nobody running the numbers. Ruin the plan — pass it on."
+        text: "I ran the numbers on betting at You-Bet. Here's what the math actually says: #DesafioContraBets"
+        whatsapp: "WhatsApp"
+        twitter: "X"
+        copy: "Copy link"
+        copied: "Copied!"

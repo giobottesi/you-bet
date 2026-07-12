@@ -1,0 +1,21 @@
+<%# FE-10 — link sharing. Paper aesthetic; three actions: WhatsApp, X, copy link. %>
+<% permalink = simulation_url(@simulation) %>
+<section class="result-card mt-10" style="--card-accent: var(--color-yellow)"
+         data-controller="share"
+         data-share-url-value="<%= permalink %>"
+         data-share-copied-value="<%= t("simulations.results.share.copied") %>"
+         aria-labelledby="share-heading">
+  <h2 id="share-heading" class="text-lg font-extrabold text-text"><%= t("simulations.results.share.heading") %></h2>
+  <p class="mt-2 text-base text-muted"><%= t("simulations.results.share.intro") %></p>
+
+  <div class="mt-5 flex flex-wrap gap-3">
+    <%= link_to t("simulations.results.share.whatsapp"), whatsapp_share_url(permalink),
+                class: "share-button bg-green", target: "_blank", rel: "noopener" %>
+    <%= link_to t("simulations.results.share.twitter"), twitter_share_url(permalink),
+                class: "share-button bg-cyan", target: "_blank", rel: "noopener" %>
+    <button type="button" class="share-button bg-yellow"
+            data-share-target="button" data-action="share#copy">
+      <%= t("simulations.results.share.copy") %>
+    </button>
+  </div>
+</section>

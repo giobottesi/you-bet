@@ -280,6 +280,56 @@ RSpec.describe 'Simulations', type: :request do
     end
   end
 
+  describe 'GET /simulations/:id share section (#show, FE-10)' do
+    let(:simulation) { create(:simulation) }
+    # pt-BR is the default locale, so only the non-default English view pins ?locale=en on the permalink.
+    let(:base_permalink) { "http://www.example.com/simulations/#{simulation.uuid}" }
+
+    context 'in English' do
+      let(:permalink) { "#{base_permalink}?locale=en" }
+
+      before { get simulation_path(simulation, locale: 'en') }
+
+      it 'renders the share heading and the share Stimulus controller' do
+        expect(response.body).to include(CGI.escapeHTML(I18n.t('simulations.results.share.heading', locale: :en)))
+        expect(response.body).to include('data-controller="share"')
+      end
+
+      it 'wires the copy button to the permalink and localized confirmation' do
+        expect(response.body).to include("data-share-url-value=\"#{permalink}\"")
+        expect(response.body).to include('data-share-copied-value')
+        expect(response.body).to include('data-action="share#copy"')
+      end
+
+      it 'links WhatsApp with the encoded share text and permalink' do
+        message = "#{I18n.t('simulations.results.share.text', locale: :en)} #{permalink}"
+        expect(response.body).to include("https://wa.me/?text=#{ERB::Util.url_encode(message)}")
+      end
+
+      it 'links X/Twitter with the encoded text and permalink params' do
+        text = ERB::Util.url_encode(I18n.t('simulations.results.share.text', locale: :en))
+        url = ERB::Util.url_encode(permalink)
+        expect(response.body).to include("https://twitter.com/intent/tweet?text=#{text}&amp;url=#{url}")
+      end
+    end
+
+    context 'in Portuguese' do
+      let(:permalink) { base_permalink }
+
+      before { get simulation_path(simulation, locale: 'pt-BR') }
+
+      it 'renders the localized share heading' do
+        expect(response.body).to include(CGI.escapeHTML(I18n.t('simulations.results.share.heading', locale: :'pt-BR')))
+      end
+
+      it 'carries the Portuguese share text and campaign hashtag in the WhatsApp link' do
+        message = "#{I18n.t('simulations.results.share.text', locale: :'pt-BR')} #{permalink}"
+        expect(response.body).to include("https://wa.me/?text=#{ERB::Util.url_encode(message)}")
+        expect(I18n.t('simulations.results.share.text', locale: :'pt-BR')).to include('#DesafioContraBets')
+      end
+    end
+  end
+
   describe 'help resource constants (FE-09)' do
     let(:resources) { SimulationsHelper::HELP_RESOURCES }
 
