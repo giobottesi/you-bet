@@ -126,7 +126,7 @@
   }
 
   .cta {
-    @apply mt-6 block w-full cursor-pointer border-2 border-black bg-coral px-4 py-[0.9rem] text-base font-extrabold uppercase tracking-[0.06em] text-black shadow-[4px_4px_0_rgba(0, 0, 0, 0.25)];
+    @apply mt-6 block w-full cursor-pointer border-2 border-black bg-coral px-4 py-[0.9rem] text-base font-extrabold uppercase tracking-[0.06em] text-black shadow-[4px_4px_0_rgba(0,0,0,0.25)];
   }
 
   .cta:disabled {
@@ -165,7 +165,7 @@
 
   /* Square chevron buttons at the slider's mid-height edges */
   .bet-slider__arrow {
-    @apply absolute z-[3] flex h-7 w-7 cursor-pointer items-center justify-center border-2 border-text text-xl/none font-black text-text shadow-[2px_2px_0_rgba(0, 0, 0, 0.3)];
+    @apply absolute z-[3] flex h-7 w-7 cursor-pointer items-center justify-center border-2 border-text text-xl/none font-black text-text shadow-[2px_2px_0_rgba(0,0,0,0.3)];
     top: calc(50% - 8px);
     transform: translateY(-50%);
     background: var(--color-card);
@@ -173,7 +173,7 @@
   }
 
   .bet-slider__arrow:active {
-    @apply shadow-[1px_1px_0_rgba(0, 0, 0, 0.3)];
+    @apply shadow-[1px_1px_0_rgba(0,0,0,0.3)];
     transform: translateY(-50%) translate(1px, 1px);
   }
 
@@ -209,7 +209,7 @@
   /* Card sized so the next one peeks — the "there's more" scroll signal */
   .bet-card {
     --bet-accent: var(--color-coral);
-    @apply relative flex cursor-pointer select-none flex-col gap-[0.8rem] border-[2.5px] border-text p-[1.05rem] shadow-[5px_5px_0_rgba(0, 0, 0, 0.28)];
+    @apply relative flex cursor-pointer select-none flex-col gap-[0.8rem] border-[2.5px] border-text p-[1.05rem] shadow-[5px_5px_0_rgba(0,0,0,0.28)];
     flex: 0 0 9.5rem;
     min-height: 10rem;
     scroll-snap-align: start;
@@ -219,7 +219,7 @@
   }
 
   .bet-card:hover {
-    @apply shadow-[8px_8px_0_rgba(0, 0, 0, 0.28)];
+    @apply shadow-[8px_8px_0_rgba(0,0,0,0.28)];
     transform: translateY(-3px);
   }
 
@@ -313,14 +313,14 @@
   /* Radio card — sibling of .bet-card's checkbox idiom (paper, accent-on-select), round dot not ✓ */
   .amount-card {
     --bet-accent: var(--color-coral);
-    @apply relative flex cursor-pointer select-none flex-col gap-1 border-[2.5px] border-text p-4 pl-12 shadow-[5px_5px_0_rgba(0, 0, 0, 0.28)];
+    @apply relative flex cursor-pointer select-none flex-col gap-1 border-[2.5px] border-text p-4 pl-12 shadow-[5px_5px_0_rgba(0,0,0,0.28)];
     background-color: var(--color-card);
     background-image: var(--paper-grain);
     transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   }
 
   .amount-card:hover {
-    @apply shadow-[8px_8px_0_rgba(0, 0, 0, 0.28)];
+    @apply shadow-[8px_8px_0_rgba(0,0,0,0.28)];
     transform: translateY(-3px);
   }
 
@@ -426,7 +426,7 @@
   }
 
   .timeframe__range::-webkit-slider-thumb {
-    @apply h-11 w-11 appearance-none border-[2.5px] border-text shadow-[3px_3px_0_rgba(0, 0, 0, 0.28)];
+    @apply h-11 w-11 appearance-none border-[2.5px] border-text shadow-[3px_3px_0_rgba(0,0,0,0.28)];
     background-color: var(--bet-accent, var(--color-purple));
     background-image: var(--timeframe-grip);
     background-repeat: no-repeat;
@@ -435,7 +435,7 @@
   }
 
   .timeframe__range::-moz-range-thumb {
-    @apply h-11 w-11 border-[2.5px] border-text shadow-[3px_3px_0_rgba(0, 0, 0, 0.28)];
+    @apply h-11 w-11 border-[2.5px] border-text shadow-[3px_3px_0_rgba(0,0,0,0.28)];
     background-color: var(--bet-accent, var(--color-purple));
     background-image: var(--timeframe-grip);
     background-repeat: no-repeat;
