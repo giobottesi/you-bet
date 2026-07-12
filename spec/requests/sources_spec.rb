@@ -18,10 +18,14 @@ RSpec.describe 'Sources', type: :request do
       end
     end
 
-    it 'renders the localized provides + key figures for each source' do
+    it 'renders each source: provides, every figure line, the conclusion, and the exact-figure receipt' do
       SourcesController::DATA_SOURCES.each do |source|
         expect(response.body).to include(CGI.escapeHTML(I18n.t("sources.data.#{source[:key]}.provides")))
-        expect(response.body).to include(CGI.escapeHTML(I18n.t("sources.data.#{source[:key]}.figures")))
+        I18n.t("sources.data.#{source[:key]}.figures").each do |line|
+          expect(response.body).to include(CGI.escapeHTML(line))
+        end
+        expect(response.body).to include(CGI.escapeHTML(I18n.t("sources.data.#{source[:key]}.conclusion")))
+        expect(response.body).to include(CGI.escapeHTML(I18n.t("sources.data.#{source[:key]}.exact")))
       end
     end
 
@@ -51,22 +55,24 @@ RSpec.describe 'Sources', type: :request do
       expect(SourcesController::DATA_SOURCES.size).to eq(7)
     end
 
-    it 'gives every source a key, a name, a source link, and localized provides/figures in both locales' do
+    it 'gives every source a key, a name, a link, and localized provides/figures/conclusion/exact in both locales' do
       SourcesController::DATA_SOURCES.each do |source|
         expect(source).to include(:key, :name, :url)
         expect(source[:url]).to start_with('https://')
         %i[en pt-BR].each do |locale|
           expect(I18n.t("sources.data.#{source[:key]}.provides", locale: locale)).to be_present
-          expect(I18n.t("sources.data.#{source[:key]}.figures", locale: locale)).to be_present
+          expect(I18n.t("sources.data.#{source[:key]}.figures", locale: locale)).to be_an(Array).and be_present
+          expect(I18n.t("sources.data.#{source[:key]}.conclusion", locale: locale)).to be_present
+          expect(I18n.t("sources.data.#{source[:key]}.exact", locale: locale)).to be_present
         end
       end
     end
 
-    it 'carries the methodological notes, each keyed to its localized prose; citations are optional and https' do
-      expect(SourcesController::METHODOLOGICAL_NOTES.size).to eq(4)
+    it 'carries the methodological notes, each keyed to its prose and cited to a verifiable primary source' do
+      expect(SourcesController::METHODOLOGICAL_NOTES.size).to eq(3)
       SourcesController::METHODOLOGICAL_NOTES.each do |note|
-        expect(note).to include(:key)
-        Array(note[:citations]).each do |citation|
+        expect(note).to include(:key, :citations)
+        note[:citations].each do |citation|
           expect(citation[:label]).to be_present
           expect(citation[:url]).to start_with('https://')
         end

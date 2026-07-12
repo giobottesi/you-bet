@@ -26,37 +26,60 @@ pt-BR:
     heading: "De onde vêm nossos números"
     intro: "Cada número no You-Bet tem por trás uma fonte pública verificada. Aqui está cada uma, o que fornece e como cruzamos os números."
     list_label: "Fontes de dados"
-    provides_label: "O que fornece"
-    figures_label: "Números principais"
+    provides_label: "O que mostra"
+    figures_label: "Os números"
+    conclusion_label: "O que isso quer dizer"
     source_link: "Ver a fonte ↗"
     data:
       bcb:
         provides: "Quanto dinheiro entra nas bets"
-        figures: "De R$18 a 21 bilhões por mês entram nas bets via Pix (2024). Das famílias do Bolsa Família, as bets tiraram R$3 bilhões, atingindo 5 milhões de pessoas."
+        figures:
+          - "De R$18 a 21 bilhões por mês entram nas bets via Pix (2024)."
+          - "Das famílias do Bolsa Família, as bets tiraram R$3 bilhões, atingindo 5 milhões de pessoas."
+        conclusion: "As bets já são um mercado de bilhões, e parte sai de quem tem menos."
         exact: "R$18–21 bi/mês via Pix (2024); R$3 bi de 5 milhões de pessoas em lares do Bolsa Família"
       datasenado:
         provides: "Quem aposta, quanto gasta, quanto deve"
-        figures: "Em 2024, as bets alcançaram 22,1 milhões de pessoas em um só mês. Mais da metade ganha até 2 salários mínimos. E 42% estão com contas atrasadas há mais de 90 dias."
+        figures:
+          - "Em 2024, as bets alcançaram 22,1 milhões de pessoas em um só mês."
+          - "Mais da metade ganha até 2 salários mínimos."
+          - "E 42% estão com contas atrasadas há mais de 90 dias."
+        conclusion: "Quem mais aposta é quem menos pode perder."
         exact: "22,1 milhões em 30 dias (2024); 52% ganham até 2 salários mínimos; 42% com dívida acima de 90 dias"
       cnc:
         provides: "Dívida das famílias"
-        figures: "Mais de R$30 bilhões por mês vão para as bets. O gasto cresceu mais de 500% em 3 anos. As bets já empurraram quase 270 mil famílias para dívidas graves."
+        figures:
+          - "Mais de R$30 bilhões por mês vão para as bets."
+          - "O gasto cresceu mais de 500% em 3 anos."
+          - "As bets já empurraram quase 270 mil famílias para dívidas graves."
+        conclusion: "O dinheiro das apostas está virando dívida de família."
         exact: "R$30 bi/mês; +500% de gasto em 3 anos; 269 mil famílias em inadimplência grave"
       unifesp:
         provides: "Impacto na saúde"
-        figures: "O jeito como as bets funcionam já põe quase 11 milhões de pessoas em risco de saúde e de dinheiro. Entre quem aposta, 2 em cada 3 mostram sinais de alerta."
+        figures:
+          - "O jeito como as bets funcionam já põe quase 11 milhões de pessoas em risco de saúde e de dinheiro."
+          - "Entre quem aposta, 2 em cada 3 mostram sinais de alerta."
+        conclusion: "Para muita gente, apostar já é risco de saúde, não passatempo."
         exact: "10,9 milhões em risco (6,8% dos maiores de 14 anos); 66,8% dos apostadores com jogo de risco ou problemático"
       ibevar:
         provides: "O que mais endivida"
-        figures: "No endividamento das famílias, as apostas pesam cerca de 3 vezes o peso dos juros."
+        figures:
+          - "No endividamento das famílias, as apostas pesam cerca de 3 vezes o peso dos juros."
+        conclusion: "As apostas endividam mais que os próprios juros."
         exact: "peso no endividamento: apostas 0,2255 vs juros 0,0709 (cerca de 3x)"
       inss:
         provides: "Auxílios por vício em apostas"
-        figures: "Os auxílios do INSS por vício em apostas cresceram mais de 2.300% entre 2023 e 2025. E 73% de quem recebe são homens."
+        figures:
+          - "Os auxílios do INSS por vício em apostas cresceram mais de 2.300% entre 2023 e 2025."
+          - "E 73% de quem recebe são homens."
+        conclusion: "O vício em apostas já pesa até no INSS."
         exact: "+2.300% em auxílios por ludopatia (2023 a 2025); 73% dos beneficiários são homens"
       atlasintel:
         provides: "Opinião dos brasileiros"
-        figures: "Quase 87% das pessoas acham as bets prejudiciais. E 70% querem proibir de vez."
+        figures:
+          - "Quase 87% das pessoas acham as bets prejudiciais."
+          - "E 70% querem proibir de vez."
+        conclusion: "O país já enxergou o problema e quer freio."
         exact: "86,7% acham prejudicial; 70% por proibição total; 76% por limites de publicidade; 85,2% associam ao endividamento familiar"
     methodology_heading: "Como conferimos os números"
     cited_label: "Fontes:"
@@ -67,9 +90,6 @@ pt-BR:
       cnc_contested:
         subject: "A magnitude da CNC é contestada"
         body: "O estudo da CNC recebeu uma réplica pública da associação da indústria de apostas (IBJR), que contesta a escala. Citamos a CNC, mas sinalizamos a disputa em vez de apresentá-la como consenso."
-      tigrinho_edge:
-        subject: "Margem da casa no tigrinho"
-        body: "A PG Soft alega uma taxa de retorno ao jogador (RTP) de 96,81%, mas plataformas não reguladas podem definir RTPs menores. Usamos 5% como meio-termo conservador e declaramos isso de forma transparente."
       bolsa_familia:
         subject: "O que é o Bolsa Família"
         body: "O Bolsa Família é o programa federal de transferência de renda do Brasil para famílias de baixa renda."

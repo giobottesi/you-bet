@@ -10,37 +10,60 @@ en:
     heading: "Where our numbers come from"
     intro: "Every figure in You-Bet is backed by a verified public source. Here is each one, what it provides, and how we cross-checked it."
     list_label: "Data sources"
-    provides_label: "What it provides"
-    figures_label: "Key figures"
+    provides_label: "What it shows"
+    figures_label: "The numbers"
+    conclusion_label: "What it means"
     source_link: "See the source ↗"
     data:
       bcb:
         provides: "How much money bets pull in"
-        figures: "R$18 to 21 billion a month goes into bets via Pix (2024). From Bolsa Família families, bets took R$3 billion, hitting 5 million people."
+        figures:
+          - "R$18 to 21 billion a month goes into bets via Pix (2024)."
+          - "From Bolsa Família families, bets took R$3 billion, hitting 5 million people."
+        conclusion: "Betting is already a billion-real market, and part of it comes from those who have the least."
         exact: "R$18–21 bn/month via Pix (2024); R$3 bn from 5 million people in Bolsa Família households"
       datasenado:
         provides: "Who bets, what they spend, what they owe"
-        figures: "In 2024, bets reached 22.1 million people in a single month. More than half earn up to 2 minimum wages. And 42% are over 90 days behind on bills."
+        figures:
+          - "In 2024, bets reached 22.1 million people in a single month."
+          - "More than half earn up to 2 minimum wages."
+          - "And 42% are over 90 days behind on bills."
+        conclusion: "The people betting most are the ones who can least afford to lose."
         exact: "22.1M in 30 days (2024); 52% earn up to 2 minimum wages; 42% carry 90+ day debt"
       cnc:
         provides: "Family debt"
-        figures: "More than R$30 billion a month goes into bets. Spending grew over 500% in 3 years. Bets have pushed nearly 270,000 families into serious debt."
+        figures:
+          - "More than R$30 billion a month goes into bets."
+          - "Spending grew over 500% in 3 years."
+          - "Bets have pushed nearly 270,000 families into serious debt."
+        conclusion: "Betting money is turning into family debt."
         exact: "R$30 bn/month; +500% spending in 3 years; 269K families in severe default"
       unifesp:
         provides: "Health impact"
-        figures: "The way bets are built already puts nearly 11 million people's health and money at risk. Among bettors, 2 in 3 show warning signs."
+        figures:
+          - "The way bets are built already puts nearly 11 million people's health and money at risk."
+          - "Among bettors, 2 in 3 show warning signs."
+        conclusion: "For many, betting is already a health risk, not a pastime."
         exact: "10.9M at risk (6.8% of ages 14+); 66.8% of bettors show risky or problem gambling"
       ibevar:
         provides: "What drives debt most"
-        figures: "In driving families into debt, betting weighs about 3 times as much as interest."
+        figures:
+          - "In driving families into debt, betting weighs about 3 times as much as interest."
+        conclusion: "Bets drive debt more than interest itself."
         exact: "debt-driver weight: bets 0.2255 vs interest 0.0709 (about 3x)"
       inss:
         provides: "Benefits for betting addiction"
-        figures: "Disability benefits for betting addiction grew over 2,300% from 2023 to 2025. And 73% of recipients are men."
+        figures:
+          - "Disability benefits for betting addiction grew over 2,300% from 2023 to 2025."
+          - "And 73% of recipients are men."
+        conclusion: "Betting addiction now weighs even on social security."
         exact: "+2,300% ludopatia (gambling-disorder) benefits (2023 to 2025); 73% of recipients are men"
       atlasintel:
         provides: "What Brazilians think"
-        figures: "Nearly 87% of people consider bets harmful. And 70% want them banned outright."
+        figures:
+          - "Nearly 87% of people consider bets harmful."
+          - "And 70% want them banned outright."
+        conclusion: "The country already sees the problem, and wants brakes."
         exact: "86.7% consider bets harmful; 70% support a total ban; 76% want ad limits; 85.2% link bets to family debt"
     methodology_heading: "How we checked the numbers"
     cited_label: "Sources:"
@@ -51,9 +74,6 @@ en:
       cnc_contested:
         subject: "CNC magnitude is contested"
         body: "The CNC study drew a public rebuttal from the betting industry association (IBJR), which disputes the scale. We cite CNC but flag the dispute rather than present it as settled."
-      tigrinho_edge:
-        subject: "Tigrinho house edge"
-        body: "PG Soft claims a 96.81% payout rate (RTP), but unregulated platforms can set lower RTPs. We use 5% as a conservative middle ground and disclose it transparently."
       bolsa_familia:
         subject: "What is Bolsa Família"
         body: "Bolsa Família is Brazil's federal cash-transfer program for low-income families."
