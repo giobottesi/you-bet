@@ -33,24 +33,31 @@ pt-BR:
       bcb:
         provides: "Quanto dinheiro entra nas bets"
         figures: "De R$18 a 21 bilhões por mês entram nas bets via Pix (2024). Das famílias do Bolsa Família, as bets tiraram R$3 bilhões, atingindo 5 milhões de pessoas."
+        exact: "R$18–21 bi/mês via Pix (2024); R$3 bi de 5 milhões de pessoas em lares do Bolsa Família"
       datasenado:
         provides: "Quem aposta, quanto gasta, quanto deve"
-        figures: "As bets alcançaram 22,1 milhões de pessoas no último mês. Metade ganha até 2 salários mínimos. Mais de 4 em cada 10 estão com contas atrasadas há mais de 90 dias."
+        figures: "Em 2024, as bets alcançaram 22,1 milhões de pessoas em um só mês. Mais da metade ganha até 2 salários mínimos. E 42% estão com contas atrasadas há mais de 90 dias."
+        exact: "22,1 milhões em 30 dias (2024); 52% ganham até 2 salários mínimos; 42% com dívida acima de 90 dias"
       cnc:
         provides: "Dívida das famílias"
         figures: "Mais de R$30 bilhões por mês vão para as bets. O gasto cresceu mais de 500% em 3 anos. As bets já empurraram quase 270 mil famílias para dívidas graves."
+        exact: "R$30 bi/mês; +500% de gasto em 3 anos; 269 mil famílias em inadimplência grave"
       unifesp:
         provides: "Impacto na saúde"
         figures: "O jeito como as bets funcionam já põe quase 11 milhões de pessoas em risco de saúde e de dinheiro. Entre quem aposta, 2 em cada 3 mostram sinais de alerta."
+        exact: "10,9 milhões em risco (6,8% dos maiores de 14 anos); 66,8% dos apostadores com jogo de risco ou problemático"
       ibevar:
         provides: "O que mais endivida"
-        figures: "Para endividar uma família, as apostas pesam cerca de 3 vezes mais que os juros."
+        figures: "No endividamento das famílias, as apostas pesam cerca de 3 vezes o peso dos juros."
+        exact: "peso no endividamento: apostas 0,2255 vs juros 0,0709 (cerca de 3x)"
       inss:
         provides: "Auxílios por vício em apostas"
-        figures: "Os auxílios do INSS por vício em apostas cresceram mais de 2.300% entre 2023 e 2025. 7 em cada 10 de quem recebe são homens."
+        figures: "Os auxílios do INSS por vício em apostas cresceram mais de 2.300% entre 2023 e 2025. E 73% de quem recebe são homens."
+        exact: "+2.300% em auxílios por ludopatia (2023 a 2025); 73% dos beneficiários são homens"
       atlasintel:
-        provides: "O que o país acha"
-        figures: "Quase 9 em cada 10 pessoas acham as bets prejudiciais. 7 em cada 10 querem proibir de vez."
+        provides: "Opinião dos brasileiros"
+        figures: "Quase 87% das pessoas acham as bets prejudiciais. E 70% querem proibir de vez."
+        exact: "86,7% acham prejudicial; 70% por proibição total; 76% por limites de publicidade; 85,2% associam ao endividamento familiar"
     methodology_heading: "Como conferimos os números"
     cited_label: "Fontes:"
     notes:
