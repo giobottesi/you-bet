@@ -34,46 +34,44 @@ pt-BR:
       bcb:
         provides: "Quanto dinheiro entra nas bets"
         figures:
-          - "De R$18 a 21 bilhões por mês entram nas bets via Pix (2024)."
+          - "Em um mês de 2024, entre R$18 e R$21 bilhões foram apostados via Pix."
           - "Das famílias do Bolsa Família, as bets tiraram R$3 bilhões, atingindo 5 milhões de pessoas."
         conclusion: "Parte do dinheiro apostado vem de famílias de baixa renda."
-        exact: "R$18–21 bi/mês via Pix (2024); R$3 bi de 5 milhões de pessoas em lares do Bolsa Família"
+        exact: "R$18–21 bi em transferências Pix num mês (2024); R$3 bi de 5 milhões de pessoas de famílias do Bolsa Família"
       datasenado:
         provides: "Quem aposta, quanto gasta, quanto deve"
         figures:
-          - "Em 2024, as bets alcançaram 22,1 milhões de pessoas em um só mês."
+          - "Em 2024, 22,1 milhões de pessoas apostaram em um só mês."
           - "Mais da metade ganha até 2 salários mínimos."
           - "42% estão com contas atrasadas há mais de 90 dias."
         conclusion: "Grande parte de quem aposta tem baixa renda e já convive com dívidas."
-        exact: "22,1 milhões em 30 dias (2024); 52% ganham até 2 salários mínimos; 42% com dívida acima de 90 dias"
+        exact: "13% dos brasileiros de 16+ (22,13 milhões) apostaram em 30 dias; 52% ganham até 2 salários mínimos; 42% com dívida acima de 90 dias"
       cnc:
         provides: "Dívida das famílias"
         figures:
-          - "Mais de R$30 bilhões por mês vão para as bets."
-          - "O gasto cresceu mais de 500% em 3 anos."
-          - "As bets já empurraram quase 270 mil famílias para dívidas graves."
+          - "O gasto mensal com bets cresceu mais de R$30 bilhões no período."
+          - "Isso pode ter levado cerca de 270 mil famílias a dívidas graves."
         conclusion: "O gasto com apostas cresce junto com o endividamento das famílias."
-        exact: "R$30 bi/mês; +500% de gasto em 3 anos; 269 mil famílias em inadimplência grave"
+        exact: "crescimento do gasto mensal superior a R$30 bilhões; cerca de 270 mil famílias em possível inadimplência severa"
       unifesp:
         provides: "Impacto na saúde"
         figures:
-          - "O jeito como as bets funcionam já põe quase 11 milhões de pessoas em risco de saúde e de dinheiro."
-          - "Entre quem aposta, 2 em cada 3 mostram sinais de alerta."
-        conclusion: "Uma parcela grande dos apostadores já apresenta comportamento de risco."
-        exact: "10,9 milhões em risco (6,8% dos maiores de 14 anos); 66,8% dos apostadores com jogo de risco ou problemático"
+          - "Quase 11 milhões de pessoas (6,8% dos maiores de 14 anos) já apostam de um jeito que cria problemas de saúde e de dinheiro."
+        conclusion: "Para milhões de pessoas, apostar já cria problemas de saúde e de dinheiro."
+        exact: "10,9 milhões (6,8% dos maiores de 14 anos) jogam de forma a criar problemas para si"
       ibevar:
         provides: "O que mais endivida"
         figures:
-          - "No endividamento das famílias, as apostas pesam cerca de 3 vezes o peso dos juros."
-        conclusion: "No estudo, as apostas pesam mais no endividamento do que os juros."
-        exact: "peso no endividamento: apostas 0,2255 vs juros 0,0709 (cerca de 3x)"
+          - "No estudo sobre endividamento, as apostas tiveram o maior peso, acima dos juros e do crédito."
+        conclusion: "No estudo, as apostas pesaram mais no endividamento do que os juros."
+        exact: "coeficientes no endividamento: apostas 0,2255; juros ao consumidor 0,0709; crédito sobre a renda 0,0440"
       inss:
         provides: "Auxílios por vício em apostas"
         figures:
-          - "Os auxílios do INSS por vício em apostas cresceram mais de 2.300% entre 2023 e 2025."
+          - "Os auxílios do INSS por vício em apostas cresceram mais de 2.300% entre junho de 2023 e abril de 2025."
           - "73% de quem recebe são homens."
         conclusion: "O vício em apostas já aparece nos pedidos de auxílio ao INSS."
-        exact: "+2.300% em auxílios por ludopatia (2023 a 2025); 73% dos beneficiários são homens"
+        exact: "+2.300% em auxílios por ludopatia (jun/2023 a abr/2025); 73% dos beneficiários são homens"
       atlasintel:
         provides: "Opinião dos brasileiros"
         figures:
