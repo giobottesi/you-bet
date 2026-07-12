@@ -76,7 +76,8 @@
   font-weight: 800;
   font-style: normal;
   font-display: swap;
-  src: url("/fonts/bricolage-grotesque-800.woff2") format("woff2");
+  src: url("/fonts/bricolage-grotesque-800.ttf") format("truetype"),
+       url("/fonts/bricolage-grotesque-800.woff2") format("woff2");
 }
 
 @layer components {
