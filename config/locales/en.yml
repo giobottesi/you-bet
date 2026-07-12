@@ -15,27 +15,27 @@ en:
     source_link: "See the source ↗"
     data:
       bcb:
-        provides: "Financial flows, market size"
-        figures: "R$18-21 bi/month via Pix (2024); 5 million people in Bolsa Família households sent R$3 bi to bets"
+        provides: "How much money bets pull in"
+        figures: "R$18 to 21 billion a month bet via Pix (2024). Among Bolsa Família families alone, 5 million people sent R$3 billion."
       datasenado:
-        provides: "Bettor demographics, spending, debt"
-        figures: "22.1M bet in the last month; 52% earn ≤2 minimum wages; 42% carry 90+ day debt"
+        provides: "Who bets, what they spend, what they owe"
+        figures: "22.1 million people bet last month. Half earn up to 2 minimum wages. More than 4 in 10 are over 90 days behind on bills."
       cnc:
-        provides: "Family debt trends"
-        figures: "Over R$30 bi/month; +500% spending growth in 3 years; ~269K families in severe default"
+        provides: "Family debt"
+        figures: "More than R$30 billion a month bet. Spending grew over 500% in 3 years. Nearly 270,000 families are deep in debt."
       unifesp:
-        provides: "Clinical gambling behavior"
-        figures: "10.9M at-risk gamblers (6.8% of ages 14+); 66.8% of bettors show risky or problem gambling"
+        provides: "Health impact"
+        figures: "Nearly 11 million people bet in ways that put their health and money at risk. Among bettors, 2 in 3 already show warning signs."
       ibevar:
-        provides: "Debt regression analysis"
-        figures: "Debt-driver coefficient: bets 0.2255 vs interest 0.0709 — bets weigh roughly 3x"
+        provides: "What drives debt most"
+        figures: "To push a family into debt, betting weighs about 3 times more than interest."
       inss:
-        provides: "Ludopatia benefits"
-        figures: "+2,300% monthly ludopatia benefits (2023 to 2025); 73% of beneficiaries are men"
+        provides: "Benefits for betting addiction"
+        figures: "Disability benefits for betting addiction grew over 2,300% from 2023 to 2025. 7 in 10 recipients are men."
       atlasintel:
-        provides: "Public perception"
-        figures: "86.7% consider bets harmful; 70% support a total ban; 76% want ad limits; 85.2% link bets to family debt"
-    methodology_heading: "Methodological notes"
+        provides: "What the country thinks"
+        figures: "Nearly 9 in 10 people consider bets harmful. 7 in 10 want them banned outright."
+    methodology_heading: "How we checked the numbers"
     cited_label: "Sources:"
     notes:
       bettor_count:
