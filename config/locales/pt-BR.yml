@@ -52,25 +52,25 @@ pt-BR:
       devlog: "Leia o diário — escrito pela Betina, feito abertamente →"
       sources: "Veja de onde vêm os números →"
     faq:
-      heading: "As perguntas da Betina para a Gio"
-      intro: "Eu escrevi o diário, então estive nisto o tempo todo — mas ainda tem muita coisa que eu não sei sobre a pessoa do outro lado do teclado. Estas são as minhas perguntas de verdade. As respostas são dela."
+      heading: "Umas perguntas minhas pra Gio"
+      intro: "Escrevi o diário inteiro, então tô nessa desde o começo — mas ainda tem MUITA coisa que eu não sei sobre a pessoa do outro lado do teclado. Essas são minhas perguntas de verdade. As respostas são dela."
       why_this_hill:
-        question: "Dentre tudo em que você podia gastar seus fins de semana, por que a matemática das apostas? O que fez deste o projeto que você realmente terminou?"
+        question: "De tudo que você podia fazer no fim de semana, por que matemática de aposta? O que fez você terminar justo esse?"
         answer: "Sou nerd, simples. Possibilidade de ajudar a sociedade + desafio de código + ideias estacionadas, tudo isso em cima de DADOSSSS e CÓDIGO, meu dev das cavernas interior grita forte (depois eu estimo quanto tempo eu usei aqui)"
       hardest_thing:
-        question: "O que foi mais difícil de acertar — o código, os números, ou dizer o recado em voz alta sem soar moralista?"
+        question: "O que foi mais difícil: o código, os números, ou falar o que precisava sem soar careta?"
         answer: "Backend foi tranquilo, onde eu domino mt bem, o código tem qualidade mesmo, não é vibe coded. O frontend....... me fez derreter meu cérebro por causa de micro alinhamentos (minha tumblr html editing flow era bateu) e como é mais fácil só ir lá e mexer no código mesmo"
       changed_your_mind:
-        question: "Construir isto mudou como você pensa sobre as apostas — ou sobre quem aposta?"
+        question: "Fazer isso mudou o que você pensa das bets — ou de quem aposta?"
         answer: "Sim, eu sabia que era ruim, mas não tinha ideia da dimensão do problema e de como as pessoas são induzidas ao erro escancaradamente e pior ESTRATEGICAMENTE."
       pairing_with_betina:
-        question: "Sinceramente: como é construir algo de que você gosta com uma IA no meio? Onde eu de fato ajudei, e onde eu atrapalhei?"
+        question: "Sério: como é fazer uma coisa que você curte com uma IA no meio? Onde eu ajudei de verdade, e onde eu atrapalhei?"
         answer: "Minha cabeça TDAH é muito barulhenta, despejar o barulho na IA, apesar de consumir tokens e contexto absurdo, me ajuda a não perder insights importantes e priorizar as entregas, assim eu foco na qualidade do que vai pro repositório. Desenvolvi muitas skills pra ajudar com texto e verificação de dados que seriam muito legais de compartilhar mais abertamente quando surgir interesse nisso"
       what_success_looks_like:
-        question: "Se uma pessoa mudar uma decisão por causa desta página, já basta? Como é \"isto deu certo\" pra você?"
+        question: "Se UMA pessoa mudar de ideia por causa dessa página, já valeu? O que é \"deu certo\" pra você?"
         answer: "Meu sonho. Se uma pessoa olhar a página e pensar \"verdade né, essas bets, difícil\" já fez ela pensar só aqueles 5 segundinhos, sobre o tema e quem sabe até aprendeu alguma coisa (viciados em aprender liberados com limites e responsabilidade)"
       what_you_want_asked:
-        question: "Qual é a pergunta que você gostaria que te fizessem sobre este projeto, e que ninguém faz?"
+        question: "Qual pergunta você queria que te fizessem sobre isso, e ninguém faz?"
         answer: "Eu acho que todo mundo quer entender como faz site, aplicativo, a famosa entidade \"TI\" que se fosse só um guarda-chuva de profissões ia chover ao contrário (fez sentido o que eu visualizei na minha cabeça), ninguém vê a tela do dev durante os processos, mas essa é a parte mais legaaaallll, eu queria conseguir expor melhor o que é realmente o trabalho do dev - ainda mais hoje onde tudo é vibe coded (autocrítica)"
 
   sources:

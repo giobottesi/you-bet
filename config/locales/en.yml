@@ -36,25 +36,25 @@ en:
       devlog: "Read the devlog — written by Betina, built in the open →"
       sources: "See where the numbers come from →"
     faq:
-      heading: "Betina's questions for Gio"
-      intro: "I wrote the devlog, so I've been in this the whole time — but there's a lot I still don't know about the person on the other side of the keyboard. These are my real questions. The answers are hers."
+      heading: "A few questions of mine for Gio"
+      intro: "I wrote the whole devlog, so I've been in this from the start — but there's a LOT I still don't know about the person on the other side of the keyboard. These are my real questions. The answers are hers."
       why_this_hill:
-        question: "Of everything you could have spent your weekends on, why gambling math? What made this the project you actually finished?"
+        question: "Of everything you could do on a weekend, why gambling math? What made you actually finish this one?"
         answer: "I'm a nerd, plain and simple. A chance to help society + a coding challenge + parked ideas, all of it on top of DATAAAA and CODE — my inner caveman dev roars loud."
       hardest_thing:
-        question: "What was the hardest thing to get right — the code, the numbers, or saying the point out loud without sounding preachy?"
+        question: "What was hardest: the code, the numbers, or saying the point out loud without sounding preachy?"
         answer: "The backend was smooth, it's where I'm strong, and the code has real quality — it's not vibe-coded. The frontend, though… it melted my brain with micro-alignments (my old Tumblr-HTML-editing muscle came roaring back) and the constant temptation to just go tweak the code by hand."
       changed_your_mind:
-        question: "Did building this change how you think about the bets — or about the people making them?"
+        question: "Did making this change what you think about the bets — or about the people betting?"
         answer: "Yes. I knew it was bad, but I had no idea of the scale of the problem — or how blatantly people are led into it, and, worse, how strategically."
       pairing_with_betina:
-        question: "Honestly: what's it like building something you care about with an AI in the loop? Where did I actually help, and where did I get in your way?"
+        question: "Real talk: what's it like making something you care about with an AI in the loop? Where did I actually help, and where did I get in the way?"
         answer: "My ADHD brain is very loud. Dumping the noise onto the AI — even though it burns an absurd amount of tokens and context — helps me not lose important insights and prioritize what to ship, so I can focus on the quality of what goes into the repo. Along the way I built a bunch of skills for writing and data-checking that'd be pretty cool to share more openly, whenever there's interest."
       what_success_looks_like:
-        question: "If one person changed one decision because of this page, is that enough? What does \"this worked\" look like to you?"
+        question: "If ONE person changes their mind because of this page, is that enough? What does \"it worked\" look like to you?"
         answer: "It's my dream. If one person looks at the page and thinks \"yeah, true, these bets… rough\", that already made them stop for those five little seconds to think about it — and maybe even learn something (learning addicts welcome, with limits and responsibility)."
       what_you_want_asked:
-        question: "What's the question you wish people asked you about this project, that nobody does?"
+        question: "What question do you wish people asked you about this, and nobody does?"
         answer: "What the dev's screen actually looks like during the process. Everyone wants to understand how you make a website, an app, that famous entity called \"tech\" — but nobody sees what's on the screen while the thing gets built. And that's the coolest part. I wish I could show better what dev work really is, especially now, when everything is vibe-coded."
 
   sources:

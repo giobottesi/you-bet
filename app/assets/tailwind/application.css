@@ -459,7 +459,7 @@
      via text-size/leading utilities — a component rule here loses to Tailwind's utility layer). */
   .notepad__body > * { margin: 0; }
 
-  /* Methodology poster: a paper sheet lifted off the page (hard-offset shadow, no hard outline). */
+  /* Lifted paper sheet: hard-offset shadow in an accent (--poster-accent), no hard outline. */
   .note-poster {
     position: relative;
     padding: 1.75rem 1.5rem;
@@ -468,15 +468,15 @@
     background-blend-mode: soft-light;
     background-size: 320px 320px;
     box-shadow:
-      6px 6px 0 color-mix(in srgb, var(--color-muted) 50%, transparent),
+      7px 7px 0 var(--poster-accent, color-mix(in srgb, var(--color-muted) 50%, transparent)),
       inset 0 0 0 1px color-mix(in srgb, var(--color-muted) 22%, transparent);
   }
 
-  /* A note inside the poster: dashed accent frame, washi tape pinned to a corner. */
+  /* A note inside the poster: dashed accent frame + a faint accent wash, washi tape pinned to a corner. */
   .note-card {
     position: relative;
-    padding: 1rem 1.1rem;
-    background-color: var(--color-bg);
+    padding: 1.4rem 1.1rem 1.1rem;
+    background-color: color-mix(in srgb, var(--dash, var(--color-muted)) 8%, var(--color-bg));
     background-image: var(--rough-paper);
     background-blend-mode: soft-light;
     background-size: 320px 320px;
