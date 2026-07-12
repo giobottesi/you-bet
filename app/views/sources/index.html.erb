@@ -11,12 +11,12 @@
       <li class="notepad" style="<%= notepad_accent_style(index, "--bar") %>">
         <div class="notepad__bar"></div>
         <div class="notepad__body">
-          <h2 class="text-[1.15rem] font-extrabold text-text"><%= source[:name] %></h2>
-          <p class="text-[0.8rem] font-bold uppercase tracking-[0.06em] text-muted"><%= t("sources.provides_label") %></p>
-          <p class="text-base text-text"><%= source[:provides] %></p>
-          <p class="text-[0.8rem] font-bold uppercase tracking-[0.06em] text-muted"><%= t("sources.figures_label") %></p>
-          <p class="text-base text-text"><%= source[:figures] %></p>
-          <p><%= link_to t("sources.source_link"), source[:url], class: "font-bold underline", target: "_blank", rel: "noopener" %></p>
+          <h2 class="text-[1.15rem]/[var(--note-gap)] font-extrabold text-text"><%= source[:name] %></h2>
+          <p class="text-[0.8rem]/[var(--note-gap)] font-bold uppercase tracking-[0.06em] text-muted"><%= t("sources.provides_label") %></p>
+          <p class="text-base/[var(--note-gap)] text-text"><%= source[:provides] %></p>
+          <p class="text-[0.8rem]/[var(--note-gap)] font-bold uppercase tracking-[0.06em] text-muted"><%= t("sources.figures_label") %></p>
+          <p class="text-base/[var(--note-gap)] text-text"><%= source[:figures] %></p>
+          <p class="text-base/[var(--note-gap)]"><%= link_to t("sources.source_link"), source[:url], class: "font-bold underline", target: "_blank", rel: "noopener" %></p>
         </div>
       </li>
     <% end %>
