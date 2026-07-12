@@ -66,6 +66,25 @@
 
 @layer components {
 
+  /* Brand heading — a hand-swiped highlighter marker behind the text (no drop shadow).
+     --mark sets the accent (defaults to yellow); the swipe hugs the words and wraps per line. */
+  .brand-heading {
+    display: inline;
+    padding: 0 0.1em;
+    background-repeat: no-repeat;
+    background-position: 0 82%;
+    background-size: 100% 40%;
+    background-image: linear-gradient(
+      100deg,
+      transparent 0,
+      color-mix(in srgb, var(--mark, var(--color-yellow)) 75%, transparent) 0.35em,
+      color-mix(in srgb, var(--mark, var(--color-yellow)) 82%, transparent) 92%,
+      transparent 100%
+    );
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
   /* Links on the light base use cyan-ink (AA-legible per DESIGN.md) */
   .page a {
     @apply text-cyan-ink;

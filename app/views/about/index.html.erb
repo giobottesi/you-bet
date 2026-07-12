@@ -1,7 +1,7 @@
 <% content_for :title, "You-Bet — #{t('about.title')}" %>
 
 <section class="py-8">
-  <h1 class="mb-4 text-[2rem]/[1.2] font-extrabold text-text [text-shadow:3px_3px_0_var(--color-coral)] sm:text-[2.5rem]"><%= t("about.heading") %></h1>
+  <h1 class="mb-4 text-[2rem]/[1.3] font-extrabold text-text sm:text-[2.5rem]"><span class="brand-heading" style="--mark: var(--color-coral)"><%= t("about.heading") %></span></h1>
   <p class="text-base text-muted"><%= t("about.intro") %></p>
 </section>
 
@@ -20,7 +20,7 @@
 
 <%# Developer story — Gio's own voice, notepad cards. %>
 <section class="py-6" aria-label="<%= t('about.story.heading') %>">
-  <h2 class="mb-5 text-[1.5rem] font-extrabold text-text [text-shadow:2px_2px_0_var(--color-cyan)]"><%= t("about.story.heading") %></h2>
+  <h2 class="mb-5 text-[1.5rem]/[1.4] font-extrabold text-text"><span class="brand-heading" style="--mark: var(--color-cyan)"><%= t("about.story.heading") %></span></h2>
   <ul class="flex flex-col gap-8">
     <% @story_sections.each_with_index do |section, index| %>
       <li class="notepad" style="<%= notepad_accent_style(index, "--bar") %>; <%= notepad_accent_style(index, "--label-accent", ink: true) %>">
@@ -61,10 +61,12 @@
   <div class="bg-surface [background-image:var(--rough-paper)] [background-blend-mode:soft-light] [background-size:320px_320px] border-[3px] border-text p-5 shadow-[6px_6px_0_var(--color-purple)]">
     <h2 class="text-[1.15rem] font-extrabold text-purple-ink"><%= t("about.logo.heading") %></h2>
     <p class="mt-1 text-base text-text"><%= t("about.logo.body") %></p>
-    <div class="mt-4 flex flex-wrap items-center gap-4">
-      <img src="/you-bet-logo.svg" alt="<%= t("about.logo.concept_alt") %>" class="h-12 w-auto border-2 border-text bg-bg p-2">
-      <img src="/concept-purple-line.svg" alt="<%= t("about.logo.concept_alt") %>" class="h-12 w-auto border-2 border-text bg-bg p-2">
-      <img src="/concept-purple-square.svg" alt="<%= t("about.logo.concept_alt") %>" class="h-12 w-auto border-2 border-text bg-bg p-2">
+    <div class="mt-4 flex flex-wrap items-end gap-5">
+      <%# The shipped logo — prominent. %>
+      <img src="/you-bet-logo.svg" alt="<%= t("about.logo.concept_alt") %>" class="h-16 w-auto border-[3px] border-text bg-bg p-3 shadow-[4px_4px_0_var(--color-green)]">
+      <%# The concepts that didn't ship — smaller, lightly pinned. %>
+      <img src="/concept-purple-line.svg" alt="<%= t("about.logo.concept_alt") %>" class="h-11 w-auto rotate-[-3deg] border-2 border-muted bg-bg p-2 opacity-80">
+      <img src="/concept-purple-square.svg" alt="<%= t("about.logo.concept_alt") %>" class="h-11 w-auto rotate-[2deg] border-2 border-muted bg-bg p-2 opacity-80">
     </div>
   </div>
 </section>
