@@ -31,10 +31,10 @@ The brief says: "show the losses", "use the concrete", "don't blame the bettor."
 
 Two audiences, same engine:
 
-| Audience | Entry framing | Example |
-|---|---|---|
-| **Never bet** | "Imagine you start betting R$50/week on múltiplas..." | Prevention — show the math before they start |
-| **Already betting** | "You bet R$50/week on múltiplas. Here's what the math says." | Awareness — show the math they're living |
+| Audience            | Entry framing                                                | Example                                      |
+| ------------------- | ------------------------------------------------------------ | -------------------------------------------- |
+| **Never bet**       | "Imagine you start betting R$50/week on múltiplas..."        | Prevention — show the math before they start |
+| **Already betting** | "You bet R$50/week on múltiplas. Here's what the math says." | Awareness — show the math they're living     |
 
 ---
 
@@ -44,15 +44,15 @@ Two audiences, same engine:
 
 Select one or more bet types:
 
-| Bet Type | House Edge | Display Name (PT-BR) |
-|---|---|---|
-| Sports singles (futebol) | Low | Apostas esportivas |
-| 3-leg accumulator | Moderate | Múltiplas (3 jogos) |
-| 5-leg accumulator | High | Múltiplas (5 jogos) |
-| Tigrinho / slots | Low–Moderate | Tigrinho / Caça-níquel |
-| Crash games (Aviator) | Low | Aviator / Crash |
-| Lottery (Mega-Sena) | Very high | Loteria |
-| Roulette | Low–Moderate | Roleta |
+| Bet Type                 | House Edge   | Display Name (PT-BR)   |
+| ------------------------ | ------------ | ---------------------- |
+| Sports singles (futebol) | Low          | Apostas esportivas     |
+| 3-leg accumulator        | Moderate     | Múltiplas (3 jogos)    |
+| 5-leg accumulator        | High         | Múltiplas (5 jogos)    |
+| Tigrinho / slots         | Low–Moderate | Tigrinho / Caça-níquel |
+| Crash games (Aviator)    | Low          | Aviator / Crash        |
+| Lottery (Mega-Sena)      | Very high    | Loteria                |
+| Roulette                 | Low–Moderate | Roleta                 |
 
 Exact house edge values and methodological notes are in [ARCHITECTURE.md](ARCHITECTURE.md) (settings seed data).
 
@@ -60,13 +60,13 @@ Exact house edge values and methodological notes are in [ARCHITECTURE.md](ARCHIT
 
 Anchored radio buttons based on **real DataSenado spending tiers** — not arbitrary amounts:
 
-| Option | Anchor | Based on |
-|---|---|---|
-| R$12/semana (~R$50/mês) | "uma assinatura de streaming" | DataSenado: 4% of pop bets up to R$50/month (6.3M people) |
-| R$25/semana (~R$100/mês) | "o preço de duas pizzas" | DataSenado: lower bound of R$100-499 tier |
-| R$50/semana (~R$200/mês) | "uma parcela de celular" | Near CNC avg monthly spend of R$216 |
-| R$125/semana (~R$500/mês) | "quase uma parcela de moto" | DataSenado: 3% of pop bets R$500+/month (4.5M people) |
-| Outro valor: [___] | | For exact amounts |
+| Option                    | Anchor                        | Based on                                                  |
+| ------------------------- | ----------------------------- | --------------------------------------------------------- |
+| R$12/semana (~R$50/mês)   | "uma assinatura de streaming" | DataSenado: 4% of pop bets up to R$50/month (6.3M people) |
+| R$25/semana (~R$100/mês)  | "o preço de duas pizzas"      | DataSenado: lower bound of R$100-499 tier                 |
+| R$50/semana (~R$200/mês)  | "uma parcela de celular"      | Near CNC avg monthly spend of R$216                       |
+| R$125/semana (~R$500/mês) | "quase uma parcela de moto"   | DataSenado: 3% of pop bets R$500+/month (4.5M people)     |
+| Outro valor: [___]        |                               | For exact amounts                                         |
 
 No timeframe selection — results show ALL timeframes at once.
 
@@ -93,8 +93,8 @@ The short-term profit percentage is honest and builds trust. The cascade IS the 
 
 ```
 ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐
-│ 31 pizzas│ │ 1 iPhone │ │17m Netflix│ │ R$845 na │
-│          │ │          │ │ + Spotify │ │ poupança │
+│ 31 pizzas│ │ 1 iPhone │ │17m Streaming │ R$845 na │
+│          │ │          │ │ bundle │ │ poupança │
 └──────────┘ └──────────┘ └──────────┘ └──────────┘
 ```
 
@@ -102,12 +102,12 @@ Pool includes: pizzas, cesta básica, smartphone, iPhone, passagem de avião, ge
 
 **Context Cards** — data-backed stats from verified sources:
 
-| Stat | Number | Source |
-|---|---|---|
-| Apostadores que ganham até 2 SM | 52% | DataSenado 2024, p.24 |
-| Apostadores com dívidas 90+ dias | 42% | DataSenado 2024, p.25 |
-| Impacto das apostas vs juros no endividamento | 3x maior | Ibevar/FIA 2026 |
-| Apostadores online com comportamento problemático | 66.8% | LENAD III / UNIFESP |
+| Stat                                                       | Number    | Source                     |
+| ---------------------------------------------------------- | --------- | -------------------------- |
+| Apostadores que ganham até 2 SM                            | 52%       | DataSenado 2024, p.24      |
+| Apostadores com dívidas 90+ dias                           | 42%       | DataSenado 2024, p.25      |
+| Impacto das apostas vs juros no endividamento              | 3x maior  | Ibevar/FIA 2026            |
+| Apostadores online com comportamento problemático          | 66.8%     | LENAD III / UNIFESP        |
 | Pessoas em lares do Bolsa Família que mandaram $ para bets | 5 milhões | BCB Estudo Especial nº 119 |
 
 **Every number MUST be double-checked against primary sources before launch.**
@@ -120,15 +120,15 @@ Pool includes: pizzas, cesta básica, smartphone, iPhone, passagem de avião, ge
 
 Every number in the app is backed by a verified source, rendered as a `/sources` page.
 
-| Source | What It Provides | Key Numbers |
-|---|---|---|
-| **Banco Central — Estudo Especial nº 119** | Financial flows, market size | R$18-21 bi/month via Pix, ~24M bettors, R$3 bi from Bolsa Família |
-| **DataSenado — Panorama Político 2024** | Bettor demographics, spending, debt | 52% earn ≤2 SM, 42% have 90+ day debt, spending tiers |
-| **CNC — PEIC** | Family debt trends | +500% spending growth in 3 years, ~270K families defaulted |
-| **UNIFESP / LENAD III** | Clinical gambling behavior | 10.9M at-risk, 66.8% digital bettors show problem behavior |
-| **Ibevar/FIA (2026)** | Debt regression analysis | Betting impact 3x greater than interest rates |
-| **INSS via Intercept Brasil** | Ludopatia benefits | +2,300% growth in gambling disorder benefits |
-| **AtlasIntel / Latam Pulse (Apr 2026)** | Public perception | 86% consider bets harmful, 70% support ban |
+| Source                                     | What It Provides                    | Key Numbers                                                       |
+| ------------------------------------------ | ----------------------------------- | ----------------------------------------------------------------- |
+| **Banco Central — Estudo Especial nº 119** | Financial flows, market size        | R$18-21 bi/month via Pix, ~24M bettors, R$3 bi from Bolsa Família |
+| **DataSenado — Panorama Político 2024**    | Bettor demographics, spending, debt | 52% earn ≤2 SM, 42% have 90+ day debt, spending tiers             |
+| **CNC — PEIC**                             | Family debt trends                  | +500% spending growth in 3 years, ~270K families defaulted        |
+| **UNIFESP / LENAD III**                    | Clinical gambling behavior          | 10.9M at-risk, 66.8% digital bettors show problem behavior        |
+| **Ibevar/FIA (2026)**                      | Debt regression analysis            | Betting impact 3x greater than interest rates                     |
+| **INSS via Intercept Brasil**              | Ludopatia benefits                  | +2,300% growth in gambling disorder benefits                      |
+| **AtlasIntel / Latam Pulse (Apr 2026)**    | Public perception                   | 86% consider bets harmful, 70% support ban                        |
 
 ### Methodological Notes
 - **BCB vs DataSenado bettor count**: BCB says ~24M (Pix data), DataSenado says 22M (survey). We use "22-24 million" and explain the difference.
@@ -166,12 +166,12 @@ AI declaration (footer badge + `/about` page + README + submission post). Two se
 
 ### Tone (Hard Rules from Brief)
 
-| DO | DON'T |
-|---|---|
-| Target the industry and its math | Blame or ridicule the bettor |
-| Show losses concretely | Moralize ("certo e errado") |
-| Welcome with empathy | Use professorial/"lecture" tone |
-| Use relatable examples | Sensationalize or expose real people |
+| DO                               | DON'T                                |
+| -------------------------------- | ------------------------------------ |
+| Target the industry and its math | Blame or ridicule the bettor         |
+| Show losses concretely           | Moralize ("certo e errado")          |
+| Welcome with empathy             | Use professorial/"lecture" tone      |
+| Use relatable examples           | Sensationalize or expose real people |
 
 ### Responsibility
 - Help resources always visible (CVV 188, SUS/CAPS, Jogadores Anônimos)
