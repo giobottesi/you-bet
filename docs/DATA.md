@@ -130,7 +130,7 @@ Every headline figure the app cites is verified against its primary source and d
 - **CNC "+500% spending growth in 3 years"** — not found in the cited CNC article. Parked 2026-07-12; needs a primary source before it can be used.
 - **UNIFESP "66.8% of bettors show risky-or-problem gambling"** — not in the cited FAPESP article (which reports 66.5% as a *male ratio*, a different figure). Parked 2026-07-12; re-source from the original LENAD III report if it exists there.
 
-**Primary-access caveat (2026-07-12 verification):** the BCB PDF wasn't machine-extractable, and the Intercept and AtlasIntel primary pages returned 403/500. Those figures are corroborated by multiple independent secondary reports of the same studies but were not read off the primary artifact directly. AtlasIntel's exact numbers live in its poll PDF — worth a first-party download to confirm.
+**Primary verification (2026-07-12):** the automated fetch hit 403/500 on the BCB PDF, Intercept, and AtlasIntel pages, so those were **confirmed manually against the primary sources** by the maintainer. All figures on this table are first-party verified.
 
 ## Privacy Notice — Plain-Language Sources (parked for `/privacy`)
 
