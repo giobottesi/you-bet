@@ -85,4 +85,26 @@ module SimulationsHelper
   def loss_percentage_label(loss_fraction)
     number_to_percentage(loss_fraction * 100, precision: 1, strip_insignificant_zeros: true)
   end
+
+  # An already-percentage value (e.g. 38.5) as a whole-percent label -> "39%".
+  def whole_percentage_label(percentage)
+    number_to_percentage(percentage, precision: 0)
+  end
+
+  # A comparison item as its localized, pluralized label, e.g. "31 pizzas" / "1 iPhone".
+  def comparison_label(comparison)
+    t("simulations.results.opportunity.items.#{comparison[:key]}", count: comparison[:quantity])
+  end
+
+  # The [bet_type, result] pair that loses the least at the horizon — the person's best-case pick.
+  def best_case_result(bet_type_results, timeframe_weeks)
+    bet_type_results.min_by { |_bet_type, result| result.loss_fraction(timeframe_weeks) }
+  end
+
+  # Loss fraction at each horizon for one result — the ramp that shows time is the enemy.
+  def loss_timeline(result)
+    MonteCarloSimulator::TIMEFRAMES.values.map do |weeks|
+      { weeks: weeks, fraction: result.loss_fraction(weeks) }
+    end
+  end
 end

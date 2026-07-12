@@ -19,9 +19,44 @@ class SimulationsController < ApplicationController
   def show
     @simulation = Simulation.find_by!(uuid: params[:id])
     @bet_type_results = @simulation.bet_type_keys.filter_map { |bet_type_key| bet_type_result_for(bet_type_key) }
+    @worst_case_loss_cents = worst_case_loss_cents
+    load_opportunity_cost
   end
 
   private
+
+  # Worst single-bet-type loss for the horizon — the bet types are parallel what-ifs on the same
+  # money, never summed, so the opportunity anchor uses the deepest one (matches the staked->lost bar).
+  def worst_case_loss_cents
+    weeks = @simulation.timeframe_weeks
+    @bet_type_results.map { |_bet_type, result| result.loss_cents(weeks) }.max || 0
+  end
+
+  # What the lost money could have bought, plus what it would have grown to in poupança (the hero).
+  # A bonus section — never fail the core results page if its reference data isn't seeded.
+  def load_opportunity_cost
+    @item_comparisons = []
+    return if @worst_case_loss_cents.zero?
+
+    balance_cents = poupanca_balance_cents
+    return if balance_cents.nil?
+
+    comparisons = OpportunityCostMapper.run(loss_cents: @worst_case_loss_cents, poupanca_balance_cents: balance_cents)
+    @poupanca_comparison = comparisons.find { |comparison| comparison[:key] == 'poupanca' }
+    @item_comparisons = comparisons.reject { |comparison| comparison[:key] == 'poupanca' }
+  end
+
+  # Balance the same weekly amount would reach in poupança over the chosen horizon; nil if the rate isn't seeded.
+  def poupanca_balance_cents
+    monthly_rate = AppConfig.find_by(key: 'poupanca_monthly_rate')&.typed_value
+    return if monthly_rate.nil?
+
+    timeframe_key = MonteCarloSimulator::TIMEFRAMES.key(@simulation.timeframe_weeks)
+    PoupancaCalculator.run(
+      weekly_amount_cents: @simulation.weekly_amount_cents,
+      monthly_rate: monthly_rate
+    ).dig(timeframe_key, :balance_cents)
+  end
 
   def simulation_params
     params.permit(:weekly_amount_cents, :timeframe_weeks, bet_type_keys: []).tap do |permitted|
