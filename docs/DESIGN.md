@@ -108,6 +108,7 @@ The magicagem spike (PR #47, not-to-merge) used **Caveat** — a Google Fonts ha
 
 - **Grain/noise overlay** on page background — **locked as the app texture** (see SPRINT.md). Native SVG `feTurbulence` fractalNoise rendered to a `data:` URI CSS background: no asset, no gem, tileable, resolution-independent. Tested recipe (`docs/texture-compare.html`): `baseFrequency='0.65'` + `numOctaves='3'` for coarse grain that survives on-screen (fine high-freq noise aliases to flat gray), a `feColorMatrix` collapsing the RGB noise to contrasty black-alpha speckle, over the light base with `mix-blend-mode: multiply`. Opacity `~0.12–0.25` (0.05 reads as invisible over the warm paper). The same overlay is reused as a layer on BE 17 share cards.
   - *Refinement (2026-07-06):* on **cards**, the grain gains a fine fiber **hatch** over the warm noise — see the Paper-grain row in the Trinket catalog for the full recipe and rollout.
+  - *Refinement (2026-07-12):* **`/sources`** uses a heavier **rough recycled-paper** variant — the same technique escalated with `feDiffuseLighting` (an embossed relief lit by a `feDistantLight`) baked **once** into a stitched tiling `data:` URI (`--rough-paper`) and blended `soft-light` across every surface (card, poster, tape, page). Baking it into a tile — rather than a live per-element `filter` — keeps it clipped to each box, one scale everywhere, and free of filter bleed. The faint hatch lines stay on the page background under it.
 - **Drop shadows** on all cards, buttons, hero text — hard offset, not soft blur
 - **Hard square borders** — no border-radius anywhere
 - **Dot-grid** (from #47 spike) — **not for this app.** `background-image: radial-gradient(<color> 1px, transparent 1px); background-size: 24px 24px;`. Asset-free and tileable like the grain, but a repeating *pattern* not *noise*. Decision (Gio call, 2026-07-06): grain wins for You-Bet; the dot-grid is reserved for a separate private magicagem-blog project, not tracked here. Retained as a comparison lane in `docs/texture-compare.html`.
@@ -169,6 +170,10 @@ WCAG: the active tick keeps dark text on an accent *highlighter* underline (not 
 
 Footer-anchored. Muted text with cyan-**ink** (`#117E71`) links to CVV 188, Jogadores Anônimos — ink variant so link text stays AA-legible on the light base.
 
+### Source Notepad + Methodology Poster (FE-12)
+
+The `/sources` cards are **notepads**: a bright kraft binding bar (accent cycled per card) folded onto a ruled paper body, with a fold crease under the bar and text locked to the ruled-line rhythm (`line-height == --note-gap`, set per row via a text-size/leading utility so Tailwind's own line-height can't drift it). The methodology notes sit on a **lifted paper poster** — a sheet raised off the page by a hard-offset shadow, no hard outline — holding dashed accent note-cards, each pinned with a strip of washi tape on alternating corners. All surfaces carry the rough recycled-paper texture (see Texture).
+
 ---
 
 ## Whimsy patterns (harvested from the #47 spike)
@@ -198,7 +203,7 @@ Asset-free CSS treatments (no gem, no image). A `trinket` Stimulus controller is
 | **Paper grain** | Fine fiber hatch (`2/3px`, `rgba(30,23,20,.045)`) + whisper of warm `feTurbulence` noise (`baseFrequency .5`, warm-tinted, `~.09` alpha). Noise + hatch **overlap** → reads as texture not stripes; warm tint avoids grey striping. Extracted to one `--paper-grain` custom prop, applied to body + panel + cards. Future: refine into stacked-paper-piles look (parked). | All paper surfaces | B | **Live** — body/panel/cards |
 | **Highlighter marker** | Accent marker sweep behind text (`color-mix` ~60%, asymmetric feathered ends, `rotate(-1.2deg)`), dark ink text. Replaces dry boxed badges. **Static only** — animating per-hover annoys. | Over-informational labels (e.g. CASA%); one accent per card. | C-style, static | **Live** on CASA% |
 | **Perforation** | Betting-slip edge notches — side-stub take (dashed tear + radial notches). | **Drop-shadowed** static boxes only (reads as a physical slip). Never on interactive cards. | B | Parked → result slips |
-| **Washi tape** | Translucent pinned-tape strip. | **Flat / non-shadowed** surfaces only — a hard drop-shadow contradicts pinned tape. | B | Parked → landing |
+| **Washi tape** | Translucent pinned-tape strip; accent-tinted with straight-cut ends, the rough-paper grain over it reading as real matte tape. | **Flat / non-shadowed** surfaces. | B | **Live** — `/sources` methodology note-cards (alternating corners) |
 | **Dashed border** | Draft / coming-soon / placeholder device. | Section placeholders, future dividers. | B | Live (placeholders) |
 | **Coin / confetti burst** | Celebration pop. | Results *reveal* only — **never on selection** (noisy, breaks the no-blame tone). | C | Future (Stimulus) |
 | **Easter eggs** | e.g. Pepsi Black can + striped paper straw. | Hidden, low-stakes. | C | Future (Stimulus) |
