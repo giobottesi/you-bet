@@ -24,7 +24,7 @@
           <p class="text-[0.8rem]/[var(--note-gap)] font-bold uppercase tracking-[0.06em] [color:var(--label-accent)]"><%= t("sources.conclusion_label") %></p>
           <p class="text-base/[var(--note-gap)] text-text"><%= t("sources.data.#{source[:key]}.conclusion") %><sup class="font-bold [color:var(--label-accent)]">*</sup></p>
 
-          <p class="mt-3 mb-1 text-[0.75rem] leading-loose text-muted">
+          <p class="mt-1 text-[0.75rem] leading-loose text-muted">
             <span class="font-bold [color:var(--label-accent)]">*</span> <%= t("sources.data.#{source[:key]}.exact") %>. <%= link_to t("sources.source_link"), source[:url], class: "font-bold underline whitespace-nowrap", target: "_blank", rel: "noopener" %>
           </p>
         </div>
