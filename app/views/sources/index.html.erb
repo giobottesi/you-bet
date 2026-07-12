@@ -22,9 +22,9 @@
 
 <section class="py-8" aria-label="<%= t('sources.methodology_heading') %>">
   <h2 class="mb-4 text-[1.5rem] font-extrabold text-text"><%= t("sources.methodology_heading") %></h2>
-  <ul class="flex flex-col gap-5 border-2 border-dashed border-border p-5">
+  <ul class="flex flex-col gap-5 p-0">
     <% @methodological_notes.each do |note| %>
-      <li>
+      <li class="border-2 border-dashed border-border p-5">
         <p class="font-bold text-text"><%= t("sources.notes.#{note[:key]}.subject") %></p>
         <p class="text-base text-muted"><%= t("sources.notes.#{note[:key]}.body") %></p>
         <% if note[:url] %>
