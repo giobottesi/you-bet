@@ -9,7 +9,7 @@
 <section aria-label="<%= t('devlog.title') %>">
   <ol class="flex flex-col gap-4">
     <% @entries.each_with_index do |entry, index| %>
-      <li class="bg-surface [background-image:var(--paper-grain)] border-[3px] border-border p-5 shadow-[6px_6px_0_rgba(0,0,0,0.25)]">
+      <li class="bg-surface [background-image:var(--paper-grain)] border-[3px] border-border p-5 shadow-[6px_6px_0_var(--shadow-25)]">
         <details<%= " open".html_safe if index.zero? %>>
           <summary class="cursor-pointer text-lg font-extrabold text-text marker:text-coral"><%= entry.title %></summary>
           <div class="mt-4 flex flex-col gap-3">

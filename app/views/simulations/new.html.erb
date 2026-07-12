@@ -17,7 +17,7 @@
     </p>
   </section>
 
-  <section class="bg-surface [background-image:var(--paper-grain)] border-[3px] border-border p-6 shadow-[6px_6px_0_rgba(0,0,0,0.25)]" aria-label="Simulation form">
+  <section class="bg-surface [background-image:var(--paper-grain)] border-[3px] border-border p-6 shadow-[6px_6px_0_var(--shadow-25)]" aria-label="Simulation form">
     <%= form_with model: @simulation, url: simulations_path, method: :post, data: { turbo: false } do |form| %>
       <%= render "bet_type_picker", form: form %>
       <%= render "weekly_amount", form: form %>

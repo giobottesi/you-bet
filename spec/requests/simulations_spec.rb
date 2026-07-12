@@ -183,27 +183,70 @@ RSpec.describe 'Simulations', type: :request do
       expect(response).to have_http_status(:ok)
     end
 
-    it 'names every selected bet type' do
-      expect(response.body).to include(BetType.new(key: 'sports_singles').display_name(:en))
+    it 'names the best-case bet type in the timeline' do
+      # roulette (edge 0.027) loses less than sports singles (0.05), so it's the best-case pick.
       expect(response.body).to include(BetType.new(key: 'roulette').display_name(:en))
     end
 
-    it 'renders the recycled projected loss and its share of deposits per bet type' do
+    it 'leads with the worst-case loss and shows the best-case share over time' do
       helpers = ActionController::Base.helpers
-      { 'sports_singles' => 0.05, 'roulette' => 0.027 }.each do |bet_type_key, edge|
-        result = MonteCarloSimulator.new(bet_type_key: bet_type_key, house_edge: edge, weekly_amount_cents: 5000).run['year_1']
-        loss_label = helpers.number_to_currency(result[:expected_value_cents].abs / 100.0, unit: 'R$', precision: 0, format: '%u%n')
-        share = result[:expected_value_cents].abs.to_f / result[:total_deposited_cents]
-        share_label = helpers.number_to_percentage(share * 100, precision: 1, strip_insignificant_zeros: true)
 
-        expect(response.body).to include(loss_label)
-        expect(response.body).to include(share_label)
-      end
+      worst = MonteCarloSimulator.new(bet_type_key: 'sports_singles', house_edge: 0.05, weekly_amount_cents: 5000).run['year_1']
+      worst_loss_label = helpers.number_to_currency(worst[:expected_value_cents].abs / 100.0, unit: 'R$', precision: 0, format: '%u%n')
+      expect(response.body).to include(worst_loss_label)
+
+      best = MonteCarloSimulator.new(bet_type_key: 'roulette', house_edge: 0.027, weekly_amount_cents: 5000).run['year_1']
+      best_share = best[:expected_value_cents].abs.to_f / best[:total_deposited_cents]
+      best_share_label = helpers.number_to_percentage(best_share * 100, precision: 1, strip_insignificant_zeros: true)
+      expect(response.body).to include(best_share_label)
+    end
+
+    it 'projects a loss that is the majority of deposits — recycled winnings, not a single-turnover edge' do
+      result = MonteCarloSimulator.new(bet_type_key: 'sports_singles', house_edge: 0.05, weekly_amount_cents: 5000).run['year_1']
+      single_turnover_loss = 5000 * 52 * 0.05
+
+      expect(result[:expected_value_cents].abs).to be > (single_turnover_loss * 3)
+    end
+
+    it 'renders the win chance that shrinks to almost nothing over time' do
+      expect(response.body).to include('of simulations ended in profit')
     end
 
     it 'renders the selected weekly amount and horizon' do
       expect(response.body).to include('R$50')
       expect(response.body).to include('1 year')
+    end
+  end
+
+  describe 'GET /simulations/:id opportunity cost (#show, FE-07)' do
+    let(:simulation) do
+      create(:simulation, bet_type_keys: %w[sports_singles], weekly_amount_cents: 5000, timeframe_weeks: 52)
+    end
+
+    let!(:edge) do
+      create(:reference_value, bet_type: 'sports_singles', key: 'house_edge',
+                               value: '0.05', value_type: 'float', category: 'bet_type')
+    end
+    let!(:pizza) do
+      create(:reference_value, key: 'pizza_price_cents', value: '4000', value_type: 'integer', category: 'comparison')
+    end
+    let!(:poupanca_rate) do
+      create(:app_config, key: 'poupanca_monthly_rate', value: '0.0067', value_type: 'decimal')
+    end
+
+    before { get simulation_path(simulation, locale: 'en') }
+
+    it 'renders the opportunity-cost section heading' do
+      expect(response.body).to include('That money could have been')
+    end
+
+    it 'renders a comparison item the lost money could have bought' do
+      # R$130 lost / R$40 pizza = 3 pizzas.
+      expect(response.body).to include('pizzas')
+    end
+
+    it 'renders the poupança balance the same money would have grown to' do
+      expect(response.body).to include('In savings, it would have grown to')
     end
   end
 

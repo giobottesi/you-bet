@@ -239,8 +239,56 @@ pt-BR:
     results:
       title: "You-Bet — Seus resultados"
       heading: "Olha o estrago"
-      summary: "Apostando %{amount}/semana durante %{timeframe}, é isso que a matemática diz que você perderia:"
-      loss_share: "%{percentage} de tudo que você apostaria"
+      staked_intro: "Você apostaria"
+      staked_meta: "%{amount}/semana · %{timeframe}"
+      bar:
+        staked_cap: "apostado"
+        lost_cap: "vira pó"
+        headline_single: "%{max} viram poeira espacial"
+        sub_single: "%{max_pct} de tudo que entrou"
+      timeline:
+        heading: "Quanto mais tempo, pior"
+        intro: "Aqui está a sua melhor aposta (%{bet_type}) ao longo do tempo. Mesmo a que menos perde caminha pra perder quase tudo."
+      math:
+        heading: "Como a gente calcula isso"
+        method: "A gente roda milhares de simulações da sua aposta usando o método de Monte Carlo — o mesmo que as próprias casas usam pra analisar apostas. Em cada aposta, a casa fica com uma parte fixa (a \"margem\"). Uma aposta só quase não dói. O problema é o tempo: quanto mais dinheiro passa pela mesa, mais vezes essa margem morde."
+        reality: "Esse número é o estrago que fica embaixo do gasto do dia a dia. Quase ninguém aposta uma vez e para: o que ganha volta pra próxima aposta, mais dinheiro entra, semana após semana. É esse vai-e-volta que faz a margem se acumular até sobrar quase nada. Não é falta de sorte nem de juízo — é a matemática, e ela foi feita pra favorecer a casa."
+      win_chance: "Em %{timeframe}, só %{percentage} das simulações terminaram no lucro."
+      opportunity:
+        heading: "Com esse dinheiro daria pra comprar:"
+        poupanca_label: "Na poupança, isso teria virado"
+        poupanca_note: "O mesmo valor, guardado na poupança em vez de apostado."
+        items:
+          pizza_price_cents:
+            one: "pizza"
+            other: "pizzas"
+          iphone_price_cents:
+            one: "iPhone"
+            other: "iPhones"
+          smartphone_price_cents:
+            one: "celular"
+            other: "celulares"
+          cesta_basica_cents:
+            one: "cesta básica"
+            other: "cestas básicas"
+          netflix_spotify_cents:
+            one: "mês de Netflix + Spotify"
+            other: "meses de Netflix + Spotify"
+          motorcycle_price_cents:
+            one: "moto"
+            other: "motos"
+          rent_monthly_cents:
+            one: "mês de aluguel"
+            other: "meses de aluguel"
+          flight_price_cents:
+            one: "passagem de avião"
+            other: "passagens de avião"
+          fridge_price_cents:
+            one: "geladeira"
+            other: "geladeiras"
+          course_price_cents:
+            one: "curso técnico"
+            other: "cursos técnicos"
       help:
         heading: "Você não está sozinho(a) nisso"
         intro: "A casa foi feita pra ganhar — isso é sobre eles, não sobre você. Se apostar deixou de ser uma escolha, ou se você só quer conversar com alguém, aqui vão lugares reais, gratuitos e sigilosos pra começar. Pedir ajuda é normal."

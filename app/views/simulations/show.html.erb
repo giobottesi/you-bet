@@ -1,30 +1,100 @@
 <% content_for :title, t("simulations.results.title") %>
 
 <div class="page mx-auto w-full max-w-3xl p-5 sm:p-8" data-simulation-uuid="<%= @simulation.to_param %>">
-  <h1 class="text-[2rem]/[1.2] font-extrabold text-text"><%= t("simulations.results.heading") %></h1>
-  <p class="mt-3 text-base text-muted">
-    <%= t("simulations.results.summary",
+  <% weeks = @simulation.timeframe_weeks %>
+  <% staked_cents = @simulation.weekly_amount_cents * weeks %>
+  <% losses = @bet_type_results.filter_map { |_bet_type, result| result.loss_cents(weeks) } %>
+  <% fractions = @bet_type_results.filter_map { |_bet_type, result| result.loss_fraction(weeks) } %>
+
+  <%# Brand wordmark — results get shared as links/screenshots, so the mark travels with them. %>
+  <div class="flex items-end justify-between p-0">
+    <h1 class="mt-5 text-[2rem]/[1.2] font-extrabold text-text">
+      <span class="brand-heading" style="--mark: var(--color-coral)">
+        <%= t("simulations.results.heading") %>
+      </span>
+    </h1>
+
+    <span>
+      <%= link_to root_path, class: "inline-block", "aria-label": "You-Bet" do %>
+        <img src="/you-bet-logo.svg" alt="You-Bet" class="h-9 w-auto">
+      <% end %>
+    </span>
+  </div>
+
+  <%# Input receipt — the anchor: what a cold viewer needs to read the numbers below. %>
+  <div class="mt-5 flex items-baseline gap-3">
+    <span class="text-[0.8rem] font-bold uppercase tracking-[0.06em] text-muted"><%= t("simulations.results.staked_intro") %></span>
+    <span class="text-[2rem]/[1] font-extrabold text-text"><%= reais_label(staked_cents) %></span>
+  </div>
+  <p class="mt-1 text-sm text-muted">
+    <%= t("simulations.results.staked_meta",
           amount: weekly_amount_label(@simulation.weekly_amount_cents),
-          timeframe: timeframe_label(@simulation.timeframe_weeks)) %>
+          timeframe: timeframe_label(weeks)) %>
   </p>
 
-  <% weeks = @simulation.timeframe_weeks %>
-  <ul class="mt-6 flex flex-col gap-8">
-    <% @bet_type_results.each_with_index do |(bet_type, simulation_result), index| %>
-      <% next unless simulation_result.result_by_timeframe(weeks) %>
-      <li class="notepad" style="<%= notepad_accent_style(index, "--bar") %>; <%= notepad_accent_style(index, "--label-accent", ink: true) %>">
-        <div class="notepad__bar"></div>
-        <div class="notepad__body">
-          <h2 class="text-[1.15rem]/[var(--note-gap)] font-extrabold text-text"><%= bet_type.display_name %></h2>
-          <p class="text-[2rem]/[calc(var(--note-gap)*2)] font-extrabold text-loss"><%= reais_label(simulation_result.loss_cents(weeks)) %></p>
-          <p class="text-base/[var(--note-gap)] text-muted">
-            <%= t("simulations.results.loss_share",
-                  percentage: loss_percentage_label(simulation_result.loss_fraction(weeks))) %>
-          </p>
-        </div>
-      </li>
-    <% end %>
-  </ul>
+  <%# Staked -> lost bar — the red slice of the input, worst-case fill, at a glance. Only when a horizon has results. %>
+  <% if fractions.present? %>
+  <div class="mt-6">
+    <div class="relative h-14 w-full border-[3px] border-text bg-bg [background-image:var(--rough-paper)] [background-blend-mode:soft-light] [background-size:320px_320px]">
+      <div class="absolute inset-y-0 left-0 bg-loss" style="width: <%= (fractions.max * 100).round(1) %>%"></div>
+    </div>
+    <div class="mt-2 flex justify-between text-[0.8rem] font-bold uppercase tracking-[0.06em]">
+      <span class="text-muted"><%= reais_label(staked_cents) %> <%= t("simulations.results.bar.staked_cap") %></span>
+      <span class="text-loss"><%= t("simulations.results.bar.lost_cap") %></span>
+    </div>
+    <p class="mt-4 text-[1.5rem]/[1.15] font-extrabold text-loss">
+      <%= t("simulations.results.bar.headline_single", max: reais_label(losses.max)) %>
+    </p>
+    <p class="mt-1 text-base text-muted">
+      <%= t("simulations.results.bar.sub_single", max_pct: loss_percentage_label(fractions.max)) %>
+    </p>
+  </div>
+  <% end %>
+
+  <%= render "opportunity_cost" if @item_comparisons.present? %>
+
+  <%# Best-case type across time — even the least-bad pick trends to ruin the longer you play. %>
+  <% best_case = best_case_result(@bet_type_results, weeks) %>
+  <% if best_case %>
+    <% best_bet_type, best_result = best_case %>
+    <details class="group mt-12">
+      <summary class="flex cursor-pointer list-none items-center justify-between gap-3">
+        <h2 class="text-marker-effect text-[1.15rem] font-extrabold uppercase tracking-[0.04em] text-text" style="--mark: var(--color-green)"><%= t("simulations.results.timeline.heading") %></h2>
+        <span aria-hidden="true" class="flex-none text-[1.6rem] font-black leading-none text-muted transition-transform group-open:rotate-45">+</span>
+      </summary>
+      <p class="mt-3 text-sm text-muted">
+        <%= t("simulations.results.timeline.intro", bet_type: best_bet_type.display_name) %>
+      </p>
+      <ul class="mt-5 flex flex-col gap-3">
+        <% loss_timeline(best_result).each do |point| %>
+          <li class="flex items-center gap-3" <%= "aria-current=true" if point[:weeks] == weeks %>>
+            <span class="w-24 flex-none text-sm font-bold text-text <%= "text-loss" if point[:weeks] == weeks %>"><%= timeframe_label(point[:weeks]) %></span>
+            <div class="relative h-6 flex-1 border-[2px] border-text bg-bg">
+              <div class="absolute inset-y-0 left-0 bg-loss" style="width: <%= (point[:fraction] * 100).round(1) %>%"></div>
+            </div>
+            <span class="w-14 flex-none text-right text-sm font-bold text-loss"><%= loss_percentage_label(point[:fraction]) %></span>
+          </li>
+        <% end %>
+      </ul>
+      <p class="mt-4 text-base text-muted">
+        <%= t("simulations.results.win_chance",
+              percentage: whole_percentage_label(best_result.profit_percentage(weeks)),
+              timeframe: timeframe_label(weeks)) %>
+      </p>
+    </details>
+  <% end %>
+
+  <%# Math disclosure — how the number is built, and why withdrawing winnings doesn't save you (edge on every turnover). %>
+  <details class="group mt-6">
+    <summary class="flex cursor-pointer list-none items-center justify-between gap-3">
+      <h2 class="text-marker-effect text-[1.15rem] font-extrabold uppercase tracking-[0.04em] text-text" style="--mark: var(--color-purple)"><%= t("simulations.results.math.heading") %></h2>
+      <span aria-hidden="true" class="flex-none text-[1.6rem] font-black leading-none text-muted transition-transform group-open:rotate-45">+</span>
+    </summary>
+    <div class="mt-3 flex flex-col gap-3 text-base text-text">
+      <p><%= t("simulations.results.math.method") %></p>
+      <p><%= t("simulations.results.math.reality") %></p>
+    </div>
+  </details>
 
   <%= render "help_resources" %>
 </div>
