@@ -34,12 +34,16 @@ class SourcesController < ContentController
       url: 'https://atlasintel.org/poll/latam-pulse-brazil-april-2026-2026-04-30' }
   ].freeze
 
-  # Order + any external link per methodological note; the prose is localized (sources.notes.*).
+  # Order per note; prose localized (sources.notes.*). A note only cites a source NOT already shown as a card
+  # above — BCB/DataSenado/CNC are cards, so they aren't re-linked here; Bolsa Família is the one added source.
+  # PG Soft's Fortune Tiger RTP link is parked (the primary page 404s); IBJR has no self-hosted rebuttal to cite.
   METHODOLOGICAL_NOTES = [
     { key: 'bettor_count' },
     { key: 'cnc_contested' },
     { key: 'tigrinho_edge' },
-    { key: 'bolsa_familia', url: 'https://www.gov.br/mds/pt-br/acoes-e-programas/bolsa-familia' }
+    { key: 'bolsa_familia', citations: [
+      { label: 'gov.br — Bolsa Família', url: 'https://www.gov.br/mds/pt-br/acoes-e-programas/bolsa-familia' }
+    ] }
   ].freeze
 
   def index

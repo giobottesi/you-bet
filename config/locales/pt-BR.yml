@@ -30,7 +30,7 @@ pt-BR:
     figures_label: "Números principais"
     source_link: "Ver a fonte ↗"
     methodology_heading: "Notas metodológicas"
-    learn_more: "Saiba mais ↗"
+    cited_label: "Fontes:"
     notes:
       bettor_count:
         subject: "Contagem de apostadores: BCB vs DataSenado"
