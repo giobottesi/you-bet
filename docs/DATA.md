@@ -75,7 +75,7 @@ pizza_price_cents        = 4000     | source: "iFood avg delivery, Jun 2026"
 iphone_price_cents       = 550000   | source: "Apple BR store, Jun 2026"
 smartphone_price_cents   = 90000    | source: "Magazine Luiza Moto G, Jun 2026"
 cesta_basica_cents       = 80000    | source: "DIEESE Jun 2026"
-netflix_spotify_cents    = 5500     | source: "Official pricing, Jun 2026"
+music_video_stream       = 5500     | source: "Official pricing, Jun 2026"
 motorcycle_price_cents   = 1000000  | source: "OLX Honda CG 160 avg, Jun 2026"
 rent_monthly_cents       = 120000   | source: "FipeZap national avg, Jun 2026"
 flight_price_cents       = 80000    | source: "Google Flights domestic avg"
@@ -225,19 +225,28 @@ How reference data becomes a loss projection. The engine (`MonteCarloSimulator`)
 
 ### Calculation Model
 
+**Model (recycled bankroll / gambler's ruin):** the bettor doesn't stake a fixed slice each week and pocket every win. Each week they **deposit** the weekly amount, then **re-wager a fraction `r` of the bankroll** (`recycling_coefficient`) and pocket the rest — the staked part rides on a win, is lost on a loss. Over turnover the edge compounds against the recycled winnings, so cumulative loss trends toward the deposits, not a one-shot house-edge slice.
+
+**The recycling coefficient `r` (default 0.5).** `r` is the single behavioral knob between two extremes: `r = 0` is a disciplined flat bettor who pockets every return (loss ≈ the house edge, forever); `r = 1` is pure let-it-ride (loss trends toward ~100% of deposits — the pessimistic ceiling). The edge only bites the re-wagered fraction, so the *effective* per-week edge is `r × house_edge`.
+
+**Why `r` is a scenario, not a measurement.** `r` is not identifiable from published data. The abundant turnover-÷-net-loss figures pin only the *hold* (RTP): `turnover / net_loss = 1/(1 − RTP)`, and `r` cancels out. `r` appears solely in turnover-÷-*deposits* (`T/D = 1/(1 − r·RTP)`), and no primary source publishes deposits and turnover for one population/period — SPA has never released *montante apostado*, and BCB's Pix inflow (2024, all-market, gross) conflates deposits with turnover. What *is* primary is RTP by product: sports ≈ 0.64–0.71, casino ≈ 0.92–0.945 (Harvard/bwin player-tracking — LaBrie 2007, LaPlante 2008; EU — Catania & Griffiths 2015; theoretical-loss model — Auer & Griffiths 2013). Heavy recycling is *forced* where hold is low (casino turnover ≈ 18× net loss ⇒ `r` → ~0.9). **We default `r = 0.5` deliberately as the conservative end:** the best-supported blended reading is `r ≈ 0.6` (plausible 0.5–0.85), so 0.5 *under*-states expected loss rather than over-stating it — a harm-awareness tool should never exaggerate. Real bettors span the full 0→1 range; `r` is a class constant (`DEFAULT_RECYCLING_COEFFICIENT`), not yet per-user.
+
 **Layer 1 — Expected Value (closed form):**
 
 ```
-expected_loss = total_wagered × house_edge
+effective_edge = r × house_edge
+B_t = (B_{t-1} + weekly_amount) × (1 − effective_edge)  # balance after week t
+expected_value = B_weeks − total_deposited              # negative = net loss
 ```
 
-The deterministic headline number. With a 6% edge, R$100 wagered loses R$6 on average.
+Recycled winnings compound the effective edge, so `expected_value` trends toward `−total_deposited` as weeks grow (fastest at high `r`). The deterministic headline number, stored negative.
 
 **Layer 2 — Monte Carlo (1,000 simulations):**
 
-- Simulate each week's bets by type, amount, and house edge
-- Track cumulative P&L per simulation run
-- Extract percentiles across runs: P5, P25, P50, P75, P95
+- Per run, per week: `bankroll += weekly_amount`, stake `r × bankroll` and keep the rest; with probability `p` (win) the staked part returns `× (1 − house_edge) / p`, else it's lost
+- `p` is the bet type's `WIN_PROBABILITIES` (e.g. `accumulator_5` ≈ 0.031, `sports_singles` ≈ 0.48) — low `p` = rare big wins, shaping the skew
+- Net per run = final bankroll − total deposited; extract percentiles across runs: P5, P25, P50, P75, P95
+- `profit_percentage` = share of runs ending net positive
 
 **Why Monte Carlo over closed-form?** Accumulators have non-normal distributions — many small losses, rare large wins. The mean (Layer 1) hides that skew. Monte Carlo captures it and lets us show realistic percentile ranges: "half the time you end below P50, 1-in-20 times below P5." Closed-form gives the expected value; Monte Carlo gives the *distribution story* that makes the loss tangible. ([Monte Carlo methods in finance — Glasserman, 2003](https://link.springer.com/book/10.1007/978-0-387-21617-1))
 
@@ -258,18 +267,21 @@ One `simulation_results` row holds all five timeframes as JSONB — read-optimiz
 
 ```json
 {
-  "4_weeks": {
-    "expected_loss_cents": 6000,
-    "percentiles": { "p5": -18000, "p25": -10000, "p50": -6000, "p75": -2000, "p95": 5000 },
-    "profit_percentage": 38.2,
-    "poupanca_alternative_cents": 1740
+  "month_1": {
+    "weeks": 4,
+    "total_deposited_cents": 20000,
+    "percentiles": { "p5": -20000, "p25": -20000, "p50": -20000, "p75": -12000, "p95": 24000 },
+    "profit_percentage": 22.4,
+    "expected_value_cents": -4600
   },
-  "26_weeks": { "..." },
-  "52_weeks": { "..." },
-  "104_weeks": { "..." },
-  "260_weeks": { "..." }
+  "months_6": { "..." },
+  "year_1": { "..." },
+  "years_2": { "..." },
+  "years_5": { "..." }
 }
 ```
+
+Timeframe keys come from `MonteCarloSimulator::TIMEFRAMES` (`month_1`/`months_6`/`year_1`/`years_2`/`years_5`). `expected_value_cents` is stored **negative** (a net loss). Poupança is **not** in this bucket — it's computed separately by `PoupancaCalculator` at render time.
 
 ### Caching
 
