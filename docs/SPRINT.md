@@ -5,6 +5,8 @@
 **Assets**: Free/open-source only. No paid fonts, icons, images, or services.
 **Track reality**: devlog (`/devlog`). Compare planned vs actual at the end.
 
+> **✅ MVP DELIVERED — Jul 12, 2026 (deadline day).** Live at [`youbet.gio.show`](https://youbet.gio.show). Core loop shipped end to end: form → Monte Carlo sim → UUID-permalink results (loss board + opportunity cost + always-visible help + share) → content pages (sources / about / privacy / devlog). Scope changes vs. the plan are recorded honestly in the [Roadmap](#roadmap) below (context cards relocated to `/sources`, share-image + verification cards deferred to the post-MVP backlog). Remaining: **SUB** (record demo, AI-declaration, register + submit).
+
 ---
 
 ## Implementation Cards
@@ -178,34 +180,48 @@ Each card: controller (inherits ContentController) + view + route.
 | BE 13 | ✅ Done | #11 | Jun 30 |
 | BE 14 | ✅ Done | #30 | Jul 02 |
 | BE 15 | ✅ Done | #31 | Jul 02 |
-| BE 16 | ⬜ | | |
-| BE 17 | ⬜ | | |
-| BE 18 | ⬜ | | |
+| BE 16 | ✅ Done | #63 | Jul 09 |
+| BE 17 | ⬜ Deferred | | |
+| BE 18 | ⬜ Deferred | | |
 | BE 19 | ✅ Done | #32 | Jul 02 |
-| BE 20 | ⬜ | | |
-| BE 21 | ⬜ | | |
+| BE 20 | ⬜ Deferred | | |
+| BE 21 | ✅ Done | | Jul 12 |
 | FE 01 | ✅ Done | #38 | Jul 05 |
 | FE 02 | ✅ Done | #54 | Jul 06 |
 | FE 03 | ✅ Done | #59 | Jul 08 |
 | FE 04 | ✅ Done | #61 | Jul 08 |
 | FE 05 | ✅ Done | #63 | Jul 09 |
 | FE 06 | ✅ Done | #67 | Jul 09 |
-| FE 07 | ⬜ | | |
-| FE 08 | ⬜ | | |
-| FE 09 | 🔵 In review | #77 | |
-| FE 10 | ⬜ | | |
-| FE 11 | ⬜ | | |
+| FE 07 | ✅ Done | #67 | Jul 09 |
+| FE 08 | ❌ Cut | | |
+| FE 09 | ✅ Done | #77 | Jul 12 |
+| FE 10 | ✅ Done | #86 | Jul 12 |
+| FE 11 | ✅ Done | #66 | Jul 10 |
 | FE 12 | ✅ Done | #66 | Jul 10 |
-| FE 13 | 🔵 In review | #76 | |
+| FE 13 | ✅ Done | #83 | Jul 12 |
 | FE 14 | ✅ Done | #68 | Jul 11 |
 | FE 15 | ✅ Done | #69 | Jul 10 |
-| FE 16 | ⬜ | | |
-| FE 17 | ⬜ | | |
-| FE 18 | ⬜ | | |
-| SUB 01 | ⬜ | | |
-| SUB 02 | ⬜ | | |
-| SUB 03 | ⬜ | | |
-| SUB 04 | ⬜ | | |
+| FE 16 | 🟡 Partial | | |
+| FE 17 | ✅ Done | #58 | Jul 07 |
+| FE 18 | 🟡 Partial | #85 | Jul 12 |
+| SUB 01 | 🔵 In progress | | Jul 12 |
+| SUB 02 | 🔵 In progress | | Jul 12 |
+| SUB 03 | 🔵 In progress | | Jul 12 |
+| SUB 04 | 🔵 In progress | | Jul 12 |
+
+**Legend:** ✅ Done · 🔵 In progress · 🟡 Partial · ⬜ Deferred (post-MVP) · ❌ Cut (scope removed)
+
+**Scope changes vs. the original plan (honest record):**
+
+- **FE 07** (comparison items) shipped inside the FE-06 results card (`_opportunity_cost`), not as its own PR; the "show more" expand was folded into the #85 redesign.
+- **FE 08** (standalone context cards) — **cut**. The results page (`show.html.erb`) carries the loss board + math disclosure + opportunity cost + help + share, but no data-stat cards; those DataSenado/BCB stats were relocated to the **`/sources` page** (`SourcesController::DATA_SOURCES`) instead of shipped as results-page cards.
+- **BE 16** (permalink) shipped via **FE-05 (#63)** as a UUID permalink at `/simulations/:uuid`. No short `/s/:uuid` route or OG image meta — those were part of the BE-17 share-card scope.
+- **BE 17** (`ShareCardGenerator` downloadable image) — **deferred**, not built. FE-10 (#86) shipped share as WhatsApp/X/link + text buttons; the HTML→PNG render + extra share options are on the post-MVP backlog (see #92).
+- **BE 18** (OWASP top-10 walk) / **BE 20** (pre-launch data-source verification) — **deferred**. Not formally documented as checklists before the deadline.
+- **BE 21** (final deploy) — prod live at `youbet.gio.show` (Heroku); README polished (AGPL, About, contact). Earlier deploys: BE-04 (#8), prod-500 fix (#46).
+- **FE 16** (responsive) — **partial**. Layout is fluid mobile-first (single-column, few explicit breakpoints) with active pre-launch fixes (scroll `be8500f`, FE details `4b11b20`); no dedicated cross-device QA pass on real Android/iOS.
+- **FE 17** (visual polish) shipped across the trinket/palette system (#58) + design polishing (#91).
+- **FE 18** (accessibility) — **partial**: WCAG-safe markers + contrast contract (#34, #85); no full Lighthouse audit run.
 
 ---
 
@@ -275,7 +291,7 @@ If time allows or post-competition:
 | Dark mode | 0.5d | — |
 | PWA | 0.5d | — |
 | **About page: cost transparency** — what the dev pays monthly to keep the site running (self-funded), set against our betting-loss dataset | 0.5d | Refine later. A modest hosting bill vs what people lose betting — ties into the FE 13 developer story. |
-| 🔴 **Background texture / grain** — paper-grain overlay on bg + reusable layer for images | 0.5d | **High-prio NTH.** Native SVG `feTurbulence` fractalNoise as `data:` URI bg — no asset, no gem, tileable, scales. Low-opacity + `mix-blend-mode: multiply` over warm surface. Reuse same overlay as a layer on BE 17 share cards. |
+| ~~Background texture / grain~~ ✅ **Shipped (#58)** | — | Paper-grain + highlighter trinket system landed via #58. Native SVG `feTurbulence` fractalNoise over warm surface. (BE-17 share-card reuse moot — BE-17 cut.) |
 
 ---
 
