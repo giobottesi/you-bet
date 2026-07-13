@@ -25,7 +25,7 @@ No login. No income questions. No identifying data. Simulations stored anonymous
 
 ## 🛠️ How this is built
 
-A real engineering project, built and looked after by a software engineer — and always evolving. Nothing's hidden: every number links to where it came from (`/sources`), every use of AI is spelled out (`/about`), and the whole build is public, day by day (`/devlog`). Made to be as careful as the industry it's questioning.
+A real engineering project, built and looked after by a software engineer — and always evolving. Nothing's hidden: every number links to where it came from (`/sources`), every use of AI is spelled out (`/about`), and the whole build is public, day by day (`/devlog`). Made to be as careful as the industry it's questioning. Want to help? See [CONTRIBUTING](CONTRIBUTING.md).
 
 ---
 
