@@ -2,7 +2,7 @@
 
 **The house always wins. We just show you the receipts.**
 
-A betting simulator that runs the real financial math of gambling in Brazil — no moralizing, just numbers. You tell it what you'd bet and how much per week; it runs **1,000 Monte Carlo simulations** and shows what happens across 1 month → 5 years, then turns your projected losses into things you could've bought or saved instead. 💸
+A betting simulator that runs the real financial math of gambling in Brazil — no moralizing, just numbers. You tell it what you'd bet and how much per week; it runs **1,000 Monte Carlo simulations** and shows what happens over the timeframe you pick — 1 month to 5 years — then turns your projected losses into things you could've bought or saved instead. 💸
 
 > Built for the **Desafio Contra Bets** competition ("IA em Campo" category). 🇧🇷
 
@@ -10,7 +10,7 @@ A betting simulator that runs the real financial math of gambling in Brazil — 
 
 ## ✨ What it does
 
-- 🎰 **Monte Carlo engine** — 1,000 runs per simulation, every timeframe at once
+- 🎰 **Monte Carlo engine** — 1,000 runs per simulation, any horizon from 1 month to 5 years
 - 📓 **Notepad-style results** — your outcomes, handwritten on the page
 - 💰 **Opportunity cost** — losses translated into groceries, savings, real life
 - 📤 **Shareable cards** — post your result with `#DesafioContraBets`
@@ -20,6 +20,12 @@ A betting simulator that runs the real financial math of gambling in Brazil — 
 - 📔 **Devlog** — the build, day by day
 
 No login. No income questions. No identifying data. Simulations stored anonymously so we can surface aggregate impact.
+
+---
+
+## 🛠️ How this is built
+
+A real engineering project, built and looked after by a software engineer — and always evolving. Nothing's hidden: every number links to where it came from (`/sources`), every use of AI is spelled out (`/about`), and the whole build is public, day by day (`/devlog`). Made to be as careful as the industry it's questioning.
 
 ---
 
