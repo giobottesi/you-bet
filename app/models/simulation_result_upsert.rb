@@ -6,6 +6,7 @@ class SimulationResultUpsert
   attribute :house_edge, :float
   attribute :weekly_amount_cents, :integer
   attribute :simulation_count, :integer, default: MonteCarloSimulator::DEFAULT_SIMULATION_COUNT
+  attribute :recycling_coefficient, :float, default: MonteCarloSimulator::DEFAULT_RECYCLING_COEFFICIENT
 
   validates :bet_type_key, presence: true
   validates :house_edge, presence: true
@@ -26,7 +27,7 @@ class SimulationResultUpsert
   private
 
   def inputs_signature
-    "#{bet_type_key}:#{house_edge}:#{weekly_amount_cents}:#{simulation_count}"
+    "#{bet_type_key}:#{house_edge}:#{weekly_amount_cents}:#{simulation_count}:#{recycling_coefficient}"
   end
 
   def simulated_results
@@ -34,7 +35,8 @@ class SimulationResultUpsert
       bet_type_key: bet_type_key,
       house_edge: house_edge,
       weekly_amount_cents: weekly_amount_cents,
-      simulation_count: simulation_count
+      simulation_count: simulation_count,
+      recycling_coefficient: recycling_coefficient
     )
   end
 end

@@ -10,7 +10,8 @@ class MonteCarloSimulator
     'years_5' => 260
   }.freeze
 
-  # Win probability per bet type — shapes the distribution (low p = rare big wins, high p = small swings).
+  # Bernoulli success probability per bet type — the input distribution we sample each week (MC step 2:
+  # specify the predictor variable's distribution). Low p = rare big wins, high p = frequent small swings.
   WIN_PROBABILITIES = {
     'sports_singles' => 0.48,
     'accumulator_3' => 0.125,
@@ -22,12 +23,16 @@ class MonteCarloSimulator
   }.freeze
 
   DEFAULT_SIMULATION_COUNT = 1000
+  # Fraction of the bankroll a bettor re-wagers each week (0 = pockets everything, 1 = lets it all ride).
+  # 0.5 is anchored to observed Brazilian turnover÷deposits (~1.6–2.3×); it scales the effective edge.
+  DEFAULT_RECYCLING_COEFFICIENT = 0.5
   REPORTED_PERCENTILES = [ 5, 25, 50, 75, 95 ].freeze
 
   attribute :bet_type_key, :string
   attribute :house_edge, :float
   attribute :weekly_amount_cents, :integer
   attribute :simulation_count, :integer, default: DEFAULT_SIMULATION_COUNT
+  attribute :recycling_coefficient, :float, default: DEFAULT_RECYCLING_COEFFICIENT
 
   def self.run(**attributes)
     new(**attributes).run
@@ -63,17 +68,23 @@ class MonteCarloSimulator
     }
   end
 
+  # Monte Carlo core: draw `simulation_count` independent sampled paths, one net outcome each.
+  # The sorted outcomes form the output distribution we read percentiles off (MC step 3).
   def simulated_outcomes(weeks)
     simulation_count.times.map { single_run_net(weeks) }
   end
 
-  # One run's net over `weeks`: each week deposits the weekly amount, then re-wagers the whole
-  # bankroll — a win lets it ride, a loss zeroes it. Net = final bankroll minus everything deposited.
+  # One Monte Carlo iteration — a single random walk through the horizon. Each week deposits the weekly
+  # amount, then re-wagers a fraction (recycling_coefficient) of the bankroll and pockets the rest: a
+  # Bernoulli draw (rand < p) lets the staked part ride on a win, loses it on a loss. Net = final bankroll
+  # minus everything deposited. At recycling_coefficient = 1 the whole bankroll rides (pure let-it-ride).
   def single_run_net(weeks)
     bankroll = 0
     weeks.times do
       bankroll += weekly_amount_cents
-      bankroll = rand < win_probability ? (bankroll * win_multiplier).round : 0
+      staked = bankroll * recycling_coefficient
+      kept = bankroll - staked
+      bankroll = (kept + (rand < win_probability ? staked * win_multiplier : 0)).round
     end
     bankroll - weekly_amount_cents * weeks
   end
@@ -82,14 +93,18 @@ class MonteCarloSimulator
     (outcomes.count(&:positive?).to_f / simulation_count * 100).round(1)
   end
 
-  # Closed-form expected net: E[balance] follows B_t = (B_{t-1} + deposit)(1 - edge). Recycled winnings
-  # compound the edge over turnover, so cumulative loss trends toward the full deposits (gambler's ruin).
+  # Analytic counterpart to the sampled runs above: the exact E[net], not an average of draws. The MC
+  # outcomes give the spread ("what could happen to you"); this closed form gives the mean drift ("what
+  # happens on average") and cross-checks the simulation. E[balance] follows B_t = (B_{t-1} + deposit)(1 - edge):
+  # recycled winnings compound the edge over turnover, so cumulative loss trends toward full deposits (gambler's ruin).
   def expected_value_cents(weeks)
     deposited = weekly_amount_cents * weeks
-    retention = 1.0 - house_edge
-    return 0 if retention == 1.0
+    # Recycling only re-exposes a fraction of the bankroll, so the edge bites at r × house_edge per week.
+    effective_edge = recycling_coefficient * house_edge
+    return 0 if effective_edge.zero?
 
-    expected_balance = weekly_amount_cents * retention * (1 - retention**weeks) / house_edge
+    retention = 1.0 - effective_edge
+    expected_balance = weekly_amount_cents * retention * (1 - retention**weeks) / effective_edge
     (expected_balance - deposited).round
   end
 
