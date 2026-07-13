@@ -66,6 +66,22 @@ docs/           # the living docs ↓
 
 ---
 
+## ✨ Future iterations
+
+The MVP shipped — but the dream is bigger. Where this could go next: 🌱
+
+- 🔬 **Sharper Monte Carlo** — push the model closer to real-world fidelity
+- 🎨 **Richer comparisons** — pixel-art + icons on the real-world cost cards, so a lost bet *looks* like the groceries it was
+- 📤 **More ways to share** — `html → png` cards, more formats, more reach
+- 🗣️ **Plainer words** — bet-type copy in human terms, zero jargon
+- 🧃 **Pague um refri pro dev** — a little Pepsi-pixel *buy-the-dev-a-pop* corner 🥤
+- 📊 **Know the field** — an overview of the other `#DesafioContraBets` simulators, sourced honestly
+- 🧹 **Contributor-friendly** — the [TECH_DEBT](docs/TECH_DEBT.md) ledger has starter-sized tasks with your name on them
+
+Full parking lot lives in [#92](https://github.com/giobottesi/you-bet/pull/92). Ideas welcome — open an issue. 💛
+
+---
+
 ## 🤖 AI assistance
 
 Built with heavy AI assistance, declared in full on the [About page](/about) per competition rules.
