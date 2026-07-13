@@ -78,7 +78,7 @@ The MVP shipped — but the dream is bigger. Where this could go next: 🌱
 - 📊 **Know the field** — an overview of the other `#DesafioContraBets` simulators, sourced honestly
 - 🧹 **Contributor-friendly** — the [TECH_DEBT](docs/TECH_DEBT.md) ledger has starter-sized tasks with your name on them
 
-Full parking lot lives in [#92](https://github.com/giobottesi/you-bet/pull/92). Ideas welcome — open an issue. 💛
+Full parking lot lives in [docs/BACKLOG.md](docs/BACKLOG.md). Ideas welcome — open an issue. 💛
 
 ---
 
