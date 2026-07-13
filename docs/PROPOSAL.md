@@ -5,7 +5,7 @@
 
 ---
 
-> **Historical document.** This is the *original* MVP proposal, written before the build. The shipped app diverged from it in real ways — most notably the results flow (the app now takes a timeframe selection and shows a single horizon, not all five at once), the value anchors, and the loss model (which gained a recycling coefficient). For **current** behavior, see the live app at [youbet.gio.show](https://youbet.gio.show) and [ARCHITECTURE.md](ARCHITECTURE.md) / [DATA.md](DATA.md). Read the rest of this file as the plan, not the spec.
+> **Historical document.** This is the *original* MVP proposal, written before the build. The shipped app diverged from it in real ways — most notably the results flow (the app now takes a timeframe selection and shows a single horizon, not all five at once), the value anchors, and the loss model (which gained a re-bet fraction). For **current** behavior, see the live app at [youbet.gio.show](https://youbet.gio.show) and [ARCHITECTURE.md](ARCHITECTURE.md) / [DATA.md](DATA.md). Read the rest of this file as the plan, not the spec.
 
 ---
 

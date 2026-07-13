@@ -20,6 +20,7 @@ Post-MVP parking lot. The MVP shipped 2026-07-12 (live at youbet.gio.show); this
 
 ## 🔬 Simulation realism
 - Refine the Monte Carlo model toward real-world fidelity — external reading: [Monte Carlo vs reality (2026)](https://supercalcpro.com.au/blog/monte-carlo-vs-reality-2026.html)
+- Research whether `rebet_fraction` should vary by bet type. Fast auto-repeat products (tigrinho, aviator) plausibly recycle near 1.0; discrete ones (sports singles, lottery) lower. Today it's one conservative class default (0.5), overridable per call but not seeded per type. Find a primary basis (RTP-by-product exists; the turnover÷deposits ratio that would pin `r` does not — see DATA.md) before seeding any per-type table; otherwise it stays one honest default. Ship per-type values flagged as illustrative assumption, never as data.
 
 ## 🧃 Whimsy
 - "Pague um refri pro dev" — a Pepsi pixel-art *buy-the-dev-a-pop* trinket somewhere
