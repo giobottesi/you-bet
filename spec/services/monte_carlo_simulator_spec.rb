@@ -7,7 +7,7 @@ RSpec.describe MonteCarloSimulator do
       house_edge: house_edge,
       weekly_amount_cents: weekly_amount_cents,
       simulation_count: simulation_count,
-      recycling_coefficient: recycling_coefficient
+      rebet_fraction: rebet_fraction
     )
   end
 
@@ -15,7 +15,7 @@ RSpec.describe MonteCarloSimulator do
   let(:house_edge) { 0.06 }
   let(:weekly_amount_cents) { 5000 }
   let(:simulation_count) { 1000 }
-  let(:recycling_coefficient) { MonteCarloSimulator::DEFAULT_RECYCLING_COEFFICIENT }
+  let(:rebet_fraction) { MonteCarloSimulator::DEFAULT_REBET_FRACTION }
 
   describe '#run' do
     subject(:results) { simulator.run }
@@ -96,7 +96,7 @@ RSpec.describe MonteCarloSimulator do
       described_class.new(
         bet_type_key: bet_type_key, house_edge: house_edge,
         weekly_amount_cents: weekly_amount_cents, simulation_count: simulation_count,
-        recycling_coefficient: recycling
+        rebet_fraction: recycling
       ).run['year_1'][:expected_value_cents]
     end
 
@@ -104,7 +104,7 @@ RSpec.describe MonteCarloSimulator do
       described_class.run(
         bet_type_key: bet_type_key, house_edge: house_edge,
         weekly_amount_cents: weekly_amount_cents, simulation_count: simulation_count,
-        recycling_coefficient: 0.0
+        rebet_fraction: 0.0
       ).each_value do |timeframe|
         expect(timeframe[:expected_value_cents]).to eq(0)
         expect(timeframe[:profit_percentage]).to eq(0.0)
@@ -122,12 +122,12 @@ RSpec.describe MonteCarloSimulator do
       half_recycled = described_class.run(
         bet_type_key: bet_type_key, house_edge: 0.06,
         weekly_amount_cents: weekly_amount_cents, simulation_count: simulation_count,
-        recycling_coefficient: 0.5
+        rebet_fraction: 0.5
       )
       fully_recycled_half_edge = described_class.run(
         bet_type_key: bet_type_key, house_edge: 0.03,
         weekly_amount_cents: weekly_amount_cents, simulation_count: simulation_count,
-        recycling_coefficient: 1.0
+        rebet_fraction: 1.0
       )
 
       MonteCarloSimulator::TIMEFRAMES.each_key do |timeframe_key|
@@ -194,7 +194,7 @@ RSpec.describe MonteCarloSimulator do
 
     context 'with the house edge at 1.0 (house always keeps the stake)' do
       let(:house_edge) { 1.0 }
-      let(:recycling_coefficient) { 1.0 } # whole bankroll rides, so a 100% edge wipes every run
+      let(:rebet_fraction) { 1.0 } # whole bankroll rides, so a 100% edge wipes every run
 
       it 'loses the full wager every run' do
         results.each_value do |timeframe|

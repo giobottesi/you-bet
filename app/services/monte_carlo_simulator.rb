@@ -25,14 +25,14 @@ class MonteCarloSimulator
   DEFAULT_SIMULATION_COUNT = 1000
   # Fraction of the bankroll a bettor re-wagers each week (0 = pockets everything, 1 = lets it all ride).
   # 0.5 is anchored to observed Brazilian turnover÷deposits (~1.6–2.3×); it scales the effective edge.
-  DEFAULT_RECYCLING_COEFFICIENT = 0.5
+  DEFAULT_REBET_FRACTION = 0.5
   REPORTED_PERCENTILES = [ 5, 25, 50, 75, 95 ].freeze
 
   attribute :bet_type_key, :string
   attribute :house_edge, :float
   attribute :weekly_amount_cents, :integer
   attribute :simulation_count, :integer, default: DEFAULT_SIMULATION_COUNT
-  attribute :recycling_coefficient, :float, default: DEFAULT_RECYCLING_COEFFICIENT
+  attribute :rebet_fraction, :float, default: DEFAULT_REBET_FRACTION
 
   def self.run(**attributes)
     new(**attributes).run
@@ -75,14 +75,14 @@ class MonteCarloSimulator
   end
 
   # One Monte Carlo iteration — a single random walk through the horizon. Each week deposits the weekly
-  # amount, then re-wagers a fraction (recycling_coefficient) of the bankroll and pockets the rest: a
+  # amount, then re-wagers a fraction (rebet_fraction) of the bankroll and pockets the rest: a
   # Bernoulli draw (rand < p) lets the staked part ride on a win, loses it on a loss. Net = final bankroll
-  # minus everything deposited. At recycling_coefficient = 1 the whole bankroll rides (pure let-it-ride).
+  # minus everything deposited. At rebet_fraction = 1 the whole bankroll rides (pure let-it-ride).
   def single_run_net(weeks)
     bankroll = 0
     weeks.times do
       bankroll += weekly_amount_cents
-      staked = bankroll * recycling_coefficient
+      staked = bankroll * rebet_fraction
       kept = bankroll - staked
       bankroll = (kept + (rand < win_probability ? staked * win_multiplier : 0)).round
     end
@@ -99,8 +99,8 @@ class MonteCarloSimulator
   # recycled winnings compound the edge over turnover, so cumulative loss trends toward full deposits (gambler's ruin).
   def expected_value_cents(weeks)
     deposited = weekly_amount_cents * weeks
-    # Recycling only re-exposes a fraction of the bankroll, so the edge bites at r × house_edge per week.
-    effective_edge = recycling_coefficient * house_edge
+    # Only rebet_fraction of the bankroll is re-exposed each week, so the edge bites at rebet_fraction × house_edge.
+    effective_edge = rebet_fraction * house_edge
     return 0 if effective_edge.zero?
 
     retention = 1.0 - effective_edge
