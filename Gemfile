@@ -32,6 +32,8 @@ gem "bootsnap", require: false
 # Rack middleware for throttling and blocking abusive requests [https://github.com/rack/rack-attack]
 gem "rack-attack"
 
+gem "appsignal"
+
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
   gem "rspec-rails"

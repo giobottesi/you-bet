@@ -75,6 +75,9 @@ GEM
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
       uri (>= 0.13.1)
+    appsignal (4.8.6)
+      logger
+      rack (>= 2.0.0)
     ast (2.4.3)
     base64 (0.3.0)
     bigdecimal (4.1.2)
@@ -351,6 +354,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  appsignal
   bootsnap
   bundler-audit
   debug
@@ -387,6 +391,7 @@ CHECKSUMS
   activerecord (8.1.3) sha256=8003be7b2466ba0a2a670e603eeb0a61dd66058fccecfc49901e775260ac70ab
   activestorage (8.1.3) sha256=0564ce9309143951a67615e1bb4e090ee54b8befed417133cae614479b46384d
   activesupport (8.1.3) sha256=21a5e0dfbd4c3ddd9e1317ec6a4d782fa226e7867dc70b0743acda81a1dca20e
+  appsignal (4.8.6) sha256=411be975ddf3b3f47a18261a69990df36a3e9663e4efabdd3077ca67576600cb
   ast (2.4.3) sha256=954615157c1d6a382bc27d690d973195e79db7f55e9765ac7c481c60bdb4d383
   base64 (0.3.0) sha256=27337aeabad6ffae05c265c450490628ef3ebd4b67be58257393227588f5a97b
   bigdecimal (4.1.2) sha256=53d217666027eab4280346fba98e7d5b66baaae1b9c3c1c0ffe89d48188a3fbd
