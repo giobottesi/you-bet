@@ -1,0 +1,10 @@
+# config/locales/pt-BR.yml
+
+pt-BR:
+  hello: "Olá"
+  goodbye: "Tchau"
+  about_title: "Sobre o You-Bet"
+  devlog_title: "Diário de Desenvolvimento"
+  help_title: "Ajuda"
+  simulations_title: "Simulações"
+  sources_title: "Fontes"

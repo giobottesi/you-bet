@@ -1,0 +1,10 @@
+# config/locales/en.yml
+
+en:
+  hello: "Hello"
+  goodbye: "Goodbye"
+  about_title: "About You-Bet"
+  devlog_title: "Devlog"
+  help_title: "Help"
+  simulations_title: "Simulations"
+  sources_title: "Sources"
