@@ -21,6 +21,19 @@ jobs:
             exit 1
           fi
 
+      - name: Flag boilerplate-y PR descriptions (advisory only)
+        if: github.event_name == 'pull_request'
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          score=0
+          for phrase in "changes made:" "testing instructions:" "leverage" "seamless" "robust solution" "comprehensive" "cutting-edge" "streamlin" "ensures parity" "ensures that"; do
+            echo "$PR_BODY" | grep -qi "$phrase" && score=$((score + 1))
+          done
+          if [ "$score" -ge 3 ]; then
+            echo "::warning::PR description matches $score generic AI-agent boilerplate phrases — worth a second look, not a blocker. Short, plain descriptions from first-time human contributors do NOT trigger this."
+          fi
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
