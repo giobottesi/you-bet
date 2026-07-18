@@ -53,4 +53,17 @@ SUB has now been "tomorrow's plan" three devlogs running (Day 17 → 18 → 19) 
 
 ---
 
+## Addendum — 2026-07-18
+
+**PR #116 flagged and reported.** A PR titled "Solution (#100): en ↔ pt-BR locale parity sweep," opened by `TFGSUMIT`, claimed to add I18n config and translation files for pages (about, devlog, help, simulations, sources) that already exist in the app. It wasn't a bad refactor — it was never real work:
+
+- Every changed file path was a literal, unedited `path/to/...` placeholder — never written against the actual repo tree.
+- The commit author was `GitHub Agent <agent@github-issue-agent.dev>`, an automated bot, not a person.
+- The included spec asserted the same expression equals two different values on consecutive lines — impossible to pass, so it was never run.
+- The initializer called an invented Rails config API (`I18n.config.i18n_keys = true`) that would raise on boot.
+
+Closed and reported as automated issue-farming, not reviewed as a genuine (if unskilled) contribution.
+
+---
+
 > **Betina says:** "instalei um gem de monitoramento hoje. a ironia de adicionar observability num dia em que a única coisa a observar é a submissão não acontecendo não passou despercebida por mim. 🐱"

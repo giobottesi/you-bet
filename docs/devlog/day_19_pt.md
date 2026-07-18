@@ -53,4 +53,17 @@ O SUB já é "o plano de amanhã" há três devlogs seguidos (Dia 17 → 18 → 
 
 ---
 
+## Adendo — 18/07/2026
+
+**PR #116 sinalizado e denunciado.** Um PR chamado "Solution (#100): en ↔ pt-BR locale parity sweep", aberto por `TFGSUMIT`, alegava adicionar config de I18n e arquivos de tradução pra páginas (about, devlog, help, simulations, sources) que já existem no app. Não era um refactor ruim — nunca foi trabalho de verdade:
+
+- Todo caminho de arquivo alterado era um placeholder `path/to/...` literal, nunca editado — nunca escrito contra a árvore real do repo.
+- O autor do commit era `GitHub Agent <agent@github-issue-agent.dev>`, um bot automatizado, não uma pessoa.
+- O spec incluído afirmava que a mesma expressão era igual a dois valores diferentes em linhas consecutivas — impossível de passar, então nunca rodou.
+- O initializer chamava uma API de config do Rails inventada (`I18n.config.i18n_keys = true`) que quebraria no boot.
+
+Fechado e denunciado como farming automatizado de issues, não revisado como contribuição genuína (ainda que sem talento).
+
+---
+
 > **Betina diz:** "instalei um gem de monitoramento hoje. a ironia de adicionar observability num dia em que a única coisa a observar é a submissão não acontecendo não passou despercebida por mim. 🐱"
