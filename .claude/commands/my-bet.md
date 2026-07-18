@@ -6,19 +6,21 @@ You are wrapping up the day on the You-Bet project. This is a daily EOD ritual â
 
 Use Bash. TODAY is today's date in GMT-3 (`TZ="America/Sao_Paulo" date '+%Y-%m-%d'`).
 
+The contributor commits under more than one email (GitHub noreply + personal) â€” a plain `--author=giobottesi` substring match silently misses any email that doesn't literally contain that string (e.g. `giovannabottesi@gmail.com` does NOT contain the substring `giobottesi`). Use an extended-regex OR across the known emails, not a single name guess. Confirm the current author list once per session if unsure: `git log --all --format='%ae' | sort -u`.
+
 **Git commits today:**
 ```
-git log --author=giobottesi --after="${TODAY}T00:00:00-03:00" --before="${TODAY}T23:59:59-03:00" --format='%h %s (%ar)' 2>/dev/null
+git log --all -E --author='giobottesi|giovannabottesi' --after="${TODAY}T00:00:00-03:00" --before="${TODAY}T23:59:59-03:00" --format='%h %s (%ar)' 2>/dev/null
 ```
 
 **Files changed today:**
 ```
-git log --author=giobottesi --after="${TODAY}T00:00:00-03:00" --before="${TODAY}T23:59:59-03:00" --name-only --format='' 2>/dev/null | sort -u
+git log --all -E --author='giobottesi|giovannabottesi' --after="${TODAY}T00:00:00-03:00" --before="${TODAY}T23:59:59-03:00" --name-only --format='' 2>/dev/null | sort -u
 ```
 
 **Lines changed:**
 ```
-git log --author=giobottesi --after="${TODAY}T00:00:00-03:00" --before="${TODAY}T23:59:59-03:00" --stat --format='' 2>/dev/null | tail -1
+git log --all -E --author='giobottesi|giovannabottesi' --after="${TODAY}T00:00:00-03:00" --before="${TODAY}T23:59:59-03:00" --stat --format='' 2>/dev/null | tail -1
 ```
 
 **AI cost today (you-bet only):** ccusage has no per-project filter, so scope by cross-referencing the you-bet project's session UUIDs (its `.jsonl` filenames) against ccusage session output. Reuses ccusage pricing.
