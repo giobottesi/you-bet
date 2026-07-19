@@ -81,17 +81,18 @@ Pedido do Gio: continuar comparando custo e benefício, mas este app é algo que
 
 **Leitura disso:** o trabalho de modelagem (#104, #111) é onde esforço, impacto e diversão apontam todos pro mesmo lado — é o que vale pegar quando sobrar tempo de foco de verdade, não porque pontua mais alto no papel, mas porque é genuinamente a parte boa. O post de blog (#112) é o preenchimento de esforço baixo e diversão alta pra um bloco de tempo menor. O resto tá tranquilo esperando na lista de issues até ser a coisa que parecer divertida naquele dia.
 
-## Perguntas em aberto
+## Resolvido, no mesmo dia
 
-- O `docs/SPRINT.md` ainda mostra SUB 01–04 como "🔵 In progress", com alvo 12/jul — agora desatualizado com a correção. Quer que eu marque como feito, ou tem alguma nuance (tipo o vídeo de demonstração especificamente) que ainda está aberta?
-- O devlog público do dia 19 ainda diz que o SUB estava atrasando. Deixar os registros históricos como estão (o dia 20 só foi corrigido porque ainda não tinha saído), ou publicar uma correção?
-- PR #117 (dependabot) — ainda precisa de rebase e merge; vou seguir com isso a menos que me redirecione.
-- `.claude/commands/safe-bet.md` (checklist Clean Ruby, sem commit há 4+ dias) e `.claude/commands/my-bet.md` (a reescrita da linha de custo, já refletida no devlog do dia 20) estão os dois sem commit na árvore de trabalho — quer que eu commite agora?
+As perguntas em aberto acima foram respondidas antes deste registro sair, então as respostas entram aqui em vez de um adendo separado:
+
+- **O SUB está totalmente feito — as quatro partes, vídeo incluído, feito no prazo do dia 12/jul.** A tabela de Roadmap e o banner de MVP do `docs/SPRINT.md` foram virados de "🔵 In progress" pra feito (PR #122). Nenhuma nuance ficou em aberto.
+- **O devlog público do dia 19 mantém a afirmação errada de "SUB atrasando" — deliberadamente não reescrito.** É o registro histórico do que se acreditava na época; este registro é onde a correção passa a valer daqui pra frente.
+- **As duas edições sem commit em `.claude/commands/*.md` ficam paradas** (checklist Clean Ruby, reescrita da linha de custo) — não commitadas hoje, revisitar depois.
+- A PR #117 (dependabot) segue sendo a única pendência real — precisa de rebase e merge.
 
 ## Amanhã
 
 - Rebase e merge da PR #117.
-- Resolver as perguntas em aberto acima.
 - Pegar o que sobrar de "O que vem por aí" que parecer mais gostoso naquele dia.
 
 ---

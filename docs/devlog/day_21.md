@@ -81,17 +81,18 @@ Gio's ask: still compare cost and benefit, but this app is something he builds b
 
 **Read on this:** the modeling work (#104, #111) is where effort, impact, and enjoyment all point the same direction — that's the one worth reaching for next when there's real focus time, not because it scores highest on paper but because it's genuinely the fun part. The blog post (#112) is the low-effort, high-enjoyment filler for a smaller pocket of time. Everything else is fine parked in the issue tracker until it's the thing that sounds fun that day.
 
-## Open questions
+## Resolved, same day
 
-- `docs/SPRINT.md` still shows SUB 01–04 as "🔵 In progress," targeted Jul 12 — now stale given the correction. Want it flipped to done, or is there nuance (e.g. the demo video specifically) that's still open?
-- Day 19's public devlog still says SUB was slipping. Leave historical entries as-is (day 20 was only fixed because it hadn't shipped yet), or issue a correction?
-- PR #117 (dependabot) — still needs a rebase + merge; picking this up next unless redirected.
-- `.claude/commands/safe-bet.md` (Clean Ruby checklist, uncommitted 4+ days now) and `.claude/commands/my-bet.md` (the cost-line rewrite, already reflected in day 20's devlog) are both sitting uncommitted in the working tree — want these committed now?
+The open questions above got answered before this entry shipped, so the answers get logged here instead of a separate addendum:
+
+- **SUB is fully done — all four subtasks, video included, made on the Jul 12 deadline.** `docs/SPRINT.md`'s Roadmap table and MVP banner flipped from "🔵 In progress" to done (PR #122). No nuance left open.
+- **Day 19's public devlog keeps its wrong "SUB slipping" claim — deliberately not rewritten.** It's the historical record of what was believed at the time; this entry is where the correction counts going forward.
+- **The two uncommitted `.claude/commands/*.md` edits stay parked** (Clean Ruby checklist, cost-line rewrite) — not committed today, revisit later.
+- PR #117 (dependabot) is still the one real carryover — needs a rebase + merge.
 
 ## Tomorrow
 
 - Rebase and merge PR #117.
-- Resolve the open questions above.
 - Pick up whichever "What's next" item actually sounds good that day.
 
 ---
