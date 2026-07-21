@@ -5,7 +5,7 @@
 **Assets**: Free/open-source only. No paid fonts, icons, images, or services.
 **Track reality**: devlog (`/devlog`). Compare planned vs actual at the end.
 
-> **✅ MVP DELIVERED — Jul 12, 2026 (deadline day).** Live at [`youbet.gio.show`](https://youbet.gio.show). Core loop shipped end to end: form → Monte Carlo sim → UUID-permalink results (loss board + opportunity cost + always-visible help + share) → content pages (sources / about / privacy / devlog). Scope changes vs. the plan are recorded honestly in the [Roadmap](#roadmap) below (context cards relocated to `/sources`, share-image + verification cards deferred to the post-MVP backlog). Remaining: **SUB** (record demo, AI-declaration, register + submit).
+> **✅ MVP DELIVERED — Jul 12, 2026 (deadline day).** Live at [`youbet.gio.show`](https://youbet.gio.show). Core loop shipped end to end: form → Monte Carlo sim → UUID-permalink results (loss board + opportunity cost + always-visible help + share) → content pages (sources / about / privacy / devlog). Scope changes vs. the plan are recorded honestly in the [Roadmap](#roadmap) below (context cards relocated to `/sources`, share-image + verification cards deferred to the post-MVP backlog). **SUB** (demo, AI-declaration, register + submit) completed same day. Post-MVP polish ongoing.
 
 ---
 
@@ -204,10 +204,10 @@ Each card: controller (inherits ContentController) + view + route.
 | FE 16 | 🟡 Partial | | |
 | FE 17 | ✅ Done | #58 | Jul 07 |
 | FE 18 | 🟡 Partial | #85 | Jul 12 |
-| SUB 01 | 🔵 In progress | | Jul 12 |
-| SUB 02 | 🔵 In progress | | Jul 12 |
-| SUB 03 | 🔵 In progress | | Jul 12 |
-| SUB 04 | 🔵 In progress | | Jul 12 |
+| SUB 01 | ✅ Done | | Jul 12 |
+| SUB 02 | ✅ Done | | Jul 12 |
+| SUB 03 | ✅ Done | | Jul 12 |
+| SUB 04 | ✅ Done | | Jul 12 |
 
 **Legend:** ✅ Done · 🔵 In progress · 🟡 Partial · ⬜ Deferred (post-MVP) · ❌ Cut (scope removed)
 
