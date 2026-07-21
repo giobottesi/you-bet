@@ -67,6 +67,15 @@ Tag findings with Gio's review tags:
 
 Plus: RuboCop clean, code/comments in English only, tests live alongside the feature (TDD), RSpec style (no helper methods — factories and inline setup only; group a class's constant assertions under one `describe 'constants'`, not one describe per constant).
 
+**Clean Ruby** (source: [uohzxela/clean-code-ruby](https://github.com/uohzxela/clean-code-ruby)):
+- Method arguments ≤ 2 — beyond that, pass a hash/kwargs.
+- No boolean-flag parameters — split into two named methods instead.
+- No side effects on arguments — don't mutate objects passed in; return a new object.
+- Encapsulate multi-clause conditionals into a named predicate method (`overdue?`) instead of inlining the boolean logic.
+- Prefer duck typing / polymorphism over `is_a?`/`case class` type-checks.
+- No commented-out code, no changelog-style comments (`# added 07-10 for X`) — git history is the log.
+- Rescue blocks never swallow silently — log, reraise, or report; custom error classes get descriptive names.
+
 **Stimulus controllers** (hardest to review — hold the line):
 - **Method names follow Rails naming — say what the method does.** Verb-first, Action+Noun, no vague `sync`/`handle`/`update`/`process`. `updateArrows`, not `sync`; `validateSelection`, not `check`. The name is the first comment.
 - **One job per method, with a one-line intent comment.** If a method needs "and" to describe it, question the split.
