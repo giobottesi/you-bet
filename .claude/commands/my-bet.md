@@ -23,7 +23,9 @@ git log --all -E --author='giobottesi|giovannabottesi' --after="${TODAY}T00:00:0
 git log --all -E --author='giobottesi|giovannabottesi' --after="${TODAY}T00:00:00-03:00" --before="${TODAY}T23:59:59-03:00" --stat --format='' 2>/dev/null | tail -1
 ```
 
-**AI cost today (you-bet only):** ccusage has no per-project filter, so scope by cross-referencing the you-bet project's session UUIDs (its `.jsonl` filenames) against ccusage session output. Reuses ccusage pricing.
+**Project cost today:** a subscription contributor's real cost is a flat monthly fee, not a per-token API rate — check memory first for a private note recording this contributor's actual subscription totals across the services this project runs on (AI assistant, hosting, DB, monitoring, domain). If found, amortize the monthly total to a daily figure (`monthly_total / 30`) and use that as the cost line. Never write the dollar figures themselves into this file — they stay in private memory only, per each contributor's own subscriptions.
+
+If no such private note exists for this contributor, fall back to the ccusage token-rate estimate (API list pricing, not necessarily what they actually pay):
 ```bash
 DAY="${TODAY//-/}"; DIR=~/.claude/projects/-Users-giobottesi-projetinhos-you-bet
 UUIDS=$(ls $DIR/*.jsonl 2>/dev/null | xargs -n1 basename | sed 's/.jsonl//' | tr '\n' ',')
@@ -36,7 +38,7 @@ for x in d['session']:
 print('AI cost today: \$%.2f (%d tokens, you-bet only)'%(tc,tt))
 "
 ```
-If it fails or returns nothing, skip the cost line silently.
+If both are unavailable, skip the cost line silently.
 
 Read the current docs/SPRINT.md to know what phase we're in and what's planned vs what happened.
 
@@ -108,7 +110,7 @@ Track the developer's product/UX/technical contributions today. These matter —
 
 ---
 
-_AI assist cost today: {$X.XX, N tokens, you-bet only — from Step 1; omit line if unavailable}_
+_Project cost today: {$X.XX — from Step 1, real subscription total if available else AI token estimate; omit line if unavailable}_
 
 > **Betina says:** "{quote — see Step 4}"
 ```
@@ -183,6 +185,6 @@ After committing, invoke the self-improve skill to extract any learnings from to
 Print a short summary:
 - What was committed
 - Sprint health status
-- AI assist cost today (you-bet only, from Step 1)
+- Project cost today (from Step 1)
 - What's planned for tomorrow
 - Betina's quote (again, for the terminal)
