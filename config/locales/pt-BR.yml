@@ -211,13 +211,13 @@ pt-BR:
     en: "English"
 
   bet_types:
-    sports_singles: "Apostas simples"
-    accumulator_3: "Múltipla de 3"
-    accumulator_5: "Múltipla de 5"
-    slots_tigrinho: "Slots (Tigrinho)"
-    crash_aviator: "Crash (Aviator)"
-    lottery: "Loteria"
+    sports_singles: "Apostas esportivas"
+    slots_tigrinho: "Tigrinho"
+    crash_aviator: "Aviãozinho"
+    accumulator_3: "Múltipla de 3 jogos"
+    accumulator_5: "Múltipla de 5 jogos"
     roulette: "Roleta"
+    lottery: "Loteria"
 
   simulations:
     new:

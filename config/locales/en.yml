@@ -195,13 +195,13 @@ en:
     en: "English"
 
   bet_types:
-    sports_singles: "Sports singles"
+    sports_singles: "Sports betting"
+    slots_tigrinho: "Tigrinho slot"
+    crash_aviator: "Aviator"
     accumulator_3: "3-leg accumulator"
     accumulator_5: "5-leg accumulator"
-    slots_tigrinho: "Slots (Tigrinho)"
-    crash_aviator: "Crash (Aviator)"
-    lottery: "Lottery"
     roulette: "Roulette"
+    lottery: "Lottery"
 
   simulations:
     new:
