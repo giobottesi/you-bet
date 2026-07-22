@@ -256,11 +256,11 @@ en:
         sub_single: "%{max_pct} of everything you put in"
       timeline:
         heading: "The longer you play, the worse it gets"
-        intro: "Here's your best bet (%{bet_type}) over time. Even the one that loses least trends toward losing almost everything."
+        intro: "This is your bet that loses the least (%{bet_type}). The longer you play, the closer even this one gets to losing everything."
       math:
         heading: "How we calculate this"
-        method: "We run thousands of simulations of your bet using the Monte Carlo method — the same one the bookmakers themselves use to analyse betting. On every bet, the house keeps a fixed cut (the \"edge\"). A single bet barely stings. The problem is time: the more money crosses the table, the more times that edge bites."
-        reality: "This number is the damage that hides underneath your everyday spending. Almost no one bets once and stops: what you win goes back into the next bet, more money comes in, week after week. It's that back-and-forth that lets the edge pile up until almost nothing is left. It's not bad luck or bad judgement — it's the math, and it was built to favour the house."
+        method: "We run your bet thousands of times to see how it usually ends. It's the Monte Carlo method, the same one the houses use to build their bets. On every bet, the house sets aside a fixed cut for itself: the edge. A single bet barely stings. What stings is the repetition: the more money crosses the table, the more times the edge bites."
+        reality: "This is the size of the hole, and it builds up slowly, without you noticing. Almost no one bets once and stops. What you win goes back into the next bet, more money comes in, week after week. It's that back-and-forth that lets the edge pile up until almost nothing is left. It's not your bad luck or bad judgment: it's the math, and it was built for the house to win."
       win_chance: "Over %{timeframe}, only %{percentage} of simulations ended in profit."
       opportunity:
         heading: "That money could have been…"
