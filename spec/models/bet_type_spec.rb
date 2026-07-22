@@ -34,8 +34,8 @@ RSpec.describe BetType do
 
   describe '#display_name' do
     it 'returns the translated name for the requested locale' do
-      expect(BetType.new(key: 'sports_singles').display_name(:en)).to eq('Sports singles')
-      expect(BetType.new(key: 'sports_singles').display_name(:'pt-BR')).to eq('Apostas simples')
+      expect(BetType.new(key: 'sports_singles').display_name(:en)).to eq('Sports betting')
+      expect(BetType.new(key: 'sports_singles').display_name(:'pt-BR')).to eq('Apostas esportivas')
     end
 
     it 'humanizes the key when no translation exists' do

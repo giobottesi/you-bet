@@ -4,12 +4,12 @@ class BetType
 
   BETTING_TYPES = %w[
     sports_singles
-    accumulator_3
-    accumulator_5
     slots_tigrinho
     crash_aviator
-    lottery
+    accumulator_3
+    accumulator_5
     roulette
+    lottery
   ].freeze
 
   attribute :key, :string
